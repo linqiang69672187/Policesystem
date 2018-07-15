@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+   <meta http-equiv="Content-Type" content="text/html; charset=gb2312" /> 
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>INSPINIA | Main view</title>
+    
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="../CSS/orgchartstyle1.css" rel="stylesheet" />
+    <link href="../css/merged-stylesheets.css" rel="stylesheet">
+</head>
+
+<body>
+
+
+ <div id="index">
+        <div id="mapdraw"></div>
+        <div class="boxleft">
+            <div class="input-group seach-box">
+                <input type="text" class="form-control " placeholder="请输入设备或车辆或联系人">
+                <span class="input-group-btn">
+                    <button class="btn btn-default" type="button"><i class="glyphicon glyphicon-search"></i></button>
+                 </span>
+            </div>
+            <div class="carVideo">
+            	<div class="carVideo-title" style="border-bottom:1px solid #dddddd;">
+	                <p>车载视频<i class="glyphicon glyphicon-chevron-down"></i></p>
+	            </div>
+                <div>
+				  <!-- Nav tabs -->
+				  <ul class="nav nav-tabs" role="tablist">
+				    <li role="presentation" class="active"><a href="#carvideoreallocation"  role="tab" data-toggle="tab" id="sswz">实时位置</a></li>
+				    <li role="presentation"><a href="#carvideotrack"  role="tab" data-toggle="tab" id="ckgi">查看轨迹</a></li>
+				  </ul>
+				  <!-- Tab panes -->
+				  <div class="tab-content">
+				    <div role="tabpanel" class="tab-pane active" id="carvideoreallocation">
+				    	<div class="carVideo-box" style="border: transparent;">
+		                    <div class="form-group" id="data_1">
+		                        <label>开始时间</label>
+		                        <div class="input-group date">
+		                            <input type="text" class="form-control start_form_datetime1">
+		                            <i class="glyphicon glyphicon-calendar"></i>
+		                        </div>
+		                    </div>
+		                    <div class="form-group" id="team-group1">
+		                        <div class="row">
+		                            <div class="col-md-6">
+		                                <label >所属大队</label>
+		                                <select class="form-control" id="brigadeselect1">
+		                                    <option value="all">全部</option>
+		                                    {{#each brigadeItems}}
+		                                    <option value="{{brigaName}}">{{brigaName}}</option>
+		                                    {{/each}}
+		                                </select>
+		                            </div>
+		                            <div class="col-md-6">
+		                                <label >所属中队</label>
+		                                <select class="form-control " id="squadronselect1" disabled="disabled">
+		                                    <option value="all">全部</option>
+		                                    {{#each squadronItems thisBrigaName}}
+		                                    <option value="{{squadronName}}">{{squadronName}}</option>
+		                                    {{/each}}
+		                                </select>
+		                            </div>
+		                        </div>
+		                    </div>
+		                    <div class="form-group" id="equipment-state1">
+		                        <div class="row">
+		                            <div class="col-md-6">
+		                                <label >设备状态</label>
+		                                <select class="form-control" id="sbstate1">
+		                                    <option value="all">全部</option>
+		                                    <option value="1">在线</option>
+		                                    <option value="0">离线</option>
+		                                </select>
+		                            </div>
+		                            <div class="col-md-6">
+		                                <label >排列方式</label>
+		                                <select class="form-control" id="sortMode1">
+		                                    <option>所属单位</option>
+		                                    <option>所在车辆</option>
+		                                    <option>在线时长</option>
+		                                    <option>告警状态</option>
+		                                </select>
+		                            </div>
+		                        </div>
+		                    </div>
+		                    {{#if realtime 1}}
+		                        {{#with carTrackReallist}}
+		                        <div class="table-responsive tab-maxh tab-maxh1">
+		                            <table class="table">
+		                                <thead>
+		                             	<tr>
+		                                    <th>车牌号</th>
+		                                    <th>联系人</th>
+		                                    <th>在线时长</th>
+		                                </tr>
+		                                </thead>
+		                                <tbody>
+		                                {{#each _data}}
+		                                <tr class="{{defulatselectTr @index}}" data-zx="{{DeviceisOline}}" >
+		                                    <td class="simg" style="width: 35%;text-align: center;">
+		                                    	<span>{{licensePlate}}</span>
+		                                    	<img src="./img/{{img}}">
+		                                    </td>
+		                                    <td>
+		                                    	<span>{{contacts}}</span>
+		                                    </td>
+		                                    <td>
+		                                    	<span>{{continuedzh}}</span>
+		                                    </td>
+		                                </tr>
+		                                {{/each}}
+		                                </tbody>
+		                            </table>
+		                        </div>
+		                        <div class="tab-maxh-flooter">
+		                            <div class="equipmentNumb">
+		                                <label>设备数:<span>{{deviceNumb}}</span></label>
+		                                <label>在线数:<span>{{isonlinedeviceNumb}}</span></label>
+		                                <label>离线数:<span>{{oNonlinedeviceNumb}}</span></label>
+		                            </div>
+		                            <div class="onlineTotal-time">
+		                                <p>总在线时长:<span>{{totalonlinetime}}</span></p>
+		                            </div>
+		                            <div class="data-details">
+		                                <!--<button class="btn" id="ckTrajectory">查看数据详情</button>-->
+		                            </div>
+		                        </div>
+		                        {{/with}}
+		                    {{/if}}
+		                    {{#if realtime 2}}
+		                        {{#with carTracklslist}}
+		                        <div class="table-responsive tab-maxh tab-maxh1">
+		                            <table class="table">
+		                                <thead>
+		                             	<tr>
+		                                    <th>车牌号</th>
+		                                    <th>联系人</th>
+		                                    <th>在线时长</th>
+		                                </tr>
+		                                </thead>
+		                                <tbody>
+		                                {{#each _data}}
+		                                <tr class="{{defulatselectTr @index}}" >
+		                                    <td class="simg" style="width: 35%;text-align: center;">
+		                                    	<span>{{licensePlate}}</span>
+		                                    	<img src="./img/{{img}}">
+		                                    </td>
+		                                    <td>
+		                                    	<span>{{contacts}}</span>
+		                                    </td>
+		                                    <td>
+		                                    	<span>{{continuedzh}}</span>
+		                                    </td>
+		                                </tr>
+		                                {{/each}}
+		                                </tbody>
+		                            </table>
+		                        </div>
+		                        <div class="tab-maxh-flooter">
+		                            <div class="equipmentNumb">
+		                                <label>设备数:<span>{{deviceNumb}}</span></label>
+		                                <label>在线数:<span>{{isonlinedeviceNumb}}</span></label>
+		                                <label>离线数:<span>{{oNonlinedeviceNumb}}</span></label>
+		                            </div>
+		                            <div class="onlineTotal-time">
+		                                <p>总在线时长:<span>{{totalonlinetime}}</span></p>
+		                            </div>
+		                            <div class="data-details">
+		                                <button class="btn" id="ckTrajectory">查看数据详情</button>
+		                            </div>
+		                        </div>
+		                        {{/with}}
+		                    {{/if}}
+		                </div>
+				    </div>
+				    <div role="tabpanel" class="tab-pane" id="carvideotrack">
+				    	<div class="carVideo-box" style="border: transparent;">
+		                    <div class="form-group" id="data_2">
+		                        <label>开始时间</label>
+		                        <div class="input-group date">
+		                            <input type="text" class="form-control start_form_datetime2">
+		                            <i class="glyphicon glyphicon-calendar"></i>
+		                        </div>
+		                    </div>
+		                    <div class="form-group" id="data_3">
+		                        <label>结束时间</label>
+		                        <div class="input-group date">
+		                            <input type="text" class="form-control end_form_datetime1">
+		                            <i class="glyphicon glyphicon-calendar"></i>
+		                        </div>
+		                     <!--	<button  class="btn btn-primary" id="resetDate">重置</button>-->
+		                    </div>
+		                    <div class="form-group" id="team-group2">
+		                        <div class="row">
+		                            <div class="col-md-6">
+		                                <label >所属大队</label>
+		                                <select class="form-control" id="brigadeselect2">
+		                                    <option value="all">全部</option>
+		                                    {{#each brigadeItems}}
+		                                    <option value="{{brigaName}}">{{brigaName}}</option>
+		                                    {{/each}}
+		                                </select>
+		                            </div>
+		                            <div class="col-md-6">
+		                                <label >所属中队</label>
+		                                <select class="form-control " id="squadronselect2" disabled="disabled">
+		                                    <option value="all">全部</option>
+		                                    {{#each squadronItems thisBrigaName}}
+		                                    <option value="{{squadronName}}">{{squadronName}}</option>
+		                                    {{/each}}
+		                                </select>
+		                            </div>
+		                        </div>
+		                    </div>
+		                    <div class="form-group" id="equipment-state2">
+		                        <div class="row">
+		                            <div class="col-md-6">
+		                                <label >设备状态</label>
+		                                <select class="form-control" id="sbstate2" disabled="disabled">
+		                                    <option value="all">全部</option>
+		                                    <option value="1">在线</option>
+		                                    <option value="0">离线</option>
+		                                </select>
+		                            </div>
+		                            <div class="col-md-6">
+		                                <label >排列方式</label>
+		                                <select class="form-control" id="sortMode2">
+		                                    <option>所属单位</option>
+		                                    <option>所在车辆</option>
+		                                    <option>在线时长</option>
+		                                    <option>告警状态</option>
+		                                </select>
+		                            </div>
+		                        </div>
+		                    </div>
+		                        {{#with carTracklist}}
+		                        <div class="table-responsive tab-maxh tab-maxh2">
+		                        <table class="table">
+		                            <thead>
+		                            <tr>
+		                                <th>
+		                                    <input type="checkbox" id="checkAll">
+		                                </th>
+		                                <th>车牌号</th>
+	                                    <th>联系人</th>
+	                                    <th>在线时长</th>
+		                            </tr>
+		                            </thead>
+		                            <tbody>
+		                            {{#each _data}}
+		                            <tr >
+		                                <td><input type="checkbox" class="checkSingle" data-carNo="{{deviceNo}}" data-gjIndex="{{@index}}"></td>
+		                                <td>
+		                                   	<span>{{licensePlate}}</span>
+		                                    <img src="./img/{{img}}">
+		                                </td>
+		                                <td><span>{{contacts}}</span></td>
+		                                <td><span>{{continuedzh}}</span></td>
+		                            </tr>
+		                            {{/each}}
+		                            </tbody>
+		                        </table>
+		                    </div>
+		                        <div class="tab-maxh-flooter">
+		                        <div class="equipmentNumb">
+		                            <label>设备数:<span>{{deviceNumb}}</span></label>
+		                            <label>在线数:<span>{{isonlinedeviceNumb}}</span></label>
+		                            <label>离线数:<span>{{oNonlinedeviceNumb}}</span></label>
+		                        </div>
+		                        <div class="onlineTotal-time">
+		                            <p>总在线时长:<span>{{totalonlinetime}}</span></p>
+		                        </div>
+		                        <div class="data-details">
+		                            <button class="btn" id="ckTrajectory">查看数据详情</button>
+		                        </div>
+		                    </div>
+		                    {{/with}}
+		                </div>
+				    </div>
+				  </div>
+				</div>
+            </div>
+        </div>
+        <!--<div class="boxright">
+            <div class="data-statistics">
+                <div class="datastatisticstitle">
+                    <img src="./img/data1.png">
+                    <span>
+                        数据统计
+                    </span>
+                    <i class="glyphicon glyphicon-chevron-down"></i>
+                </div>
+                <div class="datastatistics-box">
+                    <div class="datastatistics-box-title">
+                        <p>车载数据视频统计</p>
+                    </div>
+                    <div id="datastatistics-box-draw">
+                    </div>
+                </div>
+            </div>
+        </div>-->
+        <!-- Page contents -->
+        <div class="boxSlider">
+            <div class="boxSliderwidth">
+                <input type="text" id="range" value="" name="range" />
+            </div>
+        </div>
+
+    </div>
+<!-- Mainly scripts -->
+<script src="js/jquery-3.1.1.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script src="js/plugins/metisMenu/jquery.metisMenu.js"></script>
+<script src="js/plugins/slimscroll/jquery.slimscroll.min.js"></script>
+
+<!-- Custom and plugin javascript -->
+<script src="js/inspinia.js"></script>
+<script src="js/plugins/pace/pace.min.js"></script>
+ <script>
+        $("#header").load('Header.html');
+ </script>
+
+</body>
+
+</html>

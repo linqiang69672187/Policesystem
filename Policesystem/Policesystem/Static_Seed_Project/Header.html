@@ -1,0 +1,58 @@
+﻿<div class="nav">
+            <div class="nav-title">
+                <p>台州市交警局设备运维统一监管平台</p>
+            </div>
+            <div class="nav-menu">
+                <ul>
+                    <li class="{{isActivePath regex='orgstructure'}}"><a href="/orgstructure">设备查看</a></li>
+                    <li class="{{isActivePath regex='dataanalysis'}}"><a href="/dataanalysis">工作概况</a></li>
+                    <li class="{{isActivePath regex='index|policepass'}}">
+                        <a id="one-menu">实时状况
+                            <i class="glyphicon glyphicon-triangle-bottom"></i>
+                        </a>
+                        <div class="systemSettings-menu" style="z-index: 5;">
+                            <ul>
+                            	{{#if isczsp}}
+                                <li class="{{isActivePath regex='index' class='twoactive'}}"><a href="/index">车载视频</a></li>
+                                {{/if}}
+                                {{#if isjwt}}
+                                <li class="{{isActivePath regex='policepass' class='twoactive'}}" ><a href="/policepass">警务通</a></li>
+                                {{/if}}
+                                <!--<li class="{{isActivePath regex='userManagement' class='twoactive'}}"><a>对讲机</a></li>-->
+                                <!--<li class="{{isActivePath regex='deviceManagement' class='twoactive'}}"><a>拦截仪</a></li>-->
+                                <!--<li class="{{isActivePath regex='userManagement' class='twoactive'}}"><a>执法记录仪</a></li>-->
+                            </ul>
+                        </div>
+                    </li>
+                    {{#if isgjgl}}
+                    <li class="{{isActivePath regex='alramManagement'}}"><a href="/alramManagement">告警管理</a></li>
+                    {{/if}}
+                    {{#if issjgl}}
+                    <li class="{{isActivePath regex='dataManagement'}}"><a href="/dataManagement">数据统计</a></li>
+                    {{/if}}
+                    <li class="{{isActivePath regex='userManagement|deviceManagement|userqxSettings'}}">
+                        <a id="two-menu">系统设置<i class="glyphicon glyphicon-triangle-bottom"></i></a>
+                        <div class="systemSettings-menu" style="z-index: 5;">
+                            <ul>
+                                <li class="{{isActivePath regex='dataManagement'}}" ><a>账户管理</a></li>
+                                {{#if isyhgl}}
+                                <li class="{{isActivePath regex='userManagement' class='twoactive'}}"><a href="/userManagement">用户管理</a></li>
+                                <li class="{{isActivePath regex='userqxSettings' class='twoactive'}}"><a href="/userqxSettings">权限管理</a></li>
+                                {{/if}}
+                                {{#if issbgl}}
+                                <li class="{{isActivePath regex='deviceManagement' class='twoactive'}}"><a href="/deviceManagement">设备管理</a></li>
+                                {{/if}}
+                            </ul>
+                        </div>
+                    </li>
+                    <li class="userInfor">
+                        <a href="/#">
+                            <img src="./img/user1.png">
+                            <span>{{loginuser}}</span>
+                            <span>|</span>
+                            <span>退出系统</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>

@@ -1,0 +1,60 @@
+<template name="login">
+    <div id="login">
+        <div id="header">
+            <div class="logo-infor">
+                <img src="./img/logo.png" >
+                <p>台州市公安交通警察局</p>
+            </div>
+        </div>
+        <div id="content">
+            <div id="content1">
+                <div class="bj1">
+                    <img src="./img/00bj2.png">
+                </div>
+                <div class="bj2" id="bj-middle"></div>
+                <div class="bj3"></div>
+            </div>
+            <div id="content2" style="left: calc(50% - 600px)">
+                    <div class="loginForm">
+                        <div style="display: table-cell;vertical-align: middle;">
+                            <div class="loginbox">
+
+                                <div class="form-header">
+                                    <h3>设备运维统一监管平台</h3>
+                                </div>
+                                <div class="form-content">
+                                    <div class="form-infor">
+                                        <form role="form">
+                                            <div class="form-group">
+                                                <label for="userName">用户名:</label>
+                                                <input type="text" placeholder="请输入用户名" class="form-control" id="userName" >
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="userpassword">密&nbsp;&nbsp;&nbsp;码:</label>
+                                                <input type="password" placeholder="请输入密码" class="form-control" id="userpassword" minlength="5">
+                                            </div>
+                                            <div class="form-group" style="position: relative">
+                                                <label for="userpassword">验证码:</label>
+                                                <input type="password" placeholder="请输入验证码" class="form-control" id="checkpassword" checkCodelength="4" maxlength="4">
+                                                <div class="code" id="checkCode" ></div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label  style="opacity: 0">请记住</label>
+                                                <div class="form-control" style="border: transparent;box-shadow: inset 0 0px 0px;text-align: left;padding: 0px">
+                                                    <input type="checkbox" id="remberpassword" style="margin-left: 5px;"><span>记住用户名和密码</span>
+                                                </div>
+                                            </div>
+                                            <div class="form-group"  >
+                                                <button  type="button" class="btn btn-primary " id="loginBtn">登录</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+            </div>
+        </div>
+
+    </div>
+</template>
