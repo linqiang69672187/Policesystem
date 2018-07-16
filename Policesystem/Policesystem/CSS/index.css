@@ -55,7 +55,7 @@ body{-webkit-text-size-adjust:none}
 }
 .leftbox{
  float:left;
- width:calc(100%-290);
+ width:calc(100% - 310px);
  margin-left:0;
  margin-right:0;
 }
@@ -88,4 +88,29 @@ body{-webkit-text-size-adjust:none}
     margin-top:10px;
     height:111px;
     background-color:#cccccc;
+}
+.leftbox div:nth-child(1){
+    width:100%;
+    height:60px;
+    background-color:#ffffff;
+}
+.leftbox div:nth-child(2){
+    width:100%;
+    height:260px;
+    background-color:#ccc;
+}
+.leftbox div:nth-child(3){
+    width:100%;
+    height:30px;
+    background-color:#fff;
+}
+.leftbox div:nth-child(4){
+    width:100%;
+    height:120px;
+    background-color:#ccc;
+}
+.leftbox div:nth-child(5){
+    width:100%;
+    height:120px;
+    background-color:#fff;
 }
