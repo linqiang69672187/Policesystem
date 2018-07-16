@@ -7,7 +7,9 @@
     overflow-y: hidden;
     font-family: Helvetica,Tahoma,Arial,sans-serif;
     font-size: 12px;
+
 }
+body{-webkit-text-size-adjust:none} 
 #bodybg {
     width:100%;
     height:100%;
@@ -53,11 +55,37 @@
 }
 .leftbox{
  float:left;
- width:calc(100%-389px);
+ width:calc(100%-290);
  margin-left:0;
  margin-right:0;
 }
 .rightbox{
-  width:389px;
+  width:260px;
   float:right;
+  margin-right:30px;
+  margin-top:5px;
+
+}
+.entitylist{
+    width:100%;
+    height:38px;
+    background-image:url(../Image/entitylist.png); 
+    background-repeat:no-repeat; 
+    background-size:100% 100%;
+}
+.entitylist label:nth-child(1){
+    color:#4c8afa;
+}
+.rightbox label{
+ font-size:12px;
+}
+.row2n {
+    margin-top:10px;
+    height:111px;
+    background-color:#ffffff;
+}
+.row1n {
+    margin-top:10px;
+    height:111px;
+    background-color:#cccccc;
 }
