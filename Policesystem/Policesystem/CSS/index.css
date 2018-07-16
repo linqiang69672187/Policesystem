@@ -22,7 +22,7 @@ body{-webkit-text-size-adjust:none}
 }
 .banner{
     height:88px;
-       background-image:url(../Image/bannerbg.png); 
+    background-image:url(../Image/bannerbg.png); 
     background-repeat:no-repeat; 
     background-size:100% 100%;
 }
