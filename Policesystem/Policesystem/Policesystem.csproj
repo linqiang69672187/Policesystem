@@ -95,6 +95,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="CSS\top.css" />
+    <Content Include="map.html" />
     <Content Include="packages.config" />
     <Content Include="ApplicationInsights.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
