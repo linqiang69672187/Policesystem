@@ -46,7 +46,7 @@ controls.push(mousePositionControl);
 **/
 
 //controls.push(new ol.control.OverviewMap({}));
-controls.push(new ol.control.FullScreen());
+//controls.push(new ol.control.FullScreen());
 //缩放至范围  
 //var zoomToExtentControl = new ol.control.ZoomToExtent({
 //    extent: bounds,
@@ -56,20 +56,20 @@ controls.push(new ol.control.FullScreen());
 //controls.push(zoomToExtentControl);
 
 //比例尺  
-var scaleLineControl = new ol.control.ScaleLine({});
-controls.push(scaleLineControl);
+//var scaleLineControl = new ol.control.ScaleLine({});
+//controls.push(scaleLineControl);
 
 
 
 //缩放控件  
-var zoomSliderControl = new ol.control.ZoomSlider({});
-controls.push(zoomSliderControl);
+//var zoomSliderControl = new ol.control.ZoomSlider({});
+//controls.push(zoomSliderControl);
 
 //图层控件  
-var layerSwitcher = new ol.control.LayerSwitcher({
-    tipLabel: 'Légende' // Optional label for button
-});
-controls.push(layerSwitcher);
+//var layerSwitcher = new ol.control.LayerSwitcher({
+   // tipLabel: 'Légende' // Optional label for button
+//});
+//controls.push(layerSwitcher);
 
 
 // 百度地图层
@@ -91,7 +91,8 @@ var map = new ol.Map({
     })
     ],
     controls: ol.control.defaults({
-        attribution: false
+        attribution: false,
+        zoomcontrol:false
     }).extend(controls),
     view: new ol.View({
         // 设置地图中心
