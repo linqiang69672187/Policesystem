@@ -1,17 +1,5 @@
-﻿html, body {
-    height: 100%;
-    width:100%;
-    margin: 0;
-    padding: 0;
-    overflow-x: hidden;
-    overflow-y: hidden;
-    font-family: Helvetica,Tahoma,Arial,sans-serif;
-    font-size: 12px;
-    
-
-}
-body{-webkit-text-size-adjust:none} 
-body > .row{
+﻿
+ .row{
     height:102px;
     background-image:url(../Image/topbannerbg.png); 
     background-repeat:repeat-x; 

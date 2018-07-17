@@ -94,8 +94,49 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="comjs\Addcomjs.js" />
+    <Content Include="comjs\apiv2.0.my.js" />
+    <Content Include="comjs\bootstrap-datetimepicker.js" />
+    <Content Include="comjs\bootstrap.min.js" />
+    <Content Include="comjs\datatables.min - 复制.js" />
+    <Content Include="comjs\datatables.min.js" />
+    <Content Include="comjs\fonts\fontawesome-webfont.svg" />
+    <Content Include="comjs\fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="comjs\handlebars.js" />
+    <Content Include="comjs\highchart.js" />
+    <Content Include="comjs\ion.rangeSlider.js" />
+    <Content Include="comjs\jquery-1.12.3.min - 复制.js" />
+    <Content Include="comjs\jquery-1.12.3.min.js" />
+    <Content Include="comjs\jquery.cookie.js" />
+    <Content Include="comjs\jquery.Huploadify.js" />
+    <Content Include="comjs\jquery.js" />
+    <Content Include="comjs\jquery.orgchart.js" />
+    <Content Include="comjs\jquery.pagination.js" />
+    <Content Include="comjs\moment-with-locales.js" />
+    <Content Include="comjs\moment.js" />
+    <Content Include="comjs\myHeatmap2.0.min.js" />
+    <Content Include="CSS\map.css" />
     <Content Include="CSS\top.css" />
+    <Content Include="Js\map.js" />
     <Content Include="map.html" />
+    <Content Include="Ol\baidu.js" />
+    <Content Include="Ol\loader.js" />
+    <Content Include="Ol\mark.js" />
+    <Content Include="Ol\resources\common.js" />
+    <Content Include="Ol\resources\layout.css" />
+    <Content Include="Ol\resources\logo-70x70.png" />
+    <Content Include="Ol\resources\map-background.jpg" />
+    <Content Include="Ol\resources\mapbox-streets-v6-style.js" />
+    <Content Include="Ol\resources\prism\prism.css" />
+    <Content Include="Ol\resources\prism\prism.min.js" />
+    <Content Include="Ol\resources\zeroclipboard\ZeroClipboard.Core.js" />
+    <Content Include="Ol\resources\zeroclipboard\ZeroClipboard.Core.min.js" />
+    <Content Include="Ol\resources\zeroclipboard\ZeroClipboard.js" />
+    <Content Include="Ol\resources\zeroclipboard\ZeroClipboard.min.js" />
+    <Content Include="Ol\resources\zeroclipboard\ZeroClipboard.swf" />
+    <Content Include="Ol\vertor.js" />
+    <Content Include="Ol\xyz-esri.html" />
+    <Content Include="Ol\xyz-esri.js" />
     <Content Include="packages.config" />
     <Content Include="ApplicationInsights.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -139,6 +180,17 @@
     <Content Include="Static_Seed_Project\fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="Static_Seed_Project\fonts\glyphicons-halflings-regular.woff" />
     <Content Include="Static_Seed_Project\fonts\glyphicons-halflings-regular.woff2" />
+    <Content Include="comjs\fonts\fontawesome-webfont.eot" />
+    <Content Include="comjs\fonts\fontawesome-webfont.ttf" />
+    <Content Include="comjs\fonts\fontawesome-webfont.woff" />
+    <Content Include="comjs\fonts\fontawesome-webfont.woff2" />
+    <Content Include="comjs\fonts\FontAwesome.otf" />
+    <Content Include="comjs\fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="comjs\fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="comjs\fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="comjs\fonts\glyphicons-halflings-regular.woff2" />
+    <Content Include="Ol\resources\zeroclipboard\ZeroClipboard.Core.min.map" />
+    <Content Include="Ol\resources\zeroclipboard\ZeroClipboard.min.map" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
