@@ -9,8 +9,15 @@
     font-size: 12px;   
 }
 #header{
- 
     height:102px;
- 
-
+    z-index:999;
+    position:absolute;
+    width:100%;
+}
+#mapdraw{
+    width: 100%;
+    position: absolute;
+    top: 0px;
+   left: 0px;
+   z-index:1;
 }

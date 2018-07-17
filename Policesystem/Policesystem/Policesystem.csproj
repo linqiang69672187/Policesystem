@@ -94,6 +94,22 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="build\examples\addlayer.html" />
+    <Content Include="build\examples\addlayer.js" />
+    <Content Include="build\examples\browserify\index.html" />
+    <Content Include="build\examples\browserify\index.js" />
+    <Content Include="build\examples\layerswitcher.css" />
+    <Content Include="build\examples\layerswitcher.html" />
+    <Content Include="build\examples\layerswitcher.js" />
+    <Content Include="build\examples\scroll.css" />
+    <Content Include="build\examples\scroll.html" />
+    <Content Include="build\examples\scroll.js" />
+    <Content Include="build\ol-debug.js" />
+    <Content Include="build\ol-deps.js" />
+    <Content Include="build\ol.js" />
+    <Content Include="build\ol3-layerswitcher.js" />
+    <Content Include="build\src\ol3-layerswitcher.css" />
+    <Content Include="build\src\ol3-layerswitcher.js" />
     <Content Include="comjs\Addcomjs.js" />
     <Content Include="comjs\apiv2.0.my.js" />
     <Content Include="comjs\bootstrap-datetimepicker.js" />
@@ -191,6 +207,8 @@
     <Content Include="comjs\fonts\glyphicons-halflings-regular.woff2" />
     <Content Include="Ol\resources\zeroclipboard\ZeroClipboard.Core.min.map" />
     <Content Include="Ol\resources\zeroclipboard\ZeroClipboard.min.map" />
+    <Content Include="build\examples\browserify\package.json" />
+    <Content Include="build\examples\browserify\README.md" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
