@@ -46,6 +46,37 @@ controls.push(mousePositionControl);
 **/
 
 //controls.push(new ol.control.OverviewMap({}));
+controls.push(new ol.control.FullScreen());
+//缩放至范围  
+//var zoomToExtentControl = new ol.control.ZoomToExtent({
+//    extent: bounds,
+//    className: 'zoom-to-extent',
+//    tipLabel: "全图"
+//});
+//controls.push(zoomToExtentControl);
+
+//比例尺  
+var scaleLineControl = new ol.control.ScaleLine({});
+controls.push(scaleLineControl);
+
+
+
+//缩放控件  
+//var zoomSliderControl = new ol.control.ZoomSlider({});
+//controls.push(zoomSliderControl);
+/**
+var mousePositionControl = new ol.control.MousePosition({
+    className: 'custom-mouse-position',
+    target: document.getElementById('location'),
+    coordinateFormat: ol.coordinate.createStringXY(5),//保留5位小数  
+    undefinedHTML: ' ',
+    projection: 'EPSG:4326'
+});
+
+controls.push(mousePositionControl);
+**/
+
+//controls.push(new ol.control.OverviewMap({}));
 //controls.push(new ol.control.FullScreen());
 //缩放至范围  
 //var zoomToExtentControl = new ol.control.ZoomToExtent({
@@ -92,7 +123,8 @@ var map = new ol.Map({
     ],
     controls: ol.control.defaults({
         attribution: false,
-        zoomcontrol:false
+        rotate: false,
+        zoom:false
     }).extend(controls),
     view: new ol.View({
         // 设置地图中心
@@ -111,8 +143,8 @@ var map = new ol.Map({
 
 $(function () {
     // setboxsize();
-    setInterval("loadmarks()", 15000);
-    loadmarks();
+  //  setInterval("loadmarks()", 15000);
+  //  loadmarks();
 
 });
 

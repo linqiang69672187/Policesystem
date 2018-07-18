@@ -132,6 +132,7 @@
     <Content Include="comjs\moment.js" />
     <Content Include="comjs\myHeatmap2.0.min.js" />
     <Content Include="CSS\map.css" />
+    <Content Include="CSS\ol.css" />
     <Content Include="CSS\top.css" />
     <Content Include="Js\map.js" />
     <Content Include="map.html" />
