@@ -120,5 +120,17 @@ ul {
 .btn-primary{
     background-color: #116bf2 !important;
     border-color: #116bf2 !important;
-    width:120px;
+    width:110px;
+}
+.btn-group button{
+    text-align:left;
+}
+.btn-group button span{
+    float:right;
+    margin-top:5px;
+}
+.dropdown-menu li a:hover{
+    background-color: #116bf2 !important;
+    border-color: #116bf2 !important;
+    color:#fff;
 }
