@@ -271,3 +271,19 @@ ul {
 #histrorysearch .row:nth-child(2){
     margin-top:30px;
 }
+#histrorysearch #cz-cx{
+    width:44px;
+    margin-left:80px;
+}
+ .date input {
+    width: 120px !important;
+    height: 28px;
+    font-size: 14px;
+    padding-top: 0px;
+    padding-bottom: 0px;
+    line-height: 14;
+    border-radius: 4px;
+    color: #999999;
+    border-top-right-radius: 4px !important;
+    border-bottom-right-radius: 4px !important;
+}
