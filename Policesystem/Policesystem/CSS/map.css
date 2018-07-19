@@ -204,6 +204,7 @@ ul {
 .shishi {
     background-color: #116bf2;
     cursor: pointer;
+       font-size:12px;
 }
 .boxleft_right>div:nth-child(5) div:first-child {
     font-size: 16px;
@@ -219,6 +220,7 @@ ul {
 #cz-bianji{
     margin-left:92px;
     margin-top:5px;
+    font-size:12px;
 }
 .classtablerespone {
     height: 34px;
@@ -232,4 +234,40 @@ ul {
     height: 210px;
     width:412px;
     overflow-y: auto;
+}
+#histrorysearch{
+    width:220px;
+    height:150px;
+    background-image: url(../Image/topbannerbg.png);
+    background-repeat: repeat-x;
+    background-size: 100% 100%;
+    position: absolute;
+    top: 290px;
+    left:540px;
+}
+#histrorysearch .row:first-child{
+    float:right;
+    margin-right:6px;
+    color:#fff;
+}
+#histrorysearch .row{
+    margin-top:3px;
+    color:#fff;
+    margin-left:0px;
+    height:25px;
+}
+#histrorysearch .row div:nth-child(1){
+  float:left;
+  width:80px;
+  height:25px;
+  text-align:right;
+}
+#histrorysearch .row div:nth-child(2){
+  float:right;
+  width:150px;
+  height:25px;
+  text-align:left;
+}
+#histrorysearch .row:nth-child(2){
+    margin-top:30px;
 }
