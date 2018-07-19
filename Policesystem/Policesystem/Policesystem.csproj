@@ -137,6 +137,7 @@
     <Content Include="Image\bannar-logo.png" />
     <Content Include="Image\bannar-time-bg.png" />
     <Content Include="Image\entitylist.png" />
+    <Content Include="Image\leftbootombg.png" />
     <Content Include="Image\topbannerbg.png" />
     <Content Include="Js\map.js" />
     <Content Include="map.html" />
