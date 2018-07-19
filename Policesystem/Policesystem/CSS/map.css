@@ -26,27 +26,29 @@
 }
 
 .boxleft {
-    width: 340px;
-    height: 340px;
+    width: 500px;
+    height: 440px;
     position: absolute;
     top: 150px;
     left: 30px;
     background-image: url(../Image/topbannerbg.png);
     background-repeat: repeat-x;
     background-size: 100% 100%;
+    color:#48b5d4;
     z-index: 1;
 }
 
     .boxleft > .row > div:nth-child(1) {
         height: 100%;
         border-right: 1px solid #116bf2;
-        width: 50px;
+        width: 60px;
         float:left;
     }
 
     .boxleft > .row {
         margin-left: 0px;
-        height: 340px;
+        height: 440px;
+      
     }
 
 .boxleft > .row li > div:nth-child(1) {
@@ -97,8 +99,9 @@ ul {
     }
    .boxleft > .row > div:nth-child(2) {
         height: 100%;
-        width:290px;
+        width:440px;
         float:right;
+        margin-right:-10px;
     }
    .boxleft_right>div:nth-child(1){
        font-size:16px;
@@ -108,7 +111,7 @@ ul {
        vertical-align:middle;
        line-height:40px;
    }
-      .boxleft_right>div:nth-child(1) .col-md-12{
+      .boxleft_right>div:nth-child(1) .col-md-12, .boxleft_right>div:nth-child(5) .col-md-6{
        padding-left:0px;
    }
    .boxleft_right>div:nth-child(1) i{
@@ -116,21 +119,117 @@ ul {
    }
 .boxleft_right>div:nth-child(2)>div:nth-child(1){
     margin-left:10px;
+    width:100px;
+    float:left;
 }
-.btn-primary{
-    background-color: #116bf2 !important;
-    border-color: #116bf2 !important;
-    width:110px;
+.boxleft_right>div:nth-child(3)>div:nth-child(1),.boxleft_right>div:nth-child(4)>div:nth-child(1){
+    margin-left:10px;
+    width:180px;
+    float:left;
+    height:25px;
+    margin-top:3px;
 }
-.btn-group button{
-    text-align:left;
-}
-.btn-group button span{
+.boxleft_right>div:nth-child(2)>div:nth-child(2){
+    
+    width:300px;
     float:right;
+    height:25px;
+    margin-top:3px
+}
+.boxleft_right>div:nth-child(3)>div:nth-child(2){
+    width:260px;
+    float:right;
+    margin-right: -20px;
+}
+.boxleft_right>div:nth-child(4)>div:nth-child(2){
+    width:260px;
+    float:right;
+    margin-right: -142px;
+}
+#deviceselect,#brigadeselect,#squadronselect,#sbstate{
+    display: inline-block;
+    width: 110px;
+    height: 24px;
+    line-height: 24px;
+    font-size: 14px;
+    color: #ffffff;
+    padding: 0px;
+    margin-left: 10px;
+    background-color: #116bf2;
+    background-image: none;
+    border: 1px solid #116bf2;
+    border-radius: 4px;
+}
+#deviceselect{
+   margin-left: 0px;
+}
+.form-control {
+    display: block;
+    width: 100%;
+    height: 24px !important;
+    padding: 6px 12px;
+    font-size: 14px;
+    line-height: 1.42857143;
+    color: #555;
+    background-color: #fff;
+    background-image: none;
+    border: 1px solid #116bf2 !important;
+    border-radius: 4px;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+    box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+    -webkit-transition: border-color ease-in-out .15s,-webkit-box-shadow ease-in-out .15s;
+    -o-transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+    transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+}
+.seach-box{
+    width:240px;
+    margin-top:-2px;
+}
+.btn{
+     padding: 1px 12px !important;
+    color: #fff !important;
+    border-color: #116bf2 !important;
+    background-color:#005EB8 !important;
+}
+.bt2,#cz-bianji {
+    display: inline-block;
+    margin-left: 10px;
+    border-radius: 5px;
+    height: 22px;
+    line-height: 22px;
+    text-align: center;
+    color: white;
+    padding: 0 10px;
+}
+.shishi {
+    background-color: #116bf2;
+    cursor: pointer;
+}
+.boxleft_right>div:nth-child(5) div:first-child {
+    font-size: 16px;
+    color: #48b5d4;
+    font-family: 'Microsoft YaHei';
+    height: 40px;
+    vertical-align: middle;
+    line-height: 40px;
+}
+.boxleft_right>div:nth-child(5) i {
+    margin: 0 10px;
+}
+#cz-bianji{
+    margin-left:92px;
     margin-top:5px;
 }
-.dropdown-menu li a:hover{
-    background-color: #116bf2 !important;
-    border-color: #116bf2 !important;
-    color:#fff;
+.classtablerespone {
+    height: 34px;
+    color: #fff;
+    width:412px;
+    background-color: #005EB8;
+
+    overflow-y: hidden;
+}
+.tab-maxh {
+    height: 210px;
+    width:412px;
+    overflow-y: auto;
 }

@@ -31,19 +31,73 @@
     <div class="row "><div class="col-md-12"><i class="fa fa-ellipsis-v"></i>设备搜索</div></div>
     <div class="row ">
         <div>
-        <div class="btn-group">
-        <button type="button" class="btn btn-primary dropdown-toggle btn-sm"data-toggle="dropdown">原始 <span class="caret"></span>
-    </button>
-    <ul class="dropdown-menu" role="menu">
-        <li><a href="#">功能</a></li>
-        <li><a href="#">另一个功能</a></li>
-        <li><a href="#">其他</a></li>
-        <li class="divider"></li>
-        <li><a href="#">分离的链接</a></li>
-    </ul>
+            <select class="form-control" id="deviceselect">
+                <option value="all">执法记录仪</option>
+                <option value="all">对讲机</option>
+            </select>
+        </div>
+        <div>
+            <div class="input-group seach-box" style="z-index:0;">
+                <input type="text" class="form-control " placeholder="请输入设备或车辆或联系人">
+                <span class="input-group-btn">
+                    <button class="btn btn-default" type="button"><i class="glyphicon glyphicon-search"></i></button>
+                </span>
+            </div>
         </div></div>
-        <div></div></div>
+    <div class="row ">
+        <div><label>所属大队</label><select class="form-control" id="brigadeselect">
+           <option value="all">全部</option>
+         
+           </select>
+        </div>
+        <div>
+            <label>所属中队</label>
+            <select class="form-control " id="squadronselect" disabled="disabled">
+                <option value="all">全部</option>
+            </select>
+
+        </div>
     </div>
+    <div class="row">
+        <div><label>设备状态</label><select class="form-control" id="sbstate">
+          <option value="all">全部</option>
+          <option value="1" selected="selected">在线</option>
+          <option value="0">离线</option>
+        </select>
+        </div>
+        <div><div class="cell-button bt2 shishi" id="cz-ck">查看</div></div>
+    </div>
+    <div class="row ">
+        <div class="col-md-6"><i class="fa fa-ellipsis-v"></i>结果列表</div>
+        <div class="col-md-6"><div class="cell-button bt2 shishi" id="cz-bianji">历史轨迹</div></div>
+    </div>
+    <div class="row">
+        <div class="classtablerespone table-responsive  tab-maxh1 ">
+            <table class="table">
+                <thead>
+                    <tr></tr>
+                </thead>
+            </table>
+        </div>
+        <div class="table-responsive tab-maxh tab-maxh1">
+            <table class="table">
+                <tbody></tbody>
+            </table>
+        </div>
+        <div class="tab-maxh-flooter">
+            <div class="equipmentNumb">
+
+            </div>
+            <div class="onlineTotal-time">
+                <p>总在线时长:<span>0</span></p>
+            </div>
+            <div class="data-details">
+                <!--<button class="btn" id="ckTrajectory" >查看数据详情</button>-->
+            </div>
+        </div>
+
+    </div>
+        </div>
 </div>
 </div>    
 
