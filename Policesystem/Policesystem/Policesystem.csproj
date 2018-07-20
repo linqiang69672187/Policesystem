@@ -141,6 +141,9 @@
     <Content Include="Image\datamanagement_listbg.png" />
     <Content Include="Image\datamanagermentbg.jpg" />
     <Content Include="Image\entitylist.png" />
+    <Content Include="Image\index_bz.png" />
+    <Content Include="Image\index_jingwutong.png" />
+    <Content Include="Image\index_lanjieyi.png" />
     <Content Include="Image\leftbootombg.png" />
     <Content Include="Image\topbannerbg.png" />
     <Content Include="Js\dataManagement.js" />
