@@ -1,10 +1,10 @@
 ﻿html, body {
     height: 100%;
-    width:100%;
+    width:3840px;
     margin: 0;
     padding: 0;
-    overflow-x: hidden;
-    overflow-y: hidden;
+    overflow-x: auto;
+    overflow-y: auto;
     font-family: Helvetica,Tahoma,Arial,sans-serif;
     font-size: 12px;
 
@@ -60,7 +60,7 @@ body{-webkit-text-size-adjust:none}
  margin-right:0;
 }
 .rightbox{
-  width:260px;
+  width:780px;
   float:right;
   margin-right:30px;
   margin-top:5px;

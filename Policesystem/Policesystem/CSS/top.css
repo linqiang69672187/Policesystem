@@ -1,13 +1,4 @@
-﻿html, body {
-    height: 102px;
-    width: 100%;
-    margin: 0;
-    padding: 0;
-    overflow-x: hidden;
-    overflow-y: hidden;
-    font-family: Helvetica,Tahoma,Arial,sans-serif;
-    font-size: 12px;
-}
+﻿
  #header .row{
     height:102px;
     background-image:url(../Image/topbannerbg.png); 

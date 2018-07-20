@@ -21,6 +21,7 @@ label{
 body{
   background:url("../Image/datamanagermentbg.jpg") no-repeat;
   background-size: 100% 100%;
+
 }
 #header+.row{
     position:absolute;
@@ -134,4 +135,76 @@ body{
  }
  .sentity+label{
      margin-left:15px;
+ }
+ .cell-button{
+     margin-left:5px;
+     display:inline-block;
+     padding-left:10px;
+     padding-right:10px;
+     height:22px;
+     background-color:#116bf2;
+     line-height:22px;
+     vertical-align:middle;
+     text-align:center;
+     border-radius:4px;
+     cursor:pointer;
+ }
+ #shujuxiang li{
+     display:inline-block;
+     margin-left:5px !important;
+ }
+  #shujuxiang {
+     margin-left:-45px !important;
+ }
+  .shujudiv{
+      background-color:transparent;
+  }
+  .datadetail{
+      padding:10px;
+      position:absolute;
+      background-color:#000f45;
+      border-radius:4px;
+      z-index:999;
+      top:240px;
+      left:500px;
+      color:#fff;
+      font-size:12px;
+    
+  }
+  .datadetail div:nth-child(1) label{
+      color:#1d517e;
+      font-weight:700 !important;
+      font-size:14px;
+  }
+  .datadetail div:nth-child(1) .fa-close{
+      float:right;
+      color:#fff;
+      font-size:14px;
+      cursor:pointer;
+  }
+table th{
+       font-weight:400;
+       padding:0 5px;
+       background-color:#116bf2;
+       text-align:center;
+       height:25px;
+   }
+ table tr:nth-child(2n+1){
+       font-weight:400;
+       background-color:#13204d;
+       text-align:left;
+       height:22px;
+ }
+ table tr:nth-child(2n){
+       font-weight:400;
+       background-color:#213366;
+       text-align:left;
+       height:22px;
+   }
+ .tablediv table {
+     width:100%;
+     color:#fff;
+ }
+  table td{
+    padding-left:5px;
  }
