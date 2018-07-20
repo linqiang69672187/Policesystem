@@ -1,0 +1,45 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title></title>
+	<meta charset="utf-8" />
+</head>
+<body>
+    <link href="Static_Seed_Project/css/bootstrap.min.css" rel="stylesheet">
+    <link href="Static_Seed_Project/CSS/font-awesome.min.css" rel="stylesheet" />
+    <link href="CSS/dataManagement.css" rel="stylesheet" />
+    <div id="header"></div>
+    <div class="row">
+        <div class="col-md-3"><div><i class="fa fa-database" aria-hidden="true"></i><ul><li>7500</li><li>设备配发量</li><li>同比上周增加3%<i class="fa fa-arrow-up" aria-hidden="true"></i> </li></ul></div></div>
+        <div class="col-md-3"><div><i class="fa fa-clock-o" aria-hidden="true"></i><ul><li>231.3h</li><li>使用时长</li><li>同比上周下降15%<i class="fa fa-arrow-down" aria-hidden="true"></i> </li></ul></div></div>
+        <div class="col-md-3"><div><i class="fa fa-server" aria-hidden="true"></i><ul><li>4200</li><li>设备使用数量</li><li>同比上周增加3%<i class="fa fa-arrow-up" aria-hidden="true"></i> </li></ul></div></div>
+        <div class="col-md-3"><div><i class="fa fa-area-chart" aria-hidden="true"></i><ul><li>100</li><li>在线设备</li><li>同比上周增加3%<i class="fa fa-arrow-up" aria-hidden="true"></i> </li></ul></div></div>
+    </div>
+    <div class="tablediv">
+        <div class="row"><label>| 执法记录报表</label></div>
+        <div class="row">
+         <label>统计时间:</label>
+        <div class="date" ><input type="text" class=" start_form_datetime"><i class="fa fa-calendar"></i></div>
+         <label>—</label>
+         <div class="date"><input type="text" class=" end_form_datetime"><i class="fa fa-calendar"></i></div>
+         <div class="date search"><input type="text"  placeholder="输入关键字搜索" ><i class="fa fa-search" aria-hidden="true"></i></div>
+         </div>
+        <div class="row">
+        <label>单位:</label>
+        <div class="sentity"> <select id="dadui"><option>交警局</option></select></div>
+        <div class="sentity"> <select id="zhongdui"><option>所属中队</option></select></div>
+        <label>  设备类型:</label>
+        <div class="sentity"><select id="suoshusb"><option>辅警通</option></select></div>
+
+        </div>
+        <div class="row"></div>
+        <div class="row"></div>
+    </div>
+    <script src="comjs/jquery.js"></script>
+    <script src="comjs/jquery.cookie.js"></script>
+    <script src="comjs/bootstrap.min.js"></script>
+    <script src="comjs/bootstrap-datetimepicker.js"></script>
+    <script src="Js/dataManagement.js"></script>
+</body>
+</html>

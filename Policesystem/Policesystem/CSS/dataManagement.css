@@ -1,0 +1,137 @@
+﻿html, body {
+    height: 100%;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+    overflow-y: hidden;
+    font-family: Helvetica,Tahoma,Arial,sans-serif;
+    font-size: 12px;
+
+}
+label{
+  font-weight:400 !important;
+}
+#header {
+    height: 102px;
+    z-index: 999;
+    position: absolute;
+    width: 100%;
+}
+body{
+  background:url("../Image/datamanagermentbg.jpg") no-repeat;
+  background-size: 100% 100%;
+}
+#header+.row{
+    position:absolute;
+    top:110px;
+    left:15px;
+    width:100%;
+    height:113px;
+}
+#header+.row div div{
+    width:267px;
+    height:113px;
+    background:url("../Image/datamanagement_listbg.png") no-repeat;
+    text-align:center;
+    margin:0 auto;
+}
+
+.col-md-3 div ul li{
+   display:block;
+   text-align:left;
+   margin-left:65px;
+
+}
+.col-md-3 div>i:nth-child(1){
+    font-size:60px;
+    color:#48b5d4;
+    margin-left: -140px;
+    margin-bottom: 0px;
+    padding-top: 30px;
+}
+.col-md-3 div ul li:nth-child(1) {
+    font-size:24px;
+    color:#48b5d4;
+}
+.col-md-3 div ul li:nth-child(2) {
+    font-size:18px;
+    color:#48b5d4;
+}
+.col-md-3 div ul li:nth-child(3) {
+    font-size:14px;
+    color:#48b5d4;
+}
+.col-md-3 div ul  {
+   margin-top:-80px;
+}
+.col-md-3 div li i{
+      margin-left:3px;
+}
+.fa-arrow-up{
+    color:#55b764;
+}
+.fa-arrow-down{
+   color:#f40e29;
+}
+.tablediv{
+    height:calc(100% - 260px);
+    width:calc(100% - 40px);
+    top:240px;
+    left:20px;
+    position:absolute;
+    border: 1px solid #116bf2 !important;
+    border-radius: 4px;
+    padding:5px 10px;
+}
+.tablediv .row{
+       width:calc(100% - 10px); 
+       margin:0 auto;
+}
+.tablediv .row:nth-child(1){
+    color:#3f9fbf;
+    font-size:14px;
+    border-bottom: 1px  dashed #116bf2;
+    height:30px;
+    vertical-align:middle;
+}
+.tablediv .row:nth-child(2),.tablediv .row:nth-child(3),.tablediv .row:nth-child(4){
+    color:#fff;
+    font-size:12px;
+    height:30px;
+    line-height:30px;
+    vertical-align:middle;
+}
+.date,.date input{
+    display:inline-block;
+    height:25px;
+    border-radius:4px;
+    background-color:transparent;
+    
+}
+.date input{
+    width:100px;
+    border: 1px  solid #fff;
+    height:22px;
+    text-align:left;
+    padding-left:2px;
+}
+.date .fa-calendar,.date .fa-search{
+    margin-left:-16px;
+}
+ .search input {
+     width:150px;
+ }
+ .sentity,.sentity select{
+      display:inline-block;
+    height:22px;
+    border-radius:4px;
+    background-color:transparent;
+    width:100px;
+ }
+ .sentity select option{
+     background-color:#071237;
+ }
+ .sentity+label{
+     margin-left:15px;
+ }
