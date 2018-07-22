@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<head>
+<meta charset="UTF-8">
+<title>jQuery支持触摸屏3D旋转木马特效</title>
+<link rel="stylesheet" href="css/demo.css">
+<link rel="stylesheet" href="css/jquery.flipster.css">
+<link rel="stylesheet" href="css/flipsternavtabs.css">
+</head>
+<body>
+
+<!-- 代码部分begin -->
+<div class="flipster">
+	<ul>
+		<li>
+			<a href="#" class="Button Block">
+				<h1>All Features</h1>
+				<p>Showcase of all available features in both the Coverflow and Carousel styles</p>
+			</a>
+		</li>
+		<li>
+			<a href="#" class="Button Block">
+				<h1>Basic Setup</h1>
+				<p>The bare minimum code needed to implement Flipster</p>
+			</a>
+		</li>
+		<li>
+			<a href="#" class="Button Block">
+				<h1>Carousel</h1>
+				<p>Roundabout carousel style!</p>
+			</a>
+		</li>
+		<li>
+			<a href="#" class="Button Block">
+				<h1>Coverflow with Tab Navigation</h1>
+				<p>Example of tab navigation using the <code>enableNav</code> option</p>
+			</a>
+		</li>
+		<li>
+			<a href="#" class="Button Block">
+				<h1>Carousel with Tab Navigation</h1>
+				<p>Example of tab navigation using the <code>enableNav</code> option</p>
+			</a>
+		</li>
+  	</ul>
+</div>
+<script src="js/jquery-1.8.3.min.js"></script>
+<script src="js/jquery.flipster.js"></script>
+<script>
+$(function(){ 
+	$(".flipster").flipster({ 
+		style: 'carousel', 
+		start: 0 }); 
+	});
+</script>
+<!-- 代码部分end -->
+
+</body>
+</html>
