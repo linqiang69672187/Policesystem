@@ -149,12 +149,7 @@
     <Content Include="Image\index_zhifajiluyi.png" />
     <Content Include="Image\leftbootombg.png" />
     <Content Include="Image\topbannerbg.png" />
-    <Content Include="jQuery.flipster\css\demo.css" />
-    <Content Include="jQuery.flipster\css\flipsternavtabs.css" />
-    <Content Include="jQuery.flipster\css\jquery.flipster.css" />
     <Content Include="jQuery.flipster\index.html" />
-    <Content Include="jQuery.flipster\js\jquery-1.8.3.min.js" />
-    <Content Include="jQuery.flipster\js\jquery.flipster.js" />
     <Content Include="Js\dataManagement.js" />
     <Content Include="Js\index.js" />
     <Content Include="Js\map.js" />
@@ -233,8 +228,6 @@
     <Content Include="Ol\resources\zeroclipboard\ZeroClipboard.min.map" />
     <Content Include="build\examples\browserify\package.json" />
     <Content Include="build\examples\browserify\README.md" />
-    <Content Include="jQuery.flipster\css\.DS_Store" />
-    <Content Include="jQuery.flipster\js\.DS_Store" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -300,7 +293,10 @@
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="jQuery.flipster\css\" />
+    <Folder Include="jQuery.flipster\js\" />
+  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>

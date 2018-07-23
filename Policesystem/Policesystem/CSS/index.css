@@ -113,7 +113,7 @@ margin:0 12px;
    font-size:34px;
    color:#fff;
 }
-.leftbox div:nth-child(1) div:nth-child(3){
+.leftbox>div:nth-child(1)>div:nth-child(3){
    color:#fff;
    height:135px;
    width:740px;
@@ -176,7 +176,7 @@ margin:0 12px;
 
 }
 
-.leftbox div:nth-child(3){
+.leftbox>div:nth-child(3){
     width:100%;
     height:60px;
    font-size:34px;
@@ -284,4 +284,9 @@ margin:0 12px;
 }
 .col12 img{
       margin-left:20px;
+}
+.xzlb>iframe{
+    width:100%;
+    height:100%;
+    border:0px;
 }
