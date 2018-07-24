@@ -13,7 +13,7 @@
         this.nextBtn = this.caroursel.find(".poster-next-btn");
         //Ä¬ÈÏ²ÎÊý
         this.setting = {
-            "width":"1000",
+            "width":"985",
             "height":"270",
             "posterWidth":"640",
             "posterHeight":"270",

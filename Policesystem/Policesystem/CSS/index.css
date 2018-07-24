@@ -40,7 +40,8 @@ body{-webkit-text-size-adjust:none}
         vertical-align: middle;
         margin-right: 50px;
         float: right;
-      padding-top:15px;
+        padding-top:15px;
+        margin-top: -60px;
     }
 .banner .col-lg-3 div label:nth-child(1){
  margin:auto;
