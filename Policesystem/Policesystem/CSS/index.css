@@ -334,10 +334,19 @@ margin:0 12px;
     width:400px;
     height:270px;
 }
-#zf_gfscl,#zf_zxshj{
+#zf_gfscl{margin-left:50px;}
+#zf_zxshj{margin-left:-40px;}
+#djj_jrzx{margin-left:80px;}
+#djj_gfscl{margin-left:40px;}
+#zf_gfscl,#zf_zxshj,#djj_jrzx,#djj_gfscl,#djj_zxshj{
     width:500px;
     height:360px;
+    display:inline-block;
 }
 .highcharts-data-label-box{
     display:none;
+}
+.highcharts-title{
+    text-align:center;
+    color:#fff;
 }

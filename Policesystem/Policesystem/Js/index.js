@@ -245,7 +245,7 @@ function createChart(id, type, data, color, totalvalue) {
     });
 }
 
-function myGaugeChart(containerId) {
+function myGaugeChart(containerId,label) {
     var chart = Highcharts.chart(containerId, {
         chart: {
             type: 'gauge',
@@ -253,13 +253,18 @@ function myGaugeChart(containerId) {
             plotBackgroundImage: null,
             plotBorderWidth: 0,
             backgroundColor: 'rgba(0,0,0,0)',//设置背景透明
-            plotShadow: false
+            plotShadow: false,
+            margin: [0, 0, 0, 0],
+            height:'400'
         },
         credits: {
             enabled: false
         },
         title: {
-            text: ''
+            useHTML: true,
+            text: '环比昨日减少5%<br/> <span style="font-size:32px;">● ' + label + ' ● </span>',
+            y: 280,
+            style:{color:'#fff',fontSize:'28px'}
         },
         pane: {
             startAngle: -120,
@@ -309,18 +314,31 @@ function myGaugeChart(containerId) {
                 color: '#964edf' // red
             }]
         },
+
         series: [{
             name: '使用率',
             data: [80],
             tooltip: {
                 valueSuffix: ' %'
             },
-            style: { color: '#fff' },
+            dial: {
+                backgroundColor: '#F8DE43',//指针背景色
+                radius: '78%',// 半径：指针长度
+                rearLength: '10%',//尾巴长度
+                baseWidth:'8',
+                borderColor:'#cccccc',
+                borderWidth:'0',
+                topWidth:'1'
+            },
             backgroundColor:null,
             dataLabels: {
                 formatter: function () {
                     var kmh = this.y
                     return kmh+'%';
+                },
+                style: {
+                    color: '#467ddf',
+                    fontSize: '28px'
                 }
             }
         }]
@@ -342,8 +360,11 @@ function myGaugeChart(containerId) {
     });
 }
 
-myGaugeChart("zf_gfscl");
-
+myGaugeChart("zf_gfscl","规范上传率");
+myGaugeChart("zf_zxshj", "在线总时长");
+myGaugeChart("djj_gfscl", "规范上传率");
+myGaugeChart("djj_zxshj", "在线总时长");
+myGaugeChart("djj_jrzx", "在线数");
 function formatSeconds(value,y) {
     var result = Math.floor((value / 60 / 60) * Math.pow(10, y)) / Math.pow(10, y);
     return result;
