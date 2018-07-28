@@ -1,4 +1,4 @@
-/**
+ï»¿/**
  * Created by Zhangyx on 2015/10/15.
  */
 ;(function($){
@@ -11,7 +11,7 @@
         this.lastPosterItem = this.posterItems.last();
         this.prevBtn = this.caroursel.find(".poster-prev-btn");
         this.nextBtn = this.caroursel.find(".poster-next-btn");
-        //Ä¬ÈÏ²ÎÊı
+        //é»˜è®¤å‚æ•°
         this.setting = {
             "width":"985",
             "height":"270",
@@ -20,15 +20,15 @@
             "scale":"0.8",
             "speed":"1000",
             "isAutoplay":"true",
-            "dealy":"1000"
+            "dealy":"3000"
         }
-        //×Ô¶¨Òå²ÎÊıÓëÄ¬ÈÏ²ÎÊıºÏ²¢
+        //è‡ªå®šä¹‰å‚æ•°ä¸é»˜è®¤å‚æ•°åˆå¹¶
         $.extend(this.setting,this.getSetting())
-        //ÉèÖÃµÚÒ»Ö¡Î»ÖÃ
+        //è®¾ç½®ç¬¬ä¸€å¸§ä½ç½®
         this.setFirstPosition();
-        //ÉèÖÃÊ£ÓàÖ¡µÄÎ»ÖÃ
+        //è®¾ç½®å‰©ä½™å¸§çš„ä½ç½®
         this.setSlicePosition();
-        //Ğı×ª
+        //æ—‹è½¬
         this.rotateFlag = true;
         this.prevBtn.bind("click",function(){
             if(self.rotateFlag){
@@ -57,7 +57,7 @@
         rotateAnimate:function(type){
             var that = this;
             var zIndexArr = [];
-            if(type == "left"){//Ïò×óÒÆ¶¯
+            if(type == "left"){//å‘å·¦ç§»åŠ¨
                 this.posterItems.each(function(){
                    var self = $(this),
                     prev = $(this).next().get(0)?$(this).next():that.firstPosterItem,
@@ -82,7 +82,7 @@
                     $(this).css("zIndex",zIndexArr[i]);
                 });
             }
-            if(type == "right"){//ÏòÓÒÒÆ¶¯
+            if(type == "right"){//å‘å³ç§»åŠ¨
                 this.posterItems.each(function(){
                     var self = $(this),
                     next = $(this).prev().get(0)?$(this).prev():that.lastPosterItem,
@@ -112,21 +112,21 @@
             this.caroursel.css({"width":this.setting.width,"height":this.setting.height});
             this.posterList.css({"width":this.setting.width,"height":this.setting.height});
             var width = (this.setting.width - this.setting.posterWidth) / 2;
-            //ÉèÖÃÁ½¸ö°´Å¥µÄÑùÊ½
+            //è®¾ç½®ä¸¤ä¸ªæŒ‰é’®çš„æ ·å¼
             this.prevBtn.css({"width":width , "height":this.setting.height,"zIndex":Math.ceil(this.posterItems.size()/2)});
             this.nextBtn.css({"width":width , "height":this.setting.height,"zIndex":Math.ceil(this.posterItems.size()/2)});
             this.firstPosterItem.css({
                 "width":this.setting.posterWidth,
                 "height":this.setting.posterHeight,
                 "left":width,
-                "zIndex":Math.ceil(this.posterItems.size()/2)+1, //ĞŞ¸Äµ±Ç°²ã¼¶
+                "zIndex":Math.ceil(this.posterItems.size()/2)+1, //ä¿®æ”¹å½“å‰å±‚çº§
                 "top":this.setVertialType(this.setting.posterHeight)
             });
         },
         setSlicePosition:function(){
             var _self = this;
             var sliceItems = this.posterItems.slice(1),
-                level = Math.floor(this.posterItems.length/2),   //ĞŞ¸Ä²ã¼¶
+                level = Math.floor(this.posterItems.length/2),   //ä¿®æ”¹å±‚çº§
                 leftItems = sliceItems.slice(0,level),
                 rightItems = sliceItems.slice(level),
                 posterWidth = this.setting.posterWidth,
@@ -134,7 +134,7 @@
                 Btnwidth = (this.setting.width - this.setting.posterWidth) / 2,
                 gap = Btnwidth/level,
                 containerWidth = this.setting.width;
-            //ÉèÖÃ×ó±ßÖ¡µÄÎ»ÖÃ
+            //è®¾ç½®å·¦è¾¹å¸§çš„ä½ç½®
             var i = 1;
             var leftWidth = posterWidth;
             var leftHeight = posterHeight;
@@ -152,7 +152,7 @@
                 });
                 i++;
             });
-            //ÉèÖÃÓÒÃæÖ¡µÄÎ»ÖÃ
+            //è®¾ç½®å³é¢å¸§çš„ä½ç½®
             var j = level;
             var zLoop2 = 1;
             var rightWidth = posterWidth;
@@ -207,15 +207,49 @@ $(function () {
         data: "",
         dataType: "json",
         success: function (data) {
+            var sumonline, sumisused,total,img;
             for (var i = 0; i < data.length; i++) {
+                sumonline = 0; sumisused = 0; total = 0;
                 $(".lbtitle:eq(" + i + ")").html("<i class='fa fa-minus  fa-rotate-90'></i>" + data[i]["Name"]);
-                $(".divcontentrt:eq(" + i + ") ul").append("<li><img src='../Image/index_jingwutong.png' /><span>¾¯ÎñÍ¨:</span><span>1200</span></li>")
+                for (var i1 = 0; i1 < data[i]["data"].length; i1++) {
+                    total += parseInt(data[i]["data"][i1]["count"]);
+                    if(data[i]["data"][i1]["online"] !="" ) {sumonline += parseInt(data[i]["data"][i1]["online"])};//åœ¨çº¿ç»ˆç«¯æ€»æ•°
+                    if (data[i]["data"][i1]["Isused"] != "") { sumisused += parseInt(data[i]["data"][i1]["Isused"]) };//å½“æ—¥ä½¿ç”¨ç»ˆç«¯æ•°
+                    switch (data[i]["data"][i1]["TypeName"]) {
+                        case "è½¦è½½è§†é¢‘":
+                            img = "../Image/index_chezaiship.png";
+                            break;
+                        case "è­¦åŠ¡é€š":
+                            img = "../Image/index_jingwutong.png";
+                            break;
+                        case "æ‹¦æˆªä»ª":
+                            img = "../Image/index_lanjieyi.png";
+                            break;
+                        case "å¯¹è®²æœº":
+                            img = "../Image/index_duijiangji.png";
+                            break;
+                        case "æ‰§æ³•è®°å½•ä»ª":
+                            img = "../Image/index_zhifajiluyi.png";
+                            break;
+                        default:
+                            img = "../Image/index_chezaiship.png";
+                            break;
+                    }
+                    $(".divcontentrt:eq(" + i + ") ul").append("<li><img src='" + img + "' /><span>" + data[i]["data"][i1]["TypeName"] + ":</span><span>" + data[i]["data"][i1]["count"] + "</span></li>")
+                }
+                $(".divcontentrt:eq(" + i + ") ul").append("<li><span>" + "åœ¨çº¿æ•°" + ":</span><span>" + sumonline + "</span></li>");
+                $(".divcontentlf:eq(" + i + ") div:eq(3)").text(total);
+                $(".divcontentlf:eq(" + i + ") div:eq(7)").text(formatSeconds(sumisused / total,2)+"%");
             };
         },
         error: function (msg) {
-            console.debug("´íÎó:ajax");
+            console.debug("é”™è¯¯:ajax");
         }
     });
 
 
 });
+function formatSeconds(value, y) {
+    var result = Math.floor((value*100) * Math.pow(10, y)) / Math.pow(10, y);
+    return result;
+}
