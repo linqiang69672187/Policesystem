@@ -239,6 +239,7 @@
     <Content Include="Handle\TotalDevices.ashx" />
     <Content Include="Handle\Jqueryflipster.ashx" />
     <Content Include="Handle\index.ashx" />
+    <Content Include="Handle\GetEntitys.ashx" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -302,6 +303,9 @@
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Handle\GetEntitys.ashx.cs">
+      <DependentUpon>GetEntitys.ashx</DependentUpon>
+    </Compile>
     <Compile Include="Handle\index.ashx.cs">
       <DependentUpon>index.ashx</DependentUpon>
     </Compile>

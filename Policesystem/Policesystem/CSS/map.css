@@ -64,7 +64,7 @@ ul {
 }
 
 .boxleft > .row li:nth-child(n+2) {
-    margin-top: 20px;
+    margin-top: 30px;
 }
  .boxleft > .row li:nth-child(n+2) > div {
             width: 27px;
@@ -162,7 +162,7 @@ ul {
     font-size: 14px;
     color: #ffffff;
     padding: 0px;
-    margin-left: 10px;
+    margin-left: 20px;
     background-color: #116bf2;
     background-image: none;
     border: 1px solid #116bf2;
@@ -212,7 +212,8 @@ ul {
 .shishi {
     background-color: #116bf2;
     cursor: pointer;
-       font-size:12px;
+    font-size:12px;
+    margin-left: 15px;
 }
 .boxleft_right>div:nth-child(5) div:first-child {
     font-size: 16px;
@@ -226,7 +227,7 @@ ul {
     margin: 0 10px;
 }
 #cz-bianji{
-    margin-left:92px;
+    margin-left:110px;
     margin-top:5px;
     font-size:12px;
 }
