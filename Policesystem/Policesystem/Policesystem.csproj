@@ -228,6 +228,7 @@
     <Content Include="Ol\resources\zeroclipboard\ZeroClipboard.min.map" />
     <Content Include="build\examples\browserify\package.json" />
     <Content Include="build\examples\browserify\README.md" />
+    <Content Include="Handle\TotalDevices.ashx" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -291,11 +292,20 @@
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Handle\TotalDevices.ashx.cs">
+      <DependentUpon>TotalDevices.ashx</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="jQuery.flipster\css\" />
     <Folder Include="jQuery.flipster\js\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\DbComponet\DbComponet.csproj">
+      <Project>{3371620a-5db3-4f11-a64e-72c8c293bb7c}</Project>
+      <Name>DbComponet</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
