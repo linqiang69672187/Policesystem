@@ -380,3 +380,15 @@ background-color: #213366 !important;
             background: rgba(0, 0, 0, 0);  
         }  
     }  
+      .fa-map-marker-color-online{
+      color:#116bf2;
+  }
+  .fa-map-marker-color-unline{
+      color:#ccc;
+  }
+   .fa-map-marker-color-mouseover{
+      color:#005EB8;
+  }
+   .table i{
+       cursor:pointer;
+   }

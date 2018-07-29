@@ -167,14 +167,14 @@ function createtable(data) {
                 zx += 1;
                 break;
             case "0":
-                $doc.append(" <tr title='设备编号：" + data[i].DevId + "'><td ><i class='fa fa-square-o'></i></td><td class='simg' style='width: 113px;text-align: left;padding-left:5px'><span>" + data[i].BMJC + "</span></td><td style='text-align:center;width:113px;'><span>" + eval(coumm2) + "</span></td><td style='text-align:center;width:80px;'><span>" + formatSeconds(data[i].OnlineTime, 1) + "</span></td><td><i class='fa fa-map-marker fa-2x fa-map-marker-color-online' aria-hidden='true'  bh='" + data[i].DevId + "'  Dt='" + data[i].DevType + "'></i></td></tr>");
+                $doc.append(" <tr title='设备编号：" + data[i].DevId + "'><td ><i class='fa fa-square-o'></i></td><td class='simg' style='width: 113px;text-align: left;padding-left:5px'><span>" + data[i].BMJC + "</span></td><td style='text-align:center;width:113px;'><span>" + eval(coumm2) + "</span></td><td style='text-align:center;width:80px;'><span>" + formatSeconds(data[i].OnlineTime, 1) + "</span></td><td><i class='fa fa-map-marker fa-2x fa-map-marker-color-unline' aria-hidden='true'  bh='" + data[i].DevId + "'  Dt='" + data[i].DevType + "'></i></td></tr>");
                 sc +=(data[i].OnlineTime!="")? parseInt(data[i].OnlineTime):0;
                 lx +=1
                 break;
-   
-                $doc.append(" <tr title='设备编号：" + data[i].DevId + "'><td ><i class='fa fa-square-o'></i></td><td class='simg' style='width: 113px;text-align: left;padding-left:5px'><span>" + data[i].BMJC + "</span></td><td style='text-align:center;width:113px;'><span>" + eval(coumm2) + "</span></td><td style='text-align:center;width:80px;'><span>" + formatSeconds(data[i].OnlineTime, 1) + "</span></td><td><i class='fa fa-map-marker fa-2x fa-map-marker-color-online' aria-hidden='true'  bh='" + data[i].DevId + "'  Dt='" + data[i].DevType + "'></i></td></tr>");
-                sc +=(data[i].OnlineTime!="")? parseInt(data[i].OnlineTime):0;
-
+            case "":
+                $doc.append(" <tr title='设备编号：" + data[i].DevId + "'><td ><i class='fa fa-square-o'></i></td><td class='simg' style='width: 113px;text-align: left;padding-left:5px'><span>" + data[i].BMJC + "</span></td><td style='text-align:center;width:113px;'><span>" + eval(coumm2) + "</span></td><td style='text-align:center;width:80px;'><span>" + formatSeconds(data[i].OnlineTime, 1) + "</span></td><td></td></tr>");
+                sc += (data[i].OnlineTime != "") ? parseInt(data[i].OnlineTime) : 0;
+                break;
             default:
                 $doc.append(" <tr title='设备编号：" + data[i].DevId + "'><td ><i class='fa fa-square-o'></i></td><td class='simg' style='width: 113px;text-align: left;padding-left:5px'><span>" + data[i].BMJC + "</span></td><td style='text-align:center;width:113px;'><span>" + eval(coumm2) + "</span></td><td style='text-align:center;width:80px;'><span>" + formatSeconds(data[i].OnlineTime, 1) + "</span></td><td></td></tr>");
                 sc += (data[i].OnlineTime != "") ? parseInt(data[i].OnlineTime) : 0;
@@ -186,7 +186,20 @@ function createtable(data) {
     $(".equipmentNumb").append("<label>" + labeltext + ":<span>" + total + "</span></label>总在线时长:<span>" + formatSeconds(sc,1) + "(h)</span><label>在线数:<span>" + zx + "</span></label><label>离线数:<span>" + lx + "</span></label>")
 
 
-    $(document).on('click.bs.carousel.data-api', '.table .fa-map-marker-color-online', function (e) {
+    $(document).on('click.bs.carousel.data-api', '.table .fa-square-o,.table .fa-square', function (e) {
+        if (e.target.className.indexOf("fa-square-o") > 0) {
+            $(".fa-square").addClass("fa-square-o").removeClass("fa-square");
+            $(e.target).removeClass("fa-square-o");
+            $(e.target).addClass("fa-square");
+        }
+        else
+        {
+            $(e.target).removeClass("fa-square");
+            $(e.target).addClass("fa-square-o");
+        }
+    });
+
+    $(document).on('click.bs.carousel.data-api', '.table .fa-map-marker', function (e) {
         var devid;
         var detype;
         var feature;
@@ -204,10 +217,10 @@ function createtable(data) {
                 feature = vectorLayer.getSource().getFeatureById(devid);
                 break;
             case "4":
-                feature = vectorSourcejwt.getSource().getFeatureById(devid);
+                feature = vectorLayerjwt.getSource().getFeatureById(devid);
                 break;
             case "2":
-                feature = vectorSourcedjj.getSource().getFeatureById(devid);
+                feature = vectorLayerdjj.getSource().getFeatureById(devid);
                 break;
         }
      
@@ -216,35 +229,15 @@ function createtable(data) {
             point_overlay.setPosition(coordinates);
             var view = map.getView();
             view.animate({ zoom: view.getZoom() }, { center: coordinates }, function () {
-                localFeatureInfo();
+               // localFeatureInfo();
                 setTimeout(function () { point_overlay.setPosition([0, 0]) }, 30000)
             });
 
          return;
         }
-        return;
-        $.ajax({
-            type: "POST",
-            url: "../Handle/GetcoordinateBydevid.ashx",
-            data: { 'devid': devid },
-            dataType: "json",
-            success: function (data) {
-
-                var view = map.getView();
-                view.animate({ zoom: view.getZoom() }, { center: ol.proj.transform([parseFloat(data.data[0].La - offset.x), parseFloat(data.data[0].Lo - offset.y)], 'EPSG:4326', 'EPSG:3857') }, function () {
-                    point_overlay.setPosition(ol.proj.transform([parseFloat(data.data[0].La - offset.x), parseFloat(data.data[0].Lo - offset.y)], 'EPSG:4326', 'EPSG:3857'));
-
-                    localFeatureInfo();
-                    setTimeout(function () { point_overlay.setPosition([0, 0]) }, 30000)
-                });
-            },
-            error: function (msg) {
-                console.debug("错误:ajax");
-            }
-        });
     })
 
-    $(".table tbody").on("mouseover", function (e) {
+    $(document).on('mouseover.bs.carousel.data-api', '.table tbody i', function (e) {
         $(".fa-map-marker-color-mouseover").removeClass("fa-map-marker-color-mouseover");
         $(e.target).parent().find("i").addClass("fa-map-marker-color-mouseover");
     });
