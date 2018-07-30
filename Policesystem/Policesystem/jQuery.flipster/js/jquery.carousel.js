@@ -119,14 +119,14 @@
                 "width":this.setting.posterWidth,
                 "height":this.setting.posterHeight,
                 "left":width,
-                "zIndex":Math.ceil(this.posterItems.size()/2),
+                "zIndex":Math.ceil(this.posterItems.size()/2)+1, //修改当前层级
                 "top":this.setVertialType(this.setting.posterHeight)
             });
         },
         setSlicePosition:function(){
             var _self = this;
             var sliceItems = this.posterItems.slice(1),
-                level = Math.floor(this.posterItems.length/2),
+                level = Math.floor(this.posterItems.length/2),   //修改层级
                 leftItems = sliceItems.slice(0,level),
                 rightItems = sliceItems.slice(level),
                 posterWidth = this.setting.posterWidth,
@@ -199,3 +199,23 @@
     };
     window["Caroursel"] = Caroursel;
 })(jQuery)
+
+$(function () {
+    $.ajax({
+        type: "POST",
+        url: "../../Handle/Jqueryflipster.ashx",
+        data: "",
+        dataType: "json",
+        success: function (data) {
+            for (var i = 0; i < data.length; i++) {
+                $(".lbtitle:eq(" + i + ")").html("<i class='fa fa-minus  fa-rotate-90'></i>" + data[i]["Name"]);
+                $(".divcontentrt:eq(" + i + ") ul").append("<li><img src='../Image/index_jingwutong.png' /><span>警务通:</span><span>1200</span></li>")
+            };
+        },
+        error: function (msg) {
+            console.debug("错误:ajax");
+        }
+    });
+
+
+});
