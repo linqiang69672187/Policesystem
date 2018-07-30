@@ -172,6 +172,56 @@ namespace DbComponent
         #endregion
 
 
+        #region 格式化DATABALE2JSON封装
+        public static StringBuilder DatatableToJS(DataTable layerdr, string Title)
+        {
+            StringBuilder retJson = new StringBuilder();
+
+
+            retJson.Append("\"");
+            retJson.Append("data");
+            retJson.Append('"');
+            retJson.Append(":[");
+
+            try
+            {
+                for (int i = 0; i < layerdr.Rows.Count; i++)
+                {
+                    if (i != 0) retJson.Append(',');
+                    retJson.Append("{");
+
+                    for (int h = 0; h < layerdr.Columns.Count; h++)
+                    {
+                        if (h != 0) retJson.Append(',');
+                        retJson.Append('"');
+                        retJson.Append(layerdr.Columns[h].ColumnName);
+                        retJson.Append('"');
+                        retJson.Append(":");
+                        retJson.Append('"');
+                        retJson.Append(layerdr.Rows[i][layerdr.Columns[h].ColumnName].ToString().TrimEnd());
+                        retJson.Append('"');
+                    }
+
+
+
+
+                    retJson.Append("}");
+                }
+
+
+            }
+            catch (Exception ex)
+            {
+
+                ex.ToString();
+            }
+
+            retJson.Append("]}");
+
+            return retJson;
+        }
+        #endregion
+
     }
 
 }

@@ -229,6 +229,7 @@
     <Content Include="build\examples\browserify\package.json" />
     <Content Include="build\examples\browserify\README.md" />
     <Content Include="Handle\TotalDevices.ashx" />
+    <Content Include="Handle\Jqueryflipster.ashx" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -292,6 +293,9 @@
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Handle\Jqueryflipster.ashx.cs">
+      <DependentUpon>Jqueryflipster.ashx</DependentUpon>
+    </Compile>
     <Compile Include="Handle\TotalDevices.ashx.cs">
       <DependentUpon>TotalDevices.ashx</DependentUpon>
     </Compile>
