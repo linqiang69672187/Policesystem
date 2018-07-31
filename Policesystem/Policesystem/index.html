@@ -44,7 +44,13 @@
                         </iframe>
                      </div>
                      <div class="row"><i class="fa fa-tachometer" aria-hidden="true"></i>信息</div>
-                     <div class="row"><div class="col5 col-md-4"><div><img src="Image/index_zhifajiluyi.png" /><label>执法记录仪</label></div><div></div></div> <div class="col7 col-md-7"><img src="Image/index_duijiangji.png" /><label>对讲机</label></div></div>
+                     <div class="row">
+                   <div class="col5 col-md-4">
+                         <div><img src="Image/index_zhifajiluyi.png" /><label>执法记录仪</label></div>
+                              <div><div></div><div></div></div>
+                         </div> 
+                   <div class="col7 col-md-7"><img src="Image/index_duijiangji.png" /><label>对讲机</label></div>
+                     </div>
                      <div class="row"><div class="col12"><img src="Image/index_jingwutong.png" /><label>警务通</label></div></div>
                </div>
                <div class="rightbox">
@@ -63,28 +69,28 @@
                            </div>
                    <div class="row2n">
                        <div><img src="Image/index_jingwutong.png" /><label>警务通</label><img src="Image/index_bz.png" /></div>
-                       <div class="rlchars"><ul><li>配发数量</li><li></li><li>设备使用率</li><li></li></ul></div>
-                       <div><span>更多</span><span>更多</span></div>
+                       <div class="rlchars"><ul><li>配发数量</li><li><div id="jwtchart"></div></li><li>设备使用率</li><li><div id="jwtcolumn"></div></li></ul></div>
+                       <div><!--<span>更多</span><span>更多</span>--></div>
                    </div>
                    <div class="row1n">
                        <div><img src="Image/index_lanjieyi.png" /><label>拦截仪</label><img src="Image/index_bz.png" /></div>
+                       <div class="rlchars"><ul><li>配发数量</li><li><div id="ljychart"></div></li><li>设备使用率</li><li><div id="ljycolumn"></div></li></ul></div>
                        <div></div>
-                       <div><span>更多</span><span>更多</span></div>
                    </div>
                    <div class="row2n">
                        <div><img src="Image/index_duijiangji.png" /><label>对讲机</label><img src="Image/index_bz.png" /></div>
+                       <div class="rlchars"><ul><li>配发数量</li><li><div id="djjchart"></div></li><li>设备使用率</li><li><div id="djjcolumn"></div></li></ul></div>
                        <div></div>
-                       <div><span>更多</span><span>更多</span></div>
                    </div>
                    <div class="row1n">
                        <div><img src="Image/index_chezaiship.png" /><label>车载视频</label><img src="Image/index_bz.png" /></div>
+                       <div class="rlchars"><ul><li>配发数量</li><li><div id="czchart"></div></li><li>设备使用率</li><li><div id="czcolumn"></div></li></ul></div>
                        <div></div>
-                       <div><span>更多</span><span>更多</span></div>
                    </div>
                    <div class="row2n">
                        <div><img src="Image/index_zhifajiluyi.png" /><label>执法记录仪</label><img src="Image/index_bz.png" /></div>
+                       <div class="rlchars"><ul><li>配发数量</li><li><div id="zfchart"></div></li><li>设备使用率</li><li><div id="zfcolumn"></div></li></ul></div>
                        <div></div>
-                       <div><span>更多</span><span>更多</span></div>
                    </div>
                </div>
            </div>
@@ -95,6 +101,7 @@
     <!-- Mainly scripts -->
     <script src="Static_Seed_Project/js/jquery-3.1.1.min.js"></script>
     <script src="Static_Seed_Project/js/bootstrap.min.js"></script>
+    <script src="comjs/highcharts.js"></script>
     <script src="Js/index.js"></script>
 </body>
 </html>

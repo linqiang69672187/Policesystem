@@ -120,6 +120,7 @@
     <Content Include="comjs\fonts\glyphicons-halflings-regular.svg" />
     <Content Include="comjs\handlebars.js" />
     <Content Include="comjs\highchart.js" />
+    <Content Include="comjs\highcharts.js" />
     <Content Include="comjs\ion.rangeSlider.js" />
     <Content Include="comjs\jquery-1.12.3.min - 复制.js" />
     <Content Include="comjs\jquery-1.12.3.min.js" />

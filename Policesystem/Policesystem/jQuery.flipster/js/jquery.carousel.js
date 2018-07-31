@@ -207,6 +207,7 @@ $(function () {
         data: "",
         dataType: "json",
         success: function (data) {
+         
             var sumonline, sumisused,total,img;
             for (var i = 0; i < data.length; i++) {
                 sumonline = 0; sumisused = 0; total = 0;
@@ -241,13 +242,15 @@ $(function () {
                 $(".divcontentlf:eq(" + i + ") div:eq(3)").text(total);
                 $(".divcontentlf:eq(" + i + ") div:eq(7)").text(formatSeconds(sumisused / total,2)+"%");
             };
+
+            window.parent.createdata(data);
         },
         error: function (msg) {
             console.debug("错误:ajax");
         }
     });
 
-
+  
 });
 function formatSeconds(value, y) {
     var result = Math.floor((value*100) * Math.pow(10, y)) / Math.pow(10, y);

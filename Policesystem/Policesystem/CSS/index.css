@@ -324,3 +324,13 @@ margin:0 12px;
     color:#fff;
     height:100%;
 }
+#jwtchart,#ljychart,#czchart,#zfchart,#djjchart{
+    margin-top:-120px;
+    width:250px;
+    margin-left:15px;
+}
+#jwtcolumn,#ljycolumn,#czcolumn,#zfcolumn,#djjcolumn{
+   margin-top:-60px;
+    width:400px;
+    height:270px;
+}
