@@ -33,6 +33,7 @@ $(function () {
 
 
 function createdata(data) {
+
     var charttype = ["警务通", "拦截仪", "对讲机", "车载视频", "执法记录仪"];
     var ddata = new Array();
     var ddatacolumn = new Array();
@@ -152,7 +153,6 @@ function createcolum(id, type, data, color) {
         }]
     });
 }
-
 function createChart(id, type, data, color, totalvalue) {
     var chart = Highcharts.chart(id, {
         chart: {
@@ -245,6 +245,104 @@ function createChart(id, type, data, color, totalvalue) {
     });
 }
 
+function myGaugeChart(containerId) {
+    var chart = Highcharts.chart(containerId, {
+        chart: {
+            type: 'gauge',
+            plotBackgroundColor: 'rgba(0,0,0,0)',
+            plotBackgroundImage: null,
+            plotBorderWidth: 0,
+            backgroundColor: 'rgba(0,0,0,0)',//设置背景透明
+            plotShadow: false
+        },
+        credits: {
+            enabled: false
+        },
+        title: {
+            text: ''
+        },
+        pane: {
+            startAngle: -120,
+            endAngle: 120,
+            background: null,
+        },
+        // the value axis
+        yAxis: {
+            min: 0,
+            max: 100,
+            minorTickInterval: 'auto',
+            minorTickWidth: 2,
+            minorTickLength: 28,
+            minorTickPosition: 'inside',
+            minorTickColor: '#fff',
+            tickPixelInterval: 28,
+            tickWidth: 1,
+            tickPosition: 'inside',
+            tickLength: 10,
+            tickColor: '#fff',
+            labels: {
+                step: 2,
+                distance:-40,
+                rotation: 'auto',
+                style: {color: '#fff' }
+            },
+            title: {
+                text: ''
+            },
+            plotBands: [{
+                from: 0,
+                to: 60,
+                innerRadius: '100%',
+                outerRadius: '80%',
+                color: '#467ddf' // 
+            }, {
+                from: 60,
+                to: 80,
+                innerRadius: '100%',
+                outerRadius: '80%',
+                color: '#45d5d5' // 
+            }, {
+                from: 80,
+                to: 100,
+                innerRadius: '100%',
+                outerRadius: '80%',
+                color: '#964edf' // red
+            }]
+        },
+        series: [{
+            name: '使用率',
+            data: [80],
+            tooltip: {
+                valueSuffix: ' %'
+            },
+            style: { color: '#fff' },
+            backgroundColor:null,
+            dataLabels: {
+                formatter: function () {
+                    var kmh = this.y
+                    return kmh+'%';
+                }
+            }
+        }]
+    }, function (chart) {
+        return;
+        if (!chart.renderer.forExport) {
+            
+            setInterval(function () {
+                var point = chart.series[0].points[0],
+                    newVal,
+                    inc = Math.round((Math.random() - 0.5) * 20);
+                newVal = point.y + inc;
+                if (newVal < 0 || newVal > 200) {
+                    newVal = point.y - inc;
+                }
+                point.update(newVal);
+            }, 3000);
+        }
+    });
+}
+
+myGaugeChart("zf_gfscl");
 
 function formatSeconds(value,y) {
     var result = Math.floor((value / 60 / 60) * Math.pow(10, y)) / Math.pow(10, y);

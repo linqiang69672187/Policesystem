@@ -120,6 +120,7 @@
     <Content Include="comjs\fonts\glyphicons-halflings-regular.svg" />
     <Content Include="comjs\handlebars.js" />
     <Content Include="comjs\highchart.js" />
+    <Content Include="comjs\highcharts-more.js" />
     <Content Include="comjs\highcharts.js" />
     <Content Include="comjs\ion.rangeSlider.js" />
     <Content Include="comjs\jquery-1.12.3.min - 复制.js" />
@@ -137,6 +138,7 @@
     <Content Include="CSS\ol.css" />
     <Content Include="CSS\top.css" />
     <Content Include="dataManagement.html" />
+    <Content Include="HtmlPage1.html" />
     <Content Include="Image\bannar-logo.png" />
     <Content Include="Image\bannar-time-bg.png" />
     <Content Include="Image\datamanagement_listbg.png" />
@@ -156,6 +158,7 @@
     <Content Include="Js\dataManagement.js" />
     <Content Include="Js\index.js" />
     <Content Include="Js\map.js" />
+    <Content Include="Js\test.js" />
     <Content Include="map.html" />
     <Content Include="Ol\baidu.js" />
     <Content Include="Ol\loader.js" />

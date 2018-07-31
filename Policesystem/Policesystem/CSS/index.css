@@ -334,3 +334,10 @@ margin:0 12px;
     width:400px;
     height:270px;
 }
+#zf_gfscl,#zf_zxshj{
+    width:500px;
+    height:360px;
+}
+.highcharts-data-label-box{
+    display:none;
+}
