@@ -20,7 +20,7 @@ $(function () {
     });
 
 
-
+    loadGaugeData();//加载仪表盘数据
 
 
    
@@ -245,7 +245,16 @@ function createChart(id, type, data, color, totalvalue) {
     });
 }
 
-function myGaugeChart(containerId,label) {
+function myGaugeChart(containerId, label, value) {
+    var oper = '环比昨日增加' + value + '%<i class="fa fa-arrow-up" aria-hidden="true"></i><br/> <span style="font-size:32px;">● ' + label + ' ● </span>';
+    var colorarray = ['#467ddf', '#45d5d5', '#964edf', '#F8DE43']
+
+    if (value < 0) {
+        value = Math.abs(value);
+        oper = '环比昨日减少' + value + '%<i class="fa fa-arrow-down" aria-hidden="true"></i><br/> <span style="font-size:32px;">● ' + label + ' ● </span>';
+        colorarray = ['#63869e', '#45d5d5', '#FF0000', '#FF0000']
+    }
+
     var chart = Highcharts.chart(containerId, {
         chart: {
             type: 'gauge',
@@ -262,8 +271,8 @@ function myGaugeChart(containerId,label) {
         },
         title: {
             useHTML: true,
-            text: '环比昨日减少5%<br/> <span style="font-size:32px;">● ' + label + ' ● </span>',
-            y: 280,
+            text: oper,
+            y: 300,
             style:{color:'#fff',fontSize:'28px'}
         },
         pane: {
@@ -299,30 +308,30 @@ function myGaugeChart(containerId,label) {
                 to: 60,
                 innerRadius: '100%',
                 outerRadius: '80%',
-                color: '#467ddf' // 
+                color: colorarray[0] // 1
             }, {
                 from: 60,
                 to: 80,
                 innerRadius: '100%',
                 outerRadius: '80%',
-                color: '#45d5d5' // 
+                color: colorarray[1] // 2
             }, {
                 from: 80,
                 to: 100,
                 innerRadius: '100%',
                 outerRadius: '80%',
-                color: '#964edf' // red
+                color: colorarray[2] // 3
             }]
         },
 
         series: [{
             name: '使用率',
-            data: [80],
+            data: [value],
             tooltip: {
                 valueSuffix: ' %'
             },
             dial: {
-                backgroundColor: '#F8DE43',//指针背景色
+                backgroundColor: colorarray[3],//指针背景色4
                 radius: '78%',// 半径：指针长度
                 rearLength: '10%',//尾巴长度
                 baseWidth:'8',
@@ -337,35 +346,134 @@ function myGaugeChart(containerId,label) {
                     return kmh+'%';
                 },
                 style: {
-                    color: '#467ddf',
+                    color: '#467ddf', //1
                     fontSize: '28px'
                 }
             }
         }]
     }, function (chart) {
         return;
-        if (!chart.renderer.forExport) {
+        //if (!chart.renderer.forExport) {
             
-            setInterval(function () {
-                var point = chart.series[0].points[0],
-                    newVal,
-                    inc = Math.round((Math.random() - 0.5) * 20);
-                newVal = point.y + inc;
-                if (newVal < 0 || newVal > 200) {
-                    newVal = point.y - inc;
-                }
-                point.update(newVal);
-            }, 3000);
-        }
+        //    setInterval(function () {
+        //        var point = chart.series[0].points[0],
+        //            newVal,
+        //            inc = Math.round((Math.random() - 0.5) * 20);
+        //        newVal = point.y + inc;
+        //        if (newVal < 0 || newVal > 200) {
+        //            newVal = point.y - inc;
+        //        }
+        //        point.update(newVal);
+        //    }, 3000);
+        //}
     });
 }
 
-myGaugeChart("zf_gfscl","规范上传率");
-myGaugeChart("zf_zxshj", "在线总时长");
-myGaugeChart("djj_gfscl", "规范上传率");
-myGaugeChart("djj_zxshj", "在线总时长");
-myGaugeChart("djj_jrzx", "在线数");
+
+/*!
+ *
+加载仪表盘数据
+ *
+2018-8-1
+ *
+ LINQ
+ */
+function loadGaugeData() {
+    var value = 0;
+    var data1 = 0;
+    var data2 = 0;
+    var data3 = 0;
+    $.ajax({
+        type: "POST",
+        url: "Handle/index.ashx",
+        data: "",
+        dataType: "json",
+        success: function (data) {
+            //执法记录仪规范上传率
+            data1 = parseFloat(data.data["4"].规范上传率);
+            data2 = parseFloat(data.data["5"].规范上传率);
+            if (data1 == "0" || data2 == "0") { value = 0 } else { value = formatFloat((data2 - data1) * 100 / data1,1) }
+            myGaugeChart("zf_gfscl", "规范上传率", value);
+            //执法记录仪在线时长
+            data1 = parseFloat(data.data["4"].在线总时长);
+            data2 = parseFloat(data.data["5"].在线总时长);
+            if (data1 == "0" || data2 == "0") { value = 0 } else { value = formatFloat((data2 - data1) * 100 / data1, 1) }
+            myGaugeChart("zf_zxshj", "在线总时长", value);
+            //对讲机今日在线
+            data1 = parseFloat(data.data["0"].在线数);
+            data2 = parseFloat(data.data["1"].在线数);
+            if (data1 == "0" || data2 == "0") { value = 0 } else { value = formatFloat((data2 - data1) * 100 / data1, 1) }
+            myGaugeChart("djj_jrzx", "今日在线数", value);
+            //对讲机设备使用率
+            data1 = parseFloat(data.data["0"].在线数) / parseFloat(data.data["0"].设备数量);
+            data2 = parseFloat(data.data["1"].在线数) / parseFloat(data.data["1"].设备数量);
+            if (data1 == "0" || data2 == "0") { value = 0 } else { value = formatFloat((data2 - data1) * 100 / data1, 1) }
+            myGaugeChart("djj_gfscl", "设备使用率", value);
+            //对讲机在线总时长
+            data1 = parseFloat(data.data["0"].在线总时长);
+            data2 = parseFloat(data.data["1"].在线总时长);
+            if (data1 == "0" || data2 == "0") { value = 0 } else { value = formatFloat((data2 - data1) * 100 / data1, 1) }
+            myGaugeChart("djj_zxshj", "在线总时长", value);
+            //警务通在线数
+            data1 = parseFloat(data.data["2"].在线数);
+            data2 = parseFloat(data.data["3"].在线数);
+            if (data1 == "0" || data2 == "0") { value = 0 } else { value = formatFloat((data2 - data1) * 100 / data1, 1) }
+            myGaugeChart("jwt_jrzx", "今日在线数", value);
+            //警务通今日查询量
+            data1 = parseFloat(data.data["2"].查询量);
+            data2 = parseFloat(data.data["3"].查询量);
+            if (data1 == "0" || data2 == "0") { value = 0 } else { value = formatFloat((data2 - data1) * 100 / data1, 1) }
+            myGaugeChart("jwt_cxl", "今日查询量", value);
+            //警务通人均处罚量
+            data1 = parseFloat(data.data["2"].处理量) / parseFloat(data.data["2"].人数);
+            data2 = parseFloat(data.data["3"].处理量) / parseFloat(data.data["3"].人数);
+            if (data1 == "0" || data2 == "0") { value = 0 } else { value = formatFloat((data2 - data1) * 100 / data1, 1) }
+            myGaugeChart("jwt_rjcf", "人均处罚量", value);
+
+            //警务通今日处理量
+            data1 = parseFloat(data.data["2"].处理量);
+            data2 = parseFloat(data.data["3"].处理量);
+            if (data1 == "0" || data2 == "0") { value = 0 } else { value = formatFloat((data2 - data1) * 100 / data1, 1) }
+            myGaugeChart("jwt_jrcl", "今日处理量", value);
+
+            //警务通设备平均处罚量
+            data1 = parseFloat(data.data["2"].处理量) / parseFloat(data.data["2"].设备数量);
+            data2 = parseFloat(data.data["3"].处理量) / parseFloat(data.data["3"].设备数量);
+            if (data1 == "0" || data2 == "0") { value = 0 } else { value = formatFloat((data2 - data1) * 100 / data1, 1) }
+            myGaugeChart("jwt_pjcf", "设备平均处罚量", value);
+
+        },
+        error: function (msg) {
+            console.debug("错误:ajax");
+        }
+    });
+
+
+}
+
 function formatSeconds(value,y) {
     var result = Math.floor((value / 60 / 60) * Math.pow(10, y)) / Math.pow(10, y);
     return result;
+}
+function formatFloat(value, y) {
+    var result = Math.floor((value ) * Math.pow(10, y)) / Math.pow(10, y);
+    return result;
+}
+
+function getNowFormatDate() {
+    var date = new Date();
+    var seperator1 = "-";
+    var seperator2 = ":";
+    var month = date.getMonth() + 1;
+    var strDate = date.getDate();
+    if (month >= 1 && month <= 9) {
+        month = "0" + month;
+    }
+    if (strDate >= 0 && strDate <= 9) {
+        strDate = "0" + strDate;
+    }
+    var currentdate = date.getFullYear() + seperator1 + month + seperator1 + strDate
+            + " " + date.getHours() + seperator2 + date.getMinutes()
+            + seperator2 + date.getSeconds();
+    return currentdate;
 }
