@@ -71,13 +71,21 @@ ul {
             height: 25px;
             background-image: url(../Image/leftbootombg.png);
             background-repeat: no-repeat;
-       
+            cursor: pointer;
+}
+  .boxleft > .row li:nth-child(n+2) > div:hover {
+         background-image: url(../Image/leftbootombg_1.png);
+}
+.leftactive{
+    background-image: url(../Image/leftbootombg_1.png) !important;
 }
  .boxleft > .row li:nth-child(1) > div {
             height: 5px;
     }
 .boxleft > .row li:nth-child(2) > div {
          background-position: 0px 0px;
+     
+
 }
 .boxleft > .row li:nth-child(3) > div {
          background-position: 0px -70px;
@@ -236,7 +244,7 @@ ul {
     overflow-y: auto;
 }
 #histrorysearch{
-    width:380px;
+    width:280px;
     height:150px;
     background-image: url(../Image/topbannerbg.png);
     background-repeat: repeat-x;
@@ -264,7 +272,7 @@ ul {
 }
 #histrorysearch .row div:nth-child(2){
   float:right;
-  width:300px;
+  width:200px;
   height:25px;
   text-align:left;
 }
@@ -272,9 +280,11 @@ ul {
     margin-top:30px;
 }
 #histrorysearch #cz-cx{
-    width:44px;
-    margin-left:300px;
+    width:50px;
+    margin-left:200px;
     margin-top: 3px;
+    vertical-align:middle;
+    line-height:25px;
 }
  .date input {
     width: 110px !important;
@@ -291,8 +301,8 @@ ul {
 }
  .calendar1{
     position: absolute;
-    top: 3px !important;
-    right: 230px;
+    top: 5px !important;
+    right: 243px;
     color: #005EB8;
     z-index: 5;
 }

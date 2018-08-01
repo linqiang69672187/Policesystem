@@ -152,6 +152,7 @@
     <Content Include="Image\index_lanjieyi.png" />
     <Content Include="Image\index_zhifajiluyi.png" />
     <Content Include="Image\leftbootombg.png" />
+    <Content Include="Image\leftbootombg_1.png" />
     <Content Include="Image\topbannerbg.png" />
     <Content Include="jQuery.flipster\index.html" />
     <Content Include="jQuery.flipster\js\jquery.carousel.js" />
