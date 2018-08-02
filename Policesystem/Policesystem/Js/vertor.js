@@ -238,8 +238,7 @@ function addmarks(points) {
                 break;
         }
 
-
-        //  point_overlay.setPosition(ol.proj.transform([parseFloat(point.La), parseFloat(point.Lo)], 'EPSG:4326', 'EPSG:3857'));
+         // point_overlay.setPosition(ol.proj.transform([parseFloat(point.La), parseFloat(point.Lo)], 'EPSG:4326', 'EPSG:3857'));
     }
 
 }

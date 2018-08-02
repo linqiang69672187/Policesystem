@@ -30,16 +30,25 @@ namespace Policesystem.Handle
             string type = context.Request.Form["type"];
             string status = context.Request.Form["status"];
             string searchcondition = "";
+            string typesql;
             //"SELECT gps.[ID],[IsOnline],gps.Lo,gps.La,de.Contacts,de.Tel,et.Name,de.[DevType],de.[Cartype],de.DevId,de.[PlateNumber] FROM [Gps] as gps left join Device de on gps.PDAID = de.DevId left join  Entity et  on et.ID = de.EntityId where  de.[DevType] <> '' and  gps.La <" + Rlongitu + " and gps.La >" + Llongitu + " and gps.Lo <" + Rlati + "  and gps.Lo >" + Llati
-            searchcondition = (search == "") ? " " : "   and (de.[DevId] like '%" + search + "%' or de.PlateNumber like '%" + search + "%' or de.Contacts like  '%" + search + "%')";
+            if (type == "0")
+            {
+                searchcondition = (search == "") ? " " : "   and (de.[DevId] like '%" + search + "%'  or u.XM  like  '%" + search + "%')";
+                typesql = "";
+            }
+            else
+            {
+                typesql =  " and de.[DevType] = " + type;
+            }
 
             StringBuilder sqltext = new StringBuilder();
-            string typesql = (type == "0") ? "" : " and de.[DevType] = " + type;
+      
             if (ssdd == "all")
             {
                 if (status == "all")
                 {
-                    sqltext.Append("SELECT gps.[ID],[IsOnline],gps.Lo,gps.La,u.XM as Contacts,u.SJ as Tel,et.BMJC as Name,de.[DevType],de.[Cartype],de.DevId,de.[PlateNumber],de.[IMEI],u.JYBH,u.JYLX as [IdentityPosition] FROM [Gps] gps right join Device de on gps.PDAID = de.DevId left join  Entity et  on et.BMDM = de.BMDM left join  ACL_USER u  on de.JYBH = u.JYBH where   IsOnline<>'' " + typesql + searchcondition);
+                    sqltext.Append("SELECT gps.[ID],[IsOnline],gps.Lo,gps.La,u.XM as Contacts,u.SJ as Tel,et.BMJC as Name,de.[DevType],de.[Cartype],de.DevId,de.[PlateNumber],de.[IMEI],u.JYBH,u.JYLX as [IdentityPosition] FROM [Gps] gps right join Device de on gps.PDAID = de.DevId left join  Entity et  on et.BMDM = de.BMDM left join  ACL_USER u  on de.JYBH = u.JYBH where   IsOnline is not null " + typesql + searchcondition);
                 }
                 else
                 {

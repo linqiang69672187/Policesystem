@@ -162,17 +162,17 @@ function createtable(data) {
 
         switch (data[i].IsOnline) {
             case "1":
-                $doc.append(" <tr title='设备编号：" + data[i].DevId + "'><td ><i class='fa fa-square-o'></i></td><td class='simg' style='width: 113px;text-align: left;padding-left:5px'><span>" + data[i].BMJC + "</span></td><td style='text-align:center;width:113px;'><span>" + eval(coumm2) + "</span></td><td style='text-align:center;width:80px;'><span>" + formatSeconds(data[i].OnlineTime, 1) + "</span></td><td><i class='fa fa-map-marker fa-2x fa-map-marker-color-online' aria-hidden='true'  bh='" + data[i].DevId + "'></i></td></tr>");
+                $doc.append(" <tr title='设备编号：" + data[i].DevId + "'><td ><i class='fa fa-square-o'></i></td><td class='simg' style='width: 113px;text-align: left;padding-left:5px'><span>" + data[i].BMJC + "</span></td><td style='text-align:center;width:113px;'><span>" + eval(coumm2) + "</span></td><td style='text-align:center;width:80px;'><span>" + formatSeconds(data[i].OnlineTime, 1) + "</span></td><td><i class='fa fa-map-marker fa-2x fa-map-marker-color-online' aria-hidden='true'  bh='" + data[i].DevId + "' Dt='" + data[i].DevType + "'></i></td></tr>");
                 sc +=(data[i].OnlineTime!="")? parseInt(data[i].OnlineTime):0;
                 zx += 1;
                 break;
             case "0":
-                $doc.append(" <tr title='设备编号：" + data[i].DevId + "'><td ><i class='fa fa-square-o'></i></td><td class='simg' style='width: 113px;text-align: left;padding-left:5px'><span>" + data[i].BMJC + "</span></td><td style='text-align:center;width:113px;'><span>" + eval(coumm2) + "</span></td><td style='text-align:center;width:80px;'><span>" + formatSeconds(data[i].OnlineTime, 1) + "</span></td><td><i class='fa fa-map-marker fa-2x fa-map-marker-color-online' aria-hidden='true'  bh='" + data[i].DevId + "'></i></td></tr>");
+                $doc.append(" <tr title='设备编号：" + data[i].DevId + "'><td ><i class='fa fa-square-o'></i></td><td class='simg' style='width: 113px;text-align: left;padding-left:5px'><span>" + data[i].BMJC + "</span></td><td style='text-align:center;width:113px;'><span>" + eval(coumm2) + "</span></td><td style='text-align:center;width:80px;'><span>" + formatSeconds(data[i].OnlineTime, 1) + "</span></td><td><i class='fa fa-map-marker fa-2x fa-map-marker-color-online' aria-hidden='true'  bh='" + data[i].DevId + "'  Dt='" + data[i].DevType + "'></i></td></tr>");
                 sc +=(data[i].OnlineTime!="")? parseInt(data[i].OnlineTime):0;
                 lx +=1
                 break;
    
-                $doc.append(" <tr title='设备编号：" + data[i].DevId + "'><td ><i class='fa fa-square-o'></i></td><td class='simg' style='width: 113px;text-align: left;padding-left:5px'><span>" + data[i].BMJC + "</span></td><td style='text-align:center;width:113px;'><span>" + eval(coumm2) + "</span></td><td style='text-align:center;width:80px;'><span>" + formatSeconds(data[i].OnlineTime, 1) + "</span></td><td><i class='fa fa-map-marker fa-2x fa-map-marker-color-online' aria-hidden='true'  bh='" + data[i].DevId + "'></i></td></tr>");
+                $doc.append(" <tr title='设备编号：" + data[i].DevId + "'><td ><i class='fa fa-square-o'></i></td><td class='simg' style='width: 113px;text-align: left;padding-left:5px'><span>" + data[i].BMJC + "</span></td><td style='text-align:center;width:113px;'><span>" + eval(coumm2) + "</span></td><td style='text-align:center;width:80px;'><span>" + formatSeconds(data[i].OnlineTime, 1) + "</span></td><td><i class='fa fa-map-marker fa-2x fa-map-marker-color-online' aria-hidden='true'  bh='" + data[i].DevId + "'  Dt='" + data[i].DevType + "'></i></td></tr>");
                 sc +=(data[i].OnlineTime!="")? parseInt(data[i].OnlineTime):0;
 
             default:
@@ -186,18 +186,31 @@ function createtable(data) {
     $(".equipmentNumb").append("<label>" + labeltext + ":<span>" + total + "</span></label>总在线时长:<span>" + formatSeconds(sc,1) + "(h)</span><label>在线数:<span>" + zx + "</span></label><label>离线数:<span>" + lx + "</span></label>")
 
 
-
-    $(".table").on("click", function (e) {
+    $(document).on('click.bs.carousel.data-api', '.table .fa-map-marker-color-online', function (e) {
         var devid;
-        if (e.target.nodeName == "I") { devid = $(e.target).attr("bh") }
+        var detype;
+        var feature;
+        if (e.target.nodeName == "I") { devid = $(e.target).attr("bh");detype = $(e.target).attr("Dt");}
         else {
             devid = $(e.target).children().attr("bh");
+            detype = $(e.target).children().attr("Dt");
         }
         if (devid == "" || devid == undefined) { return; }
       //  $(".zq1").hide();
-        $(".table .localtd").removeClass("localtd"); //移出定位
+      //  $(".table .localtd").removeClass("localtd"); //移出定位
         selectdevid = devid;
-        var feature = vectorLayer.getSource().getFeatureById(devid);
+        switch (detype) {
+            case "1":
+                feature = vectorLayer.getSource().getFeatureById(devid);
+                break;
+            case "4":
+                feature = vectorSourcejwt.getSource().getFeatureById(devid);
+                break;
+            case "2":
+                feature = vectorSourcedjj.getSource().getFeatureById(devid);
+                break;
+        }
+     
         if (feature) {
             var coordinates = feature.getGeometry().getCoordinates();
             point_overlay.setPosition(coordinates);
