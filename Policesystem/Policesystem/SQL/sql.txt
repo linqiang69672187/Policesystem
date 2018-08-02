@@ -1,0 +1,25 @@
+///多条数据重复合并
+
+SELECT *
+
+FROM(
+
+    SELECT DISTINCT JYBH
+
+    FROM [ACL_USER]
+
+)A
+OUTER APPLY( SELECT
+       devtype = STUFF(REPLACE(REPLACE((
+
+           SELECT DevType FROM [ACL_USER] N  LEFT JOIN  Device d  on d.JYBH = n.JYBH 
+
+           WHERE n.JYBH = A.JYBH
+
+           FOR XML AUTO
+
+       ), 'd DevType="', ','), '"/>', ''), 1, 1, '')
+
+)M
+
+///以上多条数据重复合并

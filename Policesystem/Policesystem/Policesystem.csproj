@@ -126,6 +126,7 @@
     <Content Include="comjs\jquery-1.12.3.min - 复制.js" />
     <Content Include="comjs\jquery-1.12.3.min.js" />
     <Content Include="comjs\jquery.cookie.js" />
+    <Content Include="comjs\jquery.dataTables.js" />
     <Content Include="comjs\jquery.Huploadify.js" />
     <Content Include="comjs\jquery.js" />
     <Content Include="comjs\jquery.orgchart.js" />
@@ -134,6 +135,7 @@
     <Content Include="comjs\moment.js" />
     <Content Include="comjs\myHeatmap2.0.min.js" />
     <Content Include="CSS\dataManagement.css" />
+    <Content Include="CSS\jquery.dataTables.css" />
     <Content Include="CSS\map.css" />
     <Content Include="CSS\ol.css" />
     <Content Include="CSS\top.css" />
@@ -154,13 +156,77 @@
     <Content Include="Image\leftbootombg.png" />
     <Content Include="Image\leftbootombg_1.png" />
     <Content Include="Image\topbannerbg.png" />
+    <Content Include="img\00bj1.png" />
+    <Content Include="img\00bj2.png" />
+    <Content Include="img\1-警务通.png" />
+    <Content Include="img\1.png" />
+    <Content Include="img\11.jpg" />
+    <Content Include="img\11.png" />
+    <Content Include="img\bg-policeman-selected.png" />
+    <Content Include="img\big-cloud-selected.png" />
+    <Content Include="img\big-cloud.png" />
+    <Content Include="img\car1.png" />
+    <Content Include="img\car2.png" />
+    <Content Include="img\car3.png" />
+    <Content Include="img\car4.png" />
+    <Content Include="img\car5.png" />
+    <Content Include="img\car6.png" />
+    <Content Include="img\car7.png" />
+    <Content Include="img\dadui.png" />
+    <Content Include="img\data1.png" />
+    <Content Include="img\deviceClick_bg.png" />
+    <Content Include="img\devicepic\1\car\1.png" />
+    <Content Include="img\devicepic\1\car\2.png" />
+    <Content Include="img\devicepic\1\car\3.png" />
+    <Content Include="img\devicepic\1\moto\1.png" />
+    <Content Include="img\devicepic\1\moto\2.png" />
+    <Content Include="img\devicepic\1\moto\3.png" />
+    <Content Include="img\devicepic\2\1.png" />
+    <Content Include="img\devicepic\2\2.png" />
+    <Content Include="img\devicepic\4\1.png" />
+    <Content Include="img\devicepic\4\2.png" />
+    <Content Include="img\devicepic\4\3.png" />
+    <Content Include="img\gjclose.png" />
+    <Content Include="img\interceptor.png" />
+    <Content Include="img\jingjingju.png" />
+    <Content Include="img\jingwutong.png" />
+    <Content Include="img\logo.png" />
+    <Content Include="img\moto1.png" />
+    <Content Include="img\moto2.png" />
+    <Content Include="img\moto3.png" />
+    <Content Include="img\moto4.png" />
+    <Content Include="img\moto5.png" />
+    <Content Include="img\moto6.png" />
+    <Content Include="img\moto7.png" />
+    <Content Include="img\police-car.png" />
+    <Content Include="img\policeman-avatar.png" />
+    <Content Include="img\qd.png" />
+    <Content Include="img\ser.png" />
+    <Content Include="img\small-cloud-selected.png" />
+    <Content Include="img\small-cloud.png" />
+    <Content Include="img\sprite-skin-flat.png" />
+    <Content Include="img\sprite-skin-modern.png" />
+    <Content Include="img\sprite-skin-nice.png" />
+    <Content Include="img\sprite-skin-simple.png" />
+    <Content Include="img\taizhoulogo.jpg" />
+    <Content Include="img\timg.gif" />
+    <Content Include="img\two-way-radio.png" />
+    <Content Include="img\user1.png" />
+    <Content Include="img\user2.png" />
+    <Content Include="img\user3.png" />
+    <Content Include="img\user4.png" />
+    <Content Include="img\zd.png" />
+    <Content Include="img\zdui.png" />
+    <Content Include="img\警员.png" />
     <Content Include="jQuery.flipster\index.html" />
     <Content Include="jQuery.flipster\js\jquery.carousel.js" />
     <Content Include="jQuery.flipster\js\jquery.js" />
     <Content Include="Js\dataManagement.js" />
     <Content Include="Js\index.js" />
     <Content Include="Js\map.js" />
+    <Content Include="Js\markpic.js" />
     <Content Include="Js\test.js" />
+    <Content Include="Js\vertor.js" />
     <Content Include="map.html" />
     <Content Include="Ol\baidu.js" />
     <Content Include="Ol\loader.js" />
@@ -184,6 +250,7 @@
     <Content Include="ApplicationInsights.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="SQL\sql.txt" />
     <Content Include="Static_Seed_Project\css\bootstrap.css.map" />
     <Content Include="Static_Seed_Project\css\bootstrap.min.css.map" />
     <Content Include="Static_Seed_Project\font-awesome\fonts\fontawesome-webfont.eot" />
@@ -240,6 +307,7 @@
     <Content Include="Handle\Jqueryflipster.ashx" />
     <Content Include="Handle\index.ashx" />
     <Content Include="Handle\GetEntitys.ashx" />
+    <Content Include="Handle\map.ashx" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -311,6 +379,9 @@
     </Compile>
     <Compile Include="Handle\Jqueryflipster.ashx.cs">
       <DependentUpon>Jqueryflipster.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="Handle\map.ashx.cs">
+      <DependentUpon>map.ashx</DependentUpon>
     </Compile>
     <Compile Include="Handle\TotalDevices.ashx.cs">
       <DependentUpon>TotalDevices.ashx</DependentUpon>

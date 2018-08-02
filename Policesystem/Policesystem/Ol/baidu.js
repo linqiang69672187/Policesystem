@@ -46,7 +46,7 @@ controls.push(mousePositionControl);
 **/
 
 //controls.push(new ol.control.OverviewMap({}));
-controls.push(new ol.control.FullScreen());
+//controls.push(new ol.control.FullScreen());
 //缩放至范围  
 //var zoomToExtentControl = new ol.control.ZoomToExtent({
 //    extent: bounds,

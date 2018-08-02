@@ -325,3 +325,58 @@ ul {
  position: absolute;
  right: 218px;
 }
+select[disabled]
+{ 
+background-color: #ccc !important;
+color:#555;
+}
+.table{
+    color:#fff;
+}
+.table>thead>tr>th {
+    border-bottom: 0px ;
+}
+.table>tbody>tr>td, .table>tbody>tr>th, .table>tfoot>tr>td, .table>tfoot>tr>th, .table>thead>tr>td, .table>thead>tr>th{
+    border:0px;
+}
+.table>tbody>tr:nth-child(2n+1)>td{
+background-color: #13204d !important;
+}
+.table>tbody>tr:nth-child(2n)>td{
+background-color: #213366 !important;
+}
+.tab-maxh .table tr{
+    height:30px;
+}
+.tab-maxh .table tr td{
+    padding:4px,2px;
+    text-align:center;
+    vertical-align:middle;
+}
+.equipmentNumb{
+   font-size:14px;
+   font-weight:400;
+   margin-top:5px;
+}
+.equipmentNumb span {
+    margin-right:5px;
+}
+.equipmentNumb label {
+   font-weight:400;
+}
+  .css_animation{  
+        height:50px;  
+        width:50px;  
+        border-radius: 25px;  
+        background: rgba(255, 0, 0, 0.9);  
+        transform: scale(0);  
+        animation: myfirst 3s;  
+        animation-iteration-count: infinite;  
+    }  
+  
+    @keyframes myfirst{  
+        to{  
+            transform: scale(2);  
+            background: rgba(0, 0, 0, 0);  
+        }  
+    }  
