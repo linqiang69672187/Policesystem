@@ -143,8 +143,8 @@ var map = new ol.Map({
 
 $(function () {
     // setboxsize();
-  //  setInterval("loadmarks()", 15000);
-  //  loadmarks();
+    setInterval("loadmarks()", 15000);
+    loadmarks();
 
 });
 

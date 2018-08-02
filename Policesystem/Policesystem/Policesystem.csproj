@@ -308,6 +308,7 @@
     <Content Include="Handle\index.ashx" />
     <Content Include="Handle\GetEntitys.ashx" />
     <Content Include="Handle\map.ashx" />
+    <Content Include="Handle\GetaMarksbyBound.ashx" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -371,6 +372,9 @@
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Handle\GetaMarksbyBound.ashx.cs">
+      <DependentUpon>GetaMarksbyBound.ashx</DependentUpon>
+    </Compile>
     <Compile Include="Handle\GetEntitys.ashx.cs">
       <DependentUpon>GetEntitys.ashx</DependentUpon>
     </Compile>

@@ -23,13 +23,13 @@ var vectorLayer = new ol.layer.Vector({
 var vectorLayerjwt = new ol.layer.Vector({
     source: vectorSourcejwt,
     title: '警务通',
-    visible: false
+    visible: true
 });
 
 var vectorLayerdjj = new ol.layer.Vector({
     source: vectorSourcedjj,
     title: '对讲机',
-    visible: false
+    visible: true
 });
 
 
@@ -62,30 +62,14 @@ function loadmarks() {
     var rlo = parseFloat(boundsarr[2]) + offset.x;
     var rla = parseFloat(boundsarr[3]) + offset.y;
     bounds = llo + "," + lla + "," + rlo + "," + rla;
-    var type = 1;
-    var val = $("input[name='wuxiaojian']:checked").next().text();
-    switch (val) {
-        case "警务通":
-            type = 4;
-            break;
-        case "车载视频":
-            type = 1;
-            break;
-        case "对讲机":
-            type = 2;
-            break;
-        default:
-            break;
-
-    }
+    var type = $("#deviceselect").val();;
     var data =
         {
             search: $(".seach-box input").val(),
             type: type,
-            ssdd: $("#brigadeselect1").val(),
-            sszd: $("#squadronselect1").val(),
-            sortMode1: $("#sortMode1").val(),
-            status: $("#sbstate1").val(),
+            ssdd: $("#brigadeselect").val(),
+            sszd: $("#squadronselect").val(),
+            status: $("#sbstate").val(),
             bounds: bounds
 
         }
@@ -217,44 +201,6 @@ map.on('pointermove', function (e) {
 
 
 function addmarks(points) {
-    //var features = vectorLayer.getSource().getFeatures().concat(vectorLayerjwt.getSource().getFeatures().concat(vectorLayerdjj.getSource().getFeatures()));
-    //var featurein = false;
-    //for (var f = 0; f < features.length; f++) {
-    //    featurein = false
-    //    feature = features[f];
-    //    for (var i = 0; i < points.length; i++) {
-    //        var point = points[i];
-
-    //        if (feature.getId() == point.ID) {
-    //            feature.setGeometry(new ol.geom.Point(ol.proj.transform([parseFloat(point.La-offset.x), parseFloat(point.Lo - offset.y)], 'EPSG:4326', 'EPSG:3857')));
-    //            featurein = true;
-    //            if (feature.get('IsOnline') != point.IsOnline) {
-    //                Seticon(point, feature);
-    //                feature.set('IsOnline', point.IsOnline);
-    //            }
-    //            points.splice(i, 1);
-    //            i = points.length;
-    //        }
-    //    }
-
-    //    if (!featurein) {
-    //        switch (features[f].get('DevType')) {
-    //            case "1":
-    //                vectorLayer.getSource().removeFeature(features[f]);
-    //                break;
-    //            case "4":
-    //                vectorLayerjwt.getSource().removeFeature(features[f]);
-    //                break;
-    //            case "2":
-    //                vectorLayerdjj.getSource().removeFeature(features[f]);
-    //                break;
-    //        }
-
-
-    //    }
-
-
-    //}
     vectorLayer.getSource().clear();
     vectorLayerjwt.getSource().clear();
     vectorLayerdjj.getSource().clear();
