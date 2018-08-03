@@ -1,5 +1,6 @@
 ﻿var entitydata;
 var selectdevid;
+var loadmapdataInter;
 $("#header").load('top.html', function () {
 
 });
@@ -9,6 +10,38 @@ $('.start_form_datetime').datetimepicker({
     todayBtn: true,
     minView: 2
 });
+
+function startdatetimedefalute() {
+    var curDate = new Date();
+    var preDate = new Date(curDate.getTime() - 24 * 60 * 60 * 1000); //前一天
+    // var beforepreDate = new Date(curDate.getTime() - 24 * 60 * 60 * 1000); //前一天
+    $('.start_form_datetime').val(transferDate(preDate));
+}
+startdatetimedefalute();
+
+function transferDate(date) {
+    // 年  
+    var year = date.getFullYear();
+    // 月  
+    var month = date.getMonth() + 1;
+    // 日  
+    var day = date.getDate();
+
+    if (month >= 1 && month <= 9) {
+
+        month = "0" + month;
+    }
+    if (day >= 0 && day <= 9) {
+
+        day = "0" + day;
+    }
+
+    var dateString = year + '/' + month + '/' + day;
+
+    return dateString;
+}
+
+
 $(document).on('click.bs.carousel.data-api', '.boxleft > .row li > div', function (e) {
     $('.leftactive').removeClass();
     $(this).addClass('leftactive');
@@ -67,6 +100,33 @@ $.ajax({
     }
 });
 
+$(document).on('change.bs.carousel.data-api', '#deviceselect', function (e) {
+    $(".leftactive").removeClass("leftactive");
+    switch (e.target.value) {
+        case "0":
+            $("#ry").addClass("leftactive");
+            break;
+        case "1":
+            $("#czsp").addClass("leftactive");
+            break;
+        case "2":
+            $("#djj").addClass("leftactive");
+            break;
+        case "3":
+            $("#ljy").addClass("leftactive");
+            break;
+        case "4":
+            $("#jwt").addClass("leftactive");
+            break;
+        case "5":
+            $("#zfjly").addClass("leftactive");
+            break;
+        case "6":
+            $("#fjt").addClass("leftactive");
+            break;
+    }
+});
+
 //更换大队选择
 $(document).on('change.bs.carousel.data-api', '#brigadeselect', function (e) {
     //所属中队逻辑
@@ -84,8 +144,56 @@ $(document).on('change.bs.carousel.data-api', '#brigadeselect', function (e) {
     }
 });
 $(document).on('click.bs.carousel.data-api', '#cz-ck,.input-group-btn .btn-default', function (e) {
-    loaddata();
+    if (loadmapdataInter) { clearInterval(loadmapdataInter) };
+    loaddata();//加载左侧数据
+    loadmarks();//加载地图数据
+    loadmapdataInter = setInterval("loadmarks()", 15000);
+    $(".fa-square").addClass("fa-square-o").removeClass("fa-square");
+    $("#cz-bianji").attr("disabled", true);
+
 })
+$(document).on('click.bs.carousel.data-api', '#cz-bianji,.fa-close', function (e) {
+    if ($("#histrorysearch").css("visibility") != "hidden") {
+        $("#histrorysearch").css("visibility", "hidden");
+        return;
+    } else {
+        if ($(".fa-square").length==0) {
+            return;
+        };
+        $("#histrorysearch").css("visibility", "visible");
+        requestJY();
+    }
+});
+
+function requestJY() {
+    var data = {
+        sbbh: $(".fa-square").parent().parent().attr("bh"),
+        jybh: $(".fa-square").parent().parent().attr("jy"),
+        requesttype: "查询人员"
+    }
+    $.ajax({
+        type: "POST",
+        url: "../Handle/map.ashx",
+        data: data,
+        dataType: "json",
+        success: function (data) {
+            if (data.r == "0") {
+                $("#histrorysearch .row div:eq(1)").text("");
+                $("#histrorysearch .row:eq(2) div:eq(1)").html("");
+                var name = "";
+                $.each(data.result, function (i, item) {
+                    name += (name.indexOf(item.XM) < 0) ? " " + item.XM : "";
+                    $("#histrorysearch .row:eq(2) div:eq(1)").append(item.DevType);
+                });
+                $("#histrorysearch .row:eq(1) div:eq(1)").text(name);
+            }
+        },
+        error: function (msg) {
+            console.debug("错误:ajax");
+        }
+    });
+}
+
 
 function loaddata() {
 
@@ -95,7 +203,8 @@ function loaddata() {
          type: $("#deviceselect").val(),
          ssdd: $("#brigadeselect").val(),
          sszd: $("#squadronselect").val(),
-         status: $("#sbstate").val()
+         status: $("#sbstate").val(),
+         requesttype:"设备搜索"
      }
     $.ajax({
         type: "POST",
@@ -103,12 +212,10 @@ function loaddata() {
         data: data,
         dataType: "json",
         success: function (data) {
-         
+            $(".table tbody").empty();
+            $(".equipmentNumb").html("");
             if (data.r == "0") {
-
                 createtable(data.result);
-
-
             }
         },
         error: function (msg) {
@@ -118,6 +225,67 @@ function loaddata() {
 
 }
 
+
+$(document).on('click.bs.carousel.data-api', '.table .fa-square-o,.table .fa-square', function (e) {
+    if (e.target.className.indexOf("fa-square-o") > 0) {
+        $(".fa-square").addClass("fa-square-o").removeClass("fa-square");
+        $(e.target).removeClass("fa-square-o");
+        $(e.target).addClass("fa-square");
+        $("#cz-bianji").attr("disabled", false);
+        requestJY();
+    }
+    else {
+        $(e.target).removeClass("fa-square");
+        $(e.target).addClass("fa-square-o");
+        $("#cz-bianji").attr("disabled", true);
+    }
+});
+
+$(document).on('click.bs.carousel.data-api', '.table .fa-map-marker', function (e) {
+    var devid;
+    var detype;
+    var feature;
+    if (e.target.nodeName == "I") { devid = $(e.target).attr("bh"); detype = $(e.target).attr("Dt"); }
+    else {
+        devid = $(e.target).children().attr("bh");
+        detype = $(e.target).children().attr("Dt");
+    }
+    if (devid == "" || devid == undefined) { return; }
+    //  $(".zq1").hide();
+    //  $(".table .localtd").removeClass("localtd"); //移出定位
+    selectdevid = devid;
+    switch (detype) {
+        case "1":
+            feature = vectorLayer.getSource().getFeatureById(devid);
+            break;
+        case "4":
+            feature = vectorLayerjwt.getSource().getFeatureById(devid);
+            break;
+        case "2":
+            feature = vectorLayerdjj.getSource().getFeatureById(devid);
+            break;
+    }
+
+    if (feature) {
+        var coordinates = feature.getGeometry().getCoordinates();
+        point_overlay.setPosition(coordinates);
+        var view = map.getView();
+        view.animate({ zoom: view.getZoom() }, { center: coordinates }, function () {
+            // localFeatureInfo();
+            setTimeout(function () { point_overlay.setPosition([0, 0]) }, 30000)
+        });
+
+        return;
+    }
+})
+
+$(document).on('mouseover.bs.carousel.data-api', '.table tbody i', function (e) {
+    $(".fa-map-marker-color-mouseover").removeClass("fa-map-marker-color-mouseover");
+    $(e.target).parent().find("i").addClass("fa-map-marker-color-mouseover");
+});
+$(".table tbody").on("mouseout", function (e) {
+    $(".fa-map-marker-color-mouseover").removeClass("fa-map-marker-color-mouseover");
+});
 
 
 function createtable(data) {
@@ -156,21 +324,21 @@ function createtable(data) {
 
         switch (data[i].IsOnline) {
             case "1":
-                $doc.append(" <tr title='设备编号：" + data[i].DevId + "'><td ><i class='fa fa-square-o'></i></td><td class='simg' style='width: 113px;text-align: left;padding-left:5px'><span>" + data[i].BMJC + "</span></td><td style='text-align:center;width:113px;'><span>" + eval(coumm2) + "</span></td><td style='text-align:center;width:80px;'><span>" + formatSeconds(data[i].OnlineTime, 1) + "</span></td><td><i class='fa fa-map-marker fa-2x fa-map-marker-color-online' aria-hidden='true'  bh='" + data[i].DevId + "' Dt='" + data[i].DevType + "'></i></td></tr>");
+                $doc.append(" <tr bh='" + data[i].DevId + "' jy='" + data[i].JYBH + "'><td ><i class='fa fa-square-o'></i></td><td class='simg' style='width: 113px;text-align: left;padding-left:5px'><span>" + data[i].BMJC + "</span></td><td style='text-align:center;width:113px;'><span>" + eval(coumm2) + "</span></td><td style='text-align:center;width:80px;'><span>" + formatSeconds(data[i].OnlineTime, 1) + "</span></td><td><i class='fa fa-map-marker fa-2x fa-map-marker-color-online' aria-hidden='true'  bh='" + data[i].DevId + "' Dt='" + data[i].DevType + "'></i></td></tr>");
                 sc +=(data[i].OnlineTime!="")? parseInt(data[i].OnlineTime):0;
                 zx += 1;
                 break;
             case "0":
-                $doc.append(" <tr title='设备编号：" + data[i].DevId + "'><td ><i class='fa fa-square-o'></i></td><td class='simg' style='width: 113px;text-align: left;padding-left:5px'><span>" + data[i].BMJC + "</span></td><td style='text-align:center;width:113px;'><span>" + eval(coumm2) + "</span></td><td style='text-align:center;width:80px;'><span>" + formatSeconds(data[i].OnlineTime, 1) + "</span></td><td><i class='fa fa-map-marker fa-2x fa-map-marker-color-unline' aria-hidden='true'  bh='" + data[i].DevId + "'  Dt='" + data[i].DevType + "'></i></td></tr>");
+                $doc.append(" <tr bh='" + data[i].DevId + "' jy='" + data[i].JYBH + "'><td ><i class='fa fa-square-o'></i></td><td class='simg' style='width: 113px;text-align: left;padding-left:5px'><span>" + data[i].BMJC + "</span></td><td style='text-align:center;width:113px;'><span>" + eval(coumm2) + "</span></td><td style='text-align:center;width:80px;'><span>" + formatSeconds(data[i].OnlineTime, 1) + "</span></td><td><i class='fa fa-map-marker fa-2x fa-map-marker-color-unline' aria-hidden='true'  bh='" + data[i].DevId + "'  Dt='" + data[i].DevType + "'></i></td></tr>");
                 sc +=(data[i].OnlineTime!="")? parseInt(data[i].OnlineTime):0;
                 lx +=1
                 break;
             case "":
-                $doc.append(" <tr title='设备编号：" + data[i].DevId + "'><td ><i class='fa fa-square-o'></i></td><td class='simg' style='width: 113px;text-align: left;padding-left:5px'><span>" + data[i].BMJC + "</span></td><td style='text-align:center;width:113px;'><span>" + eval(coumm2) + "</span></td><td style='text-align:center;width:80px;'><span>" + formatSeconds(data[i].OnlineTime, 1) + "</span></td><td></td></tr>");
+                $doc.append(" <tr bh='" + data[i].DevId + "' jy='" + data[i].JYBH + "'><td ><i class='fa fa-square-o'></i></td><td class='simg' style='width: 113px;text-align: left;padding-left:5px'><span>" + data[i].BMJC + "</span></td><td style='text-align:center;width:113px;'><span>" + eval(coumm2) + "</span></td><td style='text-align:center;width:80px;'><span>" + formatSeconds(data[i].OnlineTime, 1) + "</span></td><td></td></tr>");
                 sc += (data[i].OnlineTime != "") ? parseInt(data[i].OnlineTime) : 0;
                 break;
             default:
-                $doc.append(" <tr title='设备编号：" + data[i].DevId + "'><td ><i class='fa fa-square-o'></i></td><td class='simg' style='width: 113px;text-align: left;padding-left:5px'><span>" + data[i].BMJC + "</span></td><td style='text-align:center;width:113px;'><span>" + eval(coumm2) + "</span></td><td style='text-align:center;width:80px;'><span>" + formatSeconds(data[i].OnlineTime, 1) + "</span></td><td></td></tr>");
+                $doc.append(" <tr bh='" + data[i].DevId + "' jy='" + data[i].JYBH + "'><td ><i class='fa fa-square-o'></i></td><td class='simg' style='width: 113px;text-align: left;padding-left:5px'><span>" + data[i].BMJC + "</span></td><td style='text-align:center;width:113px;'><span>" + eval(coumm2) + "</span></td><td style='text-align:center;width:80px;'><span>" + formatSeconds(data[i].OnlineTime, 1) + "</span></td><td></td></tr>");
                 sc += (data[i].OnlineTime != "") ? parseInt(data[i].OnlineTime) : 0;
 
                 break;
@@ -179,68 +347,11 @@ function createtable(data) {
   
     $(".equipmentNumb").html("<label>" + labeltext + ":<span>" + total + "</span></label>总在线时长:<span>" + formatSeconds(sc,1) + "(h)</span><label>在线数:<span>" + zx + "</span></label><label>离线数:<span>" + lx + "</span></label>")
 
-
-    $(document).on('click.bs.carousel.data-api', '.table .fa-square-o,.table .fa-square', function (e) {
-        if (e.target.className.indexOf("fa-square-o") > 0) {
-            $(".fa-square").addClass("fa-square-o").removeClass("fa-square");
-            $(e.target).removeClass("fa-square-o");
-            $(e.target).addClass("fa-square");
-        }
-        else
-        {
-            $(e.target).removeClass("fa-square");
-            $(e.target).addClass("fa-square-o");
-        }
-    });
-
-    $(document).on('click.bs.carousel.data-api', '.table .fa-map-marker', function (e) {
-        var devid;
-        var detype;
-        var feature;
-        if (e.target.nodeName == "I") { devid = $(e.target).attr("bh");detype = $(e.target).attr("Dt");}
-        else {
-            devid = $(e.target).children().attr("bh");
-            detype = $(e.target).children().attr("Dt");
-        }
-        if (devid == "" || devid == undefined) { return; }
-      //  $(".zq1").hide();
-      //  $(".table .localtd").removeClass("localtd"); //移出定位
-        selectdevid = devid;
-        switch (detype) {
-            case "1":
-                feature = vectorLayer.getSource().getFeatureById(devid);
-                break;
-            case "4":
-                feature = vectorLayerjwt.getSource().getFeatureById(devid);
-                break;
-            case "2":
-                feature = vectorLayerdjj.getSource().getFeatureById(devid);
-                break;
-        }
-     
-        if (feature) {
-            var coordinates = feature.getGeometry().getCoordinates();
-            point_overlay.setPosition(coordinates);
-            var view = map.getView();
-            view.animate({ zoom: view.getZoom() }, { center: coordinates }, function () {
-               // localFeatureInfo();
-                setTimeout(function () { point_overlay.setPosition([0, 0]) }, 30000)
-            });
-
-         return;
-        }
-    })
-
-    $(document).on('mouseover.bs.carousel.data-api', '.table tbody i', function (e) {
-        $(".fa-map-marker-color-mouseover").removeClass("fa-map-marker-color-mouseover");
-        $(e.target).parent().find("i").addClass("fa-map-marker-color-mouseover");
-    });
-    $(".table tbody").on("mouseout", function (e) {
-        $(".fa-map-marker-color-mouseover").removeClass("fa-map-marker-color-mouseover");
-    });
 }
 
 function formatSeconds(value, y) {
     var result = Math.floor((value / 60 / 60) * Math.pow(10, y)) / Math.pow(10, y);
     return result;
 }
+
+

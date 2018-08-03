@@ -253,6 +253,7 @@ ul {
     position: absolute;
     top: 290px;
     left:540px;
+     visibility:hidden;
 }
 #histrorysearch .row:first-child{
     float:right;
@@ -325,7 +326,7 @@ ul {
  position: absolute;
  right: 218px;
 }
-select[disabled]
+select[disabled],#cz-bianji[disabled]
 { 
 background-color: #ccc !important;
 color:#555;
@@ -392,3 +393,21 @@ background-color: #213366 !important;
    .table i{
        cursor:pointer;
    }
+.cell-button:hover {
+    background-color:#5cbf2a;
+}
+.cell-button:active {
+    position:relative;
+    top:1px;
+}
+.fa-close{
+    cursor:pointer;
+}
+.start_form_datetime {
+    background-color:transparent !important;
+    color:#fff !important;
+    border-color:#fff !important;
+}
+.calendar1{
+    color:#fff !important;
+}

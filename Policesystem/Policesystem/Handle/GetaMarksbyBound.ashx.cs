@@ -30,58 +30,107 @@ namespace Policesystem.Handle
             string type = context.Request.Form["type"];
             string status = context.Request.Form["status"];
             string searchcondition = "";
-            string typesql;
-            //"SELECT gps.[ID],[IsOnline],gps.Lo,gps.La,de.Contacts,de.Tel,et.Name,de.[DevType],de.[Cartype],de.DevId,de.[PlateNumber] FROM [Gps] as gps left join Device de on gps.PDAID = de.DevId left join  Entity et  on et.ID = de.EntityId where  de.[DevType] <> '' and  gps.La <" + Rlongitu + " and gps.La >" + Llongitu + " and gps.Lo <" + Rlati + "  and gps.Lo >" + Llati
-            if (type == "0")
-            {
-                searchcondition = (search == "") ? " " : "   and (de.[DevId] like '%" + search + "%'  or u.XM  like  '%" + search + "%')";
-                typesql = "";
-            }
-            else
-            {
-                typesql =  " and de.[DevType] = " + type;
-            }
 
             StringBuilder sqltext = new StringBuilder();
-      
-            if (ssdd == "all")
+            #region 选中设备类型为人员
+            if (type == "0") //人员
             {
+                searchcondition = (search == "") ? " " : "  and(u.[JYBH] like '%" + search + "%' or u.XM like '%" + search + "%')";
+                if (ssdd == "all")
+                {
+                    if (status == "all")
+                    {
+                        sqltext.Append("SELECT g.[ID],[IsOnline],g.Lo,g.La,u.XM as Contacts,u.SJ as Tel,e.BMJC as Name,d.[DevType],d.[Cartype],d.DevId,d.[PlateNumber],d.[IMEI],u.JYBH,u.JYLX as [IdentityPosition] FROM [ACL_USER] U LEFT JOIN Device d  on U.JYBH = d.JYBH LEFT JOIN Entity e  on U.BMDM = e.BMDM LEFT JOIN Gps g on g.PDAID = d.DevId WHERE e.BMJC  is NOT NULL");
+                    }
+                    else
+                    {
+                        sqltext.Append("SELECT  g.[ID],[IsOnline],g.Lo,g.La,u.XM as Contacts,u.SJ as Tel,e.BMJC as Name,d.[DevType],d.[Cartype],d.DevId,d.[PlateNumber],d.[IMEI],u.JYBH,u.JYLX as [IdentityPosition] FROM [ACL_USER] U LEFT JOIN Device d  on U.JYBH = d.JYBH LEFT JOIN Entity e  on U.BMDM = e.BMDM LEFT JOIN Gps g on g.PDAID = d.DevId WHERE   g.IsOnline = " + status + " and e.BMJC is NOT NULL");
+
+                    }
+
+                    goto end;
+                }
+
+                if (sszd == "all")
+                {
+                    if (status == "all")
+                    {
+                        sqltext.Append("WITH childtable(BMMC,BMDM,SJBM) as (SELECT BMMC,BMDM,SJBM FROM [Entity] WHERE SJBM= '" + ssdd + "' UNION ALL SELECT A.BMMC,A.BMDM,A.SJBM FROM [Entity] A,childtable b where a.SJBM = b.BMDM ) SELECT g.[ID],[IsOnline],g.Lo,g.La,u.XM as Contacts,u.SJ as Tel,e.BMJC as Name,d.[DevType],d.[Cartype],d.DevId,d.[PlateNumber],d.[IMEI],u.JYBH,u.JYLX as [IdentityPosition] FROM [ACL_USER] U LEFT JOIN Device d  on U.JYBH = d.JYBH LEFT JOIN Entity e  on U.BMDM = e.BMDM LEFT JOIN Gps g on g.PDAID = d.DevId WHERE e.BMDM in (SELECT BMDM from childtable) and e.BMJC  is NOT NULL");
+                    }
+                    else
+                    {
+                        sqltext.Append("WITH childtable(BMMC,BMDM,SJBM) as (SELECT BMMC,BMDM,SJBM FROM [Entity] WHERE SJBM= '" + ssdd + "' UNION ALL SELECT A.BMMC,A.BMDM,A.SJBM FROM [Entity] A,childtable b where a.SJBM = b.BMDM ) SELECT  g.[ID],[IsOnline],g.Lo,g.La,u.XM as Contacts,u.SJ as Tel,e.BMJC as Name,d.[DevType],d.[Cartype],d.DevId,d.[PlateNumber],d.[IMEI],u.JYBH,u.JYLX as [IdentityPosition] FROM [ACL_USER] U LEFT JOIN Device d  on U.JYBH = d.JYBH LEFT JOIN Entity e  on U.BMDM = e.BMDM LEFT JOIN Gps g on g.PDAID = d.DevId WHERE e.BMDM in (SELECT BMDM from childtable) and  g.IsOnline = " + status + " and e.BMJC is NOT NULL");
+
+                    }
+
+                    goto end;
+                }
+
                 if (status == "all")
                 {
-                    sqltext.Append("SELECT gps.[ID],[IsOnline],gps.Lo,gps.La,u.XM as Contacts,u.SJ as Tel,et.BMJC as Name,de.[DevType],de.[Cartype],de.DevId,de.[PlateNumber],de.[IMEI],u.JYBH,u.JYLX as [IdentityPosition] FROM [Gps] gps right join Device de on gps.PDAID = de.DevId left join  Entity et  on et.BMDM = de.BMDM left join  ACL_USER u  on de.JYBH = u.JYBH where   IsOnline is not null " + typesql + searchcondition);
+                    sqltext.Append("SELECT g.[ID],[IsOnline],g.Lo,g.La,u.XM as Contacts,u.SJ as Tel,e.BMJC as Name,d.[DevType],d.[Cartype],d.DevId,d.[PlateNumber],d.[IMEI],u.JYBH,u.JYLX as [IdentityPosition] FROM [ACL_USER] U LEFT JOIN Device d  on U.JYBH = d.JYBH LEFT JOIN Entity e  on U.BMDM = e.BMDM LEFT JOIN Gps g on g.PDAID = d.DevId WHERE  e.BMDM ='" + sszd + "'  and e.BMJC  is NOT NULL");
                 }
                 else
                 {
-                    sqltext.Append("SELECT gps.[ID],[IsOnline],gps.Lo,gps.La,u.XM as Contacts,u.SJ as Tel,et.BMJC as Name,de.[DevType],de.[Cartype],de.DevId,de.[PlateNumber],de.[IMEI],u.JYBH,u.JYLX as [IdentityPosition] FROM [Gps] gps right join Device de on gps.PDAID = de.DevId left join  Entity et  on et.BMDM = de.BMDM left join  ACL_USER u  on de.JYBH = u.JYBH where     gps.IsOnline = '" + status + "' " + typesql + searchcondition);
+                    sqltext.Append("SELECT  g.[ID],[IsOnline],g.Lo,g.La,u.XM as Contacts,u.SJ as Tel,e.BMJC as Name,d.[DevType],d.[Cartype],d.DevId,d.[PlateNumber],d.[IMEI],u.JYBH,u.JYLX as [IdentityPosition] FROM [ACL_USER] U LEFT JOIN Device d  on U.JYBH = d.JYBH LEFT JOIN Entity e  on U.BMDM = e.BMDM LEFT JOIN Gps g on g.PDAID = d.DevId WHERE e.BMDM ='" + sszd + "' and  g.IsOnline = " + status + " and e.BMJC is NOT NULL");
 
                 }
+
                 goto end;
-            }
 
-            if (sszd == "all")
-            {
-                if (status == "all")
-                {
-                    sqltext.Append("WITH childtable(Name,ID,ParentID) as (SELECT Name,ID,ParentID FROM [Entity] WHERE id=" + ssdd + " UNION ALL SELECT A.[Name],A.[ID],A.[ParentID] FROM  [Entity] A,childtable b where a.[ParentID] = b.[ID])  SELECT gps.[ID],[IsOnline],gps.Lo,gps.La,de.Contacts,de.Tel1 as Tel,et.Name,de.[DevType],de.[Cartype],de.DevId,de.[PlateNumber],de.[IMEI],de.[UserNum],de.[IdentityPosition]  FROM [Gps] gps right join Device de on gps.PDAID = de.DevId left join  Entity et  on et.ID = de.EntityId where de.[DevType] =" + type + "  and de.EntityId in (select ID from childtable)" + searchcondition);//+ " and  gps.La <" + Rlongitu + " and gps.La >" + Llongitu + " and gps.Lo <" + Rlati + "  and gps.Lo >" + Llati
-                }
-                else
-                {
-                    sqltext.Append("WITH childtable(Name,ID,ParentID) as (SELECT Name,ID,ParentID FROM [Entity] WHERE id=" + ssdd + " UNION ALL SELECT A.[Name],A.[ID],A.[ParentID] FROM  [Entity] A,childtable b where a.[ParentID] = b.[ID]) SELECT gps.[ID],[IsOnline],gps.Lo,gps.La,de.Contacts,de.Tel1,et.Name,de.[DevType],de.[Cartype],de.DevId,de.[PlateNumber],de.[IMEI],de.[UserNum],de.[IdentityPosition]  FROM [Gps] gps right join Device de on gps.PDAID = de.DevId left join  Entity et  on et.ID = de.EntityId where de.[DevType] =" + type + "  and gps.IsOnline = '" + status + "'  and de.EntityId in (select ID from childtable) " + searchcondition);
 
-                }
-                goto end;
             }
-            if (status == "all")
-            {
-                sqltext.Append("SELECT gps.[ID],[IsOnline],gps.Lo,gps.La,de.Contacts,de.Tel1,et.Name,de.[DevType],de.[Cartype],de.DevId,de.[PlateNumber],de.[IMEI],de.[UserNum],de.[IdentityPosition]  FROM Gps as gps right join Device as de on de.DevId = gps.PDAID left join  Entity et  on et.ID = de.EntityId  where de.[DevType] =" + type + " and [EntityId] =" + Convert.ToInt16(sszd) + " " + searchcondition);
-            }
+            #endregion
+            #region 选中设备类型为除人员以外的其它，对讲机、执法记录仪、警务通等8小件
             else
             {
-                sqltext.Append("SELECT gps.[ID],[IsOnline],gps.Lo,gps.La,de.Contacts,de.Tel1,et.Name,de.[DevType],de.[Cartype],de.DevId,de.[PlateNumber],de.[IMEI],de.[UserNum],de.[IdentityPosition]  FROM Gps as gps right join Device as de on de.DevId = gps.PDAID  left join  Entity et  on et.ID = de.EntityId where de.[DevType] =" + type + " and gps.IsOnline = '" + status + "'  and [EntityId] =" + Convert.ToInt16(sszd) + " " + searchcondition);
-            }
+                searchcondition = (search == "") ? " and d.DevType ='" + type + "'" : " and d.DevType ='" + type + "'" + "  and(d.DevId like '%" + search + "%' or u.XM like '%" + search + "%')";
+                if (ssdd == "all")
+                {
+                    if (status == "all")
+                    {
+                        sqltext.Append("SELECT g.[ID],[IsOnline],g.Lo,g.La,u.XM as Contacts,u.SJ as Tel,e.BMJC as Name,d.[DevType],d.[Cartype],d.DevId,d.[PlateNumber],d.[IMEI],u.JYBH,u.JYLX as [IdentityPosition] FROM Device d  LEFT JOIN [ACL_USER] U on U.JYBH = d.JYBH LEFT JOIN Entity e  on U.BMDM = e.BMDM LEFT JOIN Gps g on g.PDAID = d.DevId WHERE e.BMJC  is NOT NULL ");
+                    }
+                    else
+                    {
+                        sqltext.Append("SELECT  g.[ID],[IsOnline],g.Lo,g.La,u.XM as Contacts,u.SJ as Tel,e.BMJC as Name,d.[DevType],d.[Cartype],d.DevId,d.[PlateNumber],d.[IMEI],u.JYBH,u.JYLX as [IdentityPosition] FROM Device d  LEFT JOIN [ACL_USER] U on U.JYBH = d.JYBH LEFT JOIN Entity e  on U.BMDM = e.BMDM LEFT JOIN Gps g on g.PDAID = d.DevId WHERE   g.IsOnline = " + status + " and e.BMJC is NOT NULL");
 
+                    }
+
+                    goto end;
+                }
+
+                if (sszd == "all")
+                {
+                    if (status == "all")
+                    {
+                        sqltext.Append("WITH childtable(BMMC,BMDM,SJBM) as (SELECT BMMC,BMDM,SJBM FROM [Entity] WHERE SJBM= '" + ssdd + "' UNION ALL SELECT A.BMMC,A.BMDM,A.SJBM FROM [Entity] A,childtable b where a.SJBM = b.BMDM ) SELECT g.[ID],[IsOnline],g.Lo,g.La,u.XM as Contacts,u.SJ as Tel,e.BMJC as Name,d.[DevType],d.[Cartype],d.DevId,d.[PlateNumber],d.[IMEI],u.JYBH,u.JYLX as [IdentityPosition] FROM Device d  LEFT JOIN [ACL_USER] U on U.JYBH = d.JYBH LEFT JOIN Entity e  on U.BMDM = e.BMDM LEFT JOIN Gps g on g.PDAID = d.DevId WHERE e.BMDM in (SELECT BMDM from childtable) and e.BMJC  is NOT NULL ");
+                    }
+                    else
+                    {
+                        sqltext.Append("WITH childtable(BMMC,BMDM,SJBM) as (SELECT BMMC,BMDM,SJBM FROM [Entity] WHERE SJBM= '" + ssdd + "' UNION ALL SELECT A.BMMC,A.BMDM,A.SJBM FROM [Entity] A,childtable b where a.SJBM = b.BMDM ) SELECT  g.[ID],[IsOnline],g.Lo,g.La,u.XM as Contacts,u.SJ as Tel,e.BMJC as Name,d.[DevType],d.[Cartype],d.DevId,d.[PlateNumber],d.[IMEI],u.JYBH,u.JYLX as [IdentityPosition] FROM Device d  LEFT JOIN [ACL_USER] U on U.JYBH = d.JYBH LEFT JOIN Entity e  on U.BMDM = e.BMDM LEFT JOIN Gps g on g.PDAID = d.DevId WHERE e.BMDM in (SELECT BMDM from childtable) and  g.IsOnline = " + status + " and e.BMJC is NOT NULL ");
+
+                    }
+
+                    goto end;
+                }
+
+                if (status == "all")
+                {
+                    sqltext.Append("SELECT g.[ID],[IsOnline],g.Lo,g.La,u.XM as Contacts,u.SJ as Tel,e.BMJC as Name,d.[DevType],d.[Cartype],d.DevId,d.[PlateNumber],d.[IMEI],u.JYBH,u.JYLX as [IdentityPosition] FROM Device d  LEFT JOIN [ACL_USER] U on U.JYBH = d.JYBH LEFT JOIN Entity e  on U.BMDM = e.BMDM LEFT JOIN Gps g on g.PDAID = d.DevId WHERE  e.BMDM ='" + sszd + "'  and e.BMJC  is NOT NULL");
+                }
+                else
+                {
+                    sqltext.Append("SELECT  g.[ID],[IsOnline],g.Lo,g.La,u.XM as Contacts,u.SJ as Tel,e.BMJC as Name,d.[DevType],d.[Cartype],d.DevId,d.[PlateNumber],d.[IMEI],u.JYBH,u.JYLX as [IdentityPosition] FROM Device d  LEFT JOIN [ACL_USER] U on U.JYBH = d.JYBH LEFT JOIN Entity e  on U.BMDM = e.BMDM LEFT JOIN Gps g on g.PDAID = d.DevId WHERE e.BMDM ='" + sszd + "' and  g.IsOnline = " + status + " and e.BMJC is NOT NULL ");
+
+                }
+
+
+            }
+        #endregion
 
         end:
+            sqltext.Append(searchcondition+" and g.la>90");
             DataTable dt = SQLHelper.ExecuteRead(CommandType.Text, sqltext.ToString(), "entity");
 
 

@@ -134,6 +134,7 @@
     <Content Include="comjs\moment-with-locales.js" />
     <Content Include="comjs\moment.js" />
     <Content Include="comjs\myHeatmap2.0.min.js" />
+    <Content Include="CSS\bootstrap-datetimepicker.min.css" />
     <Content Include="CSS\dataManagement.css" />
     <Content Include="CSS\jquery.dataTables.css" />
     <Content Include="CSS\map.css" />
