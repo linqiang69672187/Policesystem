@@ -26,7 +26,8 @@ namespace Policesystem.Handle
                     goto 设备搜索;
                 case "查询人员":
                     goto 查询人员;
-                    break;
+                case "轨迹查询":
+                    goto 轨迹查询;
                 default:
                     break;
             }
@@ -139,13 +140,39 @@ namespace Policesystem.Handle
             string sbbh = context.Request.Form["sbbh"];
             string jybh = context.Request.Form["jybh"];
             sqltext.Append("SELECT u.XM,d.DevType,d.Devid FROM [ACL_USER] u FULL OUTER JOIN  Device d on u.JYBH = d.JYBH where u.JYBH ='" + jybh+ "' or d.DevId ='"+sbbh+ "' order by d.DevType");
-
-          end:
-          
+          end:       
 
             DataTable dt = SQLHelper.ExecuteRead(CommandType.Text, sqltext.ToString(), "DB");
-
             context.Response.Write(JSON.DatatableToJson(dt, ""));
+            return;
+
+        轨迹查询:
+            string sDate = context.Request.Form["date"];
+            string Devid = context.Request.Form["deviid"];
+            string[] sArray = Devid.Split(',');
+            StringBuilder json = new StringBuilder();
+            DataTable dtt;
+            json.Append("[");
+            for (int i1 = 0; i1 < sArray.Length; i1++)
+            {              
+                json.Append("{\"Name\":");
+                if (i1 > 0)
+                {
+                    json.Append(',');
+                };
+                json.Append("{\"Name\":");
+                json.Append('"');
+                json.Append(sArray[i1]);
+                json.Append('"');
+                json.Append(',');
+                searchcondition = "SELECT lo,la FROM [Gps] where  QQSJ >= '"+ sDate + " 00:00:00' and  QQSJ <= '"+ sDate + " 23:59:59'";
+                dtt = SQLHelper.ExecuteRead(CommandType.Text, searchcondition.ToString(), "DB");
+                json.Append(JSON.DatatableToJS(dtt, "").ToString());
+
+            }
+            json.Append("]");
+            context.Response.Write(json.ToString());
+
         }
 
         public bool IsReusable

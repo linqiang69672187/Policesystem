@@ -165,6 +165,8 @@ $(document).on('click.bs.carousel.data-api', '#cz-bianji,.fa-close', function (e
     }
 });
 
+
+
 function requestJY() {
     var data = {
         sbbh: $(".fa-square").parent().parent().attr("bh"),
@@ -180,12 +182,17 @@ function requestJY() {
             if (data.r == "0") {
                 $("#histrorysearch .row div:eq(1)").text("");
                 $("#histrorysearch .row:eq(2) div:eq(1)").html("");
+                $("#histrorysearch .bh").val("");
                 var name = "";
+                var bh = "";
                 $.each(data.result, function (i, item) {
                     name += (name.indexOf(item.XM) < 0) ? " " + item.XM : "";
                     $("#histrorysearch .row:eq(2) div:eq(1)").append(item.DevType);
+                    bh += (i == 0) ? item.Devid : "," + item.Devid;
+                    console.debug(bh);
                 });
                 $("#histrorysearch .row:eq(1) div:eq(1)").text(name);
+                $("#histrorysearch .bh").val(bh);
             }
         },
         error: function (msg) {
@@ -224,6 +231,28 @@ function loaddata() {
     });
 
 }
+$(document).on('click.bs.carousel.data-api', '#cz-cx', function (e) {
+    var data = {
+        deviid: $("#histrorysearch .bh").val(),
+        requesttype: "轨迹查询",
+        date: $(".start_form_datetime").val()
+    }
+    $.ajax({
+        type: "POST",
+        url: "../Handle/map.ashx",
+        data: data,
+        dataType: "json",
+        success: function (data) {
+            if (data.r == "0") {
+
+            }
+        },
+        error: function (msg) {
+            console.debug("错误:ajax");
+        }
+    });
+
+});
 
 
 $(document).on('click.bs.carousel.data-api', '.table .fa-square-o,.table .fa-square', function (e) {
