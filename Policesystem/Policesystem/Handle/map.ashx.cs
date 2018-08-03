@@ -26,65 +26,109 @@ namespace Policesystem.Handle
 
             StringBuilder sqltext = new StringBuilder();
             searchcondition = (search == "") ? " and  IsOnline<>'' " : " and IsOnline<>''  and(de.[DevId] like '%" + search + "%' or de.PlateNumber like '%" + search + "%' or de.Contacts like  '%" + search + "%')";
-
+            #region 选中设备类型为人员
             if (type == "0") //人员
             {
                 if (ssdd == "all")
                 {
                     if (status == "all")
                     {
-                        sqltext.Append("SELECT g.IsOnline, u.XM,d.DevType,u.BMDM,e.BMJC,g.OnlineTime,d.DevId,u.JYBH FROM [ACL_USER] U LEFT JOIN Device d  on U.JYBH = d.JYBH LEFT JOIN Entity e  on U.BMDM = e.BMDM LEFT JOIN Gps g on g.PDAID = d.DevId WHERE e.BMJC  is NOT NULL ORDER BY u.JYBH");
+                        sqltext.Append("SELECT g.IsOnline, u.XM,d.DevType,u.BMDM,e.BMJC,g.OnlineTime,d.DevId,u.JYBH FROM [ACL_USER] U LEFT JOIN Device d  on U.JYBH = d.JYBH LEFT JOIN Entity e  on U.BMDM = e.BMDM LEFT JOIN Gps g on g.PDAID = d.DevId WHERE e.BMJC  is NOT NULL");
                     }
                     else
                     {
-                        sqltext.Append("SELECT  g.IsOnline, u.XM,d.DevType,u.BMDM,e.BMJC,g.OnlineTime,d.DevId,u.JYBH FROM [ACL_USER] U LEFT JOIN Device d  on U.JYBH = d.JYBH LEFT JOIN Entity e  on U.BMDM = e.BMDM LEFT JOIN Gps g on g.PDAID = d.DevId WHERE e.BMJC and g.IsOnline = " + status + "  is NOT NULL ORDER BY u.JYBH");
+                        sqltext.Append("SELECT  g.IsOnline, u.XM,d.DevType,u.BMDM,e.BMJC,g.OnlineTime,d.DevId,u.JYBH FROM [ACL_USER] U LEFT JOIN Device d  on U.JYBH = d.JYBH LEFT JOIN Entity e  on U.BMDM = e.BMDM LEFT JOIN Gps g on g.PDAID = d.DevId WHERE   g.IsOnline = " + status + " and e.BMJC is NOT NULL");
 
                     }
                     searchcondition = (search == "") ? " " : "  and(u.[JYBH] like '%" + search + "%' or u.XM like '%" + search + "%')";
 
                     goto end;
                 }
+
+                if (sszd == "all")
+                {
+                    if (status == "all")
+                    {
+                        sqltext.Append("WITH childtable(BMMC,BMDM,SJBM) as (SELECT BMMC,BMDM,SJBM FROM [Entity] WHERE SJBM= '" + ssdd + "' UNION ALL SELECT A.BMMC,A.BMDM,A.SJBM FROM [Entity] A,childtable b where a.SJBM = b.BMDM ) SELECT g.IsOnline, u.XM,d.DevType,u.BMDM,e.BMJC,g.OnlineTime,d.DevId,u.JYBH FROM [ACL_USER] U LEFT JOIN Device d  on U.JYBH = d.JYBH LEFT JOIN Entity e  on U.BMDM = e.BMDM LEFT JOIN Gps g on g.PDAID = d.DevId WHERE e.BMDM in (SELECT BMDM from childtable) and e.BMJC  is NOT NULL");
+                    }
+                    else
+                    {
+                        sqltext.Append("WITH childtable(BMMC,BMDM,SJBM) as (SELECT BMMC,BMDM,SJBM FROM [Entity] WHERE SJBM= '" + ssdd + "' UNION ALL SELECT A.BMMC,A.BMDM,A.SJBM FROM [Entity] A,childtable b where a.SJBM = b.BMDM ) SELECT  g.IsOnline, u.XM,d.DevType,u.BMDM,e.BMJC,g.OnlineTime,d.DevId,u.JYBH FROM [ACL_USER] U LEFT JOIN Device d  on U.JYBH = d.JYBH LEFT JOIN Entity e  on U.BMDM = e.BMDM LEFT JOIN Gps g on g.PDAID = d.DevId WHERE e.BMDM in (SELECT BMDM from childtable) and  g.IsOnline = " + status + " and e.BMJC is NOT NULL");
+
+                    }
+                    searchcondition = (search == "") ? " " : "  and(u.[JYBH] like '%" + search + "%' or u.XM like '%" + search + "%')";
+
+                    goto end;
+                }
+              
+               if (status == "all")
+                 {
+                     sqltext.Append("SELECT g.IsOnline, u.XM,d.DevType,u.BMDM,e.BMJC,g.OnlineTime,d.DevId,u.JYBH FROM [ACL_USER] U LEFT JOIN Device d  on U.JYBH = d.JYBH LEFT JOIN Entity e  on U.BMDM = e.BMDM LEFT JOIN Gps g on g.PDAID = d.DevId WHERE  e.BMDM ='" + sszd + "'  and e.BMJC  is NOT NULL");
+                  }
+                else
+                {
+                    sqltext.Append("SELECT  g.IsOnline, u.XM,d.DevType,u.BMDM,e.BMJC,g.OnlineTime,d.DevId,u.JYBH FROM [ACL_USER] U LEFT JOIN Device d  on U.JYBH = d.JYBH LEFT JOIN Entity e  on U.BMDM = e.BMDM LEFT JOIN Gps g on g.PDAID = d.DevId WHERE e.BMDM ='"+sszd+"' and  g.IsOnline = " + status + " and e.BMJC is NOT NULL");
+
+                }
+                searchcondition = (search == "") ? " " : "  and(u.[JYBH] like '%" + search + "%' or u.XM like '%" + search + "%')";
+
+                goto end;
+
+
             }
-           else
+            #endregion
+            #region 选中设备类型为除人员以外的其它，对讲机、执法记录仪、警务通等8小件
+            else
             {
                 if (ssdd == "all")
                 {
                     if (status == "all")
                     {
-                        sqltext.Append("SELECT [HandleCnt],[OnlineTime],[IsOnline],[PlateNumber],[Contacts],de.DevId as PDAID,de.EntityId,de.[Cartype],de.[IMEI],de.[UserNum] FROM [Gps] gps right join Device de on gps.PDAID = de.DevId  where de.[DevType] =" + type + searchcondition );
+                        sqltext.Append("SELECT g.IsOnline, u.XM,d.DevType,u.BMDM,e.BMJC,g.OnlineTime,d.DevId,u.JYBH FROM Device d  LEFT JOIN [ACL_USER] U on U.JYBH = d.JYBH LEFT JOIN Entity e  on U.BMDM = e.BMDM LEFT JOIN Gps g on g.PDAID = d.DevId WHERE e.BMJC  is NOT NULL ");
                     }
                     else
                     {
-                        sqltext.Append("SELECT [HandleCnt],[OnlineTime],[IsOnline],[PlateNumber],[Contacts],de.DevId as PDAID,de.EntityId,de.[Cartype],de.[IMEI],de.[UserNum] FROM [Gps] gps right join Device de on gps.PDAID = de.DevId where de.[DevType] =" + type + " and gps.IsOnline = '" + status + "'" + searchcondition  );
+                        sqltext.Append("SELECT  g.IsOnline, u.XM,d.DevType,u.BMDM,e.BMJC,g.OnlineTime,d.DevId,u.JYBH FROM Device d  LEFT JOIN [ACL_USER] U on U.JYBH = d.JYBH LEFT JOIN Entity e  on U.BMDM = e.BMDM LEFT JOIN Gps g on g.PDAID = d.DevId WHERE   g.IsOnline = " + status + " and e.BMJC is NOT NULL");
 
                     }
+                    searchcondition = (search == "") ? " " : "  and(d.DevId like '%" + search + "%' or u.XM like '%" + search + "%')";
+
                     goto end;
                 }
+
                 if (sszd == "all")
                 {
                     if (status == "all")
                     {
-                        sqltext.Append("WITH childtable(Name,ID,ParentID) as (SELECT Name,ID,ParentID FROM [Entity] WHERE id=" + ssdd + " UNION ALL SELECT A.[Name],A.[ID],A.[ParentID] FROM  [Entity] A,childtable b where a.[ParentID] = b.[ID]) SELECT [HandleCnt],[OnlineTime],[IsOnline],[PlateNumber],[Contacts],de.DevId as PDAID,de.EntityId,de.[Cartype],de.[IMEI],de.[UserNum] FROM [Gps] gps right join Device de on gps.PDAID = de.DevId where de.[DevType] =" + type + "  and de.EntityId in (select ID from childtable)" + searchcondition );
+                        sqltext.Append("WITH childtable(BMMC,BMDM,SJBM) as (SELECT BMMC,BMDM,SJBM FROM [Entity] WHERE SJBM= '" + ssdd + "' UNION ALL SELECT A.BMMC,A.BMDM,A.SJBM FROM [Entity] A,childtable b where a.SJBM = b.BMDM ) SELECT g.IsOnline, u.XM,d.DevType,u.BMDM,e.BMJC,g.OnlineTime,d.DevId,u.JYBH FROM Device d  LEFT JOIN [ACL_USER] U on U.JYBH = d.JYBH LEFT JOIN Entity e  on U.BMDM = e.BMDM LEFT JOIN Gps g on g.PDAID = d.DevId WHERE e.BMDM in (SELECT BMDM from childtable) and e.BMJC  is NOT NULL ");
                     }
                     else
                     {
-                        sqltext.Append("WITH childtable(Name,ID,ParentID) as (SELECT Name,ID,ParentID FROM [Entity] WHERE id=" + ssdd + " UNION ALL SELECT A.[Name],A.[ID],A.[ParentID] FROM  [Entity] A,childtable b where a.[ParentID] = b.[ID]) SELECT [HandleCnt],[OnlineTime],[IsOnline],[PlateNumber],[Contacts],de.DevId as PDAID,de.EntityId,de.[Cartype],de.[IMEI],de.[UserNum] FROM [Gps] gps right join Device de on gps.PDAID = de.DevId where de.[DevType] =" + type + "  and gps.IsOnline = '" + status + "'  and de.EntityId in (select ID from childtable)" + searchcondition );
+                        sqltext.Append("WITH childtable(BMMC,BMDM,SJBM) as (SELECT BMMC,BMDM,SJBM FROM [Entity] WHERE SJBM= '" + ssdd + "' UNION ALL SELECT A.BMMC,A.BMDM,A.SJBM FROM [Entity] A,childtable b where a.SJBM = b.BMDM ) SELECT  g.IsOnline, u.XM,d.DevType,u.BMDM,e.BMJC,g.OnlineTime,d.DevId,u.JYBH FROM Device d  LEFT JOIN [ACL_USER] U on U.JYBH = d.JYBH LEFT JOIN Entity e  on U.BMDM = e.BMDM LEFT JOIN Gps g on g.PDAID = d.DevId WHERE e.BMDM in (SELECT BMDM from childtable) and  g.IsOnline = " + status + " and e.BMJC is NOT NULL ");
 
                     }
+                    searchcondition = (search == "") ? " " : "  and(d.DevId like '%" + search + "%' or u.XM like '%" + search + "%')";
+
                     goto end;
                 }
+
                 if (status == "all")
                 {
-                    sqltext.Append("SELECT [HandleCnt],[OnlineTime],[IsOnline],[PlateNumber],[Contacts],de.DevId as PDAID,de.EntityId,de.[Cartype],de.[IMEI],de.[UserNum] FROM Gps as gps right join Device as de on de.DevId = gps.PDAID  where de.[DevType] =" + type + " and [EntityId] =" + Convert.ToInt16(sszd) + searchcondition );
+                    sqltext.Append("SELECT g.IsOnline, u.XM,d.DevType,u.BMDM,e.BMJC,g.OnlineTime,d.DevId,u.JYBH FROM Device d  LEFT JOIN [ACL_USER] U on U.JYBH = d.JYBH LEFT JOIN Entity e  on U.BMDM = e.BMDM LEFT JOIN Gps g on g.PDAID = d.DevId WHERE  e.BMDM ='" + sszd + "'  and e.BMJC  is NOT NULL");
                 }
                 else
                 {
-                    sqltext.Append("SELECT [HandleCnt],[OnlineTime],[IsOnline],[PlateNumber],[Contacts],de.DevId as PDAID,de.EntityId,de.[Cartype],de.[IMEI],de.[UserNum] FROM Gps as gps right join Device as de on de.DevId = gps.PDAID  where de.[DevType] =" + type + "and gps.IsOnline = '" + status + "'  and [EntityId] =" + Convert.ToInt16(sszd) + searchcondition );
-                }
-            }
-          
-        end:
+                    sqltext.Append("SELECT  g.IsOnline, u.XM,d.DevType,u.BMDM,e.BMJC,g.OnlineTime,d.DevId,u.JYBH FROM Device d  LEFT JOIN [ACL_USER] U on U.JYBH = d.JYBH LEFT JOIN Entity e  on U.BMDM = e.BMDM LEFT JOIN Gps g on g.PDAID = d.DevId WHERE e.BMDM ='" + sszd + "' and  g.IsOnline = " + status + " and e.BMJC is NOT NULL ");
 
+                }
+                searchcondition = (search == "") ? " " : "  and(d.DevId like '%" + search + "%' or u.XM like '%" + search + "%')";
+
+          
+            }
+        #endregion
+
+        end:
+            sqltext.Append(searchcondition + " ORDER BY u.JYBH");
 
             DataTable dt = SQLHelper.ExecuteRead(CommandType.Text, sqltext.ToString(), "DB");
 

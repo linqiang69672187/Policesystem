@@ -19,7 +19,7 @@ $(document).on('click.bs.carousel.data-api', '.boxleft > .row li > div', functio
             break;
         case "czsp": //车载视频
             $("#deviceselect").val("1");
-            $(".seach-box input").attr('placeholder', '请输入车辆号码或设备编号');
+            $(".seach-box input").attr('placeholder', '请输入警员姓名或设备编号');
             break;
         case "zfjly": //执法记录仪
             $(".seach-box input").attr('placeholder', '请输入警员姓名或设备编号');
@@ -130,28 +130,22 @@ function createtable(data) {
     var coumm2 = "";
     var type = $("#deviceselect").val();
     var labeltext = "记录条数";
-    $(".table thead tr").empty();
+    $(".table thead tr,.table tbody").empty();
     switch (type) {
         case "0":    //人员
             $(".table thead tr").append("<th style='width:46px;'></th><th style='width:113px;'>所属单位</th><th style='width:113px;'>联系人</th><th style='width:80px;'>在线时长</th><th></th>")
             coumm2 = "data[i].XM";
-
             break;
         case "1": //车载视频
-            break;
         case "2": //对讲机
-            break;
         case "3": //拦截仪
-            break;
         case "4": //警务通
-            break;
         case "5": //执法记录仪
-            break;
-        case "6": //辅警通
-            break;
+        case "6": //辅警通  
         case "7": //测速仪
-            break;
         case "8": //酒精测试仪
+            $(".table thead tr").append("<th style='width:46px;'></th><th style='width:113px;'>所属单位</th><th style='width:113px;'>设备编号</th><th style='width:80px;'>在线时长</th><th></th>")
+            coumm2 = "data[i].DevId";
             break;
         default:
             break;
@@ -183,7 +177,7 @@ function createtable(data) {
         }
     }
   
-    $(".equipmentNumb").append("<label>" + labeltext + ":<span>" + total + "</span></label>总在线时长:<span>" + formatSeconds(sc,1) + "(h)</span><label>在线数:<span>" + zx + "</span></label><label>离线数:<span>" + lx + "</span></label>")
+    $(".equipmentNumb").html("<label>" + labeltext + ":<span>" + total + "</span></label>总在线时长:<span>" + formatSeconds(sc,1) + "(h)</span><label>在线数:<span>" + zx + "</span></label><label>离线数:<span>" + lx + "</span></label>")
 
 
     $(document).on('click.bs.carousel.data-api', '.table .fa-square-o,.table .fa-square', function (e) {
