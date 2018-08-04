@@ -91,10 +91,15 @@ function createTrace(data) {
         divideNum = Math.ceil(data[n].data.length / 20);
         for (var i = 0; i < data[n].data.length; i++) {
             var coordinate = [parseFloat(data[n].data[i].la), parseFloat(data[n].data[i].lo)];
+            if(n==0&&i==0){
+            var view = map.getView();
+            view.animate({ zoom: view.getZoom() }, { center: ol.proj.transform(coordinate, 'EPSG:4326', 'EPSG:3857') }, function () {
+            });
+            }
             geometrytrace.appendCoordinate(ol.proj.transform(coordinate, 'EPSG:4326', 'EPSG:3857'));
             // 创建一个Feature，并设置好在地图上的位置
            
-            if (i % divideNum != 0) {
+            if (i % divideNum != 0 && i != data[n].data.length-1) {
                 continue;
             }
             textcontent = Math.ceil(i/ divideNum).toString();

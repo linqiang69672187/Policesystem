@@ -158,11 +158,19 @@ $(document).on('click.bs.carousel.data-api', '#cz-bianji,.fa-close', function (e
         $("#histrorysearch").css("visibility", "hidden");
         tracevector.getSource().clear();
         tracepointlayer.getSource().clear();
+        vectorLayer.setVisible(true);
+        vectorLayerjwt.setVisible(true);
+        vectorLayerdjj.setVisible(true);
+        loadmapdataInter = setInterval("loadmarks()", 15000);
         return;
     } else {
         if ($(".fa-square").length==0) {
             return;
         };
+        vectorLayer.setVisible(false);
+        vectorLayerjwt.setVisible(false);
+        vectorLayerdjj.setVisible(false);
+        if (loadmapdataInter) { clearInterval(loadmapdataInter) };
         $("#histrorysearch").css("visibility", "visible");
         requestJY();
     }
@@ -267,6 +275,7 @@ $(document).on('click.bs.carousel.data-api', '.table .fa-square-o,.table .fa-squ
         $(e.target).removeClass("fa-square-o");
         $(e.target).addClass("fa-square");
         $("#cz-bianji").attr("disabled", false);
+       
         requestJY();
     }
     else {

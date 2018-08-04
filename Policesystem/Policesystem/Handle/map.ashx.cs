@@ -175,8 +175,8 @@ namespace Policesystem.Handle
                 json.Append(dArray[i1]);
                 json.Append('"');
                 json.Append(',');
-                //searchcondition = "SELECT top 1000 lo,la,SendTime QQSJ FROM [HistoryGps" + sDate.Substring(2, 2) + sDate.Substring(5, 2) + "] where PDAID ='57620086'  order by QQSJ";
-                searchcondition = "SELECT lo,la,SendTime QQSJ FROM [HistoryGps"+sDate.Substring(2,2)+ sDate.Substring(5, 2) + "] where PDAID ='" + sArray[i1] + "' and SendTime >= '" + sDate + " 00:00:00' and  SendTime <= '" + sDate + " 23:59:59' order by SendTime";
+                searchcondition = "SELECT top 1000 lo,la,SendTime QQSJ FROM [HistoryGps" + sDate.Substring(2, 2) + sDate.Substring(5, 2) + "] where PDAID ='57620086'  order by QQSJ";
+                //searchcondition = "SELECT lo,la,SendTime QQSJ FROM [HistoryGps"+sDate.Substring(2,2)+ sDate.Substring(5, 2) + "] where PDAID ='" + sArray[i1] + "' and SendTime >= '" + sDate + " 00:00:00' and  SendTime <= '" + sDate + " 23:59:59' order by SendTime";
                 dtt = SQLHelper.ExecuteRead(CommandType.Text, searchcondition.ToString(), "DB");
                 json.Append(JSON.DatatableToJS(dtt, "").ToString());
 
