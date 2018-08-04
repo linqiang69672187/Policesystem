@@ -1,11 +1,12 @@
 ﻿var entitydata;
 var selectdevid;
 var loadmapdataInter;
+var typename = ["车载视频", "对讲机", "拦截仪", "警务通", "执法记录仪", "辅警通", "测速仪", "酒精测试仪"]
 $("#header").load('top.html', function () {
 
 });
 $('.start_form_datetime').datetimepicker({
-    format: 'yyyy/m/d',
+    format: 'yyyy/mm/dd',
     autoclose: true,
     todayBtn: true,
     minView: 2
@@ -155,6 +156,8 @@ $(document).on('click.bs.carousel.data-api', '#cz-ck,.input-group-btn .btn-defau
 $(document).on('click.bs.carousel.data-api', '#cz-bianji,.fa-close', function (e) {
     if ($("#histrorysearch").css("visibility") != "hidden") {
         $("#histrorysearch").css("visibility", "hidden");
+        tracevector.getSource().clear();
+        tracepointlayer.getSource().clear();
         return;
     } else {
         if ($(".fa-square").length==0) {
@@ -180,19 +183,23 @@ function requestJY() {
         dataType: "json",
         success: function (data) {
             if (data.r == "0") {
-                $("#histrorysearch .row div:eq(1)").text("");
-                $("#histrorysearch .row:eq(2) div:eq(1)").html("");
+                $("#histrorysearch .row:eq(1) div:eq(1)").text("");
+                $("#histrorysearch .row:eq(2) div:eq(1) ul").html("");
                 $("#histrorysearch .bh").val("");
+                $("#histrorysearch .leixing").val("");
                 var name = "";
                 var bh = "";
+                var leixing = "";
                 $.each(data.result, function (i, item) {
                     name += (name.indexOf(item.XM) < 0) ? " " + item.XM : "";
-                    $("#histrorysearch .row:eq(2) div:eq(1)").append(item.DevType);
+                    $("#histrorysearch .row:eq(2) div:eq(1) ul").append("<li><div class='device" + item.DevType + "' title='" + typename[item.DevType-1] + "' ></div></li>");
                     bh += (i == 0) ? item.Devid : "," + item.Devid;
+                    leixing += (i == 0) ? item.DevType : "," + item.DevType;
                     console.debug(bh);
                 });
                 $("#histrorysearch .row:eq(1) div:eq(1)").text(name);
                 $("#histrorysearch .bh").val(bh);
+                $("#histrorysearch .leixing").val(leixing);
             }
         },
         error: function (msg) {
@@ -235,7 +242,8 @@ $(document).on('click.bs.carousel.data-api', '#cz-cx', function (e) {
     var data = {
         deviid: $("#histrorysearch .bh").val(),
         requesttype: "轨迹查询",
-        date: $(".start_form_datetime").val()
+        date: $(".start_form_datetime").val(),
+        detype: $("#histrorysearch .leixing").val()
     }
     $.ajax({
         type: "POST",
@@ -243,9 +251,7 @@ $(document).on('click.bs.carousel.data-api', '#cz-cx', function (e) {
         data: data,
         dataType: "json",
         success: function (data) {
-            if (data.r == "0") {
-
-            }
+            createTrace(data);
         },
         error: function (msg) {
             console.debug("错误:ajax");

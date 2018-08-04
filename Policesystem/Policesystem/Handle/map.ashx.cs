@@ -54,6 +54,7 @@ namespace Policesystem.Handle
                         sqltext.Append("SELECT  g.IsOnline, u.XM,d.DevType,u.BMDM,e.BMJC,g.OnlineTime,d.DevId,u.JYBH FROM [ACL_USER] U LEFT JOIN Device d  on U.JYBH = d.JYBH LEFT JOIN Entity e  on U.BMDM = e.BMDM LEFT JOIN Gps g on g.PDAID = d.DevId WHERE   g.IsOnline = " + status + " and e.BMJC is NOT NULL");
 
                     }
+                    sqltext.Append(searchcondition + " ORDER BY u.JYBH");
 
                     goto end;
                 }
@@ -69,6 +70,7 @@ namespace Policesystem.Handle
                         sqltext.Append("WITH childtable(BMMC,BMDM,SJBM) as (SELECT BMMC,BMDM,SJBM FROM [Entity] WHERE SJBM= '" + ssdd + "' UNION ALL SELECT A.BMMC,A.BMDM,A.SJBM FROM [Entity] A,childtable b where a.SJBM = b.BMDM ) SELECT  g.IsOnline, u.XM,d.DevType,u.BMDM,e.BMJC,g.OnlineTime,d.DevId,u.JYBH FROM [ACL_USER] U LEFT JOIN Device d  on U.JYBH = d.JYBH LEFT JOIN Entity e  on U.BMDM = e.BMDM LEFT JOIN Gps g on g.PDAID = d.DevId WHERE e.BMDM in (SELECT BMDM from childtable) and  g.IsOnline = " + status + " and e.BMJC is NOT NULL");
 
                     }
+                    sqltext.Append(searchcondition + " ORDER BY u.JYBH");
 
                     goto end;
                 }
@@ -82,6 +84,7 @@ namespace Policesystem.Handle
                     sqltext.Append("SELECT  g.IsOnline, u.XM,d.DevType,u.BMDM,e.BMJC,g.OnlineTime,d.DevId,u.JYBH FROM [ACL_USER] U LEFT JOIN Device d  on U.JYBH = d.JYBH LEFT JOIN Entity e  on U.BMDM = e.BMDM LEFT JOIN Gps g on g.PDAID = d.DevId WHERE e.BMDM ='"+sszd+"' and  g.IsOnline = " + status + " and e.BMJC is NOT NULL");
 
                 }
+                sqltext.Append(searchcondition + " ORDER BY u.JYBH");
 
                 goto end;
 
@@ -149,13 +152,15 @@ namespace Policesystem.Handle
         轨迹查询:
             string sDate = context.Request.Form["date"];
             string Devid = context.Request.Form["deviid"];
+            string detype = context.Request.Form["detype"];
             string[] sArray = Devid.Split(',');
+            string[] dArray = detype.Split(',');
             StringBuilder json = new StringBuilder();
             DataTable dtt;
             json.Append("[");
             for (int i1 = 0; i1 < sArray.Length; i1++)
             {              
-                json.Append("{\"Name\":");
+              
                 if (i1 > 0)
                 {
                     json.Append(',');
@@ -165,7 +170,13 @@ namespace Policesystem.Handle
                 json.Append(sArray[i1]);
                 json.Append('"');
                 json.Append(',');
-                searchcondition = "SELECT lo,la FROM [Gps] where  QQSJ >= '"+ sDate + " 00:00:00' and  QQSJ <= '"+ sDate + " 23:59:59'";
+                json.Append("\"type\":");
+                json.Append('"');
+                json.Append(dArray[i1]);
+                json.Append('"');
+                json.Append(',');
+                //searchcondition = "SELECT top 1000 lo,la,SendTime QQSJ FROM [HistoryGps" + sDate.Substring(2, 2) + sDate.Substring(5, 2) + "] where PDAID ='57620086'  order by QQSJ";
+                searchcondition = "SELECT lo,la,SendTime QQSJ FROM [HistoryGps"+sDate.Substring(2,2)+ sDate.Substring(5, 2) + "] where PDAID ='" + sArray[i1] + "' and SendTime >= '" + sDate + " 00:00:00' and  SendTime <= '" + sDate + " 23:59:59' order by SendTime";
                 dtt = SQLHelper.ExecuteRead(CommandType.Text, searchcondition.ToString(), "DB");
                 json.Append(JSON.DatatableToJS(dtt, "").ToString());
 

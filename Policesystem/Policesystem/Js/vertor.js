@@ -3,34 +3,134 @@
 });
 var offset = { x: 0.006641, y: 0.160775 }; //28.6699850000,121.5158010000---28.50921,121.50916
 
-
 var vectorSourcejwt = new ol.source.Vector({
     features: [] //add an array of features
 });
-
 var vectorSourcedjj = new ol.source.Vector({
     features: [] //add an array of features
 });
-
-
-
 var vectorLayer = new ol.layer.Vector({
     source: vectorSource,
     title: '车载视频',
     visible: true
 });
-
 var vectorLayerjwt = new ol.layer.Vector({
     source: vectorSourcejwt,
     title: '警务通',
     visible: true
 });
-
 var vectorLayerdjj = new ol.layer.Vector({
     source: vectorSourcedjj,
     title: '对讲机',
     visible: true
 });
+
+var traceColors = ["#f2ab22", "#0084ff", "#b45538", "#091e3d"]
+var arrow = "../img/arrow.png";
+
+//标记数据集
+var tracesource = new ol.source.Vector();
+//获取样式
+var styleFunction = function (feature,color) {
+    var geometry = feature.getGeometry();
+    //线段样式
+    var styles = [
+    new ol.style.Style({
+        fill: new ol.style.Fill({
+            color: color
+        }),
+        stroke: new ol.style.Stroke({
+            lineDash: [1, 3, 5],
+            width: 2,
+            color: color
+        })
+    })
+    ];
+    //箭头样式
+    geometry.forEachSegment(function (start, end) {
+        var arrowLonLat = [(end[0] + start[0]) / 2, (end[1] + start[1]) / 2];
+        var dx = end[0] - start[0];
+        var dy = end[1] - start[1];
+        var rotation = Math.atan2(dy, dx);
+        styles.push(new ol.style.Style({
+            geometry: new ol.geom.Point(arrowLonLat),
+            image: new ol.style.Icon({
+                src: arrow,
+                anchor: [0.75, 0.5],
+                rotateWithView: true,
+                rotation: -rotation
+            })
+        }));
+    });
+    return styles;
+};
+
+//标记层
+var tracepointlayer = new ol.layer.Vector({
+    source: new ol.source.Vector()
+});
+
+//标记点集
+var tracevector = new ol.layer.Vector({
+    source: tracesource
+});
+
+
+function createTrace(data) {
+    tracevector.getSource().clear();
+    tracepointlayer.getSource().clear();
+    var divideNum,textcontent;
+    for (var n = 0; n < data.length; n++) {
+
+        if (data[n].data.length == 0) continue;
+    
+        var geometrytrace = new ol.geom.LineString();
+        var feature = new ol.Feature({
+            geometry: geometrytrace
+        });
+        divideNum = Math.ceil(data[n].data.length / 20);
+        for (var i = 0; i < data[n].data.length; i++) {
+            var coordinate = [parseFloat(data[n].data[i].la), parseFloat(data[n].data[i].lo)];
+            geometrytrace.appendCoordinate(ol.proj.transform(coordinate, 'EPSG:4326', 'EPSG:3857'));
+            // 创建一个Feature，并设置好在地图上的位置
+           
+            if (i % divideNum != 0) {
+                continue;
+            }
+            textcontent = Math.ceil(i/ divideNum).toString();
+            var anchor = new ol.Feature({
+                geometry: new ol.geom.Point(ol.proj.transform(coordinate, 'EPSG:4326', 'EPSG:3857'))
+            });
+            // 设置样式，在样式中就可以设置图标
+            anchor.setStyle(new ol.style.Style({
+                image: new ol.style.Circle({
+                    radius: 10,
+                    stroke: new ol.style.Stroke({
+                        color: '#fff'
+                    }),
+                    fill: new ol.style.Fill({
+                        color: traceColors[n]
+                    })
+
+                }),
+                text: new ol.style.Text({ //文本样式
+                    font: '12px Calibri,sans-serif',
+                    fill: new ol.style.Fill({
+                        color: '#fff'
+                    }),
+                    text: textcontent
+                })
+            }));
+            // 添加到之前的创建的layer中去
+           tracepointlayer.getSource().addFeature(anchor);
+        }
+        feature.setStyle(styleFunction(feature, traceColors[n]));
+        tracesource.addFeature(feature);
+
+    }
+   
+}
+
 
 
 //定位层
@@ -48,7 +148,9 @@ map.addLayer(
         layers: [
            vectorLayer,
            vectorLayerjwt,
-           vectorLayerdjj
+           vectorLayerdjj,
+           tracevector,
+           tracepointlayer
         ]
     }));
 

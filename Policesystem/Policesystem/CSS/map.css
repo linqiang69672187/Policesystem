@@ -277,6 +277,7 @@ ul {
   width:200px;
   height:25px;
   text-align:left;
+  display:inline;
 }
 #histrorysearch .row:nth-child(2){
     margin-top:30px;
@@ -413,4 +414,38 @@ background-color: #213366 !important;
 }
 .bh{
     display:none;
+}
+.device1, .device2, .device4, .device5, .device6, .device7, .device8 {
+    height: 12px !important;
+    width: 12px !important;
+    display:inline;
+    cursor:pointer;
+}
+ .device3{
+   height: 12px !important;
+    width: 14px !important;
+   cursor:pointer;
+ }
+.device1,.device7,.device8{ 
+        background:transparent url('../Image/deviceicologo.png') no-repeat scroll 0px 0px;
+}
+.device2{
+       background:transparent url('../Image/deviceicologo.png') no-repeat scroll -80px 0px;
+      
+}
+.device3{
+     background:transparent url('../Image/deviceicologo.png') no-repeat scroll -61px 0px;
+}
+.device4{
+       background:transparent url('../Image/deviceicologo.png') no-repeat scroll -48px 0px;
+}
+.device5{
+       background:transparent url('../Image/deviceicologo.png') no-repeat scroll -18px 0px;
+}
+.device6{
+       background:transparent url('../Image/deviceicologo.png') no-repeat scroll -32px 0px;
+}
+#histrorysearch ul{
+    margin-left: -40px;
+    margin-top: 3px;
 }

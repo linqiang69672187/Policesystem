@@ -146,6 +146,7 @@
     <Content Include="Image\bannar-time-bg.png" />
     <Content Include="Image\datamanagement_listbg.png" />
     <Content Include="Image\datamanagermentbg.jpg" />
+    <Content Include="Image\deviceicologo.png" />
     <Content Include="Image\entitylist.png" />
     <Content Include="Image\indexywxt_bg.png" />
     <Content Include="Image\index_bz.png" />
@@ -163,6 +164,7 @@
     <Content Include="img\1.png" />
     <Content Include="img\11.jpg" />
     <Content Include="img\11.png" />
+    <Content Include="img\arrow.png" />
     <Content Include="img\bg-policeman-selected.png" />
     <Content Include="img\big-cloud-selected.png" />
     <Content Include="img\big-cloud.png" />
