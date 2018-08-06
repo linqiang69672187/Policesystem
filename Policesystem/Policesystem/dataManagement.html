@@ -8,6 +8,7 @@
 <body>
     <link href="Static_Seed_Project/css/bootstrap.min.css" rel="stylesheet">
     <link href="CSS/dataManagement.css" rel="stylesheet" />
+    <link href="CSS/bootstrap-datetimepicker.min.css" rel="stylesheet" />
     <div id="header"></div>
     <div class="row">
         <div class="col-md-3"><div><i class="fa fa-database" aria-hidden="true"></i><ul><li>7500</li><li>设备配发量</li><li>同比上周增加3%<i class="fa fa-arrow-up" aria-hidden="true"></i> </li></ul></div></div>
@@ -22,16 +23,24 @@
         <div class="date" ><input type="text" class=" start_form_datetime"><i class="fa fa-calendar"></i></div>
          <label>—</label>
          <div class="date"><input type="text" class=" end_form_datetime"><i class="fa fa-calendar"></i></div>
-         <div class="date search"><input type="text"  placeholder="输入关键字搜索" ><i class="fa fa-search" aria-hidden="true"></i></div>
+         <div class="date search"><input type="text"  placeholder="请输入设备或人员信息" ><i class="fa fa-search" aria-hidden="true"></i></div>
          </div>
         <div class="row">
         <label>单位:</label>
-        <div class="sentity"> <select id="dadui"><option>交警局</option></select></div>
-        <div class="sentity"> <select id="zhongdui"><option>所属中队</option></select></div>
+        <div class="sentity"> <select id="brigadeselect"><option value="all">全部</option></select></div>
+        <div class="sentity"> <select id="squadronselect"  disabled="disabled"><option value="all">全部</option></select></div>
         <label>  设备类型:</label>
-        <div class="sentity"><select id="suoshusb"><option>辅警通</option></select></div>
-        <div class="cell-button">查询</div>
-        <div class="cell-button">重置</div>
+        <div class="sentity">
+            <select id="deviceselect">
+                <option value="1">车载视频</option>
+                <option value="5">执法记录仪</option>
+                <option value="6">辅警通</option>
+                <option value="4">警务通</option>
+                <option value="3">拦截仪</option>
+                <option value="2">对讲机</option>
+            </select></div>
+        <div class="cell-button" id="requestbtn">查询</div>
+        <div class="cell-button" id="resetbtn">重置</div>
         </div>
         <div class="row">
         <div class="cell-button">导出</div>
@@ -148,6 +157,24 @@
       
     </tbody>
 </table>
+        </div>
+    </div>
+
+    <div class="modal fade custom-modal in" id="alertmodal" tabindex="-1" role="dialog" aria-labelledby="mydeleModeNo" style="display: none">
+        <div class="modal-backdrop fade in" style="height: 955px;z-index: -1;"></div>
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">告警</h4><input style="display:none;" />
+                </div>
+                <div class="modal-body">
+                    结束时间不能小于起始时间！
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary btn-qx" data-dismiss="modal">确定</button>
+                </div>
+            </div>
         </div>
     </div>
     <script src="comjs/jquery.js"></script>
