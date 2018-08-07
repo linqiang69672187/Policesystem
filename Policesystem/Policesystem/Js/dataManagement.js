@@ -122,15 +122,19 @@ function createTatolRS(data) {
     if (data.result[0] != "0" || data.result[0] != "" || data.result[4] != "" || data.result[4] != "0") {
         var intpf1 = parseInt(data.result[0]);
         var intpf2 = parseInt(data.result[4]);
-        var tbpf = (intpf1 - intpf2) * 100 / intpf1;
+        var tbpf = (intpf1 - intpf2) * 100 / intpf2;
+        $("#ulsbpf li:eq(0)").text(intpf1);
 
     }
 }
-
 function datecompare(end, start) {
     start = new Date(start).getTime();
     end = new Date(end).getTime();
     var time = 0
-        time = end - start;
-   return Math.floor(time / 86400000)+1;
-}
+    time = end - start;
+    return Math.floor(time / 86400000) + 1;
+};
+function formatFloat(value, y) {
+    var result = Math.floor((value) * Math.pow(10, y)) / Math.pow(10, y);
+    return result;
+};
