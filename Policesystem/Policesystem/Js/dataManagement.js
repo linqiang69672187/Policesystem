@@ -97,6 +97,7 @@ function loadTatolData() {
        endtime: $(".end_form_datetime").val(),
        hbbegintime: hbdatetime($(".start_form_datetime").val()),
        hbendtime: hbdatetime($(".end_form_datetime").val()),
+       dates: datecompare($(".end_form_datetime").val(), $(".start_form_datetime").val()),
        requesttype: "查询汇总"
    }
     $.ajax({
@@ -112,4 +113,12 @@ function loadTatolData() {
         }
     });
 
+}
+
+function datecompare(end, start) {
+    start = new Date(start).getTime();
+    end = new Date(end).getTime();
+    var time = 0
+        time = end - start;
+   return Math.floor(time / 86400000)+1;
 }
