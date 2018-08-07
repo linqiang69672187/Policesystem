@@ -165,6 +165,7 @@
     <Content Include="img\11.jpg" />
     <Content Include="img\11.png" />
     <Content Include="img\arrow.png" />
+    <Content Include="img\arrow1.png" />
     <Content Include="img\bg-policeman-selected.png" />
     <Content Include="img\big-cloud-selected.png" />
     <Content Include="img\big-cloud.png" />

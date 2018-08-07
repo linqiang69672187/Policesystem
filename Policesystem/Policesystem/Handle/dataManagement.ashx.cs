@@ -39,7 +39,7 @@ namespace Policesystem.Handle
             }
 
         cxhz:;
-          //  search = (search=="") ? " " : "  and DevId like '%" + search + "%'";
+            search = (search=="") ? " " : "  and DevId like '%" + search + "%'";
             if (ssdd == "all")
             {
                 sqltext.Append("SELECT sum(value) as [Value] from Alarm_EveryDayInfo where AlarmDay >='"+ begintime+ "' and  AlarmDay <='" + endtime + "' and AlarmType = 6 and DevType = " + type + search + "  UNION ALL ");
@@ -58,7 +58,7 @@ namespace Policesystem.Handle
 
         end:;
             DataTable dt = SQLHelper.ExecuteRead(CommandType.Text, sqltext.ToString(), "DB");
-
+            context.Response.Write(JSON.DatatableToJson(dt, ""));
 
         }
 

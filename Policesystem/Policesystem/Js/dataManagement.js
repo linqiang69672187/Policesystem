@@ -89,7 +89,7 @@ $(document).on('click.bs.carousel.data-api', '#requestbtn', function (e) {
 function loadTatolData() {
     var data =
    {
-       search: $(".seach-box input").val(),
+       search: $(".search input").val(),
        type: $("#deviceselect").val(),
        ssdd: $("#brigadeselect").val(),
        sszd: $("#squadronselect").val(),
@@ -106,13 +106,25 @@ function loadTatolData() {
         data: data,
         dataType: "json",
         success: function (data) {
-          
+            if (data.r=="0"){
+                createTatolRS(data);
+            }
+   
         },
         error: function (msg) {
             console.debug("错误:ajax");
         }
     });
 
+}
+
+function createTatolRS(data) {
+    if (data.result[0] != "0" || data.result[0] != "" || data.result[4] != "" || data.result[4] != "0") {
+        var intpf1 = parseInt(data.result[0]);
+        var intpf2 = parseInt(data.result[4]);
+        var tbpf = (intpf1 - intpf2) * 100 / intpf1;
+
+    }
 }
 
 function datecompare(end, start) {
