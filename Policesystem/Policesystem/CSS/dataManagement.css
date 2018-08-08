@@ -226,3 +226,11 @@ border-bottom-width:0;
 .modal-dialog{
 width:400px;
 }
+.fa-arrow-up{
+    color:#F8DE43 !important;
+    display:inline-block;
+}
+.fa-arrow-down{
+    color:#FF0000 !important;
+    display:inline-block;
+}

@@ -1,5 +1,7 @@
-﻿$("#header").load('top.html', function () { });
-var entitydata;
+﻿var entitydata;
+var table;
+
+$("#header").load('top.html', function () { });
 function transferDate(date) {
     // 年  
     var year = date.getFullYear();
@@ -117,15 +119,84 @@ function loadTatolData() {
     });
 
 }
-
 function createTatolRS(data) {
-    if (data.result[0] != "0" || data.result[0] != "" || data.result[4] != "" || data.result[4] != "0") {
-        var intpf1 = parseInt(data.result[0]);
-        var intpf2 = parseInt(data.result[4]);
+    //配发量
+    if (data.result[0].Value != "0" && data.result[0].Value != "" && data.result[4].Value != "" && data.result[4].Value != "0") {
+        var intpf1 = parseInt(data.result[0].Value);
+        var intpf2 = parseInt(data.result[4].Value);
         var tbpf = (intpf1 - intpf2) * 100 / intpf2;
         $("#ulsbpf li:eq(0)").text(intpf1);
+        if (tbpf < 0) {
+            $("#ulsbpf li:eq(2)").html("同比上周减少" + formatFloat(tbpf,1) + "%<i class='fa fa-arrow-down' aria-hidden='true'>");
+        }
+        else
+        {
+            $("#ulsbpf li:eq(2)").html("同比上周增加" + formatFloat(tbpf, 1) + "%<i class='fa fa-arrow-up' aria-hidden='true'>");
+        }
+    }
+    else
+    {
+        $("#ulsbpf li:eq(0)").text("0");
+        $("#ulsbpf li:eq(2)").html("同比上周减少 --%");
 
     }
+    //在线时长
+    if (data.result[1].Value != "0" && data.result[1].Value != "" && data.result[5].Value != "" && data.result[5].Value != "0") {
+        var intpf1 = parseInt(data.result[1].Value);
+        var intpf2 = parseInt(data.result[5].Value);
+        var tbpf = (intpf1 - intpf2) * 100 / intpf2;
+        $("#ulsysc li:eq(0)").text(formatFloat(intpf1 / 3600,1)+"h");
+        if (tbpf < 0) {
+            $("#ulsysc li:eq(2)").html("同比上周减少" + formatFloat(tbpf, 1) + "%<i class='fa fa-arrow-down' aria-hidden='true'>");
+        }
+        else {
+            $("#ulsysc li:eq(2)").html("同比上周增加" + formatFloat(tbpf, 1) + "%<i class='fa fa-arrow-up' aria-hidden='true'>");
+        }
+    }
+    else {
+        $("#ulsysc li:eq(0)").text("0");
+        $("#ulsysc li:eq(2)").html("同比上周 --%");
+
+    }
+    //设备使用数量
+    if (data.result[2].Value != "0" && data.result[2].Value != "" && data.result[6].Value != "" && data.result[6].Value != "0") {
+        var intpf1 = parseInt(data.result[2].Value);
+        var intpf2 = parseInt(data.result[6].Value);
+        var tbpf = (intpf1 - intpf2) * 100 / intpf2;
+        $("#ulsysl li:eq(0)").text(intpf1);
+        if (tbpf < 0) {
+            $("#ulsysl li:eq(2)").html("同比上周减少" + formatFloat(tbpf, 1) + "%<i class='fa fa-arrow-down' aria-hidden='true'>");
+        }
+        else {
+            $("#ulsysl li:eq(2)").html("同比上周增加" + formatFloat(tbpf, 1) + "%<i class='fa fa-arrow-up' aria-hidden='true'>");
+        }
+    }
+    else {
+        $("#ulsysl li:eq(0)").text("0");
+        $("#ulsysl li:eq(2)").html("同比上周 --%");
+
+    }
+    //设备在线数
+    if (data.result[3].Value != "0" && data.result[3].Value != "" && data.result[7].Value != "" && data.result[7].Value != "0") {
+        var intpf1 = parseInt(data.result[3].Value);
+        var intpf2 = parseInt(data.result[7].Value);
+        var tbpf = (intpf1 - intpf2) * 100 / intpf2;
+        $("#ulzxsb li:eq(0)").text(intpf1);
+        if (tbpf < 0) {
+            $("#ulzxsb li:eq(2)").html("同比上周减少" + formatFloat(tbpf, 1) + "%<i class='fa fa-arrow-down' aria-hidden='true'>");
+        }
+        else {
+            $("#ulzxsb li:eq(2)").html("同比上周增加" + formatFloat(tbpf, 1) + "%<i class='fa fa-arrow-up' aria-hidden='true'>");
+        }
+    }
+    else {
+        $("#ulzxsb li:eq(0)").text("0");
+        $("#ulzxsb li:eq(2)").html("同比上周 --%");
+
+    }
+
+
+
 }
 function datecompare(end, start) {
     start = new Date(start).getTime();
@@ -138,3 +209,87 @@ function formatFloat(value, y) {
     var result = Math.floor((value) * Math.pow(10, y)) / Math.pow(10, y);
     return result;
 };
+
+function createDataTable() {
+
+    var columns = [
+                      { "data": null },
+                      { "data": "Entity" },
+                      { "data": "column1" },
+                      { "data": "column2" },
+                      { "data": "column3" },
+                      { "data": "column4" },
+                      { "data": "column5" },
+                      { "data": "column6" },
+                      { "data": "column7" },
+                      { "data": "column8" },
+                      { "data": "column9", "orderable": false },
+                      { "data": "column10" }
+    ];
+
+
+    table = $('#search-result-table')
+       .on('error.dt', function (e, settings, techNote, message) {
+         })
+         .on('xhr.dt', function (e, settings, json, xhr) {
+         })
+
+        .DataTable({
+            ajax: {
+                url: "../Handle/dataManagement.ashx",
+                type: "POST",
+                data: function () {
+                    return data = {
+                        search: $(".search input").val(),
+                        type: $("#deviceselect").val(),
+                        ssdd: $("#brigadeselect").val(),
+                        sszd: $("#squadronselect").val(),
+                        begintime: $(".start_form_datetime").val(),
+                        endtime: $(".end_form_datetime").val(),
+                        dates: datecompare($(".end_form_datetime").val(), $(".start_form_datetime").val()),
+                        ssddtext: $("#brigadeselect").find("option:selected").text(),
+                        sszdtext:$("#squadronselect").find("option:selected").text(),
+                        requesttype: "查询报表"
+                    }
+                }
+
+            },
+            Paginate: true,
+            pageLength: 10,
+            Processing: true, //DataTables载入数据时，是否显示‘进度’提示  
+            serverSide: false,   //服务器处理
+            responsive: true,
+            paging: true,
+            autoWidth: true,
+
+            "order": [],
+            columns: columns,
+            columnDefs: [
+                      {
+                          targets: 0,
+                          render: function (a, b, c, d) {
+                              var startIndex = d.settings._iDisplayStart;
+                              return startIndex + d.row + 1;
+
+                          }
+                      }
+            ],
+            buttons: [],
+            "language": {
+                "lengthMenu": "_MENU_每页",
+                "zeroRecords": "没有找到记录",
+                "info": "第 _PAGE_ 页 ( 总共 _PAGES_ 页 )",
+                "infoEmpty": "无记录",
+                "infoFiltered": "(从 _MAX_ 条记录过滤)",
+                "search": "查找设备:",
+                "paginate": {
+                    "previous": "上一页",
+                    "next": "下一页"
+                }
+            },
+
+            dom: "" + "t" + "<'row' p>B",
+
+            initComplete: function () {}
+        });
+}
