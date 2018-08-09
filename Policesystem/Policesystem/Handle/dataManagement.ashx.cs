@@ -75,10 +75,24 @@ namespace Policesystem.Handle
                 sqltext.Append("select COUNT(b.sz) as value from (SELECT  (CASE WHEN sum(a.[Value]) > 1800*" + dates + " THEN 1 ELSE 0 END) AS sz FROM [Alarm_EveryDayInfo] as a WHERE Entity ='" + sszd + "' and  AlarmDay >='" + hbbegintime + "' and  AlarmDay <='" + hbendtime + "' and a.AlarmType = 1 and DevType = " + type + search + " GROUP BY a.DevId having (CASE WHEN sum(a.[Value]) > 1000 THEN 1 ELSE 0 END)=1 ) as b ");
                 goto end;
 
+        cxbb:;
+            //string ssdd1 = context.Request.Form["ssdd1"];
+            //search = (search == "") ? " " : "  and DevId like '%" + search + "%'";
+            //if (ssdd == "all")
+            //{
+            //    sqltext.Clear();
+            //    string[] eArray = ssdd1.Split(',');
+            //    for (int i1 = 0; i1 < eArray.Length; i1++)
+            //    {
+            //        sqltext.Append("WITH childtable(BMMC,BMDM,SJBM) as (SELECT BMMC,BMDM,SJBM FROM [Entity] WHERE SJBM= '"+ eArray[i1] + "' OR BMDM = '"+ eArray[i1] + "' UNION ALL SELECT A.BMMC,A.BMDM,A.SJBM FROM [Entity] A,childtable b where a.SJBM = b.BMDM ) SELECT * FROM [Alarm_EveryDayInfo] where   Entity in (SELECT BMDM from childtable) ");
 
 
+            //    }
 
-        end:;
+            //}
+
+
+            end:;
             DataTable dt = SQLHelper.ExecuteRead(CommandType.Text, sqltext.ToString(), "DB");
             context.Response.Write(JSON.DatatableToJson(dt, ""));
 

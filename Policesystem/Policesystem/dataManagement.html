@@ -9,6 +9,7 @@
     <link href="Static_Seed_Project/css/bootstrap.min.css" rel="stylesheet">
     <link href="CSS/dataManagement.css" rel="stylesheet" />
     <link href="CSS/bootstrap-datetimepicker.min.css" rel="stylesheet" />
+    <link href="CSS/jquery.dataTables.css" rel="stylesheet" />
     <div id="header"></div>
     <div class="row">
         <div class="col-md-3"><div><i class="fa fa-database" aria-hidden="true"></i><ul id="ulsbpf"><li>0</li><li>设备配发量</li><li>同比上周--% </li></ul></div></div>
@@ -23,7 +24,7 @@
         <div class="date" ><input type="text" class=" start_form_datetime"><i class="fa fa-calendar"></i></div>
          <label>—</label>
          <div class="date"><input type="text" class=" end_form_datetime"><i class="fa fa-calendar"></i></div>
-         <div class="date search"><input type="text"  placeholder="请输入设备或人员信息" ><i class="fa fa-search" aria-hidden="true"></i></div>
+         <div class="date search"><input type="text"  placeholder="请输入设备编号" ><i class="fa fa-search" aria-hidden="true"></i></div>
          </div>
         <div class="row">
         <label>单位:</label>
@@ -48,7 +49,7 @@
         <div class="cell-button shujudiv"><ul id="shujuxiang"><li><i class="fa fa-square-o" aria-hidden="true"></i>全选</li><li><i class="fa fa-check-square-o" aria-hidden="true"></i>序号</li><li><i class="fa fa-check-square-o" aria-hidden="true"></i>操作</li></ul></div> 
         </div>
         <div class="row">
-            <table class="table table-striped dataTables-example" id="search-result-table">
+            <table  id="search-result-table">
                 <thead>
                     <tr>
                         <th></th>
@@ -149,6 +150,7 @@
     <script src="comjs/jquery.js"></script>
     <script src="comjs/jquery.cookie.js"></script>
     <script src="comjs/bootstrap.min.js"></script>
+    <script src="comjs/jquery.dataTables.js"></script>
     <script src="comjs/bootstrap-datetimepicker.js"></script>
     <script src="Js/dataManagement.js"></script>
 </body>

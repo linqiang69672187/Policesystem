@@ -87,6 +87,7 @@ $(document).on('click.bs.carousel.data-api', '#requestbtn', function (e) {
         return;
     };
     loadTatolData();//加载汇总数
+    createDataTable();
 });
 function loadTatolData() {
     var data =
@@ -210,6 +211,16 @@ function formatFloat(value, y) {
     return result;
 };
 
+function eachbrigadeselect() {
+    var entitys="";
+    $("#brigadeselect option").each(function (index, el) {
+        if (index > 0) {
+            entitys += (index > 1) ? ","+($(this).val()) : $(this).val()
+        }
+    });
+    return entitys;
+}
+
 function createDataTable() {
 
     var columns = [
@@ -244,6 +255,7 @@ function createDataTable() {
                         type: $("#deviceselect").val(),
                         ssdd: $("#brigadeselect").val(),
                         sszd: $("#squadronselect").val(),
+                        ssdd1: eachbrigadeselect(),
                         begintime: $(".start_form_datetime").val(),
                         endtime: $(".end_form_datetime").val(),
                         dates: datecompare($(".end_form_datetime").val(), $(".start_form_datetime").val()),
