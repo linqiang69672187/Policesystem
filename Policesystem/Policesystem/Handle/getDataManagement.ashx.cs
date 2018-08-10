@@ -242,37 +242,8 @@ namespace Policesystem.Handle
                 spdx += (double)视频大小 / 3600;
                 dr["设备使用率"] = (countdevices != 0) ? (deviceuse).ToString("0.00") + "%" : "-";
 
-
-
-                // int hbstatus = 0;//环比设备使用正常、周1次，月4次，季度12次
-
-                //var hbrows = from hbp in hbAlarm_EveryDayInfo.AsEnumerable()
-                //           where (hbp.Field<string>("ParentID") == dtEntity.Rows[i1]["ID"].ToString())
-                //           select hbp;
-                //foreach (var item in hbrows)
-                //{
-                //    if (item["在线时长"] is DBNull) { }
-                //    else
-                //    {
-                //       在线时长 += Convert.ToInt32(item["在线时长"]);
-                //       hbstatus += (Convert.ToInt32(item["在线时长"]) / statusvalue >= 1) ? 1 : 0;
-                //       hballstatu_device += (Convert.ToInt32(item["在线时长"]) / statusvalue >= 1) ? 1 : 0;
-                //    }
-
-                //}
-
-                // int hbcountdevices = hbrows.Count(); //环比设备总数
-                //hbdevicescount += hbcountdevices;
-                //  double hbdeviceuse = (double)hbstatus * 100 / (double)hbcountdevices; ;
-                //   string hb = (((deviceuse / hbdeviceuse) - 1) * 100).ToString("0.0") + "%";
-                //  dr["环比"] = (hb.Contains("数字")) ? "-" : hb;
                 dtreturns.Rows.Add(dr);
             }
-
-
-            // double hbhuizong = (double)hballstatu_device / (double)hbdevicescount;
-            // double huizong = (double)allstatu_device/  (double)devicescount;
-            //   string hbhb = (((hbhuizong / huizong) - 1) * 100).ToString("0.0") + "%";
             DataRow drtz = dtreturns.NewRow();
             drtz["序号"] = "汇总";
             drtz["所属大队"] = ddtitle;
@@ -291,62 +262,46 @@ namespace Policesystem.Handle
 
         警务通:
 
-            dtreturns.Columns.Add("单位名称");
-            dtreturns.Columns.Add("警员数");
-            dtreturns.Columns.Add("移动警务配发数量");
-            dtreturns.Columns.Add("移动警务处罚数今年");
-            dtreturns.Columns.Add("移动警务处罚数去年");
-            dtreturns.Columns.Add("移动警务处罚数同比");
-            dtreturns.Columns.Add("移动警务处罚占比今年");
-            dtreturns.Columns.Add("移动警务处罚占比去年");
-            dtreturns.Columns.Add("移动警务处罚占比同比");
-            dtreturns.Columns.Add("机器平均今年");
-            dtreturns.Columns.Add("机器平均去年");
-            dtreturns.Columns.Add("机器平均去年同比");
-            dtreturns.Columns.Add("人均今年");
-            dtreturns.Columns.Add("人均去年");
-            dtreturns.Columns.Add("人均去年同比");
-
+            dtreturns.Columns.Add("部门");
+            dtreturns.Columns.Add("设备配发数");
+            dtreturns.Columns.Add("处罚数");
+            dtreturns.Columns.Add("人均处罚量");
+            dtreturns.Columns.Add("查询量");
+            dtreturns.Columns.Add("设备平均处罚量");
+            dtreturns.Columns.Add("设备平均处罚量排序");
+            dtreturns.Columns.Add("无处罚量设备数");
+            dtreturns.Columns.Add("未使用设备数");
+            dtreturns.Columns.Add("无查询量数");
 
             DataTable Alarm_EveryMonthInfo = null; //每月告警
+            DataTable dtEntity = null;  //单位信息表
 
-            DataTable hbAlarm_EveryMonthInfo = null; //历史每月记录表
-            string[] sbdate = begintime.Split(new char[1] { '/' });
-            string[] sedate = endtime.Split(new char[1] { '/' });
-            int bdate = Convert.ToInt32(sbdate[0] + sbdate[1]);
-            int edate = Convert.ToInt32(sedate[0] + sedate[1]);
 
-            string[] shbbdate = hbbegintime.Split(new char[1] { '/' });
-            string[] shbedate = hbendtime.Split(new char[1] { '/' });
-            int hbbdate = Convert.ToInt32(shbbdate[0] + shbbdate[1]);
-            int hbedate = Convert.ToInt32(shbedate[0] + shbedate[1]);
 
 
             //所有大队
             if (ssdd == "all")
             {
+                Alarm_EveryMonthInfo = SQLHelper.ExecuteRead(CommandType.Text, "SELECT VALUE,AlarmType,Entity FROM [dbo].[Alarm_EveryDayInfo] where DevType=4 AND AlarmType<>6 AND AlarmDay >='" + begintime + "' AND AlarmDay <='" + endtime + "'", "Alarm_EveryDayInfo");
+                dtEntity = SQLHelper.ExecuteRead(CommandType.Text, "SELECT BMDM as ID,BMJC as Name,SJBM as ParentID,BMJB AS Depth from [Entity] a where [SJBM]  = '331000000000' and BMMC like '台州市交通警察支队直属%' ORDER BY Sort", "2");
 
-                Alarm_EveryMonthInfo = SQLHelper.ExecuteRead(CommandType.Text, "SELECT [UId],[DevType],st.[UserCount],[HandleCount],[DevCount],[Month],en.Name,DevCount FROM [StatementAnalysis] st inner join  Entity en on convert(varchar,en.ID) = st.UId where  st.Month >= " + bdate + " and st.Month <= " + edate + " and (en.Depth = 1 or en.Depth = 2) and en.id<>51 and [DevType]=" + type + "  order by en.Sort", "Alarm_EveryDayInfo");
-                hbAlarm_EveryMonthInfo = SQLHelper.ExecuteRead(CommandType.Text, "SELECT [UId],[DevType],st.[UserCount],[HandleCount],[DevCount],[Month],en.Name,DevCount FROM [StatementAnalysis] st inner join  Entity en on convert(varchar,en.ID) = st.UId where  st.Month >= " + hbbdate + " and st.Month <= " + hbedate + " and (en.Depth = 1 or en.Depth = 2) and en.id<>51 and [DevType]=" + type, "Alarm_EveryDayInfo");
                 goto jwttable;
             }
 
             if (sszd == "all")
             {
 
-                Alarm_EveryMonthInfo = SQLHelper.ExecuteRead(CommandType.Text, "SELECT [UId],[DevType],st.[UserCount],[HandleCount],[DevCount],[Month],en.Name,DevCount FROM [StatementAnalysis] st inner join  Entity en on convert(varchar,en.ID) = st.UId where  st.Month >= " + bdate + " and st.Month <= " + edate + " and (en.[ID] = " + ssdd + " or en.[ParentID] = " + ssdd + ") and [DevType]=" + type + " order by en.Sort", "Alarm_EveryDayInfo");
-                hbAlarm_EveryMonthInfo = SQLHelper.ExecuteRead(CommandType.Text, "SELECT [UId],[DevType],st.[UserCount],[HandleCount],[DevCount],[Month],en.Name,DevCount FROM [StatementAnalysis] st inner join  Entity en on convert(varchar,en.ID) = st.UId where  st.Month >= " + hbbdate + " and st.Month <= " + hbedate + " and (en.[ID] = " + ssdd + " or en.[ParentID] = " + ssdd + ") and [DevType]=" + type, "Alarm_EveryDayInfo");
-
+                Alarm_EveryMonthInfo = SQLHelper.ExecuteRead(CommandType.Text, "SELECT VALUE,AlarmType,Entity FROM [dbo].[Alarm_EveryDayInfo] where DevType=4 AND AlarmType<>6 AND AlarmDay >='" + begintime + "' AND AlarmDay <='" + endtime + "'", "Alarm_EveryDayInfo");
+                dtEntity = SQLHelper.ExecuteRead(CommandType.Text, "SELECT BMDM as ID,BMJC as Name,SJBM as ParentID,BMJB AS Depth from [Entity] a where [SJBM]  = '331000000000' and BMMC like '台州市交通警察支队直属%' ORDER BY Sort", "2");
                 goto jwttable;
             }
 
-            Alarm_EveryMonthInfo = SQLHelper.ExecuteRead(CommandType.Text, "SELECT [UId],[DevType],st.[UserCount],[HandleCount],[DevCount],[Month],en.Name,DevCount FROM [StatementAnalysis] st inner join  (SELECT de.Contacts,Contacts as Name,Sort FROM [Entity] en  inner join Device  de on de.EntityId = en.ID where en.ID =" + sszd + " and de.[DevType] = 4  union SELECT  convert(varchar,[ID]),Name,Sort  FROM [Entity] where ID = " + sszd + ") as en on st.UId=en.Contacts where  st.Month >= " + bdate + " and st.Month <= " + edate + " and [DevType]=" + type + " order by en.Sort", "Alarm_EveryDayInfo");
-            hbAlarm_EveryMonthInfo = SQLHelper.ExecuteRead(CommandType.Text, "SELECT [UId],[DevType],st.[UserCount],[HandleCount],[DevCount],[Month],en.Name,DevCount FROM [StatementAnalysis] st inner join  (SELECT de.Contacts,Contacts as Name,Sort FROM [Entity] en  inner join Device  de on de.EntityId = en.ID where en.ID =" + sszd + " and de.[DevType] = 4  union SELECT  convert(varchar,[ID]),Name,Sort  FROM [Entity] where ID = " + sszd + ") as en on st.UId=en.Contacts where  st.Month >= " + hbbdate + " and st.Month <= " + hbedate + " and [DevType]=" + type + " order by en.Sort", "Alarm_EveryDayInfo");
+               Alarm_EveryMonthInfo = SQLHelper.ExecuteRead(CommandType.Text, "SELECT VALUE,AlarmType,Entity FROM [dbo].[Alarm_EveryDayInfo] where DevType=4 AND AlarmType<>6 AND AlarmDay >='" + begintime + "' AND AlarmDay <='" + endtime + "' and Entity ='"+sszd+"'", "Alarm_EveryDayInfo");
 
 
 
         jwttable:
-            for (int i1 = 0; i1 < Alarm_EveryMonthInfo.Rows.Count; i1++)
+            for (int i1 = 0; i1 < dtEntity.Rows.Count; i1++)
             {
                 DataRow dr = dtreturns.NewRow();
 
@@ -362,41 +317,6 @@ namespace Policesystem.Handle
                 dr["机器平均今年"] = devconver;
                 string userconver = (Alarm_EveryMonthInfo.Rows[i1]["UserCount"].ToString() == "0") ? "-" : ((double)Convert.ToInt32(Alarm_EveryMonthInfo.Rows[i1]["HandleCount"].ToString()) / (double)Convert.ToInt32(Alarm_EveryMonthInfo.Rows[i1]["UserCount"].ToString())).ToString("0.0");
                 dr["人均今年"] = userconver;
-
-                var rows = from p in hbAlarm_EveryMonthInfo.AsEnumerable()
-                           where (p.Field<string>("UId") == Alarm_EveryMonthInfo.Rows[i1]["UId"].ToString())
-                           select p;
-                if (rows.Count() == 0)
-                {
-                    dr["移动警务处罚数去年"] = "-";
-                    dr["移动警务处罚数同比"] = "-";
-                    dr["机器平均去年"] = "-";
-                    dr["机器平均去年同比"] = "-";
-                    dr["人均去年"] = "-";
-                    dr["人均去年同比"] = "-";
-                }
-                foreach (var item in rows)
-                {
-                    if (item["HandleCount"] is DBNull) { }
-                    else
-                    {
-                        dr["移动警务处罚数去年"] = item["HandleCount"].ToString();
-                        dr["移动警务处罚数同比"] = (item["HandleCount"].ToString() == "0") ? "-" : (((double)Convert.ToInt32(Alarm_EveryMonthInfo.Rows[i1]["HandleCount"].ToString()) / (double)Convert.ToInt32(item["HandleCount"].ToString()) - 1) * 100).ToString("0.00") + "%";
-
-                        string hbdevconver = (item["DevCount"].ToString() == "0") ? "-" : ((double)Convert.ToInt32(item["HandleCount"].ToString()) / (double)Convert.ToInt32(item["DevCount"].ToString())).ToString("0.0");
-                        dr["机器平均去年"] = hbdevconver;
-                        dr["机器平均去年同比"] = (hbdevconver == "0.0" || hbdevconver == "-" || devconver == "-") ? "-" : (((double)Convert.ToDouble(devconver) / (double)Convert.ToDouble(hbdevconver) - 1) * 100).ToString("0.00") + "%";
-
-                        string hbuserconver = (item["UserCount"].ToString() == "0") ? "-" : ((double)Convert.ToInt32(item["HandleCount"].ToString()) / (double)Convert.ToInt32(item["UserCount"].ToString())).ToString("0.0");
-                        dr["人均去年"] = hbuserconver;
-                        dr["人均去年同比"] = (hbuserconver == "0.0" || hbuserconver == "-" || userconver == "-") ? "-" : (((double)Convert.ToDouble(userconver) / (double)Convert.ToDouble(hbuserconver) - 1) * 100).ToString("0.00") + "%";
-
-
-
-
-                    }
-
-                }
 
 
                 dtreturns.Rows.Add(dr);
