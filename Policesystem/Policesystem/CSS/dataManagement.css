@@ -181,23 +181,24 @@ color:#fff;
 font-size:14px;
 cursor:pointer;
 }
-.row>table th{
+.row>table th,#search-result-table th{
 font-weight:400;
 padding:0 5px;
 background-color:#116bf2;
 text-align:center;
 height:25px;
 }
-.row>table tr:nth-child(2n+1){
+.row>table tr:nth-child(2n+1),#search-result-table tr:nth-child(2n+1){
 font-weight:400;
 background-color:#13204d;
-text-align:left;
+text-align:center;
 height:22px;
+
 }
-.row>table tr:nth-child(2n){
+.row>table tr:nth-child(2n),#search-result-table tr:nth-child(2n){
 font-weight:400;
 background-color:#213366;
-text-align:left;
+text-align:center;
 height:22px;
 }
 .tablediv table {

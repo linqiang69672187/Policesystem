@@ -87,7 +87,12 @@ $(document).on('click.bs.carousel.data-api', '#requestbtn', function (e) {
         return;
     };
     loadTatolData();//加载汇总数
-    createDataTable();
+    if (!table) {
+        createDataTable();
+    } else {
+
+        $("#search-result-table").DataTable().ajax.reload();
+    }
 });
 function loadTatolData() {
     var data =
@@ -224,18 +229,18 @@ function eachbrigadeselect() {
 function createDataTable() {
 
     var columns = [
-                      { "data": null },
-                      { "data": "Entity" },
-                      { "data": "column1" },
-                      { "data": "column2" },
-                      { "data": "column3" },
-                      { "data": "column4" },
-                      { "data": "column5" },
-                      { "data": "column6" },
-                      { "data": "column7" },
-                      { "data": "column8" },
-                      { "data": "column9", "orderable": false },
-                      { "data": "column10" }
+                      { "data": "cloum1" },
+                      { "data": "cloum2" },
+                      { "data": "cloum3" },
+                      { "data": "cloum4" },
+                      { "data": "cloum5" },
+                      { "data": "cloum6" },
+                      { "data": "cloum7" },
+                      { "data": "cloum8" },
+                      { "data": "cloum9", "visible": false },
+                      { "data": "cloum10", "visible": false },
+                      { "data": "cloum11", "visible": false },
+                      { "data": null, "orderable": false }
     ];
 
 
@@ -243,11 +248,46 @@ function createDataTable() {
        .on('error.dt', function (e, settings, techNote, message) {
          })
          .on('xhr.dt', function (e, settings, json, xhr) {
+             switch ($("#deviceselect").val()) {
+                 case "1":   //车载视频
+
+                     table.column(8).visible(false);
+                     table.column(9).visible(false);
+                     table.column(10).visible(false);
+                     $('#search-result-table tr:eq(0) th:eq(0)').text("序号");
+                     $('#search-result-table tr:eq(0) th:eq(1)').text("部门");
+                     $('#search-result-table tr:eq(0) th:eq(2)').text("设备配发数（台）");
+                     $('#search-result-table tr:eq(0) th:eq(3)').text("在线时长（h）");
+                     $('#search-result-table tr:eq(0) th:eq(4)').text("设备使用数量（台）");
+                     $('#search-result-table tr:eq(0) th:eq(5)').text("未使用数量（台）");
+                     $('#search-result-table tr:eq(0) th:eq(6)').text("设备使用率（%）");
+                     $('#search-result-table tr:eq(0) th:eq(7)').text("使用率名次");
+                     break;
+                 case "4":  
+                     table.column(8).visible(true);
+                     table.column(9).visible(true);
+                     table.column(10).visible(true);
+                     $('#search-result-table tr:eq(0) th:eq(0)').text("序号");
+                     $('#search-result-table tr:eq(0) th:eq(1)').text("部门");
+                     $('#search-result-table tr:eq(0) th:eq(2)').text("设备配发数（台）");
+                     $('#search-result-table tr:eq(0) th:eq(3)').text("处罚量");
+                     $('#search-result-table tr:eq(0) th:eq(4)').text("人均处罚量");
+                     $('#search-result-table tr:eq(0) th:eq(5)').text("查询量");
+                     $('#search-result-table tr:eq(0) th:eq(6)').text("设备平均处罚量");
+                     $('#search-result-table tr:eq(0) th:eq(7)').text("设备平均处罚量排名");
+                     $('#search-result-table tr:eq(0) th:eq(8)').text("无处罚量设备（台）");
+                     $('#search-result-table tr:eq(0) th:eq(9)').text("未使用设备（台）");
+                     $('#search-result-table tr:eq(0) th:eq(10)').text("无查询量设备（台）");
+                     break;
+                 default:
+                     break;
+             }
+
          })
 
         .DataTable({
             ajax: {
-                url: "../Handle/dataManagement.ashx",
+                url: "../Handle/getDataManagement.ashx",
                 type: "POST",
                 data: function () {
                     return data = {
@@ -277,14 +317,10 @@ function createDataTable() {
             "order": [],
             columns: columns,
             columnDefs: [
-                      {
-                          targets: 0,
-                          render: function (a, b, c, d) {
-                              var startIndex = d.settings._iDisplayStart;
-                              return startIndex + d.row + 1;
-
-                          }
-                      }
+                     {
+                         targets:11,
+                         render: function (a, b, c, d) { var html = "<a  class=\'btn btn-sm btn-primary txzs-btn\' id='addedit' >查看详情</a>"; return html; }
+                     }
             ],
             buttons: [],
             "language": {
