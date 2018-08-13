@@ -94,6 +94,9 @@ $(document).on('click.bs.carousel.data-api', '#requestbtn', function (e) {
         $("#search-result-table").DataTable().ajax.reload();
     }
 });
+$(document).on('click.bs.carousel.data-api', '#addedit', function (e) {
+    $(".datadetail").modal("show");
+});
 function loadTatolData() {
     var data =
    {
@@ -256,10 +259,10 @@ function createDataTable() {
                      table.column(10).visible(false);
                      $('#search-result-table tr:eq(0) th:eq(0)').text("序号");
                      $('#search-result-table tr:eq(0) th:eq(1)').text("部门");
-                     $('#search-result-table tr:eq(0) th:eq(2)').text("设备配发数（台）");
+                     $('#search-result-table tr:eq(0) th:eq(2)').text("配发数");
                      $('#search-result-table tr:eq(0) th:eq(3)').text("在线时长（h）");
-                     $('#search-result-table tr:eq(0) th:eq(4)').text("设备使用数量（台）");
-                     $('#search-result-table tr:eq(0) th:eq(5)').text("未使用数量（台）");
+                     $('#search-result-table tr:eq(0) th:eq(4)').text("设备使用数量");
+                     $('#search-result-table tr:eq(0) th:eq(5)').text("未使用数量");
                      $('#search-result-table tr:eq(0) th:eq(6)').text("设备使用率（%）");
                      $('#search-result-table tr:eq(0) th:eq(7)').text("使用率名次");
                      break;
@@ -269,15 +272,15 @@ function createDataTable() {
                      table.column(10).visible(true);
                      $('#search-result-table tr:eq(0) th:eq(0)').text("序号");
                      $('#search-result-table tr:eq(0) th:eq(1)').text("部门");
-                     $('#search-result-table tr:eq(0) th:eq(2)').text("设备配发数（台）");
+                     $('#search-result-table tr:eq(0) th:eq(2)').text("配发数");
                      $('#search-result-table tr:eq(0) th:eq(3)').text("处罚量");
                      $('#search-result-table tr:eq(0) th:eq(4)').text("人均处罚量");
                      $('#search-result-table tr:eq(0) th:eq(5)').text("查询量");
                      $('#search-result-table tr:eq(0) th:eq(6)').text("设备平均处罚量");
-                     $('#search-result-table tr:eq(0) th:eq(7)').text("设备平均处罚量排名");
-                     $('#search-result-table tr:eq(0) th:eq(8)').text("无处罚量设备（台）");
-                     $('#search-result-table tr:eq(0) th:eq(9)').text("未使用设备（台）");
-                     $('#search-result-table tr:eq(0) th:eq(10)').text("无查询量设备（台）");
+                     $('#search-result-table tr:eq(0) th:eq(7)').text("平均处罚量排名");
+                     $('#search-result-table tr:eq(0) th:eq(8)').text("无处罚量设备");
+                     $('#search-result-table tr:eq(0) th:eq(9)').text("未使用设备");
+                     $('#search-result-table tr:eq(0) th:eq(10)').text("无查询量设备");
                      break;
                  default:
                      break;

@@ -71,66 +71,45 @@
             </table> 
         </div>
     </div>
-    <div class="datadetail">
-        <div><label>|一中队设备详情</label><i class="fa fa-close"></i></div>
-        <div>
-          <table>
-    <thead>
-        <tr>
-            <th>Code</th>
-            <th>Name</th>
-            <th>Price</th>
-            <th>Code</th>
-            <th>Name</th>
-            <th>Price</th>
-            <th>Code</th>
-            <th>Name</th>
-            <th>Price</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-            <td>001</td>
-            <td>name1</td>
-            <td>2323</td>
-            <td>001</td>
-            <td>name1</td>
-            <td>2323</td>
-            <td>001</td>
-            <td>name1</td>
-            <td>2323</td>
-        </tr>
-        <tr>
-            <td>002</td>
-            <td>name2</td>
-            <td>4612</td>
-            <td>001</td>
-            <td>name1</td>
-            <td>2323</td>
-        </tr>
-        <tr>
-            <td>003</td>
-            <td>name3</td>
-            <td>4612</td>
-            <td>001</td>
-            <td>name1</td>
-            <td>2323</td>
-        </tr>
-        <tr>
-            <td>004</td>
-            <td>name4</td>
-            <td>4612</td>
-            <td>001</td>
-            <td>name1</td>
-            <td>2323</td>
-        </tr>
-      
-    </tbody>
-</table>
+
+    <!--查看详情-->
+    <div class="modal fade custom-modal datadetail" id="myModalgr" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog" role="document" style="max-width:760px;width:100%;">
+            <div class="modal-content" style="max-width:760px;width:100%;">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModaltxzsLabel">设备详情</h4>
+                </div>
+                <div class="modal-body">
+                    <div id="txbox">
+                        <table class="table table-striped dataTables-example" id="detailgr-result-table" style="width:100%;">
+                            <thead>
+                                <tr>
+                                    <th>序号</th>
+                                    <th>大队</th>
+                                    <th>中队</th>
+                                    <th>设备编号</th>
+                                    <th>车辆号码</th>
+                                    <th>联系人</th>
+                                    <th>在线时长(小时)</th>
+                                    <th>设备状态</th>
+
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="search-result-flooterleft" style="margin-left:30px;width:640px">
+                    <label>统计周期:<span>0台</span></label>
+                    <label style="float:right;"><span></span></label>
+                </div>
+            </div>
         </div>
     </div>
 
-    <div class="modal fade custom-modal in" id="alertmodal" tabindex="-1" role="dialog" aria-labelledby="mydeleModeNo" style="display: none">
+  
+  <div class="modal fade custom-modal in" id="alertmodal" tabindex="-1" role="dialog" aria-labelledby="mydeleModeNo" style="display: none">
         <div class="modal-backdrop fade in" style="height: 955px;z-index: -1;"></div>
         <div class="modal-dialog" role="document">
             <div class="modal-content">
