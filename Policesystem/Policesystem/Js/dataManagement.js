@@ -1,6 +1,12 @@
 ﻿var entitydata;
 var table;
-
+var starttime;
+var endtime;
+var ssdd;
+var sszd;
+var search;
+var type;
+var ssddtext;
 $("#header").load('top.html', function () { });
 function transferDate(date) {
     // 年  
@@ -95,7 +101,17 @@ $(document).on('click.bs.carousel.data-api', '#requestbtn', function (e) {
     }
 });
 $(document).on('click.bs.carousel.data-api', '#addedit', function (e) {
+    var $doc = $(this).parents('tr');
+    //var data = $('#search-result-table').DataTable().row($doc).data();
+   // date = data["AlarmDay"];
+    $doc.addClass("trselect");
+    ssdd = $(this).attr("entityid");
+    ssddtext = $doc.find("td:eq(1)").text();
     $(".datadetail").modal("show");
+});
+$('.datadetail').on('hidden.bs.modal', function () {
+
+    $("#search-result-table").find(".trselect").removeClass("trselect"); //移除选择
 });
 function loadTatolData() {
     var data =
@@ -293,6 +309,12 @@ function createDataTable() {
                 url: "../Handle/getDataManagement.ashx",
                 type: "POST",
                 data: function () {
+                    starttime = $(".start_form_datetime").val();
+                    endtime = $(".end_form_datetime").val()
+                    ssdd = $("#brigadeselect").val();
+                    sszd = $("#squadronselect").val();
+                    search = $(".seach-box input").val();
+                    type = $("#deviceselect").val();
                     return data = {
                         search: $(".search input").val(),
                         type: $("#deviceselect").val(),
@@ -322,7 +344,7 @@ function createDataTable() {
             columnDefs: [
                      {
                          targets:11,
-                         render: function (a, b, c, d) { var html = "<a  class=\'btn btn-sm btn-primary txzs-btn\' id='addedit' >查看详情</a>"; return html; }
+                         render: function (a, b, c, d) { var html = "<a  class=\'btn btn-sm btn-primary txzs-btn\' id='addedit' entityid='" + c.cloum12 + "'  >查看详情</a>"; return html; }
                      }
             ],
             buttons: [],

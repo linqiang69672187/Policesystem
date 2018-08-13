@@ -67,6 +67,7 @@ namespace Policesystem.Handle
             dtreturns.Columns.Add("cloum9");
             dtreturns.Columns.Add("cloum10");
             dtreturns.Columns.Add("cloum11");
+            dtreturns.Columns.Add("cloum12");
             int days = Convert.ToInt16(context.Request.Form["dates"]);
             int statusvalue = 10;  //正常参考值
             int devicescount = 0;  //汇总设备总数
@@ -76,6 +77,7 @@ namespace Policesystem.Handle
             int wcxl = 0;   //无查询量设备数量
             int wcfl = 0;   //无处罚量设备数量
             int wsysb = 0;  //无使用设备数量
+            string bmdm = ""; //汇总的部门代码
             int allstatu_device = 0;  //汇总使用率不为空数量
             string ddtitle;//大队标题
 
@@ -94,7 +96,7 @@ namespace Policesystem.Handle
             //所有大队
             if (ssdd == "all")
             {
-
+                bmdm = "331000000000";
                 ddtitle = "台州交警局";
                 Alarm_EveryDayInfo = SQLHelper.ExecuteRead(CommandType.Text, "SELECT en.BMDM, en.SJBM as [ParentID],us.XM as [Contacts],de.[DevId],ala.在线时长,ala.[AlarmType] from (SELECT [DevId],[AlarmType],sum([Value]) as 在线时长 from [Alarm_EveryDayInfo]   where [AlarmType] <>6 and  [AlarmDay ] >='" + begintime + "' and [AlarmDay ] <='" + endtime + "'   group by [DevId],[AlarmType] ) as ala left join [Device] as de on de.[DevId] = ala.[DevId] left join [Entity] as en on en.[BMDM] = de.[BMDM] left join ACL_USER as us on de.JYBH = us.JYBH  where de.[DevType]=" + type, "Alarm_EveryDayInfo");
                 //  hbAlarm_EveryDayInfo = SQLHelper.ExecuteRead(CommandType.Text, "SELECT en.[ParentID],de.[Contacts],de.[DevId],ala.在线时长 from (SELECT [DevId]  ,sum([Value]) as 在线时长 from [Alarm_EveryDayInfo]   where [AlarmType] = 1 and  [AlarmDay ] >='" + hbbegintime + "' and [AlarmDay ] <='" + hbendtime + "'   group by [DevId] ) as ala left join [Device] as de on de.[DevId] = ala.[DevId] left join [Entity] as en on en.[ID] = de.[EntityId] where de.[DevType]=1", "Alarm_EveryDayInfo");
@@ -105,6 +107,7 @@ namespace Policesystem.Handle
             {
                 if (sszd == "all")
                 {
+                    bmdm = ssdd;
                     ddtitle = context.Request.Form["ssddtext"];
                     Alarm_EveryDayInfo = SQLHelper.ExecuteRead(CommandType.Text, "WITH childtable(BMMC,BMDM,SJBM) as (SELECT BMMC,BMDM,SJBM FROM [Entity] WHERE SJBM= '" + ssdd + "' OR BMDM = '"+ ssdd + "' UNION ALL SELECT A.BMMC,A.BMDM,A.SJBM FROM [Entity] A,childtable b where a.SJBM = b.BMDM ) SELECT en.BMDM, en.[BMDM] as ParentID,us.XM as [Contacts],de.[DevId],[AlarmType],ala.在线时长 from (SELECT [DevId],[AlarmType]  ,sum([Value]) as 在线时长 from [Alarm_EveryDayInfo]   where [AlarmType] <> 6 and  [AlarmDay ] >='" + begintime + "' and [AlarmDay ] <='" + endtime + "'   group by [DevId],[AlarmType]  ) as ala left join [Device] as de on de.[DevId] = ala.[DevId] left join [Entity] as en on en.[BMDM] = de.[BMDM] left join ACL_USER as us on de.JYBH = us.JYBH where de.[DevType]=" + type + " and de.BMDM in (select BMDM from childtable) ", "Alarm_EveryDayInfo");
                     //   hbAlarm_EveryDayInfo = SQLHelper.ExecuteRead(CommandType.Text, "WITH childtable(Name,ID,ParentID) as (SELECT Name,ID,ParentID FROM [Entity] WHERE id=" + ssdd + " UNION ALL SELECT A.[Name],A.[ID],A.[ParentID] FROM [Entity] A,childtable b where a.[ParentID] = b.[ID])SELECT convert(nvarchar(10),en.[ID]) as ParentID,de.[Contacts],de.[DevId],ala.在线时长 from (SELECT [DevId]  ,sum([Value]) as 在线时长 from [Alarm_EveryDayInfo]   where [AlarmType] = 1 and  [AlarmDay ] >='" + hbbegintime + "' and [AlarmDay ] <='" + hbendtime + "'   group by [DevId] ) as ala left join [Device] as de on de.[DevId] = ala.[DevId] left join [Entity] as en on en.[ID] = de.[EntityId] where de.[DevType]=1 and de.EntityId in (select ID from childtable)", "Alarm_EveryDayInfo");
@@ -114,6 +117,7 @@ namespace Policesystem.Handle
                 }
                 else
                 {
+                    bmdm = sszd;
                     ddtitle = context.Request.Form["sszdtext"];
                     Alarm_EveryDayInfo = SQLHelper.ExecuteRead(CommandType.Text, "SELECT en.BMDM ,en.BMDM as [ParentID],us.XM as [Contacts],de.[DevId],ala.在线时长,ala.[AlarmType] from (SELECT [DevId],[AlarmType],sum([Value]) as 在线时长 from [Alarm_EveryDayInfo]   where [AlarmType] <> 6 and  [AlarmDay ] >='" + begintime + "' and [AlarmDay ] <='" + endtime + "'   group by [DevId],[AlarmType] ) as ala left join [Device] as de on de.[DevId] = ala.[DevId] left join [Entity] as en on en.[BMDM] = de.[BMDM] left join ACL_USER as us on de.JYBH = us.JYBH  where de.[DevType]=" + type+" and en.BMDM='"+sszd+"'", "Alarm_EveryDayInfo");
                     //  hbAlarm_EveryDayInfo = SQLHelper.ExecuteRead(CommandType.Text, "SELECT en.[ParentID],de.[Contacts],de.[DevId],ala.在线时长 from (SELECT [DevId]  ,sum([Value]) as 在线时长 from [Alarm_EveryDayInfo]   where [AlarmType] = 1 and  [AlarmDay ] >='" + hbbegintime + "' and [AlarmDay ] <='" + hbendtime + "'   group by [DevId] ) as ala left join [Device] as de on de.[DevId] = ala.[DevId] left join [Entity] as en on en.[ID] = de.[EntityId] where de.[DevType]=1", "Alarm_EveryDayInfo");
@@ -223,9 +227,9 @@ namespace Policesystem.Handle
                         break;
                     default:
                         break;
-                }              
-                
-              
+                }
+
+                dr["cloum12"] = dtEntity.Rows[i1]["ID"].ToString();
                 dr["cloum7"] = (countdevices != 0) ? (deviceuse):0;
                 dtreturns.Rows.Add(dr);
             }
@@ -283,8 +287,7 @@ namespace Policesystem.Handle
                 default:
                     break;
             }
-
-            //  drtz["视频大小"] = spdx.ToString("0.00");
+            drtz["cloum12"] = bmdm;
             Double sbsyl = ((double)allstatu_device * 100 / devicescount) ;
             drtz["cloum7"] = Math.Round(sbsyl,2);
             // drtz["环比"] = (hbhb.Contains("数字")) ? "-" : hbhb;

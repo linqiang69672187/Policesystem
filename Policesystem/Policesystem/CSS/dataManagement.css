@@ -258,3 +258,7 @@ border: 1px solid #022396 !important;
 #search-result-table>tbody>tr>td:nth-child(2){
     text-align:left !important;
 }
+.trselect{
+  background-color:#ffff00 !important;
+  color:#000;
+}
