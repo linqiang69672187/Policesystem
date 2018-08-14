@@ -265,6 +265,7 @@ function createtabledetail() {
                    })
          .on('xhr.dt', function (e, settings, json, xhr) {
              $("#myModaltxzsLabel").text(ssddtext + "设备详情");
+             $(".search-result-flooterleft  span:eq(0)").text("共" + json.data.length+"条记录");
          })
         .DataTable({
             ajax: {
@@ -303,7 +304,36 @@ function createtabledetail() {
             ],
             columnDefs: [
                         ],
-            buttons: [],
+            buttons: [
+            {
+                extend: "print",
+                text: "打 印",
+                title: "<center></center>",
+                footer: true,
+                customize: function (win) {
+                    $(win.document.body).find('center').text(starttime + "_" + endtime + sbmingc + "报表");
+                },
+                exportOptions: {
+                    columns: function (idx, data, node, h) {
+                        var visible = table.column(idx).visible();
+                        switch (node.outerText) {
+                            case "":
+                            case "设备使用率":
+                                visible = false;
+                                break;
+
+
+                        }
+
+                        return visible;
+                    }
+
+
+                }
+
+
+            }
+            ],
             "language": {
                 "lengthMenu": "_MENU_每页",
                 "zeroRecords": "没有找到记录",
@@ -368,16 +398,16 @@ function createDataTable() {
                          $('#search-result-table tr:eq(0) th:eq(3)').text("处罚量");
                          $('#search-result-table tr:eq(0) th:eq(4)').text("人均处罚量");
                          $('#search-result-table tr:eq(0) th:eq(5)').text("查询量");
-                         $('#search-result-table tr:eq(0) th:eq(6)').text("设备平均处罚量");
-                         $('#search-result-table tr:eq(0) th:eq(7)').text("平均处罚量排名");
-                         $('#search-result-table tr:eq(0) th:eq(8)').text("无处罚量设备");
-                         $('#search-result-table tr:eq(0) th:eq(9)').text("未使用设备");
-                         $('#search-result-table tr:eq(0) th:eq(10)').text("无查询量设备");
+                         $('#search-result-table tr:eq(0) th:eq(6)').text("平均处罚量");
+                         $('#search-result-table tr:eq(0) th:eq(7)').text("排名");
+                         $('#search-result-table tr:eq(0) th:eq(8)').text("无处罚量");
+                         $('#search-result-table tr:eq(0) th:eq(9)').text("未使用");
+                         $('#search-result-table tr:eq(0) th:eq(10)').text("无查询量");
                          break;
                      default:
                          break;
                  }
-
+                 $('#search-result-table_paginate').parent().append("<span>共 " + json.data.length + " 条记录</span>");
              })
 
             .DataTable({
@@ -423,7 +453,36 @@ function createDataTable() {
                              render: function (a, b, c, d) { var html = "<a  class=\'btn btn-sm btn-primary txzs-btn\' id='addedit' entityid='" + c.cloum12 + "'  >查看详情</a>"; return html; }
                          }
                 ],
-                buttons: [],
+                buttons: [
+            {
+                extend: "print",
+                text: "打 印",
+                title: "<center></center>",
+                footer: true,
+                customize: function (win) {
+                    $(win.document.body).find('center').text(starttime + "_" + endtime + sbmingc + "报表");
+                },
+                exportOptions: {
+                    columns: function (idx, data, node, h) {
+                        var visible = table.column(idx).visible();
+                        switch (node.outerText) {
+                            case "":
+                            case "设备使用率":
+                                visible = false;
+                                break;
+
+
+                        }
+
+                        return visible;
+                    }
+
+
+                }
+
+
+            }
+                ],
                 "language": {
                     "lengthMenu": "_MENU_每页",
                     "zeroRecords": "没有找到记录",

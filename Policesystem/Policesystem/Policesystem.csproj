@@ -140,18 +140,26 @@
     <Content Include="comjs\myHeatmap2.0.min.js" />
     <Content Include="CSS\bootstrap-datetimepicker.min.css" />
     <Content Include="CSS\dataManagement.css" />
+    <Content Include="CSS\datatables.min.css" />
     <Content Include="CSS\jquery.dataTables.css" />
     <Content Include="CSS\map.css" />
     <Content Include="CSS\ol.css" />
     <Content Include="CSS\top.css" />
     <Content Include="dataManagement.html" />
     <Content Include="HtmlPage1.html" />
+    <Content Include="Images\favicon.ico" />
+    <Content Include="Images\sort_asc.png" />
+    <Content Include="Images\sort_asc_disabled.png" />
+    <Content Include="Images\sort_both.png" />
+    <Content Include="Images\sort_desc.png" />
+    <Content Include="Images\sort_desc_disabled.png" />
     <Content Include="Image\bannar-logo.png" />
     <Content Include="Image\bannar-time-bg.png" />
     <Content Include="Image\datamanagement_listbg.png" />
     <Content Include="Image\datamanagermentbg.jpg" />
     <Content Include="Image\deviceicologo.png" />
     <Content Include="Image\entitylist.png" />
+    <Content Include="Image\favicon.ico" />
     <Content Include="Image\indexywxt_bg.png" />
     <Content Include="Image\index_bz.png" />
     <Content Include="Image\index_chezaiship.png" />
@@ -161,6 +169,11 @@
     <Content Include="Image\index_zhifajiluyi.png" />
     <Content Include="Image\leftbootombg.png" />
     <Content Include="Image\leftbootombg_1.png" />
+    <Content Include="Image\sort_asc.png" />
+    <Content Include="Image\sort_asc_disabled.png" />
+    <Content Include="Image\sort_both.png" />
+    <Content Include="Image\sort_desc.png" />
+    <Content Include="Image\sort_desc_disabled.png" />
     <Content Include="Image\topbannerbg.png" />
     <Content Include="img\00bj1.png" />
     <Content Include="img\00bj2.png" />
@@ -320,6 +333,10 @@
     <Content Include="Handle\dataManagement.ashx" />
     <Content Include="Handle\getDataManagement.ashx" />
     <Content Include="Handle\dataManagementdetail.ashx" />
+    <Content Include="Image\Sorting icons.psd" />
+    <Content Include="Images\Sorting icons.psd" />
+    <Content Include="Handle\templet\1.xls" />
+    <Content Include="Handle\templet\4.xls" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -413,6 +430,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Handle\upload\" />
     <Folder Include="jQuery.flipster\css\" />
   </ItemGroup>
   <ItemGroup>

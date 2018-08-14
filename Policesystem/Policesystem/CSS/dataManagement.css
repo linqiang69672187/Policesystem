@@ -265,3 +265,34 @@ border: 1px solid #022396 !important;
 #detailgr-result-table td{
     border-top:0px;
 }
+div #txbox .dataTables_wrapper .dataTables_paginate .disabled,.tablediv .dataTables_wrapper .dataTables_paginate .disabled{
+  visibility:hidden;
+}
+#txbox .dataTables_wrapper .dataTables_paginate .paginate_button,body .tablediv .dataTables_wrapper .dataTables_paginate .paginate_button{
+        border: 1px solid #686f8c !important;
+        padding: 0 !important;
+        color:#fff !important;
+}
+#txbox .ellipsis{
+      color:#fff !important;
+}
+#txbox .dataTables_wrapper .dataTables_paginate .current,.tablediv .dataTables_wrapper .dataTables_paginate .current{
+    background-color:#116bf3 !important;
+}
+#txbox .dataTables_wrapper .dataTables_paginate .next,.tablediv .dataTables_wrapper .dataTables_paginate .next{
+    margin-right:15px;
+}
+.paginate_button{
+    line-height: 20px;
+}
+table.dataTable tbody th, table.dataTable tbody td{
+ padding:3px !important;
+}
+#txbox table.dataTable tbody td{
+    padding:8px  !important;
+}
+.buttons-excel{
+    float:left;
+    margin-top:5px;
+    color:#fff;
+}
