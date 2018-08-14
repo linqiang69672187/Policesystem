@@ -319,6 +319,7 @@
     <Content Include="Handle\GetaMarksbyBound.ashx" />
     <Content Include="Handle\dataManagement.ashx" />
     <Content Include="Handle\getDataManagement.ashx" />
+    <Content Include="Handle\dataManagementdetail.ashx" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -384,6 +385,9 @@
   <ItemGroup>
     <Compile Include="Handle\dataManagement.ashx.cs">
       <DependentUpon>dataManagement.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="Handle\dataManagementdetail.ashx.cs">
+      <DependentUpon>dataManagementdetail.ashx</DependentUpon>
     </Compile>
     <Compile Include="Handle\GetaMarksbyBound.ashx.cs">
       <DependentUpon>GetaMarksbyBound.ashx</DependentUpon>

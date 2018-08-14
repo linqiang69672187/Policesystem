@@ -7,6 +7,7 @@ var sszd;
 var search;
 var type;
 var ssddtext;
+var tablezd;
 $("#header").load('top.html', function () { });
 function transferDate(date) {
     // 年  
@@ -108,6 +109,8 @@ $(document).on('click.bs.carousel.data-api', '#addedit', function (e) {
     ssdd = $(this).attr("entityid");
     ssddtext = $doc.find("td:eq(1)").text();
     $(".datadetail").modal("show");
+    showetailRS();
+
 });
 $('.datadetail').on('hidden.bs.modal', function () {
 
@@ -244,109 +247,62 @@ function eachbrigadeselect() {
     });
     return entitys;
 }
+function showetailRS() {
+    if (!tablezd) {
+        createtabledetail();
+    } else {
+        $('#detailgr-result-table').DataTable().ajax.reload(function () {
+        });
+    }
+  
+}
 
-function createDataTable() {
+function createtabledetail() {
 
-    var columns = [
-                      { "data": "cloum1" },
-                      { "data": "cloum2" },
-                      { "data": "cloum3" },
-                      { "data": "cloum4" },
-                      { "data": "cloum5" },
-                      { "data": "cloum6" },
-                      { "data": "cloum7" },
-                      { "data": "cloum8" },
-                      { "data": "cloum9", "visible": false },
-                      { "data": "cloum10", "visible": false },
-                      { "data": "cloum11", "visible": false },
-                      { "data": null, "orderable": false }
-    ];
-
-
-    table = $('#search-result-table')
-       .on('error.dt', function (e, settings, techNote, message) {
-         })
+    tablezd = $('#detailgr-result-table')
+                   .on('error.dt', function (e, settings, techNote, message) {
+                       console.log('An error has been reported by DataTables: ', message);
+                   })
          .on('xhr.dt', function (e, settings, json, xhr) {
-             switch ($("#deviceselect").val()) {
-                 case "1":   //车载视频
-
-                     table.column(8).visible(false);
-                     table.column(9).visible(false);
-                     table.column(10).visible(false);
-                     $('#search-result-table tr:eq(0) th:eq(0)').text("序号");
-                     $('#search-result-table tr:eq(0) th:eq(1)').text("部门");
-                     $('#search-result-table tr:eq(0) th:eq(2)').text("配发数");
-                     $('#search-result-table tr:eq(0) th:eq(3)').text("在线时长（h）");
-                     $('#search-result-table tr:eq(0) th:eq(4)').text("设备使用数量");
-                     $('#search-result-table tr:eq(0) th:eq(5)').text("未使用数量");
-                     $('#search-result-table tr:eq(0) th:eq(6)').text("设备使用率（%）");
-                     $('#search-result-table tr:eq(0) th:eq(7)').text("使用率名次");
-                     break;
-                 case "4":  
-                     table.column(8).visible(true);
-                     table.column(9).visible(true);
-                     table.column(10).visible(true);
-                     $('#search-result-table tr:eq(0) th:eq(0)').text("序号");
-                     $('#search-result-table tr:eq(0) th:eq(1)').text("部门");
-                     $('#search-result-table tr:eq(0) th:eq(2)').text("配发数");
-                     $('#search-result-table tr:eq(0) th:eq(3)').text("处罚量");
-                     $('#search-result-table tr:eq(0) th:eq(4)').text("人均处罚量");
-                     $('#search-result-table tr:eq(0) th:eq(5)').text("查询量");
-                     $('#search-result-table tr:eq(0) th:eq(6)').text("设备平均处罚量");
-                     $('#search-result-table tr:eq(0) th:eq(7)').text("平均处罚量排名");
-                     $('#search-result-table tr:eq(0) th:eq(8)').text("无处罚量设备");
-                     $('#search-result-table tr:eq(0) th:eq(9)').text("未使用设备");
-                     $('#search-result-table tr:eq(0) th:eq(10)').text("无查询量设备");
-                     break;
-                 default:
-                     break;
-             }
-
+             $("#myModaltxzsLabel").text(ssddtext + "设备详情");
          })
-
         .DataTable({
             ajax: {
-                url: "../Handle/getDataManagement.ashx",
+                url: "../Handle/dataManagementdetail.ashx",
                 type: "POST",
                 data: function () {
-                    starttime = $(".start_form_datetime").val();
-                    endtime = $(".end_form_datetime").val()
-                    ssdd = $("#brigadeselect").val();
-                    sszd = $("#squadronselect").val();
-                    search = $(".seach-box input").val();
-                    type = $("#deviceselect").val();
-                    return data = {
-                        search: $(".search input").val(),
-                        type: $("#deviceselect").val(),
-                        ssdd: $("#brigadeselect").val(),
-                        sszd: $("#squadronselect").val(),
-                        ssdd1: eachbrigadeselect(),
-                        begintime: $(".start_form_datetime").val(),
-                        endtime: $(".end_form_datetime").val(),
-                        dates: datecompare($(".end_form_datetime").val(), $(".start_form_datetime").val()),
-                        ssddtext: $("#brigadeselect").find("option:selected").text(),
-                        sszdtext:$("#squadronselect").find("option:selected").text(),
-                        requesttype: "查询报表"
-                    }
-                }
+                    return    data = {
+                        search: search,
+                        type: type,
+                        entityid: ssdd,
+                        starttime: starttime,
+                        endtime: endtime,
+                        ssddtext: ssddtext
+                    };
 
+                }
             },
             Paginate: true,
-            pageLength: 10,
+            pageLength: 6,
             Processing: true, //DataTables载入数据时，是否显示‘进度’提示  
             serverSide: false,   //服务器处理
             responsive: true,
             paging: true,
             autoWidth: true,
 
-            "order": [],
-            columns: columns,
-            columnDefs: [
-                     {
-                         targets:11,
-                         render: function (a, b, c, d) { var html = "<a  class=\'btn btn-sm btn-primary txzs-btn\' id='addedit' entityid='" + c.cloum12 + "'  >查看详情</a>"; return html; }
-                     }
+            "order": [[1, 'asc']],
+            columns: [
+                      
+                         { "data": "cloum1" },
+                         { "data": "cloum2" },
+                         { "data": "cloum3" },
+                         { "data": "cloum4" },
+                         { "data": "cloum5" },
+                         { "data": "cloum6" }
+                   
             ],
+            columnDefs: [
+                        ],
             buttons: [],
             "language": {
                 "lengthMenu": "_MENU_每页",
@@ -361,8 +317,128 @@ function createDataTable() {
                 }
             },
 
-            dom: "" + "t" + "<'row' p>B",
-
-            initComplete: function () {}
+            dom: "" + "t" + "<'row' p>B"
         });
+   
 }
+function createDataTable() {
+
+        var columns = [
+                          { "data": "cloum1" },
+                          { "data": "cloum2" },
+                          { "data": "cloum3" },
+                          { "data": "cloum4" },
+                          { "data": "cloum5" },
+                          { "data": "cloum6" },
+                          { "data": "cloum7" },
+                          { "data": "cloum8" },
+                          { "data": "cloum9", "visible": false },
+                          { "data": "cloum10", "visible": false },
+                          { "data": "cloum11", "visible": false },
+                          { "data": null, "orderable": false }
+        ];
+
+
+        table = $('#search-result-table')
+           .on('error.dt', function (e, settings, techNote, message) {
+           })
+             .on('xhr.dt', function (e, settings, json, xhr) {
+                 switch ($("#deviceselect").val()) {
+                     case "1":   //车载视频
+
+                         table.column(8).visible(false);
+                         table.column(9).visible(false);
+                         table.column(10).visible(false);
+                         $('#search-result-table tr:eq(0) th:eq(0)').text("序号");
+                         $('#search-result-table tr:eq(0) th:eq(1)').text("部门");
+                         $('#search-result-table tr:eq(0) th:eq(2)').text("配发数");
+                         $('#search-result-table tr:eq(0) th:eq(3)').text("在线时长（h）");
+                         $('#search-result-table tr:eq(0) th:eq(4)').text("设备使用数量");
+                         $('#search-result-table tr:eq(0) th:eq(5)').text("未使用数量");
+                         $('#search-result-table tr:eq(0) th:eq(6)').text("设备使用率（%）");
+                         $('#search-result-table tr:eq(0) th:eq(7)').text("使用率名次");
+                         break;
+                     case "4":  
+                         table.column(8).visible(true);
+                         table.column(9).visible(true);
+                         table.column(10).visible(true);
+                         $('#search-result-table tr:eq(0) th:eq(0)').text("序号");
+                         $('#search-result-table tr:eq(0) th:eq(1)').text("部门");
+                         $('#search-result-table tr:eq(0) th:eq(2)').text("配发数");
+                         $('#search-result-table tr:eq(0) th:eq(3)').text("处罚量");
+                         $('#search-result-table tr:eq(0) th:eq(4)').text("人均处罚量");
+                         $('#search-result-table tr:eq(0) th:eq(5)').text("查询量");
+                         $('#search-result-table tr:eq(0) th:eq(6)').text("设备平均处罚量");
+                         $('#search-result-table tr:eq(0) th:eq(7)').text("平均处罚量排名");
+                         $('#search-result-table tr:eq(0) th:eq(8)').text("无处罚量设备");
+                         $('#search-result-table tr:eq(0) th:eq(9)').text("未使用设备");
+                         $('#search-result-table tr:eq(0) th:eq(10)').text("无查询量设备");
+                         break;
+                     default:
+                         break;
+                 }
+
+             })
+
+            .DataTable({
+                ajax: {
+                    url: "../Handle/getDataManagement.ashx",
+                    type: "POST",
+                    data: function () {
+                        starttime = $(".start_form_datetime").val();
+                        endtime = $(".end_form_datetime").val()
+                        ssdd = $("#brigadeselect").val();
+                        sszd = $("#squadronselect").val();
+                        search = $(".seach-box input").val();
+                        type = $("#deviceselect").val();
+                        return data = {
+                            search: $(".search input").val(),
+                            type: $("#deviceselect").val(),
+                            ssdd: $("#brigadeselect").val(),
+                            sszd: $("#squadronselect").val(),
+                            ssdd1: eachbrigadeselect(),
+                            begintime: $(".start_form_datetime").val(),
+                            endtime: $(".end_form_datetime").val(),
+                            dates: datecompare($(".end_form_datetime").val(), $(".start_form_datetime").val()),
+                            ssddtext: $("#brigadeselect").find("option:selected").text(),
+                            sszdtext:$("#squadronselect").find("option:selected").text(),
+                            requesttype: "查询报表"
+                        }
+                    }
+
+                },
+                Paginate: true,
+                pageLength: 10,
+                Processing: true, //DataTables载入数据时，是否显示‘进度’提示  
+                serverSide: false,   //服务器处理
+                responsive: true,
+                paging: true,
+                autoWidth: true,
+
+                "order": [],
+                columns: columns,
+                columnDefs: [
+                         {
+                             targets:11,
+                             render: function (a, b, c, d) { var html = "<a  class=\'btn btn-sm btn-primary txzs-btn\' id='addedit' entityid='" + c.cloum12 + "'  >查看详情</a>"; return html; }
+                         }
+                ],
+                buttons: [],
+                "language": {
+                    "lengthMenu": "_MENU_每页",
+                    "zeroRecords": "没有找到记录",
+                    "info": "第 _PAGE_ 页 ( 总共 _PAGES_ 页 )",
+                    "infoEmpty": "无记录",
+                    "infoFiltered": "(从 _MAX_ 条记录过滤)",
+                    "search": "查找设备:",
+                    "paginate": {
+                        "previous": "上一页",
+                        "next": "下一页"
+                    }
+                },
+
+                dom: "" + "t" + "<'row' p>B",
+
+                initComplete: function () {}
+            });
+    }
