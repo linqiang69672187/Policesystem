@@ -305,6 +305,9 @@ namespace Policesystem.Handle
         {
             ExcelFile excelFile = new ExcelFile();
             var tmpath = "";
+            string Entityname = "";
+            Entityname +=(ssddtext=="全部")?"台州交警局":ssddtext;
+            Entityname += (sszdtext == "全部") ? "" : sszdtext;
             switch (type)
             {
                 case "1":
@@ -326,7 +329,30 @@ namespace Policesystem.Handle
 
             DateTime bg = Convert.ToDateTime(begintime);
             DateTime ed = Convert.ToDateTime(endtime);
+            string typename = "";
+            switch (type)
+            {
+                case "1":
+                    typename = "车载视频";
+                    break;
+                case "2":
+                    typename = "对讲机";
+                    break;
+                case "3":
+                    typename = "拦截仪";
+                    break;
+                case "5":
+                    typename = "执法记录仪";
+                    break;
+                case "4":
+                    typename = "警务通";
+                    break;
+                case "6":
+                    typename = "辅警通";
+                    break;
+            }
 
+            sheet.Rows[0].Cells["A"].Value = begintime.Replace("/", "-") + "_" + endtime.Replace("/", "-") + Entityname + typename + "报表";
             switch (type)
             {
                 case "1":
@@ -349,6 +375,8 @@ namespace Policesystem.Handle
                         sheet.Rows[i + 2].Cells["F"].Value = dt.Rows[i][5].ToString();
                         sheet.Rows[i + 2].Cells["G"].Style.Borders.SetBorders(MultipleBorders.Outside, Color.FromArgb(0, 0, 0), LineStyle.Thin);
                         sheet.Rows[i + 2].Cells["G"].Value = dt.Rows[i][6].ToString();
+                        sheet.Rows[i + 2].Cells["H"].Style.Borders.SetBorders(MultipleBorders.Outside, Color.FromArgb(0, 0, 0), LineStyle.Thin);
+                        sheet.Rows[i + 2].Cells["H"].Value = dt.Rows[i][7].ToString();
                     }
                     break;
                 case "4":
