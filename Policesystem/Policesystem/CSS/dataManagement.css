@@ -292,7 +292,10 @@ table.dataTable tbody th, table.dataTable tbody td{
     padding:8px  !important;
 }
 .buttons-excel{
-    float:left;
-    margin-top:5px;
     color:#fff;
+}
+.daochu a:hover,a:visited,a:active,a:focus{
+    background-color:transparent !important;
+    color:#fff;
+    text-decoration: none;
 }

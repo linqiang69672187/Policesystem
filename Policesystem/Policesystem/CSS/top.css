@@ -71,7 +71,7 @@
     background: linear-gradient(#005EB8, #014688); /* 标准的语法 */
     text-decoration: none;
   }
-#header ul>li:not(.active):not(.userInfor):hover,a:hover {
+#header ul>li:not(.active):not(.userInfor):hover {
     color: #fff;
     background: -webkit-linear-gradient(#005EB8, #014688); /* Safari 5.1 - 6.0 */
     background: -o-linear-gradient(#005EB8, #014688); /* Opera 11.1 - 12.0 */

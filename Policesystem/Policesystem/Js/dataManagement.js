@@ -408,6 +408,8 @@ function createDataTable() {
                          break;
                  }
                  $('#search-result-table_paginate').parent().append("<span>共 " + json.data.length + " 条记录</span>");
+                 $('.daochu').html("<a class='buttons-excel'  href='../Handle/upload/" + json.title + "'><span>导 出</span></a>");
+
              })
 
             .DataTable({

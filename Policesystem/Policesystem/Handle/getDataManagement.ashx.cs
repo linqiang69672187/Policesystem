@@ -311,11 +311,11 @@ namespace Policesystem.Handle
                 case "2":
                 case "3":
                 case "5":
-                    HttpContext.Current.Server.MapPath("templet\\1.xls");
+                    tmpath= HttpContext.Current.Server.MapPath("templet\\1.xls");
                     break;
                 case "4":
                 case "6":
-                    HttpContext.Current.Server.MapPath("templet\\4.xls");
+                    tmpath = HttpContext.Current.Server.MapPath("templet\\4.xls");
                     break;
 
             }
