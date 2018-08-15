@@ -146,7 +146,6 @@
     <Content Include="CSS\ol.css" />
     <Content Include="CSS\top.css" />
     <Content Include="dataManagement.html" />
-    <Content Include="HtmlPage1.html" />
     <Content Include="Images\favicon.ico" />
     <Content Include="Images\sort_asc.png" />
     <Content Include="Images\sort_asc_disabled.png" />
@@ -239,6 +238,7 @@
     <Content Include="img\zd.png" />
     <Content Include="img\zdui.png" />
     <Content Include="img\警员.png" />
+    <Content Include="jQuery.flipster\css\carousel.css" />
     <Content Include="jQuery.flipster\index.html" />
     <Content Include="jQuery.flipster\js\jquery.carousel.js" />
     <Content Include="jQuery.flipster\js\jquery.js" />
@@ -431,7 +431,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Handle\upload\" />
-    <Folder Include="jQuery.flipster\css\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\DbComponet\DbComponet.csproj">

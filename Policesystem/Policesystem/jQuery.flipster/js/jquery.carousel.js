@@ -20,7 +20,7 @@
             "scale":"0.8",
             "speed":"1000",
             "isAutoplay":"true",
-            "dealy":"3000"
+            "dealy":"5000"
         }
         //自定义参数与默认参数合并
         $.extend(this.setting,this.getSetting())
@@ -200,22 +200,30 @@
     window["Caroursel"] = Caroursel;
 })(jQuery)
 
-$(function () {
+
+function formatSeconds(value, y) {
+    var result = Math.floor((value*100) * Math.pow(10, y)) / Math.pow(10, y);
+    return result;
+}
+function createChar() {
     $.ajax({
         type: "POST",
         url: "../../Handle/Jqueryflipster.ashx",
         data: "",
         dataType: "json",
         success: function (data) {
-         
-            var sumonline, sumisused,total,img;
+
+            var sumonline, sumisused, total, img;
+            $(".divcontentrt  ul").empty();
             for (var i = 0; i < data.length; i++) {
                 sumonline = 0; sumisused = 0; total = 0;
                 $(".lbtitle:eq(" + i + ")").html("<i class='fa fa-minus  fa-rotate-90'></i>" + data[i]["Name"]);
+             
                 for (var i1 = 0; i1 < data[i]["data"].length; i1++) {
                     total += parseInt(data[i]["data"][i1]["count"]);
-                    if(data[i]["data"][i1]["online"] !="" ) {sumonline += parseInt(data[i]["data"][i1]["online"])};//在线终端总数
+                    if (data[i]["data"][i1]["online"] != "") { sumonline += parseInt(data[i]["data"][i1]["online"]) };//在线终端总数
                     if (data[i]["data"][i1]["Isused"] != "") { sumisused += parseInt(data[i]["data"][i1]["Isused"]) };//当日使用终端数
+                  
                     switch (data[i]["data"][i1]["TypeName"]) {
                         case "车载视频":
                             img = "../Image/index_chezaiship.png";
@@ -240,7 +248,7 @@ $(function () {
                 }
                 $(".divcontentrt:eq(" + i + ") ul").append("<li><span>" + "在线数" + ":</span><span>" + sumonline + "</span></li>");
                 $(".divcontentlf:eq(" + i + ") div:eq(3)").text(total);
-                $(".divcontentlf:eq(" + i + ") div:eq(7)").text(formatSeconds(sumisused / total,2)+"%");
+                $(".divcontentlf:eq(" + i + ") div:eq(7)").text(formatSeconds(sumisused / total, 2) + "%");
             };
 
             window.parent.createdata(data);
@@ -250,9 +258,8 @@ $(function () {
         }
     });
 
-  
-});
-function formatSeconds(value, y) {
-    var result = Math.floor((value*100) * Math.pow(10, y)) / Math.pow(10, y);
-    return result;
 }
+var int = setInterval(createChar, 6000);
+$(function () {
+    createChar();
+});

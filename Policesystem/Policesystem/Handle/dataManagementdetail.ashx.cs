@@ -1,7 +1,9 @@
 ﻿using DbComponent;
+using GemBox.Spreadsheet;
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Web;
@@ -88,8 +90,67 @@ namespace Policesystem.Handle
 
 
         end:;
-            string reTitle = "";// ExportExcel(dtreturns, type, begintime, endtime, title, ssdd, sszd, context.Request.Form["ssddtext"], context.Request.Form["sszdtext"]);
+            string reTitle = ExportExcel(dtreturns, type, begintime, endtime, context.Request.Form["ssddtext"]);
             context.Response.Write(JSON.DatatableToDatatableJS(dtreturns, reTitle));
+        }
+        public string ExportExcel(DataTable dt, string type, string begintime, string endtime, string ssddtext)
+        {
+            ExcelFile excelFile = new ExcelFile();
+            var tmpath = "";
+            string Entityname = "";
+            Entityname += (ssddtext == "全部") ? "台州交警局" : ssddtext;
+            tmpath = HttpContext.Current.Server.MapPath("templet\\mingxi\\1.xls");
+            excelFile.LoadXls(tmpath);
+            ExcelWorksheet sheet = excelFile.Worksheets[0];
+
+
+            DateTime bg = Convert.ToDateTime(begintime);
+            DateTime ed = Convert.ToDateTime(endtime);
+            string typename = "";
+            switch (type)
+            {
+                case "1":
+                    typename = "车载视频";
+                    break;
+                case "2":
+                    typename = "对讲机";
+                    break;
+                case "3":
+                    typename = "拦截仪";
+                    break;
+                case "5":
+                    typename = "执法记录仪";
+                    break;
+                case "4":
+                    typename = "警务通";
+                    break;
+                case "6":
+                    typename = "辅警通";
+                    break;
+            }
+
+            sheet.Rows[0].Cells["A"].Value = begintime.Replace("/", "-") + "_" + endtime.Replace("/", "-") + Entityname + typename + "设备详情报表";
+
+            for (int i = 0; i < dt.Rows.Count; i++)
+            {
+                sheet.Rows[i + 2].Cells["A"].Style.Borders.SetBorders(MultipleBorders.Outside, Color.FromArgb(0, 0, 0), LineStyle.Thin);
+                sheet.Rows[i + 2].Cells["A"].Value = dt.Rows[i][0].ToString();
+                sheet.Rows[i + 2].Cells["B"].Style.Borders.SetBorders(MultipleBorders.Outside, Color.FromArgb(0, 0, 0), LineStyle.Thin);
+                sheet.Rows[i + 2].Cells["B"].Value = dt.Rows[i][1].ToString();
+                sheet.Rows[i + 2].Cells["C"].Style.Borders.SetBorders(MultipleBorders.Outside, Color.FromArgb(0, 0, 0), LineStyle.Thin);
+                sheet.Rows[i + 2].Cells["C"].Value = dt.Rows[i][2].ToString();
+                sheet.Rows[i + 2].Cells["D"].Style.Borders.SetBorders(MultipleBorders.Outside, Color.FromArgb(0, 0, 0), LineStyle.Thin);
+                sheet.Rows[i + 2].Cells["D"].Value = dt.Rows[i][3].ToString();
+                sheet.Rows[i + 2].Cells["E"].Style.Borders.SetBorders(MultipleBorders.Outside, Color.FromArgb(0, 0, 0), LineStyle.Thin);
+                sheet.Rows[i + 2].Cells["E"].Value = dt.Rows[i][4].ToString();
+                sheet.Rows[i + 2].Cells["F"].Style.Borders.SetBorders(MultipleBorders.Outside, Color.FromArgb(0, 0, 0), LineStyle.Thin);
+                sheet.Rows[i + 2].Cells["F"].Value = dt.Rows[i][5].ToString();
+            }
+
+            tmpath = HttpContext.Current.Server.MapPath("upload\\" + sheet.Rows[0].Cells[0].Value + ".xls");
+
+            excelFile.SaveXls(tmpath);
+            return sheet.Rows[0].Cells[0].Value + ".xls";
         }
 
         public bool IsReusable

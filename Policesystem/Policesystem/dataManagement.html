@@ -49,6 +49,7 @@
         <div class="cell-button shujudiv"><ul id="shujuxiang"><li><i class="fa fa-square-o" aria-hidden="true"></i>全选</li><li><i class="fa fa-check-square-o" aria-hidden="true"></i>序号</li><li><i class="fa fa-check-square-o" aria-hidden="true"></i>操作</li></ul></div> 
         </div>
         <div class="row">
+            <div class="progress progress-striped active progresshz" style="width:80%;margin:0 auto;"><div class="floot-zhbar progress-bar progress-bar-success" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 100%;"></div> </div>
             <table  id="search-result-table" style="width:100%">
                 <thead>
                     <tr>
@@ -79,9 +80,11 @@
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                     <h4 class="modal-title" id="myModaltxzsLabel">设备详情</h4>
+                    <div class="cell-button daochumx">导出</div>
                 </div>
                 <div class="modal-body">
                     <div id="txbox">
+                        <div class="progress progress-striped active progressdt" style="width:80%;margin:0 auto;"><div class="floot-zhbar progress-bar progress-bar-success" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 100%;"></div> </div>
                         <table class="table table-striped dataTables-example" id="detailgr-result-table" style="width:100%;">
                             <thead>
                                 <tr>
@@ -99,12 +102,11 @@
                 </div>
                 <div class="search-result-flooterleft" style="margin-left:30px;width:640px">
                     <label><span></span></label>
-                    <label style="float:right;"><span></span></label>
+                    <label style="float:right;"></label>
                 </div>
             </div>
         </div>
     </div>
-
   
   <div class="modal fade custom-modal in" id="alertmodal" tabindex="-1" role="dialog" aria-labelledby="mydeleModeNo" style="display: none">
         <div class="modal-backdrop fade in" style="height: 955px;z-index: -1;"></div>

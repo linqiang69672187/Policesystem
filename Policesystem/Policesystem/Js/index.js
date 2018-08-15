@@ -1,6 +1,42 @@
-﻿$("#header").load('top.html', function () {
+﻿setInterval(function() {
+    var date = new Date();
+    var year = date.getFullYear();
+    var month = Appendzero(date.getMonth() + 1);
+    var day = Appendzero(date.getDate());
+    var weekday 
+    var hour = Appendzero(date.getHours());
+    var min = Appendzero(date.getMinutes());
+    var sencond = Appendzero(date.getSeconds());
+    switch (date.getDay()) {
+        case 0:
+            weekday = "星期天";
+            break;
+        case 1:
+            weekday = "星期一";
+            break;
+        case 2:
+            weekday = "星期二";
+            break;
+        case 3:
+            weekday = "星期三";
+            break;
+        case 4:
+            weekday = "星期四";
+            break;
+        case 5:
+            weekday = "星期五";
+            break;
+        case 6:
+            weekday = "星期六";
+            break;
+    }
+    $(".timebanner label").text(year + "-" + month + "-" + day + " " + hour + ":" + min + ":" + sencond+" "+ weekday);
+},50);
 
-});
+function Appendzero(obj) {
+    if (obj < 10) return "0" + "" + obj;
+    else return obj;
+}
 $(function () {
     $.ajax({
         type: "POST",
@@ -22,9 +58,6 @@ $(function () {
 
     loadGaugeData();//加载仪表盘数据
 
-
-   
-  
    
 });
 

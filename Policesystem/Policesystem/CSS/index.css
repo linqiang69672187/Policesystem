@@ -86,6 +86,22 @@ body{-webkit-text-size-adjust:none}
     display:block;
     margin-top:6px;
 }
+.ddlabel{
+    margin-left:10px;
+}
+.entitylist li:nth-child(1) .glyphicon-stop:nth-child(1){
+    color:#a24cfa;
+}
+.entitylist li:nth-child(1) .glyphicon-stop:nth-child(2){
+    color:#fa4cae;
+}
+.entitylist li:nth-child(1) .glyphicon-stop:nth-child(3){
+    color:#f2ab22;
+}
+.entitylist li:nth-child(1) .glyphicon-stop:nth-child(4){
+    color:#43db89;
+}
+
 .rightbox ul{
  margin:15px 10px;
  padding-left:20px;
@@ -114,6 +130,10 @@ margin:0 12px;
    font-size:34px;
    color:#fff;
 }
+.ddlabel{
+    font-weight:400;
+}
+
 .leftbox>div:nth-child(1)>div:nth-child(3){
    color:#fff;
    height:135px;

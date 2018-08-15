@@ -86,3 +86,10 @@
     margin-top:30px;
     font-size:30px !important;
 }
+#header a{
+    text-decoration-line:none;
+    color:#fff
+}
+.bannertime{
+    margin-top:0px !important;
+}

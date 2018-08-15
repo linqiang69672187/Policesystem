@@ -3,7 +3,7 @@ var selectdevid;
 var loadmapdataInter;
 var typename = ["车载视频", "对讲机", "拦截仪", "警务通", "执法记录仪", "辅警通", "测速仪", "酒精测试仪"]
 $("#header").load('top.html', function () {
-
+    $("#header ul li:eq(2)").addClass("active");
 });
 $('.start_form_datetime').datetimepicker({
     format: 'yyyy/mm/dd',

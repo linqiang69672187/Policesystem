@@ -8,7 +8,9 @@ var search;
 var type;
 var ssddtext;
 var tablezd;
-$("#header").load('top.html', function () { });
+$("#header").load('top.html', function () {
+    $("#header ul li:eq(3)").addClass("active");
+});
 function transferDate(date) {
     // 年  
     var year = date.getFullYear();
@@ -263,9 +265,16 @@ function createtabledetail() {
                    .on('error.dt', function (e, settings, techNote, message) {
                        console.log('An error has been reported by DataTables: ', message);
                    })
+             .on('preXhr.dt', function (e, settings, data) {
+                 $('.progressdt').show();
+                 $('#detailgr-result-table').hide();
+             })
          .on('xhr.dt', function (e, settings, json, xhr) {
+             $('.progressdt').hide();
+             $('#detailgr-result-table').show();
              $("#myModaltxzsLabel").text(ssddtext + "设备详情");
-             $(".search-result-flooterleft  span:eq(0)").text("共" + json.data.length+"条记录");
+             $(".search-result-flooterleft  span:eq(0)").text("共" + json.data.length + "条记录");
+             $('.daochumx').html("<a class='buttons-excel'  href='../Handle/upload/" + json.title + "'><span>导 出</span></a>");
          })
         .DataTable({
             ajax: {
@@ -372,7 +381,13 @@ function createDataTable() {
         table = $('#search-result-table')
            .on('error.dt', function (e, settings, techNote, message) {
            })
+            .on('preXhr.dt', function (e, settings, data) {
+                $('.progresshz').show();
+                $('#search-result-table').hide();
+           })
              .on('xhr.dt', function (e, settings, json, xhr) {
+                 $('.progresshz').hide();
+                 $('#search-result-table').show();
                  switch ($("#deviceselect").val()) {
                      case "1":   //车载视频
 

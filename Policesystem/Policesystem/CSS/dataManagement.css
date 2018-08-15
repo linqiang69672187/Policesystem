@@ -294,8 +294,14 @@ table.dataTable tbody th, table.dataTable tbody td{
 .buttons-excel{
     color:#fff;
 }
-.daochu a:hover,a:visited,a:active,a:focus{
+.daochu a:hover,a:visited,a:active,a:focus,.daochumx a:hover,a:visited,a:active,a:focus{
     background-color:transparent !important;
     color:#fff;
     text-decoration: none;
+}
+.daochumx{
+    position:absolute;
+}
+.progress{
+    display:none;
 }

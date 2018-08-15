@@ -84,11 +84,12 @@ body{color:#666; background-color:#fff;font: 12px/1.5 'Î¢ÈíÑÅºÚ',tahoma,arial,'H
     display:inline-block;
     float:right;
     vertical-align:middle;
+    margin-right:10px;
 }
 .divcontentrt ul li{
     vertical-align:middle;
-    line-height:36px;
-    height:36px;
+    line-height:60px;
+    height:60px;
 }
 .divcontentrt ul li img{
     vertical-align:middle;
@@ -99,7 +100,7 @@ body{color:#666; background-color:#fff;font: 12px/1.5 'Î¢ÈíÑÅºÚ',tahoma,arial,'H
 
 .divcontentrt ul li span{
    letter-spacing:0;
-   font-size:16px;
+   font-size:40px;
    vertical-align:middle;
    color:#fff;
 }
