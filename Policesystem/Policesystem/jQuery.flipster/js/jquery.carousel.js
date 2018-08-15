@@ -259,7 +259,7 @@ function createChar() {
     });
 
 }
-var int = setInterval(createChar, 6000);
+var int = setInterval(createChar, 600000); //10分钟刷新
 $(function () {
     createChar();
 });

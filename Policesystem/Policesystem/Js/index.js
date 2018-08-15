@@ -32,39 +32,10 @@
     }
     $(".timebanner label").text(year + "-" + month + "-" + day + " " + hour + ":" + min + ":" + sencond+" "+ weekday);
 },50);
-
 function Appendzero(obj) {
     if (obj < 10) return "0" + "" + obj;
     else return obj;
 }
-$(function () {
-    $.ajax({
-        type: "POST",
-        url: "Handle/TotalDevices.ashx",
-        data: "",
-        dataType: "json",
-        success: function (data) {
-            
-            $(".qjxinxi label:eq(0)").text(data.data["0"].value);
-            $(".qjxinxi label:eq(2)").text(data.data["1"].value);
-            $(".qjxinxi label:eq(4)").text(data.data["2"].value);
-            $(".qjxinxi label:eq(6)").text(formatSeconds(data.data["1"].value2,1));
-        },
-        error: function (msg) {
-            console.debug("错误:ajax");
-        }
-    });
-
-
-    loadGaugeData();//加载仪表盘数据
-
-   
-});
-
-
-
-
-
 function createdata(data) {
 
     var charttype = ["警务通", "拦截仪", "对讲机", "车载视频", "执法记录仪"];
@@ -118,7 +89,6 @@ function createdata(data) {
     }
 
 }
-
 function createcolum(id, type, data, color) {
     var chart = Highcharts.chart(id, {
         chart: {
@@ -277,7 +247,6 @@ function createChart(id, type, data, color, totalvalue) {
         });
     });
 }
-
 function myGaugeChart(containerId, label, value) {
     var oper = '环比昨日增加' + value + '%<i class="fa fa-arrow-up" aria-hidden="true"></i><br/> <span style="font-size:32px;">● ' + label + ' ● </span>';
     var colorarray = ['#467ddf', '#45d5d5', '#964edf', '#F8DE43']
@@ -401,16 +370,6 @@ function myGaugeChart(containerId, label, value) {
         //}
     });
 }
-
-
-/*!
- *
-加载仪表盘数据
- *
-2018-8-1
- *
- LINQ
- */
 function loadGaugeData() {
     var value = 0;
     var data1 = 0;
@@ -483,7 +442,6 @@ function loadGaugeData() {
 
 
 }
-
 function formatSeconds(value,y) {
     var result = Math.floor((value / 60 / 60) * Math.pow(10, y)) / Math.pow(10, y);
     return result;
@@ -492,7 +450,6 @@ function formatFloat(value, y) {
     var result = Math.floor((value ) * Math.pow(10, y)) / Math.pow(10, y);
     return result;
 }
-
 function getNowFormatDate() {
     var date = new Date();
     var seperator1 = "-";
@@ -510,3 +467,27 @@ function getNowFormatDate() {
             + seperator2 + date.getSeconds();
     return currentdate;
 }
+function loadTotalDevices() {
+    $.ajax({
+        type: "POST",
+        url: "Handle/TotalDevices.ashx",
+        data: "",
+        dataType: "json",
+        success: function (data) {
+
+            $(".qjxinxi label:eq(0)").text(data.data["0"].value);
+            $(".qjxinxi label:eq(2)").text(data.data["1"].value);
+            $(".qjxinxi label:eq(4)").text(data.data["2"].value);
+            $(".qjxinxi label:eq(6)").text(formatSeconds(data.data["1"].value2, 1));
+        },
+        error: function (msg) {
+            console.debug("错误:ajax");
+        }
+    });
+}
+$(function () {
+    loadTotalDevices()//加载顶部全局设备数据
+    loadGaugeData();//加载仪表盘数据
+});
+var Totalinter = setInterval(loadTotalDevices, 60000);//一分钟重新加载全局设备情况
+var Gaugeinter = setInterval(loadGaugeData, 180000);//3分钟加载仪表盘
