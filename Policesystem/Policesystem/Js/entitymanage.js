@@ -1,4 +1,5 @@
-﻿$.ajax({
+﻿var table;
+$.ajax({
     type: "POST",
     url: "../Handle/GetEntitys.ashx",
     data: "",
@@ -15,23 +16,15 @@
         console.debug("错误:ajax");
     }
 });
-
 function createtableentity() {
-
-    tablezd = $('#detailgr-result-table')
-                   .on('error.dt', function (e, settings, techNote, message) {
+    table = $('#entitytable')
+        .on('error.dt', function (e, settings, techNote, message) {
                        console.log('An error has been reported by DataTables: ', message);
                    })
-             .on('preXhr.dt', function (e, settings, data) {
-                 $('.progressdt').show();
-                 $('#detailgr-result-table').hide();
+        .on('preXhr.dt', function (e, settings, data) {
+           
              })
-         .on('xhr.dt', function (e, settings, json, xhr) {
-             $('.progressdt').hide();
-             $('#detailgr-result-table').show();
-             $("#myModaltxzsLabel").text(ssddtext + "设备详情");
-             $(".search-result-flooterleft  span:eq(0)").text("共" + json.data.length + "条记录");
-             $('.daochumx').html("<a class='buttons-excel'  href='../Handle/upload/" + json.title + "'><span>导 出</span></a>");
+        .on('xhr.dt', function (e, settings, json, xhr) {
          })
         .DataTable({
             ajax: {
@@ -39,12 +32,8 @@ function createtableentity() {
                 type: "POST",
                 data: function () {
                     return data = {
-                        search: search,
-                        type: type,
-                        entityid: ssdd,
-                        starttime: starttime,
-                        endtime: endtime,
-                        ssddtext: ssddtext
+                        search: $(".search input").val(),
+                        ssdd: $("#brigadeselect").val()
                     };
 
                 }
@@ -59,46 +48,20 @@ function createtableentity() {
 
             "order": [[1, 'asc']],
             columns: [
-
                          { "data": "cloum1" },
                          { "data": "cloum2" },
                          { "data": "cloum3" },
                          { "data": "cloum4" },
                          { "data": "cloum5" },
-                         { "data": "cloum6" }
-
+                         { "data": "cloum6" },
+                         { "data": "cloum7" },
+                         { "data": "cloum8" },
+                         { "data": "cloum9" },
+                         { "data": "cloum10" }
             ],
             columnDefs: [
             ],
             buttons: [
-            {
-                extend: "print",
-                text: "打 印",
-                title: "<center></center>",
-                footer: true,
-                customize: function (win) {
-                    $(win.document.body).find('center').text(starttime + "_" + endtime + sbmingc + "报表");
-                },
-                exportOptions: {
-                    columns: function (idx, data, node, h) {
-                        var visible = table.column(idx).visible();
-                        switch (node.outerText) {
-                            case "":
-                            case "设备使用率":
-                                visible = false;
-                                break;
-
-
-                        }
-
-                        return visible;
-                    }
-
-
-                }
-
-
-            }
             ],
             "language": {
                 "lengthMenu": "_MENU_每页",
@@ -117,3 +80,11 @@ function createtableentity() {
         });
 
 }
+$(document).on('click.bs.carousel.data-api', '.send', function (e) {
+    if (!table) {
+        createDataTable();
+    } else {
+
+        $("#entitytable").DataTable().ajax.reload();
+    }
+});

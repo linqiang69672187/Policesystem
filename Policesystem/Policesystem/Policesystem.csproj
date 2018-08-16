@@ -344,6 +344,7 @@
     <Content Include="Images\Sorting icons.psd" />
     <Content Include="Handle\templet\1.xls" />
     <Content Include="Handle\templet\4.xls" />
+    <Content Include="Handle\entitymanage.ashx" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -412,6 +413,9 @@
     </Compile>
     <Compile Include="Handle\dataManagementdetail.ashx.cs">
       <DependentUpon>dataManagementdetail.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="Handle\entitymanage.ashx.cs">
+      <DependentUpon>entitymanage.ashx</DependentUpon>
     </Compile>
     <Compile Include="Handle\GetaMarksbyBound.ashx.cs">
       <DependentUpon>GetaMarksbyBound.ashx</DependentUpon>
