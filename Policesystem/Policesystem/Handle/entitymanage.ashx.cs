@@ -25,10 +25,10 @@ namespace Policesystem.Handle
             switch (ssdd)
             {
                 case "all":
-                    sqltext.Append("SELECT et1.BMMC,et2.BMMC as SJMC,et1.LXDZ,et1.FZR,et1.BMDM,et1.JKYH,et1.FY,et1.FYJG,et1.LXDH,CONVERT(varchar(10),et1.Lo)+','+CONVERT(varchar(10),et1.La) from [Entity] et1 left join Entity et2 on et1.SJBM =et2.BMDM where et1.[SJBM]  = '331000000000'" + search+"  order by sort ");
+                    sqltext.Append("SELECT et1.BMMC,et2.BMMC as SJMC,et1.LXDZ,et1.FZR,et1.BMDM,et1.JKYH,et1.FY,et1.FYJG,et1.LXDH,CONVERT(varchar(10),et1.Lo)+','+CONVERT(varchar(10),et1.La) as position from [Entity] et1 left join Entity et2 on et1.SJBM =et2.BMDM where et1.[SJBM]  = '331000000000'" + search+"  order by et1.sort ");
                     break;
                 default:
-                    sqltext.Append("WITH childtable(BMMC,BMDM,SJBM) as (SELECT BMMC,BMDM,SJBM FROM [Entity] WHERE SJBM= '" + ssdd + "' OR BMDM = '" + ssdd + "' UNION ALL SELECT A.BMMC,A.BMDM,A.SJBM FROM [Entity] A,childtable b where a.SJBM = b.BMDM ) SELECT et1.BMMC,et2.BMMC as SJMC,et1.LXDZ,et1.FZR,et1.BMDM,et1.JKYH,et1.FY,et1.FYJG,et1.LXDH,CONVERT(varchar(10),et1.Lo)+','+CONVERT(varchar(10),et1.La) from [Entity] et1  left join Entity et2 on et1.SJBM =et2.BMDM  where et1.[BMDM]  in (select BMDM from childtable) " + search+"  order by sort ");
+                    sqltext.Append("WITH childtable(BMMC,BMDM,SJBM) as (SELECT BMMC,BMDM,SJBM FROM [Entity] WHERE SJBM= '" + ssdd + "' OR BMDM = '" + ssdd + "' UNION ALL SELECT A.BMMC,A.BMDM,A.SJBM FROM [Entity] A,childtable b where a.SJBM = b.BMDM ) SELECT et1.BMMC,et2.BMMC as SJMC,et1.LXDZ,et1.FZR,et1.BMDM,et1.JKYH,et1.FY,et1.FYJG,et1.LXDH,CONVERT(varchar(10),et1.Lo)+','+CONVERT(varchar(10),et1.La) as position  from [Entity] et1  left join Entity et2 on et1.SJBM =et2.BMDM  where et1.[BMDM]  in (select BMDM from childtable) " + search+"  order by et1.sort ");
                     break;
             }
 

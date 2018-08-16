@@ -28,7 +28,7 @@ function createtableentity() {
          })
         .DataTable({
             ajax: {
-                url: "../Handle/dataManagementdetail.ashx",
+                url: "../Handle/entitymanage.ashx",
                 type: "POST",
                 data: function () {
                     return data = {
@@ -39,7 +39,7 @@ function createtableentity() {
                 }
             },
             Paginate: true,
-            pageLength: 6,
+            pageLength: 10,
             Processing: true, //DataTables载入数据时，是否显示‘进度’提示  
             serverSide: false,   //服务器处理
             responsive: true,
@@ -51,13 +51,13 @@ function createtableentity() {
                          { "data": "BMMC" },
                          { "data": "SJMC" },
                          { "data": "LXDZ" },
-                         { "data": "FZR" },
+                         { "data": "position" },
                          { "data": "BMDM" },
+                         { "data": "FZR" },
+                         { "data": "LXDH" },
                          { "data": "JKYH" },
                          { "data": "FY" },
-                         { "data": "FYJG" },
-                         { "data": "cloum9" },
-                         { "data": "cloum10" }
+                         { "data": "FYJG" }
             ],
             columnDefs: [
             ],
@@ -82,7 +82,7 @@ function createtableentity() {
 }
 $(document).on('click.bs.carousel.data-api', '.send', function (e) {
     if (!table) {
-        createDataTable();
+        createtableentity();
     } else {
 
         $("#entitytable").DataTable().ajax.reload();
