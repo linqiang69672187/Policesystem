@@ -19,22 +19,21 @@ namespace Policesystem.Handle
             context.Response.ContentType = "text/plain";
             string search = context.Request.Form["search"];
             string ssdd = context.Request.Form["ssdd"];
-            string sszd = context.Request.Form["sszd"];
-
             StringBuilder sqltext = new StringBuilder();
 
+            search = (search == "") ? " " : "  and et1.BMMC like '%" + search + "%'";
             switch (ssdd)
             {
                 case "all":
-                    sqltext.Append("SELECT * from [Entity] a where [SJBM]  = '331000000000'");
+                    sqltext.Append("SELECT et1.BMMC,et2.BMMC as SJMC,et1.LXDZ,et1.FZR,et1.BMDM,et1.JKYH,et1.FY,et1.FYJG,et1.LXDH,CONVERT(varchar(10),et1.Lo)+','+CONVERT(varchar(10),et1.La) from [Entity] et1 left join Entity et2 on et1.SJBM =et2.BMDM where et1.[SJBM]  = '331000000000'" + search+"  order by sort ");
                     break;
                 default:
-                    sqltext.Append("SELECT * from [Entity] a where [SJBM]  = '331000000000'");
+                    sqltext.Append("WITH childtable(BMMC,BMDM,SJBM) as (SELECT BMMC,BMDM,SJBM FROM [Entity] WHERE SJBM= '" + ssdd + "' OR BMDM = '" + ssdd + "' UNION ALL SELECT A.BMMC,A.BMDM,A.SJBM FROM [Entity] A,childtable b where a.SJBM = b.BMDM ) SELECT et1.BMMC,et2.BMMC as SJMC,et1.LXDZ,et1.FZR,et1.BMDM,et1.JKYH,et1.FY,et1.FYJG,et1.LXDH,CONVERT(varchar(10),et1.Lo)+','+CONVERT(varchar(10),et1.La) from [Entity] et1  left join Entity et2 on et1.SJBM =et2.BMDM  where et1.[BMDM]  in (select BMDM from childtable) " + search+"  order by sort ");
                     break;
             }
 
             DataTable dt = SQLHelper.ExecuteRead(CommandType.Text, sqltext.ToString(), "DB");
-            context.Response.Write(JSON.DatatableToDatatableJS(dt, ""));
+            context.Response.Write(JSON.DatatableToDatatableJS(dt, "table"));
         }
 
         public bool IsReusable

@@ -48,14 +48,14 @@ function createtableentity() {
 
             "order": [[1, 'asc']],
             columns: [
-                         { "data": "cloum1" },
-                         { "data": "cloum2" },
-                         { "data": "cloum3" },
-                         { "data": "cloum4" },
-                         { "data": "cloum5" },
-                         { "data": "cloum6" },
-                         { "data": "cloum7" },
-                         { "data": "cloum8" },
+                         { "data": "BMMC" },
+                         { "data": "SJMC" },
+                         { "data": "LXDZ" },
+                         { "data": "FZR" },
+                         { "data": "BMDM" },
+                         { "data": "JKYH" },
+                         { "data": "FY" },
+                         { "data": "FYJG" },
                          { "data": "cloum9" },
                          { "data": "cloum10" }
             ],
