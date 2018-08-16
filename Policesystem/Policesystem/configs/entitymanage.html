@@ -1,0 +1,47 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title></title>
+	<meta charset="utf-8" />
+</head>
+<body>
+    <link href="CSS/jquery.dataTables.css" rel="stylesheet" />
+    <link href="../CSS/entitymanage.css" rel="stylesheet" />
+    <div class="content">
+        <div><label>| 部门管理</label></div>
+        <div>
+            <label>选择大队:</label>
+            <div class="sentity"> <select id="brigadeselect"><option value="all">全部</option></select></div>
+            <div class="date search"><input type="text" placeholder="请输入单位名称"><i class="fa fa-search" aria-hidden="true"></i></div>
+            <div class="cell-button send">确定</div>
+        </div>
+        <div><div class="cell-button daochu">导入</div><div class="cell-button">导出</div></div>
+        <div class="tablebdiv">
+            <table id="entitytable">
+                <thead>
+                    <tr>
+                        <th>部门名称</th>
+                        <th>上级单位</th>
+                        <th>地址</th>
+                        <th>坐标</th>
+                        <th>机构编码</th>
+                        <th>负责人</th>
+                        <th>联系电话</th>
+                        <th>缴款银行</th>
+                        <th>法院</th>
+                        <th>复议机构</th>
+                      
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+            <div class="tablefoot"></div>
+        </div>
+   
+    </div>
+    <script src="../comjs/jquery.js"></script>
+    <script src="../comjs/jquery.dataTables.js"></script>
+    <script src="../Js/entitymanage.js"></script>
+</body>
+</html>

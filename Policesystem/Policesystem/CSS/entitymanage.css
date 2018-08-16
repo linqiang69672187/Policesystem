@@ -1,0 +1,102 @@
+﻿body {
+    color:#02c8f2;
+    height: 100%;
+    width: 100%;
+    background:url("../Image/datamanagermentbg.jpg") no-repeat;
+    background-size: 100% 100%;
+    font-size:12px;
+}
+html, body {
+    height: 100%;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+    overflow-y: hidden;
+    font-family: Helvetica,Tahoma,Arial,sans-serif;
+    font-size: 12px;
+}
+.content{
+    height:100%;
+    width:100%;
+}
+.content>div:nth-child(1){
+    height:27px;
+    width:100%;
+    padding-top:3px;
+    border-bottom: 1px dashed #116bf2;
+}
+.content>div:nth-child(2){
+
+    height:32px;
+    width:100%;
+    padding-top:3px;
+    line-height: 35px;
+}
+.content>div:nth-child(3){
+    height:35px;
+    width:100%;
+    vertical-align:middle;
+    line-height: 35px;
+}
+.sentity,.search{
+    display:inline-block;
+}
+.search{
+    margin-left:20px;
+}
+#brigadeselect{
+    height: 22px;
+
+}
+.fa-search{
+    margin-left:-15px;
+}
+select,input{
+     border: 1px solid #fff;
+    height: 22px;
+    text-align: left;
+    padding-left: 2px;
+    background-color:transparent;
+    border-radius: 4px;
+    color:#fff;
+}
+.search input{
+    height:18px;
+}
+.cell-button {
+    margin-left: 5px;
+    display: inline-block;
+    padding-left: 10px;
+    padding-right: 10px;
+    height: 22px;
+    background-color: #116bf2;
+    line-height: 22px;
+    vertical-align: middle;
+    text-align: center;
+    border-radius: 4px;
+    cursor: pointer;
+    color:#fff;
+}
+.tablebdiv{
+    height:calc(100% - 100px);
+    width:100%;
+}
+#entitytable{
+    width:100%;
+    border-spacing:0;
+}
+#entitytable th {
+    font-weight: 400;
+    padding: 0 5px;
+    background-color: #116bf2;
+    text-align: center;
+    height: 25px; 
+    color:#fff;
+}
+#brigadeselect option{
+    background-color:#071237;
+}
+.send{
+    margin-left:10px;
+}
