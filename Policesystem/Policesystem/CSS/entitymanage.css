@@ -100,3 +100,42 @@ select,input{
 .send{
     margin-left:10px;
 }
+#entitytable tbody tr:nth-child(2n){
+    font-weight: 400;
+    background-color: #213366;
+    text-align: center;
+    height: 22px;
+}
+#entitytable tbody tr:nth-child(2n+1){
+    font-weight: 400;
+    background-color: #13204d;
+    text-align: center;
+    height: 22px;
+}
+#entitytable tbody td:nth-child(1){
+    text-align: left;
+}
+
+#entitytable_wrapper .dataTables_paginate .current{
+    background-color:#116bf3 !important;
+}
+#entitytable_wrapper  .dataTables_paginate .next{
+    margin-right:15px;
+}
+.paginate_button{
+    line-height: 20px;
+}
+#entitytable_wrapper .dataTables_paginate .paginate_button {
+    border: 1px solid #686f8c !important;
+    padding: 0 !important;
+    color: #fff !important;
+}
+#entitytable_wrapper .dataTables_paginate .disabled{
+    visibility: hidden;
+}
+.tablefoot{
+    float:left;
+}
+.tablefoot span{
+    margin-left:10px;
+}

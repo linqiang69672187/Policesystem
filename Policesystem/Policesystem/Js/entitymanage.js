@@ -2,13 +2,16 @@
 $.ajax({
     type: "POST",
     url: "../Handle/GetEntitys.ashx",
-    data: "",
+    data:  
+   {      
+       requesttype: "所有单位"
+   },
     dataType: "json",
     success: function (data) {
         entitydata = data.data; //保存单位数据
         for (var i = 0; i < entitydata.length; i++) {
             if (entitydata[i].SJBM == "331000000000") {
-                $("#brigadeselect").append("<option value='" + entitydata[i].BMDM + "'>" + entitydata[i].BMJC + "</option>");
+                $("#brigadeselect").append("<option value='" + entitydata[i].BMDM + "'>" + entitydata[i].BMMC + "</option>");
             }
         }
     },
@@ -22,9 +25,15 @@ function createtableentity() {
                        console.log('An error has been reported by DataTables: ', message);
                    })
         .on('preXhr.dt', function (e, settings, data) {
-           
+            $('.progresshz').show();
+            $('#entitytable').hide();
              })
         .on('xhr.dt', function (e, settings, json, xhr) {
+            $('.progresshz').hide();
+            $('#entitytable').show();
+            if (json) {
+                $(".tablefoot span").text("共" + json.data.length + "条记录");
+            }
          })
         .DataTable({
             ajax: {
@@ -46,18 +55,18 @@ function createtableentity() {
             paging: true,
             autoWidth: true,
 
-            "order": [[1, 'asc']],
+            "order": [],
             columns: [
-                         { "data": "BMMC" },
-                         { "data": "SJMC" },
-                         { "data": "LXDZ" },
-                         { "data": "position" },
-                         { "data": "BMDM" },
-                         { "data": "FZR" },
-                         { "data": "LXDH" },
-                         { "data": "JKYH" },
-                         { "data": "FY" },
-                         { "data": "FYJG" }
+                         { "data": "BMMC", "orderable": false},
+                         { "data": "SJMC", "orderable": false},
+                         { "data": "LXDZ", "orderable": false },
+                         { "data": "position", "orderable": false },
+                         { "data": "BMDM", "orderable": false },
+                         { "data": "FZR", "orderable": false },
+                         { "data": "LXDH", "orderable": false },
+                         { "data": "JKYH", "orderable": false },
+                         { "data": "FY", "orderable": false },
+                         { "data": "FYJG", "orderable": false }
             ],
             columnDefs: [
             ],
@@ -88,3 +97,4 @@ $(document).on('click.bs.carousel.data-api', '.send', function (e) {
         $("#entitytable").DataTable().ajax.reload();
     }
 });
+

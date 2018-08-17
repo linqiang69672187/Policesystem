@@ -15,4 +15,6 @@ $(document).on('click.bs.carousel.data-api', '.leftbanner ul li', function (e) {
     $doc.addClass("leftbanneractive");
     $(".rightbody").load('configs/entitymanage.html')
 });
-
+$(document).on('click.bs.carousel.data-api', '#exprotIn', function (e) {
+    $("#daochumodal").modal("show");
+});

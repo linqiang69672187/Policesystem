@@ -63,3 +63,32 @@ position: absolute;
     height:100%;
     border:none;
 }
+.modal-content{
+background-color: #000f45;
+color:#fff;
+}
+.modal-header .close {
+color:#fff;
+opacity: .8;
+}
+.modal-body{
+border-bottom-width:0;
+}
+.modal-dialog{
+width:400px;
+}
+.modal-content{
+border: 1px solid #022396 !important;
+}
+.modal-header{
+    border-bottom:0px;
+}
+.modal-footer{
+    border-top:0;
+}
+.modal-body>div {
+    margin-bottom:10px;
+}
+.modal-body>div span{
+    margin-left:10px;
+}

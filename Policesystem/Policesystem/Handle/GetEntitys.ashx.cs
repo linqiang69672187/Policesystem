@@ -20,16 +20,18 @@ namespace Policesystem.Handle
             string search = context.Request.Form["search"];
             string ssdd = context.Request.Form["ssdd"];
             string sszd = context.Request.Form["sszd"];
-
+            string requesttype = context.Request.Form["requesttype"];
             StringBuilder sqltext = new StringBuilder();
             
-          switch (ssdd)
+          switch (requesttype)
             {
                 case "":
                 case null://所有大队
                     sqltext.Append("SELECT BMJC,BMDM,SJBM from [Entity] a where [SJBM]  = '331000000000' and BMMC like '台州市交通警察支队直属%' union all select BMJC,BMDM,SJBM from  [Entity] b where b.SJBM in (SELECT BMDM from [Entity]  where [SJBM]  = '331000000000' and BMMC like '台州市交通警察支队直属%')");
                     break;
-
+                case "所有单位":
+                    sqltext.Append("SELECT BMJC,BMDM,SJBM,BMMC from [Entity] a where [SJBM]  = '331000000000' ");
+                    break;
                 default:
                     break;
             }
