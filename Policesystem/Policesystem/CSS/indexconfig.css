@@ -1,0 +1,118 @@
+﻿body {
+    color:#02c8f2;
+    height: 100%;
+    width: 100%;
+    background:url("../Image/datamanagermentbg.jpg") no-repeat;
+    background-size: 100% 100%;
+    font-size:14px;
+    color:#fff;
+}
+html, body,content {
+    height: 100%;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+    overflow-y: hidden;
+    font-family: Helvetica,Tahoma,Arial,sans-serif;
+    font-size: 12px;
+}
+.rightcontent{
+    float:right;
+    width:330px;
+    height:825px;
+    background:url("../Image/config_indexright.png") no-repeat;
+    background-size: 100% 100%;
+}
+.leftcontent{
+float:left;
+height:100%;
+width:calc(100% - 330px);
+}
+.buttonrow{
+    height:40px;
+}
+.leftcontent > div:nth-child(1) {
+    background: url("../Image/config_indexleft1.png") no-repeat;
+    background-size: 100% 100%;
+    height: 104px;
+}
+.leftcontent > div:nth-child(2) {
+    background: url("../Image/config_indexleft2.png") no-repeat;
+    background-size: 100% 100%;
+    height: 418px;
+}
+.cloum2{
+    float:left;
+    margin-right:5px;
+    border: 1px solid #116bf2 !important;
+    height:140px;
+    width:calc(40% - 4px);
+}
+.cloum3{
+    float:right;
+    border: 1px solid #116bf2 !important;
+    height:140px;
+    width:calc(60% - 10px);
+}
+.cloum5{
+
+    border: 1px solid #116bf2 !important;
+    height:140px;
+    width:calc(100% - 2px);
+}
+
+.leftcontent>div .row{
+    margin-top:5px;
+    height:140px;
+    display:block;
+
+}
+.leftcontent>div .row:nth-child(2){
+    margin-top:15px;
+}
+.cell-button {
+    margin-left: 5px;
+    display: inline-block;
+    padding-left: 10px;
+    padding-right: 10px;
+    height: 22px;
+    background-color: #116bf2;
+    line-height: 22px;
+    vertical-align: middle;
+    text-align: center;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-top:10px;
+}
+.cloum2>div:nth-child(1),.cloum3>div:nth-child(1),.cloum5>div:nth-child(1){
+    height:36px;
+    vertical-align:middle;
+    line-height:36px;
+}
+.cloum2>div:nth-child(2),.cloum3>div:nth-child(2),.cloum5>div:nth-child(2){
+     height:calc(100% - 40px);
+}
+select {
+    display: inline-block;
+    height: 22px;
+    border-radius: 4px;
+    background-color: transparent;
+    width: 100px;
+    color:#fff;
+    margin-left:10px;
+}
+select option {
+    background-color: #071237;
+}
+ul li{
+    display:block;
+    height:22px;
+}
+.none{
+    display:none;
+}
+li div{
+    width:50%;
+    display:inline-block;
+}

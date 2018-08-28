@@ -13,7 +13,7 @@ $(document).on('click.bs.carousel.data-api', '.leftbanner ul li', function (e) {
     var $doc = $(this);
     $(".leftbanner ul li").removeClass("leftbanneractive");
     $doc.addClass("leftbanneractive");
-    $(".rightbody").load('configs/entitymanage.html')
+    //$(".rightbody").load('configs/entitymanage.html')
 });
 $(document).on('click.bs.carousel.data-api', '#exprotIn', function (e) {
     $("#daochumodal").modal("show");

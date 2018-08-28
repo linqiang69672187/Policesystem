@@ -140,11 +140,13 @@
     <Content Include="comjs\myHeatmap2.0.min.js" />
     <Content Include="config.html" />
     <Content Include="configs\entitymanage.html" />
+    <Content Include="configs\indexconfig.html" />
     <Content Include="CSS\bootstrap-datetimepicker.min.css" />
     <Content Include="CSS\config.css" />
     <Content Include="CSS\dataManagement.css" />
     <Content Include="CSS\datatables.min.css" />
     <Content Include="CSS\entitymanage.css" />
+    <Content Include="CSS\indexconfig.css" />
     <Content Include="CSS\jquery.dataTables.css" />
     <Content Include="CSS\map.css" />
     <Content Include="CSS\ol.css" />
@@ -158,6 +160,8 @@
     <Content Include="Images\sort_desc_disabled.png" />
     <Content Include="Image\bannar-logo.png" />
     <Content Include="Image\bannar-time-bg.png" />
+    <Content Include="Image\config_indexleft1.png" />
+    <Content Include="Image\config_indexright.png" />
     <Content Include="Image\datamanagement_listbg.png" />
     <Content Include="Image\datamanagermentbg.jpg" />
     <Content Include="Image\deviceicologo.png" />
@@ -251,6 +255,7 @@
     <Content Include="Js\dataManagement.js" />
     <Content Include="Js\entitymanage.js" />
     <Content Include="Js\index.js" />
+    <Content Include="Js\indexconfig.js" />
     <Content Include="Js\map.js" />
     <Content Include="Js\markpic.js" />
     <Content Include="Js\test.js" />
