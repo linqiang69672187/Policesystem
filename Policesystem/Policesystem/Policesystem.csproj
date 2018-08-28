@@ -350,6 +350,7 @@
     <Content Include="Handle\templet\1.xls" />
     <Content Include="Handle\templet\4.xls" />
     <Content Include="Handle\entitymanage.ashx" />
+    <Content Include="Handle\indexconfig.ashx" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -433,6 +434,9 @@
     </Compile>
     <Compile Include="Handle\index.ashx.cs">
       <DependentUpon>index.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="Handle\indexconfig.ashx.cs">
+      <DependentUpon>indexconfig.ashx</DependentUpon>
     </Compile>
     <Compile Include="Handle\Jqueryflipster.ashx.cs">
       <DependentUpon>Jqueryflipster.ashx</DependentUpon>
