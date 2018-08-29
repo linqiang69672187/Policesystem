@@ -116,3 +116,11 @@ li div{
     width:50%;
     display:inline-block;
 }
+.fa-toggle-off,.fa-toggle-on{
+    cursor:pointer;
+}
+span{
+  float:right;
+  margin-right:20px;
+  font-weight:700;
+}
