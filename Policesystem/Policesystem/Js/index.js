@@ -1,4 +1,5 @@
-﻿setInterval(function() {
+﻿var indexconfigdata;
+setInterval(function () {
     var date = new Date();
     var year = date.getFullYear();
     var month = Appendzero(date.getMonth() + 1);
@@ -370,6 +371,98 @@ function myGaugeChart(containerId, label, value) {
         //}
     });
 }
+
+function loadGaugeData() {
+    var value = 0;
+    var data1 = 0;
+    var data2 = 0;
+    var data3 = 0;
+    $.ajax({
+        type: "POST",
+        url: "Handle/index.ashx",
+        data: "",
+        dataType: "json",
+        success: function (data) {
+            createGauge(data);
+        },
+        error: function (msg) {
+            console.debug("错误:ajax");
+        }
+    });
+
+
+
+}
+
+function formatSeconds(value,y) {
+    var result = Math.floor((value / 60 / 60) * Math.pow(10, y)) / Math.pow(10, y);
+    return result;
+}
+function formatFloat(value, y) {
+    var result = Math.floor((value ) * Math.pow(10, y)) / Math.pow(10, y);
+    return result;
+}
+function getNowFormatDate() {
+    var date = new Date();
+    var seperator1 = "-";
+    var seperator2 = ":";
+    var month = date.getMonth() + 1;
+    var strDate = date.getDate();
+    if (month >= 1 && month <= 9) {
+        month = "0" + month;
+    }
+    if (strDate >= 0 && strDate <= 9) {
+        strDate = "0" + strDate;
+    }
+    var currentdate = date.getFullYear() + seperator1 + month + seperator1 + strDate
+            + " " + date.getHours() + seperator2 + date.getMinutes()
+            + seperator2 + date.getSeconds();
+    return currentdate;
+}
+function loadTotalDevices() {
+    $.ajax({
+        type: "POST",
+        url: "Handle/TotalDevices.ashx",
+        data: "",
+        dataType: "json",
+        success: function (data) {
+
+            $(".qjxinxi label:eq(0)").text(data.data["0"].value);
+            $(".qjxinxi label:eq(2)").text(data.data["1"].value);
+            $(".qjxinxi label:eq(4)").text(data.data["2"].value);
+            $(".qjxinxi label:eq(6)").text(formatSeconds(data.data["1"].value2, 1));
+        },
+        error: function (msg) {
+            console.debug("错误:ajax");
+        }
+    });
+}
+$(function () {
+    loadTotalDevices()//加载顶部全局设备数据
+   // loadGaugeData();//加载仪表盘数据
+});
+var Totalinter = setInterval(loadTotalDevices, 60000);//一分钟重新加载全局设备情况
+//var Gaugeinter = setInterval(loadGaugeData, 180000);//3分钟加载仪表盘
+$.ajax({
+    type: "POST",
+    url: "../Handle/indexconfig.ashx",
+    data: "",
+    dataType: "json",
+    success: function (data) {
+        if (data.data.length == 3) {
+            indexconfigdata = data.data;
+            loadGaugeData();
+        }
+    },
+    error: function (msg) {
+        console.debug("错误:ajax");
+    }
+});
+
+function createGauge(data) {
+
+}
+/*
 function loadGaugeData() {
     var value = 0;
     var data1 = 0;
@@ -384,7 +477,7 @@ function loadGaugeData() {
             //执法记录仪规范上传率
             data1 = parseFloat(data.data["4"].规范上传率);
             data2 = parseFloat(data.data["5"].规范上传率);
-            if (data1 == "0" || data2 == "0") { value = 0 } else { value = formatFloat((data2 - data1) * 100 / data1,1) }
+            if (data1 == "0" || data2 == "0") { value = 0 } else { value = formatFloat((data2 - data1) * 100 / data1, 1) }
             myGaugeChart("zf_gfscl", "规范上传率", value);
             //执法记录仪在线时长
             data1 = parseFloat(data.data["4"].在线总时长);
@@ -441,53 +534,6 @@ function loadGaugeData() {
     });
 
 
-}
-function formatSeconds(value,y) {
-    var result = Math.floor((value / 60 / 60) * Math.pow(10, y)) / Math.pow(10, y);
-    return result;
-}
-function formatFloat(value, y) {
-    var result = Math.floor((value ) * Math.pow(10, y)) / Math.pow(10, y);
-    return result;
-}
-function getNowFormatDate() {
-    var date = new Date();
-    var seperator1 = "-";
-    var seperator2 = ":";
-    var month = date.getMonth() + 1;
-    var strDate = date.getDate();
-    if (month >= 1 && month <= 9) {
-        month = "0" + month;
-    }
-    if (strDate >= 0 && strDate <= 9) {
-        strDate = "0" + strDate;
-    }
-    var currentdate = date.getFullYear() + seperator1 + month + seperator1 + strDate
-            + " " + date.getHours() + seperator2 + date.getMinutes()
-            + seperator2 + date.getSeconds();
-    return currentdate;
-}
-function loadTotalDevices() {
-    $.ajax({
-        type: "POST",
-        url: "Handle/TotalDevices.ashx",
-        data: "",
-        dataType: "json",
-        success: function (data) {
 
-            $(".qjxinxi label:eq(0)").text(data.data["0"].value);
-            $(".qjxinxi label:eq(2)").text(data.data["1"].value);
-            $(".qjxinxi label:eq(4)").text(data.data["2"].value);
-            $(".qjxinxi label:eq(6)").text(formatSeconds(data.data["1"].value2, 1));
-        },
-        error: function (msg) {
-            console.debug("错误:ajax");
-        }
-    });
 }
-$(function () {
-    loadTotalDevices()//加载顶部全局设备数据
-   // loadGaugeData();//加载仪表盘数据
-});
-var Totalinter = setInterval(loadTotalDevices, 60000);//一分钟重新加载全局设备情况
-//var Gaugeinter = setInterval(loadGaugeData, 180000);//3分钟加载仪表盘
+    */
