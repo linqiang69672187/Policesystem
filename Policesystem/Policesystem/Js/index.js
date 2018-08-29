@@ -487,7 +487,7 @@ function loadTotalDevices() {
 }
 $(function () {
     loadTotalDevices()//加载顶部全局设备数据
-    loadGaugeData();//加载仪表盘数据
+   // loadGaugeData();//加载仪表盘数据
 });
 var Totalinter = setInterval(loadTotalDevices, 60000);//一分钟重新加载全局设备情况
-var Gaugeinter = setInterval(loadGaugeData, 180000);//3分钟加载仪表盘
+//var Gaugeinter = setInterval(loadGaugeData, 180000);//3分钟加载仪表盘
