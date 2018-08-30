@@ -20,7 +20,7 @@ html, body,content {
 .rightcontent{
     float:right;
     width:330px;
-    height:765px;
+    height:725px;
     background:url("../Image/config_indexright.png") no-repeat;
     background-size: 100% 100%;
 }
@@ -40,7 +40,7 @@ width:calc(100% - 330px);
 .leftcontent > div:nth-child(2) {
     background: url("../Image/config_indexleft2.png") no-repeat;
     background-size: 100% 100%;
-    height: 360px;
+    height: 320px;
 }
 .cloum2{
     float:left;

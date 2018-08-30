@@ -161,6 +161,7 @@
     <Content Include="Image\bannar-logo.png" />
     <Content Include="Image\bannar-time-bg.png" />
     <Content Include="Image\config_indexleft1.png" />
+    <Content Include="Image\config_indexleft2.png" />
     <Content Include="Image\config_indexright.png" />
     <Content Include="Image\datamanagement_listbg.png" />
     <Content Include="Image\datamanagermentbg.jpg" />
@@ -171,6 +172,7 @@
     <Content Include="Image\index_bz.png" />
     <Content Include="Image\index_chezaiship.png" />
     <Content Include="Image\index_duijiangji.png" />
+    <Content Include="Image\index_fujingtong.png" />
     <Content Include="Image\index_jingwutong.png" />
     <Content Include="Image\index_lanjieyi.png" />
     <Content Include="Image\index_zhifajiluyi.png" />
