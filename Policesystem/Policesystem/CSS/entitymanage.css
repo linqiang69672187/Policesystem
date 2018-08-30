@@ -62,7 +62,7 @@ select,input{
     color:#fff;
 }
 .search input{
-    height:18px;
+    height:22px;
 }
 .cell-button {
     margin-left: 5px;
@@ -138,4 +138,7 @@ select,input{
 }
 .tablefoot span{
     margin-left:10px;
+}
+.progress{
+    display:none;
 }

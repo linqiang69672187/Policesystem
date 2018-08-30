@@ -439,101 +439,903 @@ function loadTotalDevices() {
 }
 $(function () {
     loadTotalDevices()//加载顶部全局设备数据
-   // loadGaugeData();//加载仪表盘数据
+    loadindexconfigdata();//加载仪表盘数据
 });
 var Totalinter = setInterval(loadTotalDevices, 60000);//一分钟重新加载全局设备情况
-//var Gaugeinter = setInterval(loadGaugeData, 180000);//3分钟加载仪表盘
-$.ajax({
-    type: "POST",
-    url: "../Handle/indexconfig.ashx",
-    data: "",
-    dataType: "json",
-    success: function (data) {
-        if (data.data.length == 3) {
-            indexconfigdata = data.data;
-            loadGaugeData();
-        }
-    },
-    error: function (msg) {
-        console.debug("错误:ajax");
+var Gaugeinter = setInterval(loadGaugeData, 180000);//3分钟加载仪表盘
+
+function createGaugeTile(domid,type) {
+    switch (type) {
+        case "1":
+            if (domid == 0) {
+                $(".xixi1").html("<img src='image/index_chezaiship.png'><label>车载视频</label>")
+            }
+            if (domid == 1) {
+                $(".xixi2").html("<img src='image/index_chezaiship.png'><label>车载视频</label>")
+            }
+            if (domid == 2) {
+                $(".xixi3").html("<img src='image/index_chezaiship.png'><label>车载视频</label>")
+            }
+            break;
+        case "2":
+            if (domid == 0) {
+                $(".xixi1").html("<img src='image/index_duijiangji.png'><label>对讲机</label>")
+            }
+            if (domid == 1) {
+                $(".xixi2").html("<img src='image/index_duijiangji.png'><label>对讲机</label>")
+            }
+            if (domid == 2) {
+                $(".xixi3").html("<img src='image/index_duijiangji.png'><label>对讲机</label>")
+            }
+            break;
+        case "3":
+            if (domid == 0) {
+                $(".xixi1").html("<img src='image/index_lanjieyi.png'><label>拦截仪</label>")
+            }
+            if (domid == 1) {
+                $(".xixi2").html("<img src='image/index_lanjieyi.png'><label>拦截仪</label>")
+            }
+            if (domid == 2) {
+                $(".xixi3").html("<img src='image/index_lanjieyi.png'><label>拦截仪</label>")
+            }
+            break;
+        case "4":
+            if (domid == 0) {
+                $(".xixi1").html("<img src='image/index_jingwutong.png'><label>警务通</label>")
+            }
+            if (domid == 1) {
+                $(".xixi2").html("<img src='image/index_jingwutong.png'><label>警务通</label>")
+            }
+            if (domid == 2) {
+                $(".xixi3").html("<img src='image/index_jingwutong.png'><label>警务通</label>")
+            }
+            break;
+        case "5":
+            if (domid == 0) {
+                $(".xixi1").html("<img src='image/index_zhifajiluyi.png'><label>执法记录仪</label>")
+            }
+            if (domid == 1) {
+                $(".xixi2").html("<img src='image/index_zhifajiluyi.png'><label>执法记录仪</label>")
+            }
+            if (domid == 2) {
+                $(".xixi3").html("<img src='image/index_zhifajiluyi.png'><label>执法记录仪</label>")
+            }
+            break;
+        case "6":
+            if (domid == 0) {
+                $(".xixi1").html("<img src='image/index_jingwutong.png'><label>辅警通</label>")
+            }
+            if (domid == 1) {
+                $(".xixi2").html("<img src='image/index_jingwutong.png'><label>辅警通</label>")
+            }
+            if (domid == 2) {
+                $(".xixi3").html("<img src='image/index_jingwutong.png'><label>辅警通</label>")
+            }
+            break;
     }
-});
-
-function createGauge(data) {
-
 }
-/*
-function loadGaugeData() {
-    var value = 0;
-    var data1 = 0;
-    var data2 = 0;
-    var data3 = 0;
+function createGauge(data) {
+    var todayvalue, yesdayvalue;
+    var numchart = 0;
+    var arrayval;
+    var data1=0;
+    var data2=0;
+    var value=0
+    for (var i = 0; i < indexconfigdata.length; i++) {
+        todayvalue = data.data[2 * parseInt(indexconfigdata[i].DevType) - 1];
+        yesdayvalue = data.data[2 * parseInt(indexconfigdata[i].DevType) - 2];
+        arrayval = indexconfigdata[i].val.split(",");
+        numchart = 0;
+        createGaugeTile(i, indexconfigdata[i].DevType);
+        if (i == 0) {   //第一个栏仪盘
+          
+            switch (indexconfigdata[i].DevType) {
+                case "1":
+                case "2":
+                case "3":
+                    if (arrayval[0] == "1") {
+                        data1 = parseFloat(yesdayvalue.在线总时长);
+                        data2 = parseFloat(todayvalue.在线总时长);
+                        if (data1 == "0" || data2 == "0") { value = 0 } else { value = formatFloat((data2 - data1) * 100 / data1, 1) }
+                        myGaugeChart("zf_gfscl", "在线总时长", value);
+                        numchart += 1;
+                    }
+                    if (arrayval[1] == "1") {
+                        data1 = parseFloat(yesdayvalue.在线数);
+                        data2 = parseFloat(todayvalue.在线数);
+                        if (data1 == "0" || data2 == "0") { value = 0 } else { value = formatFloat((data2 - data1) * 100 / data1, 1) }
+                        if (numchart > 0) {
+                            myGaugeChart("zf_zxshj", "今日在线量", value);
+                        } else {
+                            myGaugeChart("zf_gfscl", "今日在线量", value);
+                        }
+                        numchart += 1;
+                    }
+                    if (arrayval[2] == "1") {
+                        data1 = parseFloat(yesdayvalue.设备数量);
+                        data2 = parseFloat(todayvalue.设备数量);
+                        if (data1 == "0" || data2 == "0") { value = 0 } else { value = formatFloat((data2 - data1) * 100 / data1, 1) }
+                        if (numchart > 0) {
+                            myGaugeChart("zf_zxshj", "设备配发数", value);
+                        } else {
+                            myGaugeChart("zf_gfscl", "设备配发数", value);
+                        }
+                        numchart += 1;
+                    }
+                    if (arrayval[3] == "1") {
+                        data1 = parseFloat(yesdayvalue.在线数) / parseFloat(yesdayvalue.设备数量);
+                        data2 = parseFloat(todayvalue.在线数) / parseFloat(todayvalue.设备数量);
+                        if (data1 == "0" || data2 == "0") { value = 0 } else { value = formatFloat((data2 - data1) * 100 / data1, 1) }
+                        if (numchart > 0) {
+                            myGaugeChart("zf_zxshj", "设备使用率", value);
+                        } else {
+                            myGaugeChart("zf_gfscl", "设备使用率", value);
+                        }
+                        numchart += 1;
+                    }
+                    break;
+                case "4":
+                case "6":
+                    if (arrayval[0] == "1") {
+                        data1 = parseFloat(yesdayvalue.在线总时长);
+                        data2 = parseFloat(todayvalue.在线总时长);
+                        if (data1 == "0" || data2 == "0") { value = 0 } else { value = formatFloat((data2 - data1) * 100 / data1, 1) }
+                        myGaugeChart("zf_gfscl", "在线总时长", value);
+                        numchart += 1;
+                    }
+                    if (arrayval[1] == "1") {
+                        data1 = parseFloat(yesdayvalue.在线数);
+                        data2 = parseFloat(todayvalue.在线数);
+                        if (data1 == "0" || data2 == "0") { value = 0 } else { value = formatFloat((data2 - data1) * 100 / data1, 1) }
+                        if (numchart > 0) {
+                            myGaugeChart("zf_zxshj", "今日在线量", value);
+                        } else {
+                            myGaugeChart("zf_gfscl", "今日在线量", value);
+                        }
+                        numchart += 1;
+                    }
+                    if (arrayval[2] == "1") {
+                        data1 = parseFloat(yesdayvalue.设备数量);
+                        data2 = parseFloat(todayvalue.设备数量);
+                        if (data1 == "0" || data2 == "0") { value = 0 } else { value = formatFloat((data2 - data1) * 100 / data1, 1) }
+                        if (numchart > 0) {
+                            myGaugeChart("zf_zxshj", "设备配发数", value);
+                        } else {
+                            myGaugeChart("zf_gfscl", "设备配发数", value);
+                        }
+                        numchart += 1;
+                    }
+                    if (arrayval[3] == "1") {
+                        data1 = parseFloat(yesdayvalue.在线数) / parseFloat(yesdayvalue.设备数量);
+                        data2 = parseFloat(todayvalue.在线数) / parseFloat(todayvalue.设备数量);
+                        if (data1 == "0" || data2 == "0") { value = 0 } else { value = formatFloat((data2 - data1) * 100 / data1, 1) }
+                        if (numchart > 0) {
+                            myGaugeChart("zf_zxshj", "设备使用率", value);
+                        } else {
+                            myGaugeChart("zf_gfscl", "设备使用率", value);
+                        }
+                        numchart += 1;
+                    }
+                    if (arrayval[4] == "1") {
+                        data1 = parseFloat(yesdayvalue.处理量) ;
+                        data2 = parseFloat(todayvalue.处理量) ;
+                        if (data1 == "0" || data2 == "0") { value = 0 } else { value = formatFloat((data2 - data1) * 100 / data1, 1) }
+                        if (numchart > 0) {
+                            myGaugeChart("zf_zxshj", "处理量", value);
+                        } else {
+                            myGaugeChart("zf_gfscl", "处理量", value);
+                        }
+                        numchart += 1;
+                    }
+                    if (arrayval[5] == "1") {
+                        data1 = parseFloat(yesdayvalue.查询量);
+                        data2 = parseFloat(todayvalue.查询量);
+                        if (data1 == "0" || data2 == "0") { value = 0 } else { value = formatFloat((data2 - data1) * 100 / data1, 1) }
+                        if (numchart > 0) {
+                            myGaugeChart("zf_zxshj", "查询量", value);
+                        } else {
+                            myGaugeChart("zf_gfscl", "查询量", value);
+                        }
+                        numchart += 1;
+                    }
+                    break;
+                case "5":
+                    if (arrayval[2] == "1") {
+                        data1 = parseFloat(yesdayvalue.设备数量);
+                        data2 = parseFloat(todayvalue.设备数量);
+                        if (data1 == "0" || data2 == "0") { value = 0 } else { value = formatFloat((data2 - data1) * 100 / data1, 1) }
+                        if (numchart > 0) {
+                            myGaugeChart("zf_zxshj", "设备配发数", value);
+                        } else {
+                            myGaugeChart("zf_gfscl", "设备配发数", value);
+                        }
+                        numchart += 1;
+                    }
+                    if (arrayval[3] == "1") {
+                        data1 = parseFloat(yesdayvalue.在线数) / parseFloat(yesdayvalue.设备数量);
+                        data2 = parseFloat(todayvalue.在线数) / parseFloat(todayvalue.设备数量);
+                        if (data1 == "0" || data2 == "0") { value = 0 } else { value = formatFloat((data2 - data1) * 100 / data1, 1) }
+                        if (numchart > 0) {
+                            myGaugeChart("zf_zxshj", "设备使用率", value);
+                        } else {
+                            myGaugeChart("zf_gfscl", "设备使用率", value);
+                        }
+                        numchart += 1;
+                    }
+                    if (arrayval[6] == "1") {
+                        data1 = parseFloat(yesdayvalue.在线总时长);
+                        data2 = parseFloat(todayvalue.在线总时长);
+                        if (data1 == "0" || data2 == "0") { value = 0 } else { value = formatFloat((data2 - data1) * 100 / data1, 1) }
+                        if (numchart > 0) {
+                            myGaugeChart("zf_zxshj", "视频长度", value);
+                        } else {
+                            myGaugeChart("zf_gfscl", "视频长度", value);
+                        }
+                        numchart += 1;
+                    }
+                    if (arrayval[7] == "1") {
+                        data1 = parseFloat(yesdayvalue.文件大小);
+                        data2 = parseFloat(todayvalue.文件大小);
+                        if (data1 == "0" || data2 == "0") { value = 0 } else { value = formatFloat((data2 - data1) * 100 / data1, 1) }
+                        if (numchart > 0) {
+                            myGaugeChart("zf_zxshj", "视频文件大小", value);
+                        } else {
+                            myGaugeChart("zf_gfscl", "视频文件大小", value);
+                        }
+                        numchart += 1;
+                    }
+                    if (arrayval[8] == "1") {
+                        data1 = parseFloat(yesdayvalue.规范上传率);
+                        data2 = parseFloat(todayvalue.规范上传率);
+                        if (data1 == "0" || data2 == "0") { value = 0 } else { value = formatFloat((data2 - data1) * 100 / data1, 1) }
+                        if (numchart > 0) {
+                            myGaugeChart("zf_zxshj", "规范上传率", value);
+                        } else {
+                            myGaugeChart("zf_gfscl", "规范上传率", value);
+                        }
+                        numchart += 1;
+                    }
+                    break;
+
+            }
+
+        }
+        if (i == 1) {   //第二个栏仪盘
+            switch (indexconfigdata[i].DevType) {
+                case "1":
+                case "2":
+                case "3":
+                    if (arrayval[0] == "1") {
+                        data1 = parseFloat(yesdayvalue.在线总时长);
+                        data2 = parseFloat(todayvalue.在线总时长);
+                        if (data1 == "0" || data2 == "0") { value = 0 } else { value = formatFloat((data2 - data1) * 100 / data1, 1) }
+                        switch (numchart) {
+                            case 0:
+                                myGaugeChart("djj_jrzx", "在线总时长", value);
+                                break;
+                            case 1:
+                                myGaugeChart("djj_gfscl", "在线总时长", value);
+                                break;
+                            case 2:
+                                myGaugeChart("djj_zxshj", "在线总时长", value);
+                                break;
+                        }
+                        numchart += 1;
+                    }
+                    if (arrayval[1] == "1") {
+                        data1 = parseFloat(yesdayvalue.在线数);
+                        data2 = parseFloat(todayvalue.在线数);
+                        if (data1 == "0" || data2 == "0") { value = 0 } else { value = formatFloat((data2 - data1) * 100 / data1, 1) }
+                        switch (numchart) {
+                            case 0:
+                                myGaugeChart("djj_jrzx", "今日在线量", value);
+                                break;
+                            case 1:
+                                myGaugeChart("djj_gfscl", "今日在线量", value);
+                                break;
+                            case 2:
+                                myGaugeChart("djj_zxshj", "今日在线量", value);
+                                break;
+                        }
+                        numchart += 1;
+                    }
+                    if (arrayval[2] == "1") {
+                        data1 = parseFloat(yesdayvalue.设备数量);
+                        data2 = parseFloat(todayvalue.设备数量);
+                        if (data1 == "0" || data2 == "0") { value = 0 } else { value = formatFloat((data2 - data1) * 100 / data1, 1) }
+
+                        switch (numchart) {
+                            case 0:
+                                myGaugeChart("djj_jrzx", "设备配发数", value);
+                                break;
+                            case 1:
+                                myGaugeChart("djj_gfscl", "设备配发数", value);
+                                break;
+                            case 2:
+                                myGaugeChart("djj_zxshj", "设备配发数", value);
+                                break;
+                        }
+                        numchart += 1;
+                    }
+                    if (arrayval[3] == "1") {
+                        data1 = parseFloat(yesdayvalue.在线数) / parseFloat(yesdayvalue.设备数量);
+                        data2 = parseFloat(todayvalue.在线数) / parseFloat(todayvalue.设备数量);
+                        if (data1 == "0" || data2 == "0") { value = 0 } else { value = formatFloat((data2 - data1) * 100 / data1, 1) }
+                        switch (numchart) {
+                            case 0:
+                                myGaugeChart("djj_jrzx", "设备使用率", value);
+                                break;
+                            case 1:
+                                myGaugeChart("djj_gfscl", "设备使用率", value);
+                                break;
+                            case 2:
+                                myGaugeChart("djj_zxshj", "设备使用率", value);
+                                break;
+                        }
+                        numchart += 1;
+                    }
+                    break;
+                case "4":
+                case "6":
+                    if (arrayval[0] == "1") {
+                        data1 = parseFloat(yesdayvalue.在线总时长);
+                        data2 = parseFloat(todayvalue.在线总时长);
+                        if (data1 == "0" || data2 == "0") { value = 0 } else { value = formatFloat((data2 - data1) * 100 / data1, 1) }
+                        myGaugeChart("zf_gfscl", "在线总时长", value);
+                        numchart += 1;
+                    }
+                    if (arrayval[1] == "1") {
+                        data1 = parseFloat(yesdayvalue.在线数);
+                        data2 = parseFloat(todayvalue.在线数);
+                        if (data1 == "0" || data2 == "0") { value = 0 } else { value = formatFloat((data2 - data1) * 100 / data1, 1) }
+                        switch (numchart) {
+                            case 0:
+                                myGaugeChart("djj_jrzx", "今日在线量", value);
+                                break;
+                            case 1:
+                                myGaugeChart("djj_gfscl", "今日在线量", value);
+                                break;
+                            case 2:
+                                myGaugeChart("djj_zxshj", "今日在线量", value);
+                                break;
+                        }
+                        numchart += 1;
+                    }
+                    if (arrayval[2] == "1") {
+                        data1 = parseFloat(yesdayvalue.设备数量);
+                        data2 = parseFloat(todayvalue.设备数量);
+                        if (data1 == "0" || data2 == "0") { value = 0 } else { value = formatFloat((data2 - data1) * 100 / data1, 1) }
+                        switch (numchart) {
+                            case 0:
+                                myGaugeChart("djj_jrzx", "设备配发数", value);
+                                break;
+                            case 1:
+                                myGaugeChart("djj_gfscl", "设备配发数", value);
+                                break;
+                            case 2:
+                                myGaugeChart("djj_zxshj", "设备配发数", value);
+                                break;
+                        }
+                        numchart += 1;
+                    }
+                    if (arrayval[3] == "1") {
+                        data1 = parseFloat(yesdayvalue.在线数) / parseFloat(yesdayvalue.设备数量);
+                        data2 = parseFloat(todayvalue.在线数) / parseFloat(todayvalue.设备数量);
+                        if (data1 == "0" || data2 == "0") { value = 0 } else { value = formatFloat((data2 - data1) * 100 / data1, 1) }
+                        switch (numchart) {
+                            case 0:
+                                myGaugeChart("djj_jrzx", "设备使用率", value);
+                                break;
+                            case 1:
+                                myGaugeChart("djj_gfscl", "设备使用率", value);
+                                break;
+                            case 2:
+                                myGaugeChart("djj_zxshj", "设备使用率", value);
+                                break;
+                        }
+                        numchart += 1;
+                    }
+                    if (arrayval[4] == "1") {
+                        data1 = parseFloat(yesdayvalue.处理量);
+                        data2 = parseFloat(todayvalue.处理量);
+                        if (data1 == "0" || data2 == "0") { value = 0 } else { value = formatFloat((data2 - data1) * 100 / data1, 1) }
+                        switch (numchart) {
+                            case 0:
+                                myGaugeChart("djj_jrzx", "处理量", value);
+                                break;
+                            case 1:
+                                myGaugeChart("djj_gfscl", "处理量", value);
+                                break;
+                            case 2:
+                                myGaugeChart("djj_zxshj", "处理量", value);
+                                break;
+                        }
+                        numchart += 1;
+                    }
+                    if (arrayval[5] == "1") {
+                        data1 = parseFloat(yesdayvalue.查询量);
+                        data2 = parseFloat(todayvalue.查询量);
+                        if (data1 == "0" || data2 == "0") { value = 0 } else { value = formatFloat((data2 - data1) * 100 / data1, 1) }
+          
+                        switch (numchart) {
+                            case 0:
+                                myGaugeChart("djj_jrzx", "查询量", value);
+                                break;
+                            case 1:
+                                myGaugeChart("djj_gfscl", "查询量", value);
+                                break;
+                            case 2:
+                                myGaugeChart("djj_zxshj", "查询量", value);
+                                break;
+                        }
+                        numchart += 1;
+                    }
+                    break;
+                case "5":
+                    if (arrayval[2] == "1") {
+                        data1 = parseFloat(yesdayvalue.设备数量);
+                        data2 = parseFloat(todayvalue.设备数量);
+                        if (data1 == "0" || data2 == "0") { value = 0 } else { value = formatFloat((data2 - data1) * 100 / data1, 1) }
+                        switch (numchart) {
+                            case 0:
+                                myGaugeChart("djj_jrzx", "设备配发数", value);
+                                break;
+                            case 1:
+                                myGaugeChart("djj_gfscl", "设备配发数", value);
+                                break;
+                            case 2:
+                                myGaugeChart("djj_zxshj", "设备配发数", value);
+                                break;
+                        }
+                        numchart += 1;
+                    }
+                    if (arrayval[3] == "1") {
+                        data1 = parseFloat(yesdayvalue.在线数) / parseFloat(yesdayvalue.设备数量);
+                        data2 = parseFloat(todayvalue.在线数) / parseFloat(todayvalue.设备数量);
+                        if (data1 == "0" || data2 == "0") { value = 0 } else { value = formatFloat((data2 - data1) * 100 / data1, 1) }
+                        switch (numchart) {
+                            case 0:
+                                myGaugeChart("djj_jrzx", "设备使用率", value);
+                                break;
+                            case 1:
+                                myGaugeChart("djj_gfscl", "设备使用率", value);
+                                break;
+                            case 2:
+                                myGaugeChart("djj_zxshj", "设备使用率", value);
+                                break;
+                        }
+                        numchart += 1;
+                    }
+                    if (arrayval[6] == "1") {
+                        data1 = parseFloat(yesdayvalue.在线总时长);
+                        data2 = parseFloat(todayvalue.在线总时长);
+                        if (data1 == "0" || data2 == "0") { value = 0 } else { value = formatFloat((data2 - data1) * 100 / data1, 1) }
+                        switch (numchart) {
+                            case 0:
+                                myGaugeChart("djj_jrzx", "视频长度", value);
+                                break;
+                            case 1:
+                                myGaugeChart("djj_gfscl", "视频长度", value);
+                                break;
+                            case 2:
+                                myGaugeChart("djj_zxshj", "视频长度", value);
+                                break;
+                        }
+                        numchart += 1;
+                    }
+                    if (arrayval[7] == "1") {
+                        data1 = parseFloat(yesdayvalue.文件大小);
+                        data2 = parseFloat(todayvalue.文件大小);
+                        if (data1 == "0" || data2 == "0") { value = 0 } else { value = formatFloat((data2 - data1) * 100 / data1, 1) }
+                        switch (numchart) {
+                            case 0:
+                                myGaugeChart("djj_jrzx", "视频文件大小", value);
+                                break;
+                            case 1:
+                                myGaugeChart("djj_gfscl", "视频文件大小", value);
+                                break;
+                            case 2:
+                                myGaugeChart("djj_zxshj", "视频文件大小", value);
+                                break;
+                        }
+                        numchart += 1;
+                    }
+                    if (arrayval[8] == "1") {
+                        data1 = parseFloat(yesdayvalue.规范上传率);
+                        data2 = parseFloat(todayvalue.规范上传率);
+                        if (data1 == "0" || data2 == "0") { value = 0 } else { value = formatFloat((data2 - data1) * 100 / data1, 1) }
+                        switch (numchart) {
+                            case 0:
+                                myGaugeChart("djj_jrzx", "规范上传率", value);
+                                break;
+                            case 1:
+                                myGaugeChart("djj_gfscl", "规范上传率", value);
+                                break;
+                            case 2:
+                                myGaugeChart("djj_zxshj", "规范上传率", value);
+                                break;
+                        }
+                        numchart += 1;
+                    }
+                    break;
+
+            }
+
+
+        }
+
+        if (i == 2) {   //第三个栏仪盘
+            switch (indexconfigdata[i].DevType) {
+                case "1":
+                case "2":
+                case "3":
+                    if (arrayval[0] == "1") {
+                        data1 = parseFloat(yesdayvalue.在线总时长);
+                        data2 = parseFloat(todayvalue.在线总时长);
+                        if (data1 == "0" || data2 == "0") { value = 0 } else { value = formatFloat((data2 - data1) * 100 / data1, 1) }
+                        switch (numchart) {
+                            case 0:
+                                myGaugeChart("jwt_jrzx", "在线总时长", value);
+                                break;
+                            case 1:
+                                myGaugeChart("jwt_cxl", "在线总时长", value);
+                                break;
+                            case 2:
+                                myGaugeChart("jwt_rjcf", "在线总时长", value);
+                                break;
+                            case 3:
+                                myGaugeChart("jwt_jrcl", "在线总时长", value);
+                                break;
+                            case 4:
+                                myGaugeChart("jwt_pjcf", "在线总时长", value);
+                                break;
+                        }
+                        numchart += 1;
+                    }
+                    if (arrayval[1] == "1") {
+                        data1 = parseFloat(yesdayvalue.在线数);
+                        data2 = parseFloat(todayvalue.在线数);
+                        if (data1 == "0" || data2 == "0") { value = 0 } else { value = formatFloat((data2 - data1) * 100 / data1, 1) }
+                        switch (numchart) {
+                            case 0:
+                                myGaugeChart("jwt_jrzx", "今日在线量", value);
+                                break;
+                            case 1:
+                                myGaugeChart("jwt_cxl", "今日在线量", value);
+                                break;
+                            case 2:
+                                myGaugeChart("jwt_rjcf", "今日在线量", value);
+                                break;
+                            case 3:
+                                myGaugeChart("jwt_jrcl", "今日在线量", value);
+                                break;
+                            case 4:
+                                myGaugeChart("jwt_pjcf", "今日在线量", value);
+                                break;
+                        }
+                        numchart += 1;
+                    }
+                    if (arrayval[2] == "1") {
+                        data1 = parseFloat(yesdayvalue.设备数量);
+                        data2 = parseFloat(todayvalue.设备数量);
+                        if (data1 == "0" || data2 == "0") { value = 0 } else { value = formatFloat((data2 - data1) * 100 / data1, 1) }
+
+                        switch (numchart) {
+                            case 0:
+                                myGaugeChart("jwt_jrzx", "设备配发数", value);
+                                break;
+                            case 1:
+                                myGaugeChart("jwt_cxl", "设备配发数", value);
+                                break;
+                            case 2:
+                                myGaugeChart("jwt_rjcf", "设备配发数", value);
+                                break;
+                            case 3:
+                                myGaugeChart("jwt_jrcl", "设备配发数", value);
+                                break;
+                            case 4:
+                                myGaugeChart("jwt_pjcf", "设备配发数", value);
+                                break;
+                        }
+                        numchart += 1;
+                    }
+                    if (arrayval[3] == "1") {
+                        data1 = parseFloat(yesdayvalue.在线数) / parseFloat(yesdayvalue.设备数量);
+                        data2 = parseFloat(todayvalue.在线数) / parseFloat(todayvalue.设备数量);
+                        if (data1 == "0" || data2 == "0") { value = 0 } else { value = formatFloat((data2 - data1) * 100 / data1, 1) }
+                        switch (numchart) {
+                            case 0:
+                                myGaugeChart("jwt_jrzx", "设备使用率", value);
+                                break;
+                            case 1:
+                                myGaugeChart("jwt_cxl", "设备使用率", value);
+                                break;
+                            case 2:
+                                myGaugeChart("jwt_rjcf", "设备使用率", value);
+                                break;
+                            case 3:
+                                myGaugeChart("jwt_jrcl", "设备使用率", value);
+                                break;
+                            case 4:
+                                myGaugeChart("jwt_pjcf", "设备使用率", value);
+                                break;
+                        }
+                        numchart += 1;
+                    }
+                    break;
+                case "4":
+                case "6":
+                    if (arrayval[0] == "1") {
+                        data1 = parseFloat(yesdayvalue.在线总时长);
+                        data2 = parseFloat(todayvalue.在线总时长);
+                        if (data1 == "0" || data2 == "0") { value = 0 } else { value = formatFloat((data2 - data1) * 100 / data1, 1) }
+                        myGaugeChart("zf_gfscl", "在线总时长", value);
+                        numchart += 1;
+                    }
+                    if (arrayval[1] == "1") {
+                        data1 = parseFloat(yesdayvalue.在线数);
+                        data2 = parseFloat(todayvalue.在线数);
+                        if (data1 == "0" || data2 == "0") { value = 0 } else { value = formatFloat((data2 - data1) * 100 / data1, 1) }
+                        switch (numchart) {
+                            case 0:
+                                myGaugeChart("jwt_jrzx", "今日在线量", value);
+                                break;
+                            case 1:
+                                myGaugeChart("jwt_cxl", "今日在线量", value);
+                                break;
+                            case 2:
+                                myGaugeChart("jwt_rjcf", "今日在线量", value);
+                                break;
+                            case 3:
+                                myGaugeChart("jwt_jrcl", "今日在线量", value);
+                                break;
+                            case 4:
+                                myGaugeChart("jwt_pjcf", "今日在线量", value);
+                                break;
+                        }
+                        numchart += 1;
+                    }
+                    if (arrayval[2] == "1") {
+                        data1 = parseFloat(yesdayvalue.设备数量);
+                        data2 = parseFloat(todayvalue.设备数量);
+                        if (data1 == "0" || data2 == "0") { value = 0 } else { value = formatFloat((data2 - data1) * 100 / data1, 1) }
+                        
+                        switch (numchart) {
+                            case 0:
+                                myGaugeChart("jwt_jrzx", "设备配发数", value);
+                                break;
+                            case 1:
+                                myGaugeChart("jwt_cxl", "设备配发数", value);
+                                break;
+                            case 2:
+                                myGaugeChart("jwt_rjcf", "设备配发数", value);
+                                break;
+                            case 3:
+                                myGaugeChart("jwt_jrcl", "设备配发数", value);
+                                break;
+                            case 4:
+                                myGaugeChart("jwt_pjcf", "设备配发数", value);
+                                break;
+                        }
+                        numchart += 1;
+                    }
+                    if (arrayval[3] == "1") {
+                        data1 = parseFloat(yesdayvalue.在线数) / parseFloat(yesdayvalue.设备数量);
+                        data2 = parseFloat(todayvalue.在线数) / parseFloat(todayvalue.设备数量);
+                        if (data1 == "0" || data2 == "0") { value = 0 } else { value = formatFloat((data2 - data1) * 100 / data1, 1) }
+                        switch (numchart) {
+                            case 0:
+                                myGaugeChart("jwt_jrzx", "设备使用率", value);
+                                break;
+                            case 1:
+                                myGaugeChart("jwt_cxl", "设备使用率", value);
+                                break;
+                            case 2:
+                                myGaugeChart("jwt_rjcf", "设备使用率", value);
+                                break;
+                            case 3:
+                                myGaugeChart("jwt_jrcl", "设备使用率", value);
+                                break;
+                            case 4:
+                                myGaugeChart("jwt_pjcf", "设备使用率", value);
+                                break;
+                        }
+                        numchart += 1;
+                    }
+                    if (arrayval[4] == "1") {
+                        data1 = parseFloat(yesdayvalue.处理量);
+                        data2 = parseFloat(todayvalue.处理量);
+                        if (data1 == "0" || data2 == "0") { value = 0 } else { value = formatFloat((data2 - data1) * 100 / data1, 1) }
+                        switch (numchart) {
+                            case 0:
+                                myGaugeChart("jwt_jrzx", "处理量", value);
+                                break;
+                            case 1:
+                                myGaugeChart("jwt_cxl", "处理量", value);
+                                break;
+                            case 2:
+                                myGaugeChart("jwt_rjcf", "处理量", value);
+                                break;
+                            case 3:
+                                myGaugeChart("jwt_jrcl", "处理量", value);
+                                break;
+                            case 4:
+                                myGaugeChart("jwt_pjcf", "处理量", value);
+                                break;
+                        }
+                        numchart += 1;
+                    }
+                    if (arrayval[5] == "1") {
+                        data1 = parseFloat(yesdayvalue.查询量);
+                        data2 = parseFloat(todayvalue.查询量);
+                        if (data1 == "0" || data2 == "0") { value = 0 } else { value = formatFloat((data2 - data1) * 100 / data1, 1) }
+                        switch (numchart) {
+                            case 0:
+                                myGaugeChart("jwt_jrzx", "查询量", value);
+                                break;
+                            case 1:
+                                myGaugeChart("jwt_cxl", "查询量", value);
+                                break;
+                            case 2:
+                                myGaugeChart("jwt_rjcf", "查询量", value);
+                                break;
+                            case 3:
+                                myGaugeChart("jwt_jrcl", "查询量", value);
+                                break;
+                            case 4:
+                                myGaugeChart("jwt_pjcf", "查询量", value);
+                                break;
+                        }
+                        numchart += 1;
+                    }
+                    break;
+                case "5":
+                    if (arrayval[2] == "1") {
+                        data1 = parseFloat(yesdayvalue.设备数量);
+                        data2 = parseFloat(todayvalue.设备数量);
+                        if (data1 == "0" || data2 == "0") { value = 0 } else { value = formatFloat((data2 - data1) * 100 / data1, 1) }
+                    
+                        switch (numchart) {
+                            case 0:
+                                myGaugeChart("jwt_jrzx", "设备配发数", value);
+                                break;
+                            case 1:
+                                myGaugeChart("jwt_cxl", "设备配发数", value);
+                                break;
+                            case 2:
+                                myGaugeChart("jwt_rjcf", "设备配发数", value);
+                                break;
+                            case 3:
+                                myGaugeChart("jwt_jrcl", "设备配发数", value);
+                                break;
+                            case 4:
+                                myGaugeChart("jwt_pjcf", "设备配发数", value);
+                                break;
+                        }
+                        numchart += 1;
+                    }
+                    if (arrayval[3] == "1") {
+                        data1 = parseFloat(yesdayvalue.在线数) / parseFloat(yesdayvalue.设备数量);
+                        data2 = parseFloat(todayvalue.在线数) / parseFloat(todayvalue.设备数量);
+                        if (data1 == "0" || data2 == "0") { value = 0 } else { value = formatFloat((data2 - data1) * 100 / data1, 1) }
+                        switch (numchart) {
+                            case 0:
+                                myGaugeChart("jwt_jrzx", "设备使用率", value);
+                                break;
+                            case 1:
+                                myGaugeChart("jwt_cxl", "设备使用率", value);
+                                break;
+                            case 2:
+                                myGaugeChart("jwt_rjcf", "设备使用率", value);
+                                break;
+                            case 3:
+                                myGaugeChart("jwt_jrcl", "设备使用率", value);
+                                break;
+                            case 4:
+                                myGaugeChart("jwt_pjcf", "设备使用率", value);
+                                break;
+                        }
+                        numchart += 1;
+                    }
+                    if (arrayval[6] == "1") {
+                        data1 = parseFloat(yesdayvalue.在线总时长);
+                        data2 = parseFloat(todayvalue.在线总时长);
+                        if (data1 == "0" || data2 == "0") { value = 0 } else { value = formatFloat((data2 - data1) * 100 / data1, 1) }
+                        switch (numchart) {
+                            case 0:
+                                myGaugeChart("jwt_jrzx", "视频长度", value);
+                                break;
+                            case 1:
+                                myGaugeChart("jwt_cxl", "视频长度", value);
+                                break;
+                            case 2:
+                                myGaugeChart("jwt_rjcf", "视频长度", value);
+                                break;
+                            case 3:
+                                myGaugeChart("jwt_jrcl", "视频长度", value);
+                                break;
+                            case 4:
+                                myGaugeChart("jwt_pjcf", "视频长度", value);
+                                break;
+                        }
+                        numchart += 1;
+                    }
+                    if (arrayval[7] == "1") {
+                        data1 = parseFloat(yesdayvalue.文件大小);
+                        data2 = parseFloat(todayvalue.文件大小);
+                        if (data1 == "0" || data2 == "0") { value = 0 } else { value = formatFloat((data2 - data1) * 100 / data1, 1) }
+                        switch (numchart) {
+                            case 0:
+                                myGaugeChart("jwt_jrzx", "视频文件大小", value);
+                                break;
+                            case 1:
+                                myGaugeChart("jwt_cxl", "视频文件大小", value);
+                                break;
+                            case 2:
+                                myGaugeChart("jwt_rjcf", "视频文件大小", value);
+                                break;
+                            case 3:
+                                myGaugeChart("jwt_jrcl", "视频文件大小", value);
+                                break;
+                            case 4:
+                                myGaugeChart("jwt_pjcf", "视频文件大小", value);
+                                break;
+                        }
+                        numchart += 1;
+                    }
+                    if (arrayval[8] == "1") {
+                        data1 = parseFloat(yesdayvalue.规范上传率);
+                        data2 = parseFloat(todayvalue.规范上传率);
+                        if (data1 == "0" || data2 == "0") { value = 0 } else { value = formatFloat((data2 - data1) * 100 / data1, 1) }
+                        switch (numchart) {
+                            case 0:
+                                myGaugeChart("jwt_jrzx", "规范上传率", value);
+                                break;
+                            case 1:
+                                myGaugeChart("jwt_cxl", "规范上传率", value);
+                                break;
+                            case 2:
+                                myGaugeChart("jwt_rjcf", "规范上传率", value);
+                                break;
+                            case 3:
+                                myGaugeChart("jwt_jrcl", "规范上传率", value);
+                                break;
+                            case 4:
+                                myGaugeChart("jwt_pjcf", "规范上传率", value);
+                                break;
+                        }
+                        numchart += 1;
+                    }
+                    break;
+
+            }
+
+
+        }
+
+    }
+}
+
+function loadindexconfigdata() {
+  
     $.ajax({
         type: "POST",
-        url: "Handle/index.ashx",
+        url: "../Handle/indexconfig.ashx",
         data: "",
         dataType: "json",
         success: function (data) {
-            //执法记录仪规范上传率
-            data1 = parseFloat(data.data["4"].规范上传率);
-            data2 = parseFloat(data.data["5"].规范上传率);
-            if (data1 == "0" || data2 == "0") { value = 0 } else { value = formatFloat((data2 - data1) * 100 / data1, 1) }
-            myGaugeChart("zf_gfscl", "规范上传率", value);
-            //执法记录仪在线时长
-            data1 = parseFloat(data.data["4"].在线总时长);
-            data2 = parseFloat(data.data["5"].在线总时长);
-            if (data1 == "0" || data2 == "0") { value = 0 } else { value = formatFloat((data2 - data1) * 100 / data1, 1) }
-            myGaugeChart("zf_zxshj", "在线总时长", value);
-            //对讲机今日在线
-            data1 = parseFloat(data.data["0"].在线数);
-            data2 = parseFloat(data.data["1"].在线数);
-            if (data1 == "0" || data2 == "0") { value = 0 } else { value = formatFloat((data2 - data1) * 100 / data1, 1) }
-            myGaugeChart("djj_jrzx", "今日在线数", value);
-            //对讲机设备使用率
-            data1 = parseFloat(data.data["0"].在线数) / parseFloat(data.data["0"].设备数量);
-            data2 = parseFloat(data.data["1"].在线数) / parseFloat(data.data["1"].设备数量);
-            if (data1 == "0" || data2 == "0") { value = 0 } else { value = formatFloat((data2 - data1) * 100 / data1, 1) }
-            myGaugeChart("djj_gfscl", "设备使用率", value);
-            //对讲机在线总时长
-            data1 = parseFloat(data.data["0"].在线总时长);
-            data2 = parseFloat(data.data["1"].在线总时长);
-            if (data1 == "0" || data2 == "0") { value = 0 } else { value = formatFloat((data2 - data1) * 100 / data1, 1) }
-            myGaugeChart("djj_zxshj", "在线总时长", value);
-            //警务通在线数
-            data1 = parseFloat(data.data["2"].在线数);
-            data2 = parseFloat(data.data["3"].在线数);
-            if (data1 == "0" || data2 == "0") { value = 0 } else { value = formatFloat((data2 - data1) * 100 / data1, 1) }
-            myGaugeChart("jwt_jrzx", "今日在线数", value);
-            //警务通今日查询量
-            data1 = parseFloat(data.data["2"].查询量);
-            data2 = parseFloat(data.data["3"].查询量);
-            if (data1 == "0" || data2 == "0") { value = 0 } else { value = formatFloat((data2 - data1) * 100 / data1, 1) }
-            myGaugeChart("jwt_cxl", "今日查询量", value);
-            //警务通人均处罚量
-            data1 = parseFloat(data.data["2"].处理量) / parseFloat(data.data["2"].人数);
-            data2 = parseFloat(data.data["3"].处理量) / parseFloat(data.data["3"].人数);
-            if (data1 == "0" || data2 == "0") { value = 0 } else { value = formatFloat((data2 - data1) * 100 / data1, 1) }
-            myGaugeChart("jwt_rjcf", "人均处罚量", value);
-
-            //警务通今日处理量
-            data1 = parseFloat(data.data["2"].处理量);
-            data2 = parseFloat(data.data["3"].处理量);
-            if (data1 == "0" || data2 == "0") { value = 0 } else { value = formatFloat((data2 - data1) * 100 / data1, 1) }
-            myGaugeChart("jwt_jrcl", "今日处理量", value);
-
-            //警务通设备平均处罚量
-            data1 = parseFloat(data.data["2"].处理量) / parseFloat(data.data["2"].设备数量);
-            data2 = parseFloat(data.data["3"].处理量) / parseFloat(data.data["3"].设备数量);
-            if (data1 == "0" || data2 == "0") { value = 0 } else { value = formatFloat((data2 - data1) * 100 / data1, 1) }
-            myGaugeChart("jwt_pjcf", "设备平均处罚量", value);
-
+            if (data.data.length == 3) {
+                indexconfigdata = data.data;
+                loadGaugeData();
+            }
         },
         error: function (msg) {
             console.debug("错误:ajax");
         }
     });
 
-
-
 }
-    */
+
+$(document).on('click.bs.carousel.data-api', 'body', function (e) {
+    window.location.href = "map.html";
+});

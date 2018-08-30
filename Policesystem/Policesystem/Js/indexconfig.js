@@ -93,7 +93,8 @@ function setToggleVal(vals,ele) {
 }
 $(document).on('click.bs.carousel.data-api', '.fa-toggle-off,.fa-toggle-on', function (e) {
     var tableclss = $(this).parent().parent().parent().parent().parent().attr("class");
-    $("span").addClass("none")
+    $(".row1 span").addClass("none");
+    $(".row2 span").addClass("none");
     if ($(this).hasClass("fa-toggle-off")) {
         switch (tableclss) {
             case "cloum2":
@@ -124,6 +125,7 @@ $(document).on('click.bs.carousel.data-api', '.fa-toggle-off,.fa-toggle-on', fun
 });
 
 $(document).on('click.bs.carousel.data-api', '#savebtn', function (e) {
+    $('.progresshz').show();
     var val1="";
     $(".cloum2 i").each(function (index, ele) {
         val1 += (index > 0) ? "," : "";
@@ -154,10 +156,20 @@ $(document).on('click.bs.carousel.data-api', '#savebtn', function (e) {
         data: data,
         dataType: "json",
         success: function (data) {
-           
+            $('.progresshz').hide();
+            $('.buttonrow div:eq(1)').text("保存成功");
+            clearInterval(clinter);
+            clinter = setInterval(clearintet, 10000);//10秒清除保存
         },
         error: function (msg) {
+            $('.buttonrow div:eq(1)').text("保存失败");
+            clearInterval(clinter);
+            clinter = setInterval(clearintet, 10000);//10秒清除保存
             console.debug("错误:ajax");
         }
     });
 });
+var clinter = setInterval(clearintet, 5000);//10秒清除保存
+function clearintet() {
+     $('.buttonrow div:eq(1)').text("");
+}
