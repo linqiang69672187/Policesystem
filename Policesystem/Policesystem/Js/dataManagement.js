@@ -8,6 +8,7 @@ var search;
 var type;
 var ssddtext;
 var tablezd;
+var seltype;
 $("#header").load('top.html', function () {
     $("#header ul li:eq(3)").addClass("active");
 });
@@ -114,6 +115,7 @@ $(document).on('click.bs.carousel.data-api', '#addedit', function (e) {
     showetailRS();
 
 });
+
 $('.datadetail').on('hidden.bs.modal', function () {
 
     $("#search-result-table").find(".trselect").removeClass("trselect"); //移除选择
@@ -382,15 +384,21 @@ function createDataTable() {
            .on('error.dt', function (e, settings, techNote, message) {
            })
             .on('preXhr.dt', function (e, settings, data) {
-                $('.progresshz').show();
+                $('.progresshz').show()
+                $('.btnsjx').hide();
                 $('#search-result-table').hide();
            })
              .on('xhr.dt', function (e, settings, json, xhr) {
                  $('.progresshz').hide();
                  $('#search-result-table').show();
+                 $('.btnsjx').css("display", "inline-block");
+                 seltype = $("#deviceselect").val();
                  switch ($("#deviceselect").val()) {
                      case "1":   //车载视频
-
+                     case "2":  
+                     case "3":   
+                     case "5":   
+                     case "7":   
                          table.column(8).visible(false);
                          table.column(9).visible(false);
                          table.column(10).visible(false);
@@ -401,9 +409,10 @@ function createDataTable() {
                          $('#search-result-table tr:eq(0) th:eq(4)').text("设备使用数量");
                          $('#search-result-table tr:eq(0) th:eq(5)').text("未使用数量");
                          $('#search-result-table tr:eq(0) th:eq(6)').text("设备使用率（%）");
-                         $('#search-result-table tr:eq(0) th:eq(7)').text("使用率名次");
+                         $('#search-result-table tr:eq(0) th:eq(7)').text("使用率排名");
                          break;
-                     case "4":  
+                     case "4":
+                     case "6":
                          table.column(8).visible(true);
                          table.column(9).visible(true);
                          table.column(10).visible(true);
@@ -422,8 +431,9 @@ function createDataTable() {
                      default:
                          break;
                  }
-                 $('#search-result-table_paginate').parent().append("<span>共 " + json.data.length + " 条记录</span>");
+                 $('#search-result-table_paginate').parent().html("<span>共 " + json.data.length + " 条记录</span>");
                  $('.daochu').html("<a class='buttons-excel'  href='../Handle/upload/" + json.title + "'><span>导 出</span></a>");
+                 rebuildsjx();
 
              })
 
@@ -517,4 +527,35 @@ function createDataTable() {
 
                 initComplete: function () {}
             });
+}
+
+$(document).on('click.bs.carousel.data-api', '.btnsjx', function (e) {
+    var $doc = $(this).text();
+    if ($doc == "显示数据项") {
+        $('#shujuxiang').css("display", "inline-block");
+        $(this).text("隐藏数据项");
+        rebuildsjx();
     }
+    else
+    {
+        $('#shujuxiang').css("display", "none");
+        $(this).text("显示数据项");
+    }
+});
+
+function rebuildsjx() {
+    $('#shujuxiang li').remove();
+    switch (seltype) {
+        case "1":   //车载视频
+        case "2":
+        case "3":
+        case "5":
+        case "7":
+            $('#shujuxiang').html('<li><i class="fa fa-check-square-o" aria-hidden="true"></i>部门</li><li><i class="fa fa-check-square-o" aria-hidden="true"></i>配发数</li><li><i class="fa fa-check-square-o" aria-hidden="true"></i>在线时长</li><li><i class="fa fa-check-square-o" aria-hidden="true"></i>设备使用数量</li><li><i class="fa fa-check-square-o" aria-hidden="true"></i>未使用数量</li><li><i class="fa fa-check-square-o" aria-hidden="true"></i>设备使用率</li><li><i class="fa fa-check-square-o" aria-hidden="true"></i>使用名次</li>')
+            break;
+        case "4":
+        case "6":
+            $('#shujuxiang').html('<li><i class="fa fa-check-square-o" aria-hidden="true"></i>部门</li><li><i class="fa fa-check-square-o" aria-hidden="true"></i>配发数</li><li><i class="fa fa-check-square-o" aria-hidden="true"></i>处罚量</li><li><i class="fa fa-check-square-o" aria-hidden="true"></i>人均处罚量</li><li><i class="fa fa-check-square-o" aria-hidden="true"></i>查询量</li><li><i class="fa fa-check-square-o" aria-hidden="true"></i>设备平均处罚量</li><li><i class="fa fa-check-square-o" aria-hidden="true"></i>设备平均处罚量排名</li><li><i class="fa fa-check-square-o" aria-hidden="true"></i>无处罚量</li><li><i class="fa fa-check-square-o" aria-hidden="true"></i>未使用</li><li><i class="fa fa-check-square-o" aria-hidden="true"></i>无查询量</li>')
+            break;
+    }
+}
