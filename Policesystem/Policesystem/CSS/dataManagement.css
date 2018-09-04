@@ -308,3 +308,6 @@ table.dataTable tbody th, table.dataTable tbody td{
 .btnsjx,#shujuxiang{
     display:none;
 }
+#shujuxiang i {
+    margin-right:3px;
+}

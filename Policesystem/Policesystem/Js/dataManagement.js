@@ -393,6 +393,13 @@ function createDataTable() {
                  $('#search-result-table').show();
                  $('.btnsjx').css("display", "inline-block");
                  seltype = $("#deviceselect").val();
+                 table.column(1).visible(true);
+                 table.column(2).visible(true);
+                 table.column(3).visible(true);
+                 table.column(4).visible(true);
+                 table.column(5).visible(true);
+                 table.column(6).visible(true);
+                 table.column(7).visible(true);
                  switch ($("#deviceselect").val()) {
                      case "1":   //车载视频
                      case "2":  
@@ -559,3 +566,62 @@ function rebuildsjx() {
             break;
     }
 }
+$(document).on('click.bs.carousel.data-api', '#shujuxiang li', function (e) {
+    var $doc = $(this).text();
+    var ischeck = $(this).children("i").hasClass("fa-check-square-o");
+    if (ischeck) {
+        $(this).children("i").removeClass("fa-check-square-o").addClass("fa-square-o");
+    }
+    else {
+        $(this).children("i").removeClass("fa-square-o").addClass("fa-check-square-o");
+    }
+    switch ($doc) {
+        case "部门":
+            table.column(1).visible(!ischeck);
+            break;
+        case "配发数":
+            table.column(2).visible(!ischeck);
+            break;
+        case "在线时长":
+            table.column(3).visible(!ischeck);
+            break;
+        case "设备使用数量":
+            table.column(4).visible(!ischeck);
+            break;
+        case "未使用数量":
+            table.column(5).visible(!ischeck);
+            break;
+        case "设备使用率":
+            table.column(6).visible(!ischeck);
+            break;
+        case "使用名次":
+            table.column(7).visible(!ischeck);
+            break;
+        case "处罚量":
+            table.column(3).visible(!ischeck);
+            break;
+        case "人均处罚量":
+            table.column(4).visible(!ischeck);
+            break;
+        case "查询量":
+            table.column(5).visible(!ischeck);
+            break;
+        case "设备平均处罚量":
+            table.column(6).visible(!ischeck);
+            break;
+        case "设备平均处罚量排名":
+            table.column(7).visible(!ischeck);
+            break;
+        case "无处罚量":
+            table.column(8).visible(!ischeck);
+            break;
+        case "未使用":
+            table.column(9).visible(!ischeck);
+            break;
+        case "无查询量":
+            table.column(10).visible(!ischeck);
+            break;
+        default:
+            break;
+    }
+});
