@@ -43,7 +43,7 @@ function createdata(data) {
     var ddata = new Array();
     var ddatacolumn = new Array();
     var totalvalue = 0;
-    var color = ['#a24cfa', '#fa4cae', '#f2ab22', '#43db89'];
+    var color = ['#4c8afa', '#f2ab22', '#43db89', '#38e8e8'];
     for (var i1 = 0; i1 < charttype.length; i1++) {
         totalvalue = 0;
         ddata = [];

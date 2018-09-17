@@ -62,7 +62,7 @@
     text-decoration:none;
     background-color: transparent;
     color:#fff;
-    font-size:20px;
+    font-size:16px;
 }
 #header ul>li.active,a.active{
     background: -webkit-linear-gradient(#005EB8, #014688); /* Safari 5.1 - 6.0 */
