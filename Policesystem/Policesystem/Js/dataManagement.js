@@ -9,9 +9,21 @@ var type;
 var ssddtext;
 var tablezd;
 var seltype;
+var pagecount;
 $("#header").load('top.html', function () {
     $("#header ul li:eq(3)").addClass("active");
 });
+
+switch (true) {
+
+    case window.screen.height > 1000:
+        pagecount = 10;
+        break;
+     default:
+         pagecount = 5;
+        break;
+
+}
 function transferDate(date) {
     // 年  
     var year = date.getFullYear();
@@ -316,34 +328,6 @@ function createtabledetail() {
             columnDefs: [
                         ],
             buttons: [
-            {
-                extend: "print",
-                text: "打 印",
-                title: "<center></center>",
-                footer: true,
-                customize: function (win) {
-                    $(win.document.body).find('center').text(starttime + "_" + endtime + sbmingc + "报表");
-                },
-                exportOptions: {
-                    columns: function (idx, data, node, h) {
-                        var visible = table.column(idx).visible();
-                        switch (node.outerText) {
-                            case "":
-                            case "设备使用率":
-                                visible = false;
-                                break;
-
-
-                        }
-
-                        return visible;
-                    }
-
-
-                }
-
-
-            }
             ],
             "language": {
                 "lengthMenu": "_MENU_每页",
@@ -365,7 +349,7 @@ function createtabledetail() {
 function createDataTable() {
 
         var columns = [
-                          { "data": "cloum1" },
+                          { "data": "cloum1","orderable": false  },
                           { "data": "cloum2" },
                           { "data": "cloum3" },
                           { "data": "cloum4" },
@@ -387,7 +371,8 @@ function createDataTable() {
                 $('.progresshz').show()
                 $('.btnsjx').hide();
                 $('#search-result-table').hide();
-           })
+            })
+
              .on('xhr.dt', function (e, settings, json, xhr) {
                  $('.progresshz').hide();
                  $('#search-result-table').show();
@@ -438,11 +423,15 @@ function createDataTable() {
                      default:
                          break;
                  }
-                 $('#search-result-table_paginate').parent().html("<span>共 " + json.data.length + " 条记录</span>");
+                 $('.infodiv').html("<span>共 " + json.data.length + " 条记录</span>");
                  $('.daochu').html("<a class='buttons-excel'  href='../Handle/upload/" + json.title + "'><span>导 出</span></a>");
                  rebuildsjx();
 
              })
+            .on('draw.dt', function () {
+                //给第一列编号
+     
+            })
 
             .DataTable({
                 ajax: {
@@ -472,13 +461,12 @@ function createDataTable() {
 
                 },
                 Paginate: true,
-                pageLength: 10,
+                pageLength: pagecount,
                 Processing: true, //DataTables载入数据时，是否显示‘进度’提示  
                 serverSide: false,   //服务器处理
                 responsive: true,
                 paging: true,
                 autoWidth: true,
-
                 "order": [],
                 columns: columns,
                 columnDefs: [
@@ -487,36 +475,7 @@ function createDataTable() {
                              render: function (a, b, c, d) { var html = "<a  class=\'btn btn-sm btn-primary txzs-btn\' id='addedit' entityid='" + c.cloum12 + "'  >查看详情</a>"; return html; }
                          }
                 ],
-                buttons: [
-            {
-                extend: "print",
-                text: "打 印",
-                title: "<center></center>",
-                footer: true,
-                customize: function (win) {
-                    $(win.document.body).find('center').text(starttime + "_" + endtime + sbmingc + "报表");
-                },
-                exportOptions: {
-                    columns: function (idx, data, node, h) {
-                        var visible = table.column(idx).visible();
-                        switch (node.outerText) {
-                            case "":
-                            case "设备使用率":
-                                visible = false;
-                                break;
-
-
-                        }
-
-                        return visible;
-                    }
-
-
-                }
-
-
-            }
-                ],
+                buttons: [ ],
                 "language": {
                     "lengthMenu": "_MENU_每页",
                     "zeroRecords": "没有找到记录",
@@ -530,7 +489,7 @@ function createDataTable() {
                     }
                 },
 
-                dom: "" + "t" + "<'row' p>B",
+                dom: "" + "t" + "<'row'p><'row infodiv'>",
 
                 initComplete: function () {}
             });

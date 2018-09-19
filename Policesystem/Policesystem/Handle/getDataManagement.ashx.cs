@@ -68,6 +68,8 @@ namespace Policesystem.Handle
             dtreturns.Columns.Add("cloum10");
             dtreturns.Columns.Add("cloum11");
             dtreturns.Columns.Add("cloum12");
+            dtreturns.Columns.Add("cloum13", typeof(int));
+
             int days = Convert.ToInt16(context.Request.Form["dates"]);
             int statusvalue = 10;  //正常参考值
             int devicescount = 0;  //汇总设备总数
@@ -133,6 +135,7 @@ namespace Policesystem.Handle
                 DataRow dr = dtreturns.NewRow();
                 dr["cloum1"] = (i1 + 1).ToString(); ;
                 dr["cloum2"] = dtEntity.Rows[i1]["Name"].ToString();
+                dr["cloum13"] = (i1 + 1);
                 Int64 在线时长 = 0;
                 Int64 视频大小 = 0;
                 Int64 处理量 = 0;
@@ -259,7 +262,7 @@ namespace Policesystem.Handle
                 orderno += 1;
             }
 
-            query=query.OrderBy(p => p["cloum1"]);
+            query=query.OrderBy(p =>p["cloum13"]);
             dtreturns =query.CopyToDataTable<DataRow>();
             DataRow drtz = dtreturns.NewRow();
             drtz["cloum1"] = "汇总";

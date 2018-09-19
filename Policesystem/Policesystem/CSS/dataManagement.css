@@ -311,3 +311,6 @@ table.dataTable tbody th, table.dataTable tbody td{
 #shujuxiang i {
     margin-right:3px;
 }
+.infodiv{
+    margin-top:-25px !important;
+}
