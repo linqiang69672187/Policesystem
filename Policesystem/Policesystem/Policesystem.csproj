@@ -354,6 +354,7 @@
     <Content Include="Handle\entitymanage.ashx" />
     <Content Include="Handle\indexconfig.ashx" />
     <Content Include="Handle\saveindexconfig.ashx" />
+    <Content Include="Handle\templet\mingxi\1.xls" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
