@@ -19,12 +19,13 @@ namespace Policesystem.Handle
         public void ProcessRequest(HttpContext context)
         {
             context.Response.ContentType = "text/plain";
-            string search = context.Request.Form["search"];
+            string search = context.Request.Cookies["search"].Value;
             string type = context.Request.Form["type"];
             string begintime = context.Request.Form["starttime"];
             string endtime = context.Request.Form["endtime"];
             string entityid = context.Request.Form["entityid"];
             string ssddtext = context.Request.Form["ssddtext"];
+            string sreachcondi = "";
             StringBuilder sqltext = new StringBuilder();
             DataTable Alarm_EveryDayInfo = null; //每日告警
             DataTable distinctdevic = null; //设备
@@ -36,32 +37,43 @@ namespace Policesystem.Handle
             dtreturns.Columns.Add("cloum5");
             dtreturns.Columns.Add("cloum6");
 
-            search = (search == "") ? " " : "  and DevId like '%" + search + "%'";
+         switch (search)
+            {
+                case "":
+                    break;
+                default:
+                    sreachcondi = "and [DevId] like '%" + search + "%'  ";
+                    break;
+            }
+
             if (entityid == "331000000000")
             {
                 switch (type)
                 {
                     case "5":
-                        Alarm_EveryDayInfo = SQLHelper.ExecuteRead(CommandType.Text, "WITH childtable(BMMC,BMDM,SJBM) as (SELECT BMMC,BMDM,SJBM FROM [Entity] WHERE SJBM in ('331001000000','331002000000','331003000000','331004000000') OR BMDM in ('331001000000','331002000000','331003000000','331004000000') UNION ALL SELECT A.BMMC,A.BMDM,A.SJBM FROM [Entity] A,childtable b where a.SJBM = b.BMDM ) select data.Devid,data.AlarmType,data.val,us.JYBH,us.XM,us.SJ from (SELECT DevId,1 as AlarmType,SUM(value) val from EveryDayInfo_ZFJLY where Entity in(SELECT BMDM FROM childtable)  AND [Time]  >='" + begintime + "' and [Time] <='" + endtime + "'   GROUP BY DevId) as data left join Device de on de.DevId = data.DevId left join ACL_USER us on us.JYBH = de.JYBH   order by data.DevId", "Alarm_EveryDayInfo");
+                        Alarm_EveryDayInfo = SQLHelper.ExecuteRead(CommandType.Text, "WITH childtable(BMMC,BMDM,SJBM) as (SELECT BMMC,BMDM,SJBM FROM [Entity] WHERE SJBM in ('331001000000','331002000000','331003000000','331004000000') OR BMDM in ('331001000000','331002000000','331003000000','331004000000') UNION ALL SELECT A.BMMC,A.BMDM,A.SJBM FROM [Entity] A,childtable b where a.SJBM = b.BMDM ) select data.Devid,data.AlarmType,data.val,us.JYBH,us.XM,us.SJ from (SELECT DevId,1 as AlarmType,SUM(value) val from EveryDayInfo_ZFJLY where Entity in(SELECT BMDM FROM childtable) " + sreachcondi + "  AND [Time]  >='" + begintime + "' and [Time] <='" + endtime + "'   GROUP BY DevId) as data left join Device de on de.DevId = data.DevId left join ACL_USER us on us.JYBH = de.JYBH   order by data.DevId", "Alarm_EveryDayInfo");
+                        distinctdevic = SQLHelper.ExecuteRead(CommandType.Text, "WITH childtable(BMMC,BMDM,SJBM) as (SELECT BMMC,BMDM,SJBM FROM [Entity] WHERE SJBM in ('331001000000','331002000000','331003000000','331004000000') OR BMDM in ('331001000000','331002000000','331003000000','331004000000') UNION ALL SELECT A.BMMC,A.BMDM,A.SJBM FROM [Entity] A,childtable b where a.SJBM = b.BMDM ) select DISTINCT Devid from EveryDayInfo_ZFJLY where Entity in(SELECT BMDM FROM childtable) AND [Time] >='" + begintime + "' and [Time] <='" + endtime + "' " + sreachcondi + " and DevType = " + type, "devcie");
                         break;
                     default:
-                        Alarm_EveryDayInfo = SQLHelper.ExecuteRead(CommandType.Text, "WITH childtable(BMMC,BMDM,SJBM) as (SELECT BMMC,BMDM,SJBM FROM [Entity] WHERE SJBM in ('331001000000','331002000000','331003000000','331004000000') OR BMDM in ('331001000000','331002000000','331003000000','331004000000') UNION ALL SELECT A.BMMC,A.BMDM,A.SJBM FROM [Entity] A,childtable b where a.SJBM = b.BMDM ) select data.Devid,data.AlarmType,data.val,us.JYBH,us.XM,us.SJ from (SELECT DevId,AlarmType,SUM(value) val from Alarm_EveryDayInfo where Entity in(SELECT BMDM FROM childtable) AND AlarmType<>6 AND AlarmDay >='" + begintime + "' and AlarmDay <='" + endtime + "' and DevType = " + type + "  GROUP BY DevId,AlarmType) as data left join Device de on de.DevId = data.DevId left join ACL_USER us on us.JYBH = de.JYBH   order by data.DevId", "Alarm_EveryDayInfo");
+                        Alarm_EveryDayInfo = SQLHelper.ExecuteRead(CommandType.Text, "WITH childtable(BMMC,BMDM,SJBM) as (SELECT BMMC,BMDM,SJBM FROM [Entity] WHERE SJBM in ('331001000000','331002000000','331003000000','331004000000') OR BMDM in ('331001000000','331002000000','331003000000','331004000000') UNION ALL SELECT A.BMMC,A.BMDM,A.SJBM FROM [Entity] A,childtable b where a.SJBM = b.BMDM ) select data.Devid,data.AlarmType,data.val,us.JYBH,us.XM,us.SJ from (SELECT DevId,AlarmType,SUM(value) val from Alarm_EveryDayInfo where Entity in(SELECT BMDM FROM childtable) AND AlarmType<>6 AND AlarmDay >='" + begintime + "' and AlarmDay <='" + endtime + "' " + sreachcondi + " and DevType = " + type + "  GROUP BY DevId,AlarmType) as data left join Device de on de.DevId = data.DevId left join ACL_USER us on us.JYBH = de.JYBH   order by data.DevId", "Alarm_EveryDayInfo");
+                        distinctdevic = SQLHelper.ExecuteRead(CommandType.Text, "WITH childtable(BMMC,BMDM,SJBM) as (SELECT BMMC,BMDM,SJBM FROM [Entity] WHERE SJBM in ('331001000000','331002000000','331003000000','331004000000') OR BMDM in ('331001000000','331002000000','331003000000','331004000000') UNION ALL SELECT A.BMMC,A.BMDM,A.SJBM FROM [Entity] A,childtable b where a.SJBM = b.BMDM ) select DISTINCT Devid from Alarm_EveryDayInfo where Entity in(SELECT BMDM FROM childtable) AND AlarmType<>6 AND AlarmDay >='" + begintime + "' and AlarmDay <='" + endtime + "' " + sreachcondi + " and DevType = " + type, "devcie");
                         break;
                 }
-                distinctdevic = SQLHelper.ExecuteRead(CommandType.Text, "WITH childtable(BMMC,BMDM,SJBM) as (SELECT BMMC,BMDM,SJBM FROM [Entity] WHERE SJBM in ('331001000000','331002000000','331003000000','331004000000') OR BMDM in ('331001000000','331002000000','331003000000','331004000000') UNION ALL SELECT A.BMMC,A.BMDM,A.SJBM FROM [Entity] A,childtable b where a.SJBM = b.BMDM ) select DISTINCT Devid from Alarm_EveryDayInfo where Entity in(SELECT BMDM FROM childtable) AND AlarmType<>6 AND AlarmDay >='" + begintime + "' and AlarmDay <='" + endtime + "' and DevType = " + type , "devcie");
             }
             else
             {
                 switch (type)
                 {
                     case "5":
-                        Alarm_EveryDayInfo = SQLHelper.ExecuteRead(CommandType.Text, "WITH childtable(BMMC,BMDM,SJBM) as (SELECT BMMC,BMDM,SJBM FROM [Entity] WHERE SJBM ='" + entityid + "' OR BMDM = '" + entityid + "' UNION ALL SELECT A.BMMC,A.BMDM,A.SJBM FROM [Entity] A,childtable b where a.SJBM = b.BMDM ) select data.Devid,data.AlarmType,data.val,us.JYBH,us.XM,us.SJ from (SELECT DevId,1 as AlarmType,SUM(value) val from EveryDayInfo_ZFJLY where Entity in(SELECT BMDM FROM childtable) AND [Time] >='" + begintime + "' and [Time] <='" + endtime + "'  GROUP BY DevId) as data left join Device de on de.DevId = data.DevId left join ACL_USER us on us.JYBH = de.JYBH   order by data.DevId", "Alarm_EveryDayInfo");
+                        Alarm_EveryDayInfo = SQLHelper.ExecuteRead(CommandType.Text, "WITH childtable(BMMC,BMDM,SJBM) as (SELECT BMMC,BMDM,SJBM FROM [Entity] WHERE SJBM ='" + entityid + "' OR BMDM = '" + entityid + "' UNION ALL SELECT A.BMMC,A.BMDM,A.SJBM FROM [Entity] A,childtable b where a.SJBM = b.BMDM ) select data.Devid,data.AlarmType,data.val,us.JYBH,us.XM,us.SJ from (SELECT DevId,1 as AlarmType,SUM(value) val from EveryDayInfo_ZFJLY where Entity in(SELECT BMDM FROM childtable) " + sreachcondi + " AND [Time] >='" + begintime + "' and [Time] <='" + endtime + "'  GROUP BY DevId) as data left join Device de on de.DevId = data.DevId left join ACL_USER us on us.JYBH = de.JYBH   order by data.DevId", "Alarm_EveryDayInfo");
+                        distinctdevic = SQLHelper.ExecuteRead(CommandType.Text, "WITH childtable(BMMC,BMDM,SJBM) as (SELECT BMMC,BMDM,SJBM FROM [Entity] WHERE SJBM ='" + entityid + "' OR BMDM ='" + entityid + "' UNION ALL SELECT A.BMMC,A.BMDM,A.SJBM FROM [Entity] A,childtable b where a.SJBM = b.BMDM ) select DISTINCT Devid from EveryDayInfo_ZFJLY where Entity in(SELECT BMDM FROM childtable) " + sreachcondi + " AND [Time] >='" + begintime + "' and [Time] <='" + endtime + "' and DevType = " + type, "Alarm_EveryDayInfo");
                         break;
                     default:
-                        Alarm_EveryDayInfo = SQLHelper.ExecuteRead(CommandType.Text, "WITH childtable(BMMC,BMDM,SJBM) as (SELECT BMMC,BMDM,SJBM FROM [Entity] WHERE SJBM ='" + entityid + "' OR BMDM = '" + entityid + "' UNION ALL SELECT A.BMMC,A.BMDM,A.SJBM FROM [Entity] A,childtable b where a.SJBM = b.BMDM ) select data.Devid,data.AlarmType,data.val,us.JYBH,us.XM,us.SJ from (SELECT DevId,AlarmType,SUM(value) val from Alarm_EveryDayInfo where Entity in(SELECT BMDM FROM childtable) AND AlarmType<>6 AND AlarmDay >='" + begintime + "' and AlarmDay <='" + endtime + "' and DevType = " + type + "  GROUP BY DevId,AlarmType) as data left join Device de on de.DevId = data.DevId left join ACL_USER us on us.JYBH = de.JYBH   order by data.DevId", "Alarm_EveryDayInfo");
+
+                        Alarm_EveryDayInfo = SQLHelper.ExecuteRead(CommandType.Text, "WITH childtable(BMMC,BMDM,SJBM) as (SELECT BMMC,BMDM,SJBM FROM [Entity] WHERE SJBM ='" + entityid + "' OR BMDM = '" + entityid + "' UNION ALL SELECT A.BMMC,A.BMDM,A.SJBM FROM [Entity] A,childtable b where a.SJBM = b.BMDM ) select data.Devid,data.AlarmType,data.val,us.JYBH,us.XM,us.SJ from (SELECT DevId,AlarmType,SUM(value) val from Alarm_EveryDayInfo where Entity in(SELECT BMDM FROM childtable) " + sreachcondi + " AND AlarmType<>6 AND AlarmDay >='" + begintime + "' and AlarmDay <='" + endtime + "' and DevType = " + type + "  GROUP BY DevId,AlarmType) as data left join Device de on de.DevId = data.DevId left join ACL_USER us on us.JYBH = de.JYBH   order by data.DevId", "Alarm_EveryDayInfo");
+                        distinctdevic = SQLHelper.ExecuteRead(CommandType.Text, "WITH childtable(BMMC,BMDM,SJBM) as (SELECT BMMC,BMDM,SJBM FROM [Entity] WHERE SJBM ='" + entityid + "' OR BMDM ='" + entityid + "' UNION ALL SELECT A.BMMC,A.BMDM,A.SJBM FROM [Entity] A,childtable b where a.SJBM = b.BMDM ) select DISTINCT Devid from Alarm_EveryDayInfo where Entity in(SELECT BMDM FROM childtable) " + sreachcondi + " AND AlarmType<>6 AND AlarmDay >='" + begintime + "' and AlarmDay <='" + endtime + "' and DevType = " + type, "Alarm_EveryDayInfo");
                         break;
                 }
-            distinctdevic = SQLHelper.ExecuteRead(CommandType.Text, "WITH childtable(BMMC,BMDM,SJBM) as (SELECT BMMC,BMDM,SJBM FROM [Entity] WHERE SJBM ='" + entityid + "' OR BMDM ='" + entityid + "' UNION ALL SELECT A.BMMC,A.BMDM,A.SJBM FROM [Entity] A,childtable b where a.SJBM = b.BMDM ) select DISTINCT Devid from Alarm_EveryDayInfo where Entity in(SELECT BMDM FROM childtable) AND AlarmType<>6 AND AlarmDay >='" + begintime + "' and AlarmDay <='" + endtime + "' and DevType = " + type , "Alarm_EveryDayInfo");
             }
 
             for (int i1 = 0; i1 < distinctdevic.Rows.Count; i1++) {
