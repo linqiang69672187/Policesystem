@@ -1,4 +1,5 @@
 ﻿var indexconfigdata;
+var hchart = 400;
 setInterval(function () {
     var date = new Date();
     var year = date.getFullYear();
@@ -37,6 +38,18 @@ function Appendzero(obj) {
     if (obj < 10) return "0" + "" + obj;
     else return obj;
 }
+
+switch (true) {
+
+    case window.screen.width > 2600:
+        hchart = 400;
+        break;
+    default:
+        hchart = 110;
+        break;
+
+}
+
 function createdata(data) {
 
     var charttype = ["警务通", "拦截仪", "对讲机", "车载视频", "执法记录仪"];
@@ -267,7 +280,7 @@ function myGaugeChart(containerId, label, value) {
             backgroundColor: 'rgba(0,0,0,0)',//设置背景透明
             plotShadow: false,
             margin: [0, 0, 0, 0],
-            height:'400'
+            height: hchart
         },
         credits: {
             enabled: false
