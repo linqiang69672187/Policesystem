@@ -473,6 +473,9 @@
         line-height: 100px;
         font-size: 32px;
     }
+      .hbclasslabel{
+       font-size: 32px;
+    }
 }
 @media screen and (max-width: 2000px) {
       html, body {
@@ -480,7 +483,7 @@
         width: 100%;
         margin: 0;
         padding: 0;
-        overflow-x: auto;
+        overflow-x: hidden;
         overflow-y: auto;
         font-family: Helvetica,Tahoma,Arial,sans-serif;
         font-size: 12px;
@@ -515,7 +518,7 @@
         width: 312px;
         float: right;
         margin-right: 10px;
-        margin-top: 5px;
+        margin-top: -3px;
     }
      .qjxinxi{
          margin:auto;
@@ -623,18 +626,174 @@
     .leftbox > .row:nth-child(4) {
         margin-top:10px;
         height:160px;
-        overflow:auto;
+        overflow:hidden;
 
     }
     .leftbox > .row:nth-child(5) {
            margin-top:10px;
         height:160px;
-        overflow:auto;
+        overflow:hidden;
      }
     #zf_gfscl, #zf_zxshj, #djj_jrzx, #djj_gfscl, #djj_zxshj {
     margin-top: 0px;
-    width: 110px;
+    width: 160px;
     height: 110px;
     display: inline-block;
+    }
+    .highcharts-label-box{
+        stroke-width:0 !important;
+     
+    }
+    .highcharts-data-labels{
+           display:none;
+    }
+    .hbclasslabel{
+       font-size: 12px;
+    }
+    .col-md-4{
+        padding-right: 0px !important;
+        padding-left: 0px !important;
+    }
+    .highcharts-title{
+        width:160px !important;
+        text-align:center;
+    }
+ 
+    img{
+    transform: scale(0.5)
+    }
+
+    #jwt_jrzx, #jwt_cxl, #jwt_rjcf, #jwt_jrcl, #jwt_pjcf {
+        margin-top: -20px;
+        display: inline-block;
+        width: 16.66%;
+    }
+     .leftbox div:nth-child(4) .col5 {
+            border-radius: 4px;
+            display: inline-block;
+            border: 1px solid #29599b;
+            height: 100%;
+            width: 380px;
+            float: left;
+            margin-left: 25px;
+            text-align:center;
+        }
+
+        .leftbox div:nth-child(4) .col7 {
+            position: relative;
+            border-radius: 4px;
+            margin-left: 25px;
+             margin-right: 25px;
+            display: inline-block;
+            border: 1px solid #29599b;
+            height: 100%;
+            width:580px;
+            float: right;
+              text-align:center;
+        }
+        .xixi1,.xixi2{
+            text-align:left;
+        }
+       .leftbox > div:nth-child(5) > div:nth-child(1) {
+        margin-right: 25px;
+        height: 100%;
+        border-radius: 4px;
+        margin-left: 25px;
+        border: 1px solid #29599b;
+    }
+       .entitylist{
+           display:none;
+       }
+       iframe{
+           margin:0 25px 0 25px;
+       }
+       .leftbox >.row:nth-child(2){
+           margin:0 45px 0 0;
+       }
+        .rlchars, .rlchars ul, .rlchars li {
+        display: inline-block;
+        margin: 0 0;
+        height: 100%;
+        vertical-align: middle;
+    }
+
+        .rlchars > ul li:nth-child(2n+1) {
+            font-size: 12px;
+            width: 12px;
+            color: #fff;
+            height: 100%;
+            word-wrap: break-word;
+        }
+        .rlchars ul{
+            margin:0;
+            padding:0;
+        }
+
+        .rlchars > ul li:nth-child(1) {
+            margin:0 0 0 5px;
+        }
+
+        .rlchars > ul li:nth-child(3) {
+                    margin:0px;
+        }
+
+        .rlchars > ul li:nth-child(2) {
+            font-size: 12px;
+            width: 80px;
+            color: #fff;
+            height: 100%;
+                    margin:0px;
+        }
+
+        .rlchars > ul li:nth-child(4) {
+                    margin:0px;
+            font-size: 12px;
+            width: 200px;
+            color: #fff;
+            height: 100%;
+        }
+            #jwtcolumn, #ljycolumn, #czcolumn, #zfcolumn, #djjcolumn {
+        margin-top: -10px;
+        width: 200px;
+        height: 110px;
+        font-size:8px !important;
+    }
+         .row2n, .row1n {
+        margin-top: 5px;
+        margin-bottom: 2px;
+        height: 130px;
+        width: 320px;
+        background-color: #082653;
+        border: 1px solid #29599b;
+        border-radius: 2px;
+    }
+       #jwtchart, #ljychart, #czchart, #zfchart, #djjchart {
+        margin-top: -20px;
+        width: 80px;
+        margin-left: 0px;
+        height:120px;
+    }
+      .row2n div img:last-child, .row1n div img:last-child {
+            float: right;
+            margin-right: 15px;
+        }
+      .col-md-9 img{
+          margin-left:-70px;
+      }
+      .jwt_logo {
+        display: inline-block;
+        background: url("../Image/index_bz.png") no-repeat center center;
+        width: 140px;
+        height: 80%;
+        margin-top:-20px;
+    }
+  .fa-arrow-up {
+        color: #F8DE43 !important;
+        display: inline-block;
+    }
+
+    .fa-arrow-down {
+        color: #FF0000 !important;
+        display: inline-block;
     }
 }

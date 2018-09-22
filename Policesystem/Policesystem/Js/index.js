@@ -43,9 +43,25 @@ switch (true) {
 
     case window.screen.width > 2600:
         hchart = 400;
+        datalabelsize = '28px';//
+        baseWidth = '8';
+        distance = -40;
+        minorTickLength = 28;
+        minorTickWidth = 2;
+        titley = 300;
+        titlefontsize = '28px';
+        columtitlefontSize = '18px';
         break;
     default:
         hchart = 110;
+        datalabelsize='12px';//28px
+        baseWidth = '2';
+        distance = -20;
+        minorTickLength = 10;
+        minorTickWidth = 1;
+        titley = 80;
+        titlefontsize = '12px';
+        columtitlefontSize = '8px';
         break;
 
 }
@@ -114,7 +130,8 @@ function createcolum(id, type, data, color) {
         xAxis: {
             labels: {
                 style: {
-                    color: '#fff'
+                    color: '#fff',
+                    fontSize: columtitlefontSize
                 }
             },
             type: 'category',
@@ -128,7 +145,10 @@ function createcolum(id, type, data, color) {
             },
             title: {
                 text: '',
-               
+                style: {
+                    color: '#fff',
+                    fontSize: columtitlefontSize
+                }
             },
             gridLineDashStyle: 'Dash', //Dash,Dot,Solid,默认Solid
         },
@@ -138,7 +158,7 @@ function createcolum(id, type, data, color) {
             text:  '',
             style: {
                 color: '#fff',
-                fontSize: '18px'
+                fontSize: columtitlefontSize
             }
         },
         tooltip: {
@@ -202,10 +222,10 @@ function createChart(id, type, data, color, totalvalue) {
 
         title: {
             floating: true,
-            text: '合计：'+ totalvalue,
+            text: totalvalue,
             style: {
                 color: '#fff',
-                fontSize: '18px'
+                fontSize: '12px'
             }
         },
         tooltip: {
@@ -262,12 +282,12 @@ function createChart(id, type, data, color, totalvalue) {
     });
 }
 function myGaugeChart(containerId, label, value) {
-    var oper = '环比昨日增加' + value + '%<i class="fa fa-arrow-up" aria-hidden="true"></i><br/> <span style="font-size:32px;">● ' + label + ' ● </span>';
+    var oper = '环比增加' + value + '%<i class="fa fa-arrow-up" aria-hidden="true"></i><br/> <span style="hbclasslabel">● ' + label + ' ● </span>';
     var colorarray = ['#467ddf', '#45d5d5', '#964edf', '#F8DE43']
 
     if (value < 0) {
         value = Math.abs(value);
-        oper = '环比昨日减少' + value + '%<i class="fa fa-arrow-down" aria-hidden="true"></i><br/> <span style="font-size:32px;">● ' + label + ' ● </span>';
+        oper = '环比减少' + value + '%<i class="fa fa-arrow-down" aria-hidden="true"></i><br/> <span style="hbclasslabel">● ' + label + ' ● </span>';
         colorarray = ['#63869e', '#45d5d5', '#FF0000', '#FF0000']
     }
 
@@ -288,8 +308,8 @@ function myGaugeChart(containerId, label, value) {
         title: {
             useHTML: true,
             text: oper,
-            y: 300,
-            style:{color:'#fff',fontSize:'28px'}
+            y: titley,
+            style: { color: '#fff', fontSize: titlefontsize }
         },
         pane: {
             startAngle: -120,
@@ -301,18 +321,18 @@ function myGaugeChart(containerId, label, value) {
             min: 0,
             max: 100,
             minorTickInterval: 'auto',
-            minorTickWidth: 2,
-            minorTickLength: 28,
+            minorTickWidth: minorTickWidth,
+            minorTickLength: minorTickLength,
             minorTickPosition: 'inside',
             minorTickColor: '#fff',
-            tickPixelInterval: 28,
+            tickPixelInterval: 20,
             tickWidth: 1,
             tickPosition: 'inside',
             tickLength: 10,
             tickColor: '#fff',
             labels: {
                 step: 2,
-                distance:-40,
+                distance: distance,
                 rotation: 'auto',
                 style: {color: '#fff' }
             },
@@ -350,7 +370,7 @@ function myGaugeChart(containerId, label, value) {
                 backgroundColor: colorarray[3],//指针背景色4
                 radius: '78%',// 半径：指针长度
                 rearLength: '10%',//尾巴长度
-                baseWidth:'8',
+                baseWidth: baseWidth,
                 borderColor:'#cccccc',
                 borderWidth:'0',
                 topWidth:'1'
@@ -363,7 +383,7 @@ function myGaugeChart(containerId, label, value) {
                 },
                 style: {
                     color: '#467ddf', //1
-                    fontSize: '28px'
+                    fontSize: datalabelsize
                 }
             }
         }]
@@ -794,7 +814,17 @@ function createGauge(data) {
                         data1 = parseFloat(yesdayvalue.在线总时长);
                         data2 = parseFloat(todayvalue.在线总时长);
                         if (data1 == "0" || data2 == "0") { value = 0 } else { value = formatFloat((data2 - data1) * 100 / data1, 1) }
-                        myGaugeChart("zf_gfscl", "在线总时长", value);
+                        switch (numchart) {
+                            case 0:
+                                myGaugeChart("djj_jrzx", "在线总时长", value);
+                                break;
+                            case 1:
+                                myGaugeChart("djj_gfscl", "在线总时长", value);
+                                break;
+                            case 2:
+                                myGaugeChart("djj_zxshj", "在线总时长", value);
+                                break;
+                        }
                         numchart += 1;
                     }
                     if (arrayval[1] == "1") {
@@ -1082,7 +1112,23 @@ function createGauge(data) {
                         data1 = parseFloat(yesdayvalue.在线总时长);
                         data2 = parseFloat(todayvalue.在线总时长);
                         if (data1 == "0" || data2 == "0") { value = 0 } else { value = formatFloat((data2 - data1) * 100 / data1, 1) }
-                        myGaugeChart("zf_gfscl", "在线总时长", value);
+                        switch (numchart) {
+                            case 0:
+                                myGaugeChart("jwt_jrzx", "在线总时长", value);
+                                break;
+                            case 1:
+                                myGaugeChart("jwt_cxl", "在线总时长", value);
+                                break;
+                            case 2:
+                                myGaugeChart("jwt_rjcf", "在线总时长", value);
+                                break;
+                            case 3:
+                                myGaugeChart("jwt_jrcl", "在线总时长", value);
+                                break;
+                            case 4:
+                                myGaugeChart("jwt_pjcf", "在线总时长", value);
+                                break;
+                        }
                         numchart += 1;
                     }
                     if (arrayval[1] == "1") {
