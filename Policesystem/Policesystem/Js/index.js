@@ -249,7 +249,7 @@ function createChart(id, type, data, color, totalvalue) {
                     events: {
                         mouseOver: function (e) {  // 鼠标滑过时动态更新标题
                             chart.setTitle({
-                                text: e.target.name + '\t' + e.target.y + ''
+                                text: e.target.y
                             });
                         }
                         //, 

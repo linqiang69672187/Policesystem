@@ -20,7 +20,24 @@ namespace Policesystem.Handle
             StringBuilder sqltext = new StringBuilder();
             StringBuilder json = new StringBuilder();
             string dwmc = "";
-            string sbSQL = "SELECT BMMC,BMDM from [Entity] where [SJBM] = '331000000000' and BMMC like '台州市交通警察支队直属%' order by Sort"; //目前只需要查询四个大队
+            string sbSQL = "";
+            string BMDM = context.Request.Cookies["BMDM"].Value;
+            switch (BMDM)
+            {
+                case "331000000000":
+                    sbSQL = "SELECT BMMC,BMDM from [Entity] where [SJBM] = '331000000000' and BMMC like '台州市交通警察支队直属%' order by Sort"; //目前只需要查询四个大队
+                    break;
+                case "331001000000":
+                case "331002000000":
+                case "331003000000":
+                case "331004000000":
+                    sbSQL = "WITH childtable(BMMC,BMDM,SJBM) as (SELECT BMMC,BMDM,SJBM FROM [Entity] WHERE SJBM ='" + BMDM + "' OR BMDM ='" + BMDM + "' UNION ALL SELECT A.BMMC,A.BMDM,A.SJBM FROM [Entity] A,childtable b where a.SJBM = b.BMDM ) SELECT BMMC,BMDM from [Entity] where BMDM in (SELECT BMDM FROM childtable) order by Sort";
+                    break;
+                default:
+                    sbSQL = "SELECT BMMC,BMDM from [Entity] where [BMDM] = '"+BMDM+"' "; //目前只需要查询四个大队
+                    break;
+            }
+
             DataTable dtfrist = SQLHelper.ExecuteRead(CommandType.Text, sbSQL, "1");
             json.Append("[");
             for (int i1 = 0; i1 < dtfrist.Rows.Count; i1++)

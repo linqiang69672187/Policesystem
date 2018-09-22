@@ -214,8 +214,9 @@ function createChar() {
         success: function (data) {
 
             var sumonline, sumisused, total, img;
-            $(".divcontentrt  ul").empty();
+            $("ul.poster-list").empty();
             for (var i = 0; i < data.length; i++) {
+                $("ul.poster-list").append( '<li class="poster-item"><div><div class="lbtitle"></div><div class="divcontent"><div class="divcontentlf"><div><div><i class="fa fa-windows" aria-hidden="true"></i></div><div>总设备数</div><div>87</div></div><div><div><i class="fa fa-pie-chart"></i></div><div>设备使用率</div><div>50%</div></div></div><div class="divcontentrt"><ul></ul></div></div></div></li>');
                 sumonline = 0; sumisused = 0; total = 0;
                 $(".lbtitle:eq(" + i + ")").html("<i class='fa fa-minus  fa-rotate-90'></i>" + data[i]["Name"]);
              
@@ -252,6 +253,7 @@ function createChar() {
             };
 
             window.parent.createdata(data);
+            Caroursel.init($('.caroursel'));
         },
         error: function (msg) {
             console.debug("错误:ajax");
