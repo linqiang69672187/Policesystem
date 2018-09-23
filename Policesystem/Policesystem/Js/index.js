@@ -1,5 +1,6 @@
 ﻿var indexconfigdata;
 var hchart = 400;
+var chartdata;
 setInterval(function () {
     var date = new Date();
     var year = date.getFullYear();
@@ -66,13 +67,13 @@ switch (true) {
 
 }
 
-function createdata(data) {
+function createdata(data, types) {
 
-    var charttype = ["警务通", "拦截仪", "对讲机", "车载视频", "执法记录仪"];
+    var charttype = types;
     var ddata = new Array();
     var ddatacolumn = new Array();
     var totalvalue = 0;
-    var color = ['#4c8afa', '#f2ab22', '#43db89', '#38e8e8'];
+    var color = ['#4c8afa', '#f2ab22', '#43db89', '#38e8e8', '#a24cfa', '#fa4cae', '#59bfa1', '#d7ce56', '#b45538', '#c48b6c', '#c56377', '#86c36a'];
     for (var i1 = 0; i1 < charttype.length; i1++) {
         totalvalue = 0;
         ddata = [];
@@ -119,7 +120,42 @@ function createdata(data) {
     }
 
 }
-function createcolum(id, type, data, color) {
+
+
+function createdatadetail(data, types) {
+
+    var charttype = types;
+    var ddata = new Array();
+    var ddatacolumn = new Array();
+    var totalvalue = 0;
+    var color = ['#4c8afa', '#f2ab22', '#43db89', '#38e8e8', '#a24cfa', '#fa4cae', '#59bfa1', '#d7ce56', '#b45538', '#c48b6c', '#c56377', '#86c36a'];
+    for (var i1 = 0; i1 < charttype.length; i1++) {
+        totalvalue = 0;
+        ddata = [];
+        ddatacolumn = [];
+        for (var i = 0; i < data.length; i++) {
+            for (var i2 = 0; i2 < data[i]["data"].length; i2++) {
+                if (data[i]["data"][i2]["TypeName"] == charttype[i1]) {
+                    var obj1 = JSON.parse('{"name":"' + data[i]["Name"] + '","y":' + data[i]["data"][i2]["count"] + '}');
+                    totalvalue += parseInt(data[i]["data"][i2]["count"]);
+                    ddata.push(obj1);
+
+                    var obj2 = JSON.parse('{"name":"' + data[i]["Name"] + '","color":"' + color[i] + '","y":' + data[i]["data"][i2]["Isused"] * 100 / data[i]["data"][i2]["count"] + '}');
+                    ddatacolumn.push(obj2);
+                }
+
+            }
+
+        }
+        $(".modal-header div:eq(0)").text(types[0]+"设备配发及使用率");
+          createChart("chart", "pie", ddata, color, totalvalue,'L');//创建饼图
+          createcolum("column", "column", ddatacolumn, color,'L');
+        
+    }
+
+}
+
+function createcolum(id, type, data, color,fontweight) {
     var chart = Highcharts.chart(id, {
         chart: {
             backgroundColor: 'rgba(0,0,0,0)'
@@ -131,7 +167,7 @@ function createcolum(id, type, data, color) {
             labels: {
                 style: {
                     color: '#fff',
-                    fontSize: columtitlefontSize
+                    fontSize: (fontweight=='L')?'14px':columtitlefontSize
                 }
             },
             type: 'category',
@@ -147,7 +183,7 @@ function createcolum(id, type, data, color) {
                 text: '',
                 style: {
                     color: '#fff',
-                    fontSize: columtitlefontSize
+                    fontSize: (fontweight == 'L') ? '24px' : columtitlefontSize
                 }
             },
             gridLineDashStyle: 'Dash', //Dash,Dot,Solid,默认Solid
@@ -158,7 +194,7 @@ function createcolum(id, type, data, color) {
             text:  '',
             style: {
                 color: '#fff',
-                fontSize: columtitlefontSize
+                fontSize: (fontweight == 'L') ? '24px' : columtitlefontSize
             }
         },
         tooltip: {
@@ -190,7 +226,7 @@ function createcolum(id, type, data, color) {
         }]
     });
 }
-function createChart(id, type, data, color, totalvalue) {
+function createChart(id, type, data, color, totalvalue, fontweight) {
     var chart = Highcharts.chart(id, {
         chart: {
             backgroundColor: 'rgba(0,0,0,0)'
@@ -225,7 +261,7 @@ function createChart(id, type, data, color, totalvalue) {
             text: totalvalue,
             style: {
                 color: '#fff',
-                fontSize: '12px'
+                fontSize: (fontweight == 'L') ? '24px' : '12px'
             }
         },
         tooltip: {
@@ -281,6 +317,8 @@ function createChart(id, type, data, color, totalvalue) {
         });
     });
 }
+
+
 function myGaugeChart(containerId, label, value) {
     var oper = '环比增加' + value + '%<i class="fa fa-arrow-up" aria-hidden="true"></i><br/> <span style="hbclasslabel">● ' + label + ' ● </span>';
     var colorarray = ['#467ddf', '#45d5d5', '#964edf', '#F8DE43']
@@ -1395,6 +1433,12 @@ function loadindexconfigdata() {
 
 }
 
-$(document).on('click.bs.carousel.data-api', 'body', function (e) {
+$(document).on('click.bs.carousel.data-api', '.leftbox', function (e) {
     window.location.href = "map.html";
+});
+$(document).on('click.bs.carousel.data-api', '.row2n,.row1n', function (e) {
+    $("#alertmodal").modal("show");
+    createdatadetail(chartdata, new Array($(this).children().children("label").text()));
+    return;
+
 });

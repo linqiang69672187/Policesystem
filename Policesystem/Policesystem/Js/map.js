@@ -87,14 +87,24 @@ $.ajax({
     data: "",
     dataType: "json",
     success: function (data) {
-
+        if (data.title != "331000000000") {
+            $("#brigadeselect").attr("disabled", "disabled");
+        }
         entitydata = data.data; //保存单位数据
         for (var i = 0; i < entitydata.length; i++) {
 
             if (entitydata[i].SJBM == "331000000000") {
-                $("#brigadeselect").append("<option value='" + entitydata[i].BMDM + "'>" + entitydata[i].BMJC + "</option>");
+                if (data.title == entitydata[i].BMDM) {
+                    $("#brigadeselect").append("<option value='" + entitydata[i].BMDM + "' selected>" + entitydata[i].BMJC + "</option>");
+                    changesquadronselect(entitydata[i].BMDM);
+                }
+                else{
+                    $("#brigadeselect").append("<option value='" + entitydata[i].BMDM + "'>" + entitydata[i].BMJC + "</option>");
+                }
             }
         }
+
+
     },
     error: function (msg) {
         console.debug("错误:ajax");
@@ -127,6 +137,18 @@ $(document).on('change.bs.carousel.data-api', '#deviceselect', function (e) {
             break;
     }
 });
+
+
+function changesquadronselect(brigadeselectvalue) {
+    $("#squadronselect").empty();
+    $("#squadronselect").append("<option value='all'>全部</option>");
+    $("#squadronselect").removeAttr("disabled");
+    for (var i = 0; i < entitydata.length; i++) {
+        if (entitydata[i].SJBM == brigadeselectvalue) {
+            $("#squadronselect").append("<option value='" + entitydata[i].BMDM + "'>" + entitydata[i].BMJC + "</option>");
+        }
+    }
+}
 
 //更换大队选择
 $(document).on('change.bs.carousel.data-api', '#brigadeselect', function (e) {

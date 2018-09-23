@@ -22,8 +22,8 @@ namespace Policesystem.Handle
             string sszd = context.Request.Form["sszd"];
             string requesttype = context.Request.Form["requesttype"];
             StringBuilder sqltext = new StringBuilder();
-            
-          switch (requesttype)
+            context.Response.Cookies["BMDM"].Value = "331001000000";
+            switch (requesttype)
             {
                 case "":
                 case null://所有大队
@@ -40,7 +40,7 @@ namespace Policesystem.Handle
 
             DataTable dt = SQLHelper.ExecuteRead(CommandType.Text, sqltext.ToString(), "DB");
 
-            context.Response.Write(JSON.DatatableToDatatableJS(dt, ""));
+            context.Response.Write(JSON.DatatableToDatatableJS(dt, context.Request.Cookies["BMDM"].Value));
         }
 
         public bool IsReusable
