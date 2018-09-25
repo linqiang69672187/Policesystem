@@ -78,6 +78,7 @@ function createdata(data, types) {
     var ddatacolumn = new Array();
     var totalvalue = 0;
     var color = ['#4c8afa', '#f2ab22', '#43db89', '#38e8e8', '#a24cfa', '#fa4cae', '#59bfa1', '#d7ce56', '#b45538', '#c48b6c', '#c56377', '#86c36a'];
+    createTextLabel(data, color);
     for (var i1 = 0; i1 < charttype.length; i1++) {
         totalvalue = 0;
         ddata = [];
@@ -125,6 +126,16 @@ function createdata(data, types) {
 
 }
 
+function createTextLabel(data, colors) {
+    $(".entitylist ul").empty();
+    for (var i = 0; i < data.length&&i<4; i++) {
+        $(".entitylist ul").append("<li><span class='glyphicon glyphicon-stop'><label class='ddlabel'>"+data[i]['Name']+"</label></span></li>")
+    }
+    if (data.length > 4) {
+        $(".entitylist ul").append("<li><label class='ddlabel moreinfo'>更多...</label></span></li>")
+
+    }
+}
 
 function createdatadetail(data, types) {
 
@@ -1437,12 +1448,17 @@ function loadindexconfigdata() {
 
 }
 
-$(document).on('click.bs.carousel.data-api', '.leftbox', function (e) {
-    window.location.href = "map.html";
-});
+
 $(document).on('click.bs.carousel.data-api', '.row2n,.row1n', function (e) {
     $("#alertmodal").modal("show");
     createdatadetail(chartdata, new Array($(this).children().children("label").text()));
+    return;
+
+});
+
+$(document).on('click.bs.carousel.data-api', '.moreinfo', function (e) {
+    $("#infomodal").modal("show");
+
     return;
 
 });
