@@ -1457,6 +1457,12 @@ $(document).on('click.bs.carousel.data-api', '.row2n,.row1n', function (e) {
 });
 
 $(document).on('click.bs.carousel.data-api', '.moreinfo', function (e) {
+    $("#infomodal ul").empty();
+    for (var i = 0; i < chartdata.length && i < 4; i++) {
+        $("#infomodal ul").append("<li><span class='glyphicon glyphicon-stop'><label class='ddlabel'>" + chartdata[i]['Name'] + "</label></span></li>")
+    }
+
+
     $("#infomodal").modal("show");
 
     return;
