@@ -895,48 +895,57 @@ border: 1px solid #022396 !important;
 .modal-header div {
     font-size:24px;
 }
-.entitylist li:nth-child(1) .glyphicon-stop{
+.entitylist li:nth-child(1) .glyphicon-stop,#infomodal li:nth-child(1) .glyphicon-stop{
     color: #4c8afa;
 }
 
-.entitylist li:nth-child(2) .glyphicon-stop {
+.entitylist li:nth-child(2) .glyphicon-stop,#infomodal li:nth-child(2) .glyphicon-stop {
     color: #f2ab22;
 }
 
-.entitylist li:nth-child(3) .glyphicon-stop{
+.entitylist li:nth-child(3) .glyphicon-stop,#infomodal li:nth-child(3) .glyphicon-stop{
     color: #43db89;
 }
 
-.entitylist li:nth-child(4) .glyphicon-stop {
+.entitylist li:nth-child(4) .glyphicon-stop,#infomodal li:nth-child(4) .glyphicon-stop {
     color: #38e8e8;
 }
-.entitylist li:nth-child(5) .glyphicon-stop{
+.entitylist li:nth-child(5) .glyphicon-stop,#infomodal li:nth-child(5) .glyphicon-stop{
     color: #a24cfa;
 }
-.entitylist li:nth-child(6) .glyphicon-stop {
+.entitylist li:nth-child(6) .glyphicon-stop,#infomodal li:nth-child(6) .glyphicon-stop {
     color: #38e8e8;
 }
-.entitylist li:nth-child(7) .glyphicon-stop {
+.entitylist li:nth-child(7) .glyphicon-stop,#infomodal li:nth-child(7) .glyphicon-stop {
     color: #fa4cae;
 }
-.entitylist li:nth-child(8) .glyphicon-stop {
+.entitylist li:nth-child(8) .glyphicon-stop,#infomodal li:nth-child(8) .glyphicon-stop {
     color: #59bfa1;
 }
-.entitylist li:nth-child(9) .glyphicon-stop{
+.entitylist li:nth-child(9) .glyphicon-stop,#infomodal li:nth-child(9) .glyphicon-stop{
     color: #d7ce56;
 }
-.entitylist li:nth-child(10) .glyphicon-stop{
+.entitylist li:nth-child(10) .glyphicon-stop,#infomodal li:nth-child(10) .glyphicon-stop{
     color: #b45538;
 }
-.entitylist li:nth-child(11) .glyphicon-stop: {
+.entitylist li:nth-child(11) .glyphicon-stop,#infomodal li:nth-child(11) .glyphicon-stop {
     color: #c48b6c;
 }
-.entitylist li:nth-child(12) .glyphicon-stop{
+.entitylist li:nth-child(12) .glyphicon-stop,#infomodal li:nth-child(12) .glyphicon-stop{
     color: #c56377;
 }
-.entitylist li:nth-child(13) .glyphicon-stop {
+.entitylist li:nth-child(13) .glyphicon-stop,#infomodal li:nth-child(13) .glyphicon-stop {
     color: #86c36a;
 }
 .moreinfo{
     cursor:pointer;
+}
+#infomodal .modal-header {
+padding:2px 5px 0 0;
+}
+#infomodal ul{
+    padding:0px;
+}
+#infomodal ul li{
+    margin:0 10px 0 0;
 }
