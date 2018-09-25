@@ -16,7 +16,7 @@ $("#header").load('top.html', function () {
 
 switch (true) {
 
-    case window.screen.height > 1000:
+    case window.screen.height > 850:
         pagecount = 10;
         break;
      default:
@@ -61,23 +61,87 @@ function hbdatetime(date) {
 }
 
 startdatetimedefalute();
+
+
 $.ajax({
     type: "POST",
     url: "../Handle/GetEntitys.ashx",
     data: "",
     dataType: "json",
     success: function (data) {
+        if (data.title != "331000000000") {
+            $("#brigadeselect").attr("disabled", "disabled");
+        }
         entitydata = data.data; //保存单位数据
         for (var i = 0; i < entitydata.length; i++) {
+
             if (entitydata[i].SJBM == "331000000000") {
-                $("#brigadeselect").append("<option value='" + entitydata[i].BMDM + "'>" + entitydata[i].BMJC + "</option>");
+                if (data.title == entitydata[i].BMDM) {
+                    $("#brigadeselect").append("<option value='" + entitydata[i].BMDM + "' selected>" + entitydata[i].BMJC + "</option>");
+                    changesquadronselect(entitydata[i].BMDM);
+                }
+                else {
+                    $("#brigadeselect").append("<option value='" + entitydata[i].BMDM + "'>" + entitydata[i].BMJC + "</option>");
+                }
             }
         }
+        switch (data.title) {
+            case "331000000000":
+            case "331001000000":
+            case "331002000000":
+            case "331003000000":
+            case "331004000000":
+
+                break;
+            default:
+                $("#squadronselect").attr("disabled", "disabled");
+                changeentitysel(data.title)
+                break;
+        }
+
     },
     error: function (msg) {
         console.debug("错误:ajax");
     }
 });
+
+function changesquadronselect(brigadeselectvalue) {
+    $("#squadronselect").empty();
+    $("#squadronselect").append("<option value='all'>全部</option>");
+    $("#squadronselect").removeAttr("disabled");
+    for (var i = 0; i < entitydata.length; i++) {
+        if (entitydata[i].SJBM == brigadeselectvalue) {
+            $("#squadronselect").append("<option value='" + entitydata[i].BMDM + "'>" + entitydata[i].BMJC + "</option>");
+        }
+    }
+}
+
+function changeentitysel(BMDM) {
+    $("#squadronselect").empty();
+    $("#brigadeselect").empty();
+    var SJBM;
+    for (var i = 0; i < entitydata.length; i++) {
+        if (BMDM == entitydata[i].BMDM) {
+            $("#squadronselect").append("<option value='" + entitydata[i].BMDM + "' selected>" + entitydata[i].BMJC + "</option>");
+            SJBM = entitydata[i].SJBM;
+        }
+    }
+    for (var i = 0; i < entitydata.length; i++) {
+        if (SJBM == entitydata[i].BMDM) {
+            $("#brigadeselect").append("<option value='" + entitydata[i].BMDM + "' selected>" + entitydata[i].BMJC + "</option>");
+        }
+    }
+    if ($("#brigadeselect").size() == 0) {
+        $("#brigadeselect").append("<option value='0' selected>其它部门</option>");
+    }
+    if ($("#squadronselect").size() == 0) {
+        $("#squadronselect").append("<option value='" + BMDM + "' selected>" + BMDM + "</option>");
+    }
+}
+
+
+
+
 //更换大队选择
 $(document).on('change.bs.carousel.data-api', '#brigadeselect', function (e) {
     //所属中队逻辑
@@ -108,6 +172,7 @@ $(document).on('click.bs.carousel.data-api', '#requestbtn', function (e) {
         $("#alertmodal").modal("show");
         return;
     };
+    $(".tablediv label:eq(0)").text("| " + $("#deviceselect").find("option:selected").text() + "报表")
     loadTatolData();//加载汇总数
     if (!table) {
         createDataTable();
@@ -369,14 +434,15 @@ function createDataTable() {
            })
             .on('preXhr.dt', function (e, settings, data) {
                 $('.progresshz').show()
-                $('.btnsjx').hide();
+                $('.btnsjx').attr("disabled", "disabled");
                 $('#search-result-table').hide();
             })
 
              .on('xhr.dt', function (e, settings, json, xhr) {
                  $('.progresshz').hide();
                  $('#search-result-table').show();
-                 $('.btnsjx').css("display", "inline-block");
+                 $('.btnsjx').removeAttr("disabled");
+
                  seltype = $("#deviceselect").val();
                  table.column(1).visible(true);
                  table.column(2).visible(true);
@@ -496,6 +562,9 @@ function createDataTable() {
 }
 
 $(document).on('click.bs.carousel.data-api', '.btnsjx', function (e) {
+    if ($(this).attr("disabled") == "disabled") {
+        return;
+    }
     var $doc = $(this).text();
     if ($doc == "显示数据项") {
         $('#shujuxiang').css("display", "inline-block");

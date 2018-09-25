@@ -34,7 +34,11 @@ setInterval(function () {
             break;
     }
     $(".timebanner label").text(year + "-" + month + "-" + day + " " + hour + ":" + min + ":" + sencond+" "+ weekday);
-},50);
+}, 50);
+
+$("#header").load('top.html', function () {
+    $("#header ul li:eq(0)").addClass("active");
+});
 function Appendzero(obj) {
     if (obj < 10) return "0" + "" + obj;
     else return obj;

@@ -103,13 +103,48 @@ $.ajax({
                 }
             }
         }
+        switch (data.title) {
+            case "331000000000":
+            case "331001000000":
+            case "331002000000":
+            case "331003000000":
+            case "331004000000":
 
+                break;
+            default:
+                $("#squadronselect").attr("disabled", "disabled");
+                changeentitysel(data.title)
+                break;
+        }
 
     },
     error: function (msg) {
         console.debug("错误:ajax");
     }
 });
+
+function changeentitysel(BMDM) {
+    $("#squadronselect").empty();
+    $("#brigadeselect").empty();
+    var SJBM;
+    for (var i = 0; i < entitydata.length; i++) {
+        if (BMDM == entitydata[i].BMDM) {
+            $("#squadronselect").append("<option value='" + entitydata[i].BMDM + "' selected>" + entitydata[i].BMJC + "</option>");
+            SJBM = entitydata[i].SJBM;
+        }
+    }
+    for (var i = 0; i < entitydata.length; i++) {
+        if (SJBM == entitydata[i].BMDM) {
+            $("#brigadeselect").append("<option value='" + entitydata[i].BMDM + "' selected>" + entitydata[i].BMJC + "</option>");
+        }
+    }
+    if ($("#brigadeselect").size() == 0) {
+        $("#brigadeselect").append("<option value='0' selected>其它部门</option>");
+    }
+    if ($("#squadronselect").size() == 0) {
+        $("#squadronselect").append("<option value='" + BMDM + "' selected>" + BMDM + "</option>");
+    }
+}
 
 $(document).on('change.bs.carousel.data-api', '#deviceselect', function (e) {
     $(".leftactive").removeClass("leftactive");

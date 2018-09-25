@@ -480,6 +480,9 @@
       .hbclasslabel{
        font-size: 32px;
     }
+      #header{
+          visibility:hidden;
+      }
 }
 @media screen and (max-width: 2000px) {
       html, body {
@@ -599,12 +602,13 @@
         margin-top:10px;
     }
     .col-lg-12>.row:nth-child(1){
-        height: 58px;
+        height: 102px;
         background-image: url(../Image/bannerbg.png);
         background-repeat:repeat;
         background-size: 100% 100%;
         line-height:58px;
         vertical-align:middle;
+       visibility:hidden;
     }
     .xzlb{
         height:240px;
@@ -663,7 +667,7 @@
         text-align:center;
     }
  
-    img{
+   #bodybg img{
     transform: scale(0.5)
     }
 
@@ -816,6 +820,13 @@
     }
   .row1n {
         background-color: rgba(8,39,83,0.6);
+    }
+
+  #header {
+    height: 73px;
+    z-index: 999;
+    position: absolute;
+    width: 100%;
     }
   
 }

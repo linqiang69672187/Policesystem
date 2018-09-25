@@ -22,7 +22,7 @@ namespace Policesystem.Handle
             string sszd = context.Request.Form["sszd"];
             string requesttype = context.Request.Form["requesttype"];
             StringBuilder sqltext = new StringBuilder();
-            context.Response.Cookies["BMDM"].Value = "331001000000";
+            context.Response.Cookies["BMDM"].Value = "331000000000";
             switch (requesttype)
             {
                 case "":

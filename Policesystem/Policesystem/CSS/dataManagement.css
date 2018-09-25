@@ -206,8 +206,9 @@ color:#fff;
 table td{
 padding-left:5px;
 }
-select[disabled],#cz-bianji[disabled]
+select[disabled],#cz-bianji[disabled],.btnsjx[disabled]
 { 
+    cursor:not-allowed;
 background-color: #ccc !important;
 color:#555;
 }
@@ -305,8 +306,11 @@ table.dataTable tbody th, table.dataTable tbody td{
 .progress{
     display:none;
 }
-.btnsjx,#shujuxiang{
+#shujuxiang{
     display:none;
+}
+.btnsjx{
+    
 }
 #shujuxiang i {
     margin-right:3px;

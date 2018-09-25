@@ -21,7 +21,7 @@ namespace Policesystem.Handle
             StringBuilder json = new StringBuilder();
             string dwmc = "";
             string sbSQL = "";
-          //  context.Response.Cookies["BMDM"].Value = "331001000000";
+            context.Response.Cookies["BMDM"].Value = "331001000000";
             string BMDM = context.Request.Cookies["BMDM"].Value;
             switch (BMDM)
             {
