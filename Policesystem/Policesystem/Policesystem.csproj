@@ -356,12 +356,7 @@
     <Content Include="Handle\indexconfig.ashx" />
     <Content Include="Handle\saveindexconfig.ashx" />
     <Content Include="Handle\templet\mingxi\1.xls" />
-    <None Include="Web.Debug.config">
-      <DependentUpon>Web.config</DependentUpon>
-    </None>
-    <None Include="Web.Release.config">
-      <DependentUpon>Web.config</DependentUpon>
-    </None>
+    <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="CSS\index.css" />
@@ -416,7 +411,6 @@
     <Content Include="Static_Seed_Project\login.js" />
     <Content Include="Static_Seed_Project\minor.html" />
     <Content Include="top.html" />
-    <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Handle\dataManagement.ashx.cs">
@@ -465,6 +459,14 @@
       <Project>{3371620a-5db3-4f11-a64e-72c8c293bb7c}</Project>
       <Name>DbComponet</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Web.Debug.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
+    <None Include="Web.Release.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
