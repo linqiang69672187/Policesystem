@@ -98,6 +98,7 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="bin\GemBox.Spreadsheet.dll" />
     <Content Include="build\examples\addlayer.html" />
     <Content Include="build\examples\addlayer.js" />
     <Content Include="build\examples\browserify\index.html" />
