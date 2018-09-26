@@ -27,7 +27,7 @@ namespace Policesystem.Handle
             {
                 case "":
                 case null://所有大队
-                    sqltext.Append("SELECT BMJC,BMDM,SJBM from [Entity] a where [SJBM]  = '331000000000' and BMMC like '台州市交通警察支队直属%' union all select BMJC,BMDM,SJBM from  [Entity] b where b.SJBM in (SELECT BMDM from [Entity]  where [SJBM]  = '331000000000' and BMMC like '台州市交通警察支队直属%')");
+                    sqltext.Append("SELECT BMJC,BMDM,SJBM from [Entity] a where [SJBM]  = '331000000000' and [BMJC] IS NOT NULL AND BMJC <> '' union all select BMJC,BMDM,SJBM from  [Entity] b where b.SJBM in (SELECT BMDM from [Entity]  where [SJBM]  = '331000000000' and   [BMJC] IS NOT NULL AND BMJC <> '')");
                     break;
                 case "所有单位":
                     sqltext.Append("SELECT BMJC,BMDM,SJBM,BMMC from [Entity] a where [SJBM]  = '331000000000' ");

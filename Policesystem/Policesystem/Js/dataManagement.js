@@ -91,7 +91,7 @@ $.ajax({
             case "331002000000":
             case "331003000000":
             case "331004000000":
-
+            case "33100000000x":
                 break;
             default:
                 $("#squadronselect").attr("disabled", "disabled");
