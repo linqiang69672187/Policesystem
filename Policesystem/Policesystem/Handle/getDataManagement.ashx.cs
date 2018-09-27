@@ -87,6 +87,7 @@ namespace Policesystem.Handle
             int wcxl = 0;   //无查询量设备数量
             int wcfl = 0;   //无处罚量设备数量
             int wsysb = 0;  //无使用设备数量
+            
             string bmdm = ""; //汇总的部门代码
             int allstatu_device = 0;  //汇总使用率不为空数量
             string ddtitle;//大队标题

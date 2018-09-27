@@ -32,7 +32,7 @@ namespace Policesystem.Handle
             switch (type)
             {
                 case "5":
-                    if (ssdd == "all")
+           if (ssdd == "all")
             {   //设备配发
                 sqltext.Append("SELECT COUNT(DISTINCT a.DevId) as [Value] from EveryDayInfo_ZFJLY as  a left join [Device] as de on  de.[DevId] = a.[DevId]  left join ACL_USER as us on de.JYBH = us.JYBH where [Time] >='" + begintime+ "' and   [Time] <='" + endtime + "'  and de.DevType = " + type + search + "  UNION ALL ");
                 //使用时长

@@ -23,9 +23,11 @@ namespace Policesystem.Handle
             string requesttype = context.Request.Form["requesttype"];
             StringBuilder sqltext = new StringBuilder();
             string title= "331000000000";
-            if (context.Response.Cookies["BMDM"].Value !=null)
+            HttpCookie cookies = HttpContext.Current.Request.Cookies["cookieName"];
+            string BMDM = cookies["BMDM"]; ;
+            if (BMDM != null)
             {
-                title = context.Response.Cookies["BMDM"].Value;
+                title = BMDM;
             }
             
     

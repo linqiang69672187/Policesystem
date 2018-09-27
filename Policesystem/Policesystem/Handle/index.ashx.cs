@@ -19,8 +19,9 @@ namespace Policesystem.Handle
             context.Response.ContentType = "text/plain";
             StringBuilder sqltext = new StringBuilder();
 
-           // context.Response.Cookies["BMDM"].Value = "331001000000";
-            string BMDM = context.Request.Cookies["BMDM"].Value;
+            // context.Response.Cookies["BMDM"].Value = "331001000000";
+            HttpCookie cookies = HttpContext.Current.Request.Cookies["cookieName"];
+            string BMDM = cookies["BMDM"]; ;
             switch (BMDM)
             {
                 case "331000000000":
