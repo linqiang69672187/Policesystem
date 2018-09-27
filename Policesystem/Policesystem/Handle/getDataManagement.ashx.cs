@@ -77,9 +77,11 @@ namespace Policesystem.Handle
             dtreturns.Columns.Add("cloum11");
             dtreturns.Columns.Add("cloum12");
             dtreturns.Columns.Add("cloum13", typeof(int));
+            dtreturns.Columns.Add("cloum14");
 
             int days = Convert.ToInt16(context.Request.Form["dates"]);
             int statusvalue = 10;  //正常参考值
+            int zxstatusvalue = 30;//在线参考值
             int devicescount = 0;  //汇总设备总数
             double zxsc = 0.0;  //汇总在线时长
             double spdx = 0.0;  //汇总视频大小
@@ -87,14 +89,15 @@ namespace Policesystem.Handle
             int wcxl = 0;   //无查询量设备数量
             int wcfl = 0;   //无处罚量设备数量
             int wsysb = 0;  //无使用设备数量
-            
+            int zxsb = 0; //在线设备
+
             string bmdm = ""; //汇总的部门代码
             int allstatu_device = 0;  //汇总使用率不为空数量
             string ddtitle;//大队标题
 
 
             statusvalue = days * 600;//超过10分钟算使用
-
+            zxstatusvalue = days * 1800;//在线参考值
             DataTable Alarm_EveryDayInfo = null; //每日告警
             DataTable dUser = null;
 
@@ -175,7 +178,7 @@ namespace Policesystem.Handle
                 int 无处罚量 = 0;
                 int 未使用 = 0;
                 int usercount = 0;
-
+                int 在线 = 0;
                 int status = 0;//设备使用正常、周1次，月4次，季度12次
                 var rows = from p in Alarm_EveryDayInfo.AsEnumerable()
                            where (p.Field<string>("ParentID") == dtEntity.Rows[i1]["ID"].ToString()|| p.Field<string>("BMDM") == dtEntity.Rows[i1]["ID"].ToString())
@@ -193,6 +196,7 @@ namespace Policesystem.Handle
                             case "1":
                                 在线时长 += Convert.ToInt32(item["在线时长"]);
                                 未使用+= ((Convert.ToInt32(item["在线时长"]) - statusvalue)<0)?1:0;
+                                在线 += ((Convert.ToInt32(item["在线时长"]) - zxstatusvalue) >= 0) ? 1 : 0;
                                 break;
                             case "2":
                                 处理量 += Convert.ToInt32(item["在线时长"]);
@@ -247,7 +251,9 @@ namespace Policesystem.Handle
                         wcxl += 无查询量;
                         wcfl += 无处罚量;
                         dr["cloum10"] = 未使用;
+                       
                         wsysb += 未使用;
+                     
                         break;
                     case "1":
                     case "2":
@@ -261,7 +267,8 @@ namespace Policesystem.Handle
                     default:
                         break;
                 }
-
+                zxsb += 在线;
+                dr["cloum14"] = 在线;
                 dr["cloum12"] = dtEntity.Rows[i1]["ID"].ToString();
                 dr["cloum7"] = (countdevices != 0) ? (deviceuse):0;
                 dtreturns.Rows.Add(dr);
@@ -320,6 +327,7 @@ namespace Policesystem.Handle
                 default:
                     break;
             }
+            drtz["cloum14"] = zxsb;
             drtz["cloum12"] = bmdm;
             Double sbsyl = ((double)allstatu_device * 100 / devicescount) ;
             drtz["cloum7"] = Math.Round(sbsyl,2);

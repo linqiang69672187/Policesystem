@@ -10,6 +10,7 @@ var ssddtext;
 var tablezd;
 var seltype;
 var pagecount;
+var todaytotaldata=[];
 $("#header").load('top.html', function () {
     $("#header ul li:eq(3)").addClass("active");
 });
@@ -218,7 +219,7 @@ function loadTatolData() {
         dataType: "json",
         success: function (data) {
             if (data.r=="0"){
-                createTatolRS(data);
+                joinData(data);
             }
    
         },
@@ -228,6 +229,38 @@ function loadTatolData() {
     });
 
 }
+
+function joinData(data) {
+    var  creadata = {
+        result:[]
+    }
+    var val1 = { Value: {} };
+    var val2 = { Value: {} };
+    var val3 = { Value: {} };
+    var val4 = { Value: {} };
+    var val5 = { Value: {} };
+    var val6 = { Value: {} };
+    var val7 = { Value: {} };
+    var val8 = { Value: {} };
+    val1.Value = todaytotaldata[0];
+    creadata.result.push(val1)
+    val2.Value = parseFloat(todaytotaldata[1]) * 3600;
+    creadata.result.push(val2)
+    val3.Value = todaytotaldata[2];
+    creadata.result.push(val3)
+    val4.Value = todaytotaldata[3];
+    creadata.result.push(val4)
+    val5.Value = data.result[0].Value;
+    creadata.result.push(val5)
+    val6.Value = data.result[1].Value;
+    creadata.result.push(val6)
+    val7.Value = data.result[2].Value;
+    creadata.result.push(val7)
+    val8.Value = data.result[3].Value;
+    creadata.result.push(val8)
+    createTatolRS(creadata);
+}
+
 function createTatolRS(data) {
     //配发量
     if (data.result[0].Value != "0" && data.result[0].Value != "" && data.result[4].Value != "" && data.result[4].Value != "0") {
@@ -439,6 +472,13 @@ function createDataTable() {
             })
 
              .on('xhr.dt', function (e, settings, json, xhr) {
+                 if (json.data.length > 0) {
+                     todaytotaldata.length = 0;
+                     todaytotaldata.push(json.data[0]["cloum3"]);
+                     todaytotaldata.push(json.data[0]["cloum4"]);
+                     todaytotaldata.push(json.data[0]["cloum5"]);
+                     todaytotaldata.push(json.data[0]["cloum14"]);
+                 }
                  $('.progresshz').hide();
                  $('#search-result-table').show();
                  $('.btnsjx').removeAttr("disabled");
@@ -492,6 +532,7 @@ function createDataTable() {
                  $('.infodiv').html("<span>共 " + json.data.length + " 条记录</span>");
                  $('.daochu').html("<a class='buttons-excel'  href='../Handle/upload/" + json.title + "'><span>导 出</span></a>");
                  rebuildsjx();
+                 loadTatolData();
 
              })
             .on('draw.dt', function () {
