@@ -22,7 +22,13 @@ namespace Policesystem.Handle
             string sszd = context.Request.Form["sszd"];
             string requesttype = context.Request.Form["requesttype"];
             StringBuilder sqltext = new StringBuilder();
-            context.Response.Cookies["BMDM"].Value = "331000000000";
+            string title= "331000000000";
+            if (context.Response.Cookies["BMDM"].Value !=null)
+            {
+                title = context.Response.Cookies["BMDM"].Value;
+            }
+            
+    
             switch (requesttype)
             {
                 case "":
@@ -40,7 +46,7 @@ namespace Policesystem.Handle
 
             DataTable dt = SQLHelper.ExecuteRead(CommandType.Text, sqltext.ToString(), "DB");
 
-            context.Response.Write(JSON.DatatableToDatatableJS(dt, context.Request.Cookies["BMDM"].Value));
+            context.Response.Write(JSON.DatatableToDatatableJS(dt, title));
         }
 
         public bool IsReusable

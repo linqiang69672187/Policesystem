@@ -35,9 +35,9 @@ namespace Policesystem.Handle
 
             if (search != "")
             {
-                sreachcondi = " (de.[DevId] like '%" + search + "%' ) and ";
+                sreachcondi = " (de.[DevId] like '%" + search + "%' or us.[XM] like '%" + search + "%' or us.[JYBH] like '%" + search + "%' ) and ";
             }
-            context.Response.Cookies["search"].Value = search;
+            context.Response.Cookies["search"].Value = HttpUtility.UrlEncode(search);
 
             string tmpDevid = "";
             int tmpRows = 0;
