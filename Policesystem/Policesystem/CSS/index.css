@@ -5,7 +5,7 @@
 @media screen and (min-width: 2600px) {
     html, body {
         height: 100%;
-        width: 3840px;
+        width: 100%;
         margin: 0;
         padding: 0;
         overflow-x: hidden;
@@ -16,6 +16,13 @@
         background-repeat: no-repeat;
         background-size: 100% 100%;
         /*-moz-background-size:100% 100%;*/
+    }
+    .col-lg-12 {
+      width: 95%;
+      margin-left:100px;
+      }
+  body{
+        margin-top:30px;
     }
 
     body {
@@ -97,7 +104,7 @@
         }
 
         .entitylist li:nth-child(2) {
-            display: block;
+            /*display: block;*/
             margin-top: 6px;
         }
 
@@ -151,8 +158,17 @@
         border: 2px solid #29599b;
         position: relative;
         margin: 0 auto;
-        margin-top: -165px;
+        margin-top: -215px;
         background-color: transparent;
+    }
+    .xixi2 img{
+        margin-left:15px;
+    }
+    #infomodal {
+        font-size:50px;
+    }
+    #infomodal .modal-dialog {
+    width: 1500px !important;
     }
 
     .qjxinxi div:nth-child(1) {
@@ -466,7 +482,7 @@
        font-size: 32px;
     }
       #header{
-          visibility:hidden;
+       display:none;
       }
 }
 @media screen and (max-width: 2000px) {

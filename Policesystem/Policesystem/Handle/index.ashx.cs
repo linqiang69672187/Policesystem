@@ -20,8 +20,14 @@ namespace Policesystem.Handle
             StringBuilder sqltext = new StringBuilder();
 
             // context.Response.Cookies["BMDM"].Value = "331001000000";
+
+                //HttpCookie cookie = new HttpCookie("cookieName");
+                //cookie.Value = "331001000000";
+                //HttpContext.Current.Response.Cookies.Add(cookie);
+       
+
             HttpCookie cookies = HttpContext.Current.Request.Cookies["cookieName"];
-            string BMDM = cookies["BMDM"]; ;
+            string BMDM = cookies.Value;
             switch (BMDM)
             {
                 case "331000000000":

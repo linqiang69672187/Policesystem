@@ -276,12 +276,12 @@ function createChart(id, type, data, color, totalvalue, fontweight) {
             text: totalvalue,
             style: {
                 color: '#fff',
-                fontSize: (fontweight == 'L') ? '24px' : '12px'
+                fontSize: (fontweight == 'L' || datalabelsize == '28px') ? '50px' : '12px'
             }
         },
         tooltip: {
-            headerFormat: '<span style="font-size:11px">{series.name}</span><br>',
-            pointFormat: '<span style="color:{point.color}">{point.name}</span>: <b>{point.y}</b>个 <br/>'
+            headerFormat: (fontweight == 'L' || datalabelsize == '28px') ? '<span style="font-size:20px">{series.name}</span><br>' : '<span style="font-size:11px">{series.name}</span><br>',
+            pointFormat: (fontweight == 'L' || datalabelsize == '28px') ? '<span style="color:{point.color};font-size:12px">{point.name}: {point.y}个</span> <br/>':'<span style="color:{point.color};font-size:12px">{point.name}: {point.y}个</span> <br/>'
         },
         legend: {
             enabled: false
