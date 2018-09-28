@@ -174,7 +174,7 @@ $(document).on('click.bs.carousel.data-api', '#requestbtn', function (e) {
         return;
     };
     $(".tablediv label:eq(0)").text("| " + $("#deviceselect").find("option:selected").text() + "报表")
-    loadTatolData();//加载汇总数
+   
     if (!table) {
         createDataTable();
     } else {
