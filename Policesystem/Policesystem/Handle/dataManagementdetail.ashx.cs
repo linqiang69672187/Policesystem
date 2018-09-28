@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Web;
 
+
 namespace Policesystem.Handle
 {
     /// <summary>
@@ -19,7 +20,8 @@ namespace Policesystem.Handle
         public void ProcessRequest(HttpContext context)
         {
             context.Response.ContentType = "text/plain";
-            string search = HttpUtility.UrlDecode(context.Request.Cookies["search"].Value);
+
+            string search = context.Request.Form["searchtext"];
             string type = context.Request.Form["type"];
             string begintime = context.Request.Form["starttime"];
             string endtime = context.Request.Form["endtime"];

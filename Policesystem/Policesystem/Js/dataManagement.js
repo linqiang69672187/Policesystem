@@ -10,7 +10,8 @@ var ssddtext;
 var tablezd;
 var seltype;
 var pagecount;
-var todaytotaldata=[];
+var todaytotaldata = [];
+var searchtext;
 $("#header").load('top.html', function () {
     $("#header ul li:eq(3)").addClass("active");
 });
@@ -399,7 +400,8 @@ function createtabledetail() {
                         entityid: ssdd,
                         starttime: starttime,
                         endtime: endtime,
-                        ssddtext: ssddtext
+                        ssddtext: ssddtext,
+                        searchtext: searchtext
                     };
 
                 }
@@ -551,6 +553,7 @@ function createDataTable() {
                         sszd = $("#squadronselect").val();
                         search = $(".seach-box input").val();
                         type = $("#deviceselect").val();
+                        searchtext = $(".search input").val();
                         return data = {
                             search: $(".search input").val(),
                             type: $("#deviceselect").val(),
