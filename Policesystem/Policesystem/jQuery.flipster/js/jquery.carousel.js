@@ -20,7 +20,7 @@
             "scale":"0.8",
             "speed":"1000",
             "isAutoplay":"true",
-            "dealy":"5000"
+            "dealy":"15000"
         }
         //自定义参数与默认参数合并
         $.extend(this.setting,this.getSetting())
