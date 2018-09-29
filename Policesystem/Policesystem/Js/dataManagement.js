@@ -17,9 +17,11 @@ $("#header").load('top.html', function () {
 });
 
 switch (true) {
-
-    case window.screen.height > 850:
+    case window.screen.height > 910:
         pagecount = 10;
+        break;
+    case window.screen.height > 850:
+        pagecount = 8;
         break;
      default:
          pagecount = 5;
