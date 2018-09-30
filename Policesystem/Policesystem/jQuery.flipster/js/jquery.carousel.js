@@ -20,7 +20,7 @@
             "scale":"0.8",
             "speed":"1000",
             "isAutoplay":"true",
-            "dealy":"15000"
+            "dealy":"3000000"
         }
         //自定义参数与默认参数合并
         $.extend(this.setting,this.getSetting())
@@ -72,8 +72,10 @@
                         "width":width,
                         "height":height,
                         "left":left,
-                        "opacity":opacity,
-                        "top":top,
+                        "opacity": that.setVisbility(opacity),
+                        "top": top,
+                      
+                     
                     },that.setting.speed,function(){
                         that.rotateFlag = true;
                     });
@@ -98,7 +100,8 @@
                         "height":height,
                         "left":left,
                         "opacity":opacity,
-                        "top":top,
+                        "top": top,
+                 
                     },that.setting.speed,function(){
                         that.rotateFlag = true;
                     });
@@ -148,7 +151,7 @@
                     "left": Btnwidth - i*gap,
                     "zIndex":zLoop1--,
                     "opacity":1/(i+1),
-                    "top":_self.setVertialType(leftHeight)
+                    "top": _self.setVertialType(leftHeight),
                 });
                 i++;
             });
@@ -166,7 +169,7 @@
                     "left": containerWidth -( Btnwidth - j*gap + rightWidth),
                     "zIndex":zLoop2++,
                     "opacity":1/(j+1),
-                    "top":_self.setVertialType(rightHeight)
+                    "top": _self.setVertialType(rightHeight),
                 });
                 j--;
             });
@@ -190,6 +193,13 @@
             }else {
                 return (this.setting.posterHeight - height) / 2
             }
+        },
+        setVisbility: function (opcity) {
+            opcity = parseFloat(opcity);
+            if (opcity > 0.25) {
+                return opcity;
+            }
+            return "0";
         }
     }
     Caroursel.init = function (caroursels){
