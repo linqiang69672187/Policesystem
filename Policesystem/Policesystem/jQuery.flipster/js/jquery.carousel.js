@@ -1,6 +1,8 @@
 ﻿/**
  * Created by Zhangyx on 2015/10/15.
  */
+var tabledata;
+var currentIndex=0;
 ;(function($){
     var Caroursel = function (caroursel){
         var self = this;
@@ -20,7 +22,7 @@
             "scale":"0.8",
             "speed":"1000",
             "isAutoplay":"true",
-            "dealy":"3000000"
+            "dealy":"30000"
         }
         //自定义参数与默认参数合并
         $.extend(this.setting,this.getSetting())
@@ -44,14 +46,17 @@
         });
         if(this.setting.isAutoplay){
             this.autoPlay();
-            this.caroursel.hover(function(){clearInterval(self.timer)},function(){self.autoPlay()})
+            this.caroursel.hover(function () { clearInterval(self.timer) }, function () { self.autoPlay() });
+            crateItem();
         }
     };
     Caroursel.prototype = {
         autoPlay:function(){
           var that = this;
-          this.timer =  window.setInterval(function(){
+          this.timer = window.setInterval(function () {
+              crateItem();
               that.prevBtn.click();
+             
           },that.setting.dealy)
         },
         rotateAnimate:function(type){
@@ -99,7 +104,7 @@
                         "width":width,
                         "height":height,
                         "left":left,
-                        "opacity":opacity,
+                        "opacity": that.setVisbility(opacity),
                         "top": top,
                  
                     },that.setting.speed,function(){
@@ -150,7 +155,7 @@
                     "height":leftHeight,
                     "left": Btnwidth - i*gap,
                     "zIndex":zLoop1--,
-                    "opacity":1/(i+1),
+                    "opacity": _self.setVisbility(1 / (i + 1)),
                     "top": _self.setVertialType(leftHeight),
                 });
                 i++;
@@ -168,7 +173,7 @@
                     "height":rightHeight,
                     "left": containerWidth -( Btnwidth - j*gap + rightWidth),
                     "zIndex":zLoop2++,
-                    "opacity":1/(j+1),
+                    "opacity":_self.setVisbility(1 / (j + 1)),
                     "top": _self.setVertialType(rightHeight),
                 });
                 j--;
@@ -181,6 +186,9 @@
             }else{
                 return {};
             }
+        },
+        setdisplay: function () {
+            
         },
         setVertialType:function(height){
             var algin = this.setting.algin;
@@ -195,11 +203,8 @@
             }
         },
         setVisbility: function (opcity) {
-            opcity = parseFloat(opcity);
-            if (opcity > 0.25) {
-                return opcity;
-            }
-            return "0";
+            return opcity;
+       
         }
     }
     Caroursel.init = function (caroursels){
@@ -212,6 +217,9 @@
 
 
 function formatSeconds(value, y) {
+    if (isNaN(value)) {
+        return "0";
+    }
     var result = Math.floor((value*100) * Math.pow(10, y)) / Math.pow(10, y);
     return result;
 }
@@ -222,10 +230,12 @@ function createChar() {
         data: "",
         dataType: "json",
         success: function (data) {
-
+            Caroursel.init($('.caroursel'));
+            tabledata = data;
+        
             var sumonline, sumisused, total, img;
             $("ul.poster-list").empty();
-            for (var i = 0; i < data.length; i++) {
+            for (var i = 0; i < data.length&&i<3; i++) {
                 $("ul.poster-list").append( '<li class="poster-item"><div><div class="lbtitle"></div><div class="divcontent"><div class="divcontentlf"><div><div><i class="fa fa-windows" aria-hidden="true"></i></div><div>总设备数</div><div>87</div></div><div><div><i class="fa fa-pie-chart"></i></div><div>设备使用率</div><div>50%</div></div></div><div class="divcontentrt"><ul></ul></div></div></div></li>');
                 sumonline = 0; sumisused = 0; total = 0;
                 $(".lbtitle:eq(" + i + ")").html("<i class='fa fa-minus  fa-rotate-90'></i>" + data[i]["Name"]);
@@ -261,7 +271,7 @@ function createChar() {
                 $(".divcontentlf:eq(" + i + ") div:eq(3)").text(total);
                 $(".divcontentlf:eq(" + i + ") div:eq(7)").text(formatSeconds(sumisused / total, 2) + "%");
             };
-
+            currentIndex = 3;
             window.parent.createdata(data, ["警务通", "拦截仪", "对讲机", "车载视频", "执法记录仪"]);
             window.parent.chartdata = data;
             Caroursel.init($('.caroursel'));
@@ -276,3 +286,61 @@ var int = setInterval(createChar, 600000); //10分钟刷新
 $(function () {
     createChar();
 });
+
+function crateItem() {
+    var data = tabledata;
+  
+    if (!data) { return; }
+    var sumonline, sumisused, total, img;
+    sumonline = 0; sumisused = 0; total = 0;
+
+    $("ul.poster-list>li").each(function (index, ele) {
+        if ($(this).position().left == 0) {
+            $(".lbtitle:eq(" + index + ")").html("<i class='fa fa-minus  fa-rotate-90'></i>" + data[currentIndex]["Name"]);
+            $(".divcontentrt:eq(" + index + ") ul").html("");
+            for (var i1 = 0; i1 < data[currentIndex]["data"].length; i1++) {
+                total += parseInt(data[currentIndex]["data"][i1]["count"]);
+                if (data[currentIndex]["data"][i1]["online"] != "" && data[currentIndex]["data"][i1]["online"] != undefined) { sumonline += parseInt(data[currentIndex]["data"][i1]["online"]) };//在线终端总数
+                if (data[currentIndex]["data"][i1]["Isused"] != "" && data[currentIndex]["data"][i1]["Isused"] != undefined) { sumisused += parseInt(data[currentIndex]["data"][i1]["Isused"]) };//当日使用终端数
+
+                switch (data[currentIndex]["data"][i1]["TypeName"]) {
+                    case "车载视频":
+                        img = "../Image/index_chezaiship.png";
+                        break;
+                    case "警务通":
+                        img = "../Image/index_jingwutong.png";
+                        break;
+                    case "拦截仪":
+                        img = "../Image/index_lanjieyi.png";
+                        break;
+                    case "对讲机":
+                        img = "../Image/index_duijiangji.png";
+                        break;
+                    case "执法记录仪":
+                        img = "../Image/index_zhifajiluyi.png";
+                        break;
+                    default:
+                        img = "../Image/index_chezaiship.png";
+                        break;
+                }
+                
+                $(".divcontentrt:eq(" + index + ") ul").append("<li><img src='" + img + "' /><span>" + data[currentIndex]["data"][i1]["TypeName"] + ":</span><span>" + data[currentIndex]["data"][i1]["count"] + "</span></li>")
+            }
+            $(".divcontentrt:eq(" + index + ") ul").append("<li><span>" + "在线数" + ":</span><span>" + sumonline + "</span></li>");
+            $(".divcontentlf:eq(" + index + ") div:eq(3)").text(total);
+            $(".divcontentlf:eq(" + index + ") div:eq(7)").text(formatSeconds(sumisused / total, 2) + "%");
+        }
+    });
+    
+    //if (data.length - i - currentIndex > 0) {
+    //    $(".lbtitle:eq(" + i + ")").html("<i class='fa fa-minus  fa-rotate-90'></i>" + data[i + currentIndex]["Name"]);
+    //}
+   
+    if (currentIndex == data.length - 1) {
+        currentIndex = 0;
+    }
+    else{
+        currentIndex += 1;
+    }
+    
+}

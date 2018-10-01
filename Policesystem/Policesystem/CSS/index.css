@@ -880,7 +880,7 @@ border: 1px solid #022396 !important;
 }
 #infomodal .modal-content{
  
-    height:auto;
+    height:300px;
 }
 .modal-body ul,.modal-body li{
         display: inline-block;
@@ -971,5 +971,5 @@ padding:2px 5px 0 0;
     bottom: 0;
     left: 0;
     right: 0;
-    margin: auto;
+    margin: auto !important;
 }
