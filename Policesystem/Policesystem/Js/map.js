@@ -227,6 +227,7 @@ $(document).on('click.bs.carousel.data-api', '#cz-bianji,.fa-close', function (e
         vectorLayer.setVisible(false);
         vectorLayerjwt.setVisible(false);
         vectorLayerdjj.setVisible(false);
+        $(".zq1").hide();
         if (loadmapdataInter) { clearInterval(loadmapdataInter) };
         $("#histrorysearch").css("visibility", "visible");
         requestJY();
