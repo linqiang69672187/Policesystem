@@ -455,3 +455,83 @@ background-color: #213366 !important;
     margin-left: -40px;
     margin-top: 3px;
 }
+ .zq1{
+   width:260px;top:500px;position:absolute;left:100px;
+    z-index:999;
+  }
+  .zq1 .zq-tl1{
+    width: 260px;
+    height: 34px;
+    background-color: #005EB8;
+    border-radius: 4px 4px 0px 0px;
+  }
+  .zq1 .zq-tl1 .zq-title1{
+    color: #ffffff;
+    text-align: center;
+    line-height: 34px;
+    font-size: 14px;
+    font-weight: bold;
+    position: relative;
+  }
+  .zq1 .zq-tl1 .close{
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    height: 34px;
+    width: 34px;
+    text-align: center;
+    opacity: 1;
+  }
+  .zq1 .zq-tl1 .close i{
+    color: #ffffff;
+    line-height: 34px;
+    font-weight: 100;
+    font-size: 14px;
+  }
+  .zq1 .zq-cwrap1 div{
+    font-size: 14px;
+    color: #666666;
+    margin-bottom: 6px;
+  }
+  .zq1 .zq-cwrap1 div .col-md-5{
+    padding: 0px;
+    text-align: right;
+    padding-right: 10px;
+  }
+  .zq1 .zq-cwrap1 div .col-md-7{
+    padding: 0px;
+  }
+  .zq1 .zq-floot1{
+    text-align: center;
+    border-radius: 0px 0px 0px 0px;
+  }
+   .zq-floot1{
+background-color:#fff;
+  
+ 
+  }
+.zq-bottom {
+    background-image: url('../img/deviceClick_bg.png');
+    height:22px;
+}
+  .zq1 .zq-floot1 button{
+    width: 70px;
+    height: 28px;
+    padding: 0px;
+
+  }
+  .zq1 .zq-floot1 .weekly{
+    background-color: #06B45C;
+    border-color: #06B45C;
+    text-align: center;
+    color: #ffffff;
+    font-size: 12px;
+  }
+  .zq1 .zq-floot1 .alram-btn{
+    background-color: #F26B41;
+    border-color: #F26B41;
+    text-align: center;
+    color: #ffffff;
+    font-size: 12px;
+    margin-left: 13px;
+  }
