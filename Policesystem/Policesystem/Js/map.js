@@ -304,6 +304,8 @@ function loaddata() {
 
 }
 $(document).on('click.bs.carousel.data-api', '#cz-cx', function (e) {
+    $('.progresshz').show();
+
     var data = {
         deviid: $("#histrorysearch .bh").val(),
         requesttype: "轨迹查询",
@@ -317,9 +319,11 @@ $(document).on('click.bs.carousel.data-api', '#cz-cx', function (e) {
         dataType: "json",
         success: function (data) {
             createTrace(data);
+            $('.progresshz').hide();
         },
         error: function (msg) {
             console.debug("错误:ajax");
+            $('.progresshz').hide();
         }
     });
 

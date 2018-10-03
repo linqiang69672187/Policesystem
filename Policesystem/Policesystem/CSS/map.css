@@ -8,6 +8,12 @@
     font-family: Helvetica,Tahoma,Arial,sans-serif;
     font-size: 12px;
 }
+.progresshz{
+    position:absolute;
+    display:none;
+    top:105px;
+    left:10%;
+}
 
 #header {
     height: 102px;
