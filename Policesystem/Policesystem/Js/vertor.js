@@ -27,6 +27,7 @@ var vectorLayerdjj = new ol.layer.Vector({
 
 var traceColors = ["#f2ab22", "#0084ff", "#b45538", "#091e3d"]
 var arrow = "../img/arrow.png";
+var idpositionText = ["民警", "辅警", "职工"];
 
 //标记数据集
 var tracesource = new ol.source.Vector();
@@ -246,7 +247,7 @@ function showfeatureinfo(IsOnline, Contacts, Name, Tel, devid, PlateNumber, DevT
 
     $(".zq-cwrap1 .col-md-7:eq(5)").text(Tel);
     $(".zq-cwrap1 .col-md-7:eq(6)").text(Name);
-    $(".zq-cwrap1 .col-md-7:eq(7)").text(IdentityPosition);
+    $(".zq-cwrap1 .col-md-7:eq(7)").text(idpositionText[IdentityPosition]);
     $(".zq-cwrap1 .col-md-7:eq(8)").text(IsOnline);
 
 

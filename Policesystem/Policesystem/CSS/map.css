@@ -456,13 +456,15 @@ background-color: #213366 !important;
     margin-top: 3px;
 }
  .zq1{
-   width:260px;top:500px;position:absolute;left:100px;
+   width:260px;top:100px;position:absolute;left:100px;
     z-index:999;
+    display:none;
   }
   .zq1 .zq-tl1{
     width: 260px;
     height: 34px;
     background-color: #005EB8;
+    background-image: url(../Image/topbannerbg.png);
     border-radius: 4px 4px 0px 0px;
   }
   .zq1 .zq-tl1 .zq-title1{

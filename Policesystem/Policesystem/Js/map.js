@@ -374,16 +374,19 @@ $(document).on('click.bs.carousel.data-api', '.table .fa-map-marker', function (
     if (feature) {
         var coordinates = feature.getGeometry().getCoordinates();
         point_overlay.setPosition(coordinates);
-        var view = map.getView();
+        var view = map.getView(feature);
         view.animate({ zoom: view.getZoom() }, { center: coordinates }, function () {
-            // localFeatureInfo();
+            localFeatureInfo(feature);
             setTimeout(function () { point_overlay.setPosition([0, 0]) }, 30000)
         });
 
         return;
     }
 })
-
+$(".zq-title1 .close").on("click", function () {
+    $(".zq1").hide();
+    //$(".table .localtd").removeClass("localtd"); //移出定位
+});
 $(document).on('mouseover.bs.carousel.data-api', '.table tbody i', function (e) {
     $(".fa-map-marker-color-mouseover").removeClass("fa-map-marker-color-mouseover");
     $(e.target).parent().find("i").addClass("fa-map-marker-color-mouseover");
@@ -392,6 +395,27 @@ $(".table tbody").on("mouseout", function (e) {
     $(".fa-map-marker-color-mouseover").removeClass("fa-map-marker-color-mouseover");
 });
 
+function localFeatureInfo(feature) {
+    var newfeature = feature;
+  
+
+    if (!newfeature) {
+        return;
+    }
+    var newcoordinates = newfeature.getGeometry().getCoordinates();
+    var pixel = map.getPixelFromCoordinate(newcoordinates);
+    var IsOnline = newfeature.get('IsOnline') == "0" ? "离线" : "在线";
+    var Contacts = newfeature.get('Contacts');
+    var Name = newfeature.get('Name');
+    var Tel = newfeature.get('Tel');
+    var devid = newfeature.get('DevId');
+    var PlateNumber = newfeature.get('PlateNumber');
+    var DevType = newfeature.get('DevType');
+    var IMEI = newfeature.get('IMEI');
+    var UserNum = newfeature.get('UserNum');
+    var IdentityPosition = newfeature.get('IdentityPosition');
+    showfeatureinfo(IsOnline, Contacts, Name, Tel, devid, PlateNumber, DevType, pixel, IMEI, UserNum, IdentityPosition);
+}
 
 function createtable(data) {
     var $doc = $(".table tbody");

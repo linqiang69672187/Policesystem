@@ -12,7 +12,7 @@ var vectorSourcedjj = new ol.source.Vector({
     features: [] //add an array of features
 });
 
-
+var idpositionText = ["民警", "辅警", "职工"];
 
 var vectorLayer = new ol.layer.Vector({
     source: vectorSource,
@@ -156,7 +156,7 @@ function showfeatureinfo(IsOnline, Contacts, Name, Tel, devid, PlateNumber, DevT
  
     $(".zq-cwrap1 .col-md-7:eq(5)").text(Tel);
     $(".zq-cwrap1 .col-md-7:eq(6)").text(Name);
-    $(".zq-cwrap1 .col-md-7:eq(7)").text(IdentityPosition);
+    $(".zq-cwrap1 .col-md-7:eq(7)").text(idpositionText[IdentityPosition]);
     $(".zq-cwrap1 .col-md-7:eq(8)").text(IsOnline);
 
 
@@ -168,7 +168,6 @@ function showfeatureinfo(IsOnline, Contacts, Name, Tel, devid, PlateNumber, DevT
     $(".table .localtd").removeClass("localtd");
     $(".table td:contains(" + devid + ")").addClass("localtd");
 }
-
 
 
 
