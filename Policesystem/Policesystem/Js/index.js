@@ -78,11 +78,13 @@ function createdata(data, types) {
     var ddatacolumn = new Array();
     var totalvalue = 0;
     var color = ['#4c8afa', '#f2ab22', '#43db89', '#38e8e8', '#a24cfa', '#fa4cae', '#59bfa1', '#d7ce56', '#b45538', '#c48b6c', '#c56377', '#86c36a'];
+    var colorcount = 0;
     createTextLabel(data, color);
     for (var i1 = 0; i1 < charttype.length; i1++) {
         totalvalue = 0;
         ddata = [];
         ddatacolumn = [];
+        colorcount = 0;
         for (var i = 0; i < data.length; i++) {
             for (var i2 = 0; i2 < data[i]["data"].length; i2++) {
                 if (data[i]["data"][i2]["TypeName"] == charttype[i1]) {
@@ -90,8 +92,9 @@ function createdata(data, types) {
                     totalvalue += parseInt(data[i]["data"][i2]["count"]);
                     ddata.push(obj1);
 
-                    var obj2 = JSON.parse('{"name":"' + data[i]["Name"] + '","color":"' + color [i] + '","y":' + data[i]["data"][i2]["Isused"]*100 / data[i]["data"][i2]["count"] + '}');
+                    var obj2 = JSON.parse('{"name":"' + data[i]["Name"] + '","color":"' + color[colorcount] + '","y":' + data[i]["data"][i2]["Isused"] * 100 / data[i]["data"][i2]["count"] + '}');
                     ddatacolumn.push(obj2);
+                    colorcount += 1;
                 }
 
             }
@@ -144,10 +147,12 @@ function createdatadetail(data, types) {
     var ddatacolumn = new Array();
     var totalvalue = 0;
     var color = ['#4c8afa', '#f2ab22', '#43db89', '#38e8e8', '#a24cfa', '#fa4cae', '#59bfa1', '#d7ce56', '#b45538', '#c48b6c', '#c56377', '#86c36a'];
+    var colorcount = 0;
     for (var i1 = 0; i1 < charttype.length; i1++) {
         totalvalue = 0;
         ddata = [];
         ddatacolumn = [];
+        colorcount=0;
         for (var i = 0; i < data.length; i++) {
             for (var i2 = 0; i2 < data[i]["data"].length; i2++) {
                 if (data[i]["data"][i2]["TypeName"] == charttype[i1]) {
@@ -155,8 +160,9 @@ function createdatadetail(data, types) {
                     totalvalue += parseInt(data[i]["data"][i2]["count"]);
                     ddata.push(obj1);
 
-                    var obj2 = JSON.parse('{"name":"' + data[i]["Name"] + '","color":"' + color[i] + '","y":' + data[i]["data"][i2]["Isused"] * 100 / data[i]["data"][i2]["count"] + '}');
+                    var obj2 = JSON.parse('{"name":"' + data[i]["Name"] + '","color":"' + color[colorcount] + '","y":' + data[i]["data"][i2]["Isused"] * 100 / data[i]["data"][i2]["count"] + '}');
                     ddatacolumn.push(obj2);
+                    colorcount += 1;
                 }
 
             }
