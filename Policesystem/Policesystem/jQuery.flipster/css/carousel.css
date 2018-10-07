@@ -54,7 +54,7 @@ body{color:#666; background-color:#fff;font: 12px/1.5 'Î¢ÈíÑÅºÚ',tahoma,arial,'H
     color:#fff;
     margin:10px auto;
     line-height:82px;
-    font-size:25px;
+    font-size:30px;
 }
 .divcontentlf div div:nth-child(1){
     margin:0 10px;
@@ -100,7 +100,7 @@ body{color:#666; background-color:#fff;font: 12px/1.5 'Î¢ÈíÑÅºÚ',tahoma,arial,'H
 
 .divcontentrt ul li span{
    letter-spacing:0;
-   font-size:40px;
+   font-size:35px;
    vertical-align:middle;
    color:#fff;
 }
