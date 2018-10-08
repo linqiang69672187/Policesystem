@@ -29,12 +29,13 @@ namespace Policesystem.Handle
             //cookie.Value = "331001000000";
             //HttpContext.Current.Response.Cookies.Add(cookie);
 
+       
 
             HttpCookie cookies = HttpContext.Current.Request.Cookies["cookieName"];
-            string BMDM = "331001000000";
+            string BMDM = "331000000000";
             if (cookies != null)
             {
-                BMDM = cookies.Value;
+                BMDM = cookies["BMDM"];
             }
             if (BMDM != null)
             {
