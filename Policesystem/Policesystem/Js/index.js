@@ -51,11 +51,13 @@ switch (true) {
         datalabelsize = '28px';//
         baseWidth = '8';
         distance = -40;
-        minorTickLength = 28;
+        minorTickLength = 10;
         minorTickWidth = 2;
         titley = 300;
         titlefontsize = '28px';
         columtitlefontSize = '18px';
+        tickLength = 28;
+        doublecount = 2;
         break;
     default:
         hchart = 110;
@@ -65,8 +67,10 @@ switch (true) {
         minorTickLength = 5;
         minorTickWidth = 1;
         titley = 80;
+        tickLength = 10;
         titlefontsize = '12px';
         columtitlefontSize = '8px';
+        doublecount = 1;
         break;
 
 }
@@ -188,7 +192,7 @@ function createcolum(id, type, data, color,fontweight) {
             labels: {
                 style: {
                     color: '#fff',
-                    fontSize: (fontweight=='L')?'14px':columtitlefontSize
+                    fontSize: (fontweight=='L')?doublecount*14+'px':columtitlefontSize
                 }
             },
             type: 'category',
@@ -197,14 +201,15 @@ function createcolum(id, type, data, color,fontweight) {
         yAxis: {
             labels: {
                 style: {
-                    color: '#fff'
+                    color: '#fff',
+                    fontSize: (fontweight == 'L') ? doublecount*14+'px' : columtitlefontSize
                 }
             },
             title: {
                 text: '',
                 style: {
                     color: '#fff',
-                    fontSize: (fontweight == 'L') ? '24px' : columtitlefontSize
+                    fontSize: (fontweight == 'L') ? doublecount*24+'px' : columtitlefontSize
                 }
             },
             gridLineDashStyle: 'Dash', //Dash,Dot,Solid,默认Solid
@@ -215,7 +220,7 @@ function createcolum(id, type, data, color,fontweight) {
             text:  '',
             style: {
                 color: '#fff',
-                fontSize: (fontweight == 'L') ? '24px' : columtitlefontSize
+                fontSize: (fontweight == 'L') ? doublecount * 24 + 'px' : columtitlefontSize
             }
         },
         tooltip: {
@@ -347,7 +352,7 @@ function myGaugeChart(containerId, label, value) {
     if (value < 0) {
         value = Math.abs(value);
         oper = '环比减少' + value + '%<i class="fa fa-arrow-down" aria-hidden="true"></i><br/> <span style="hbclasslabel">● ' + label + ' ● </span>';
-        var colorarray = ['#467ddf', '#964edf', '#ff0000', '#FF0000']
+         colorarray = ['#467ddf', '#964edf', '#ff0000', '#FF0000']
 
     }
 
@@ -388,7 +393,7 @@ function myGaugeChart(containerId, label, value) {
             tickPixelInterval: 20,
             tickWidth: 1,
             tickPosition: 'inside',
-            tickLength: 10,
+            tickLength: tickLength,
             tickColor: '#fff',
             labels: {
                 step: 2,

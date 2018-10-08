@@ -17,6 +17,29 @@
         background-size: 100% 100%;
         /*-moz-background-size:100% 100%;*/
     }
+    #alertmodal .modal-header div {
+    font-size: 48px;
+     }
+    #alertmodal  .modal-content{
+        height:700px;
+    }
+   #alertmodal #chart {
+    width: 720px;
+   }
+    #alertmodal .modal-dialog{
+        width:2000px;
+    }
+    #alertmodal  #column {
+    width: 1000px;
+    height: 600px;
+}
+   #alertmodal .chars > ul li:nth-child(2n+1) {
+    font-size: 38px;
+    width:  38px;
+    color: #fff;
+    height: 100%;
+    word-wrap: break-word;
+    }
     .qjxinxi{
     position: absolute;
     width: 40%;
@@ -659,13 +682,7 @@
     height: 110px;
     display: inline-block;
     }
-    .highcharts-label-box{
-        stroke-width:0 !important;
-     
-    }
-    .highcharts-data-labels{
-           display:none;
-    }
+  
     .hbclasslabel{
        font-size: 12px;
     }
@@ -854,7 +871,13 @@
   
 }
 
-
+  .highcharts-label-box{
+        stroke-width:0 !important;
+     
+    }
+    .highcharts-data-labels{
+           display:none;
+    }
 .modal-content{
 background-color: #000f45;
 color:#fff;
