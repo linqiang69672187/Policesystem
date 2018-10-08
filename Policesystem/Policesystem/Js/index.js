@@ -62,7 +62,7 @@ switch (true) {
         datalabelsize='12px';//28px
         baseWidth = '2';
         distance = -20;
-        minorTickLength = 10;
+        minorTickLength = 5;
         minorTickWidth = 1;
         titley = 80;
         titlefontsize = '12px';
@@ -342,12 +342,13 @@ function createChart(id, type, data, color, totalvalue, fontweight) {
 
 function myGaugeChart(containerId, label, value) {
     var oper = '环比增加' + value + '%<i class="fa fa-arrow-up" aria-hidden="true"></i><br/> <span style="hbclasslabel">● ' + label + ' ● </span>';
-    var colorarray = ['#4c8afa', '#59bfa1', '#008000', '#008000']
+    var colorarray = ['#467ddf', '#ff0000', '#964edf', '#008000']
 
     if (value < 0) {
         value = Math.abs(value);
         oper = '环比减少' + value + '%<i class="fa fa-arrow-down" aria-hidden="true"></i><br/> <span style="hbclasslabel">● ' + label + ' ● </span>';
-        colorarray = ['#63869e', '#45d5d5', '#FF0000', '#FF0000']
+        var colorarray = ['#467ddf', '#ff0000', '#964edf', '#FF0000']
+
     }
 
     var chart = Highcharts.chart(containerId, {
@@ -400,12 +401,12 @@ function myGaugeChart(containerId, label, value) {
             },
             plotBands: [{
                 from: 0,
-                to: 60,
+                to: 30,
                 innerRadius: '100%',
                 outerRadius: '80%',
                 color: colorarray[0] // 1
             }, {
-                from: 60,
+                from: 30,
                 to: 80,
                 innerRadius: '100%',
                 outerRadius: '80%',
@@ -534,7 +535,7 @@ $(function () {
     loadindexconfigdata();//加载仪表盘数据
 });
 var Totalinter = setInterval(loadTotalDevices, 60000);//一分钟重新加载全局设备情况
-var Gaugeinter = setInterval(loadGaugeData, 180000);//3分钟加载仪表盘
+var Gaugeinter = setInterval(loadGaugeData, 120000);//2分钟加载仪表盘
 
 function createGaugeTile(domid,type) {
     switch (type) {

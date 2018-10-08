@@ -35,6 +35,7 @@ var currentIndex=0;
         this.prevBtn.bind("click",function(){
             if(self.rotateFlag){
                 self.rotateFlag = false;
+                crateItem();
                 self.rotateAnimate("left")
             }
         });
@@ -47,14 +48,14 @@ var currentIndex=0;
         if(this.setting.isAutoplay){
             this.autoPlay();
             this.caroursel.hover(function () { clearInterval(self.timer) }, function () { self.autoPlay() });
-            crateItem();
+           // crateItem();
         }
     };
     Caroursel.prototype = {
         autoPlay:function(){
           var that = this;
           this.timer = window.setInterval(function () {
-              crateItem();
+ 
               that.prevBtn.click();
              
           },that.setting.dealy)
@@ -238,8 +239,7 @@ function createChar() {
             for (var i = 0; i < data.length&&i<3; i++) {
                 $("ul.poster-list").append( '<li class="poster-item"><div><div class="lbtitle"></div><div class="divcontent"><div class="divcontentlf"><div><div><i class="fa fa-windows" aria-hidden="true"></i></div><div>总设备数</div><div>87</div></div><div><div><i class="fa fa-pie-chart"></i></div><div>设备使用率</div><div>50%</div></div></div><div class="divcontentrt"><ul></ul></div></div></div></li>');
                 sumonline = 0; sumisused = 0; total = 0;
-                $(".lbtitle:eq(" + i + ")").html("<i class='fa fa-minus  fa-rotate-90'></i>" + data[i]["Name"]);
-             
+                $(".lbtitle:eq(" + i + ")").html("<i class='fa fa-minus  fa-rotate-90 " + data[i]["Name"] + "'></i>" + data[i]["Name"]);
                 for (var i1 = 0; i1 < data[i]["data"].length; i1++) {
                     total += parseInt(data[i]["data"][i1]["count"]);
                     if (data[i]["data"][i1]["online"] != "") { sumonline += parseInt(data[i]["data"][i1]["online"]) };//在线终端总数
@@ -293,10 +293,24 @@ function crateItem() {
     if (!data) { return; }
     var sumonline, sumisused, total, img;
     sumonline = 0; sumisused = 0; total = 0;
+    for (var i1 = 0; i1 < 30; i1++) {
+        if ($("." + data[currentIndex]["Name"]).length > 0) {
+            if (currentIndex == data.length - 1) {
+                currentIndex = 0;
+            }
+            else{
+            currentIndex += 1;
+            }
+        }
+        else {
+            break;
+        }
+    }
 
     $("ul.poster-list>li").each(function (index, ele) {
         if ($(this).position().left == 0) {
-            $(".lbtitle:eq(" + index + ")").html("<i class='fa fa-minus  fa-rotate-90'></i>" + data[currentIndex]["Name"]);
+         
+            $(".lbtitle:eq(" + index + ")").html("<i class='fa fa-minus  fa-rotate-90 " + data[currentIndex]["Name"] + "'></i>" + data[currentIndex]["Name"]);
             $(".divcontentrt:eq(" + index + ") ul").html("");
             for (var i1 = 0; i1 < data[currentIndex]["data"].length; i1++) {
                 total += parseInt(data[currentIndex]["data"][i1]["count"]);
@@ -330,17 +344,13 @@ function crateItem() {
             $(".divcontentlf:eq(" + index + ") div:eq(3)").text(total);
             $(".divcontentlf:eq(" + index + ") div:eq(7)").text(formatSeconds(sumisused / total, 2) + "%");
         }
+       
     });
     
     //if (data.length - i - currentIndex > 0) {
     //    $(".lbtitle:eq(" + i + ")").html("<i class='fa fa-minus  fa-rotate-90'></i>" + data[i + currentIndex]["Name"]);
     //}
    
-    if (currentIndex == data.length - 1) {
-        currentIndex = 0;
-    }
-    else{
-        currentIndex += 1;
-    }
+  
     
 }
