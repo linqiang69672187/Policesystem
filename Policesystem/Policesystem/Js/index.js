@@ -342,12 +342,12 @@ function createChart(id, type, data, color, totalvalue, fontweight) {
 
 function myGaugeChart(containerId, label, value) {
     var oper = '环比增加' + value + '%<i class="fa fa-arrow-up" aria-hidden="true"></i><br/> <span style="hbclasslabel">● ' + label + ' ● </span>';
-    var colorarray = ['#467ddf', '#ff0000', '#964edf', '#008000']
+    var colorarray = ['#467ddf', '#964edf', '#ff0000', '#008000']
 
     if (value < 0) {
         value = Math.abs(value);
         oper = '环比减少' + value + '%<i class="fa fa-arrow-down" aria-hidden="true"></i><br/> <span style="hbclasslabel">● ' + label + ' ● </span>';
-        var colorarray = ['#467ddf', '#ff0000', '#964edf', '#FF0000']
+        var colorarray = ['#467ddf', '#964edf', '#ff0000', '#FF0000']
 
     }
 
