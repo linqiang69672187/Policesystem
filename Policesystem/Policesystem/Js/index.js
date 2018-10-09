@@ -634,14 +634,14 @@ function createGauge(data) {
                     if (arrayval[0] == "1") {
                         data1 = parseFloat(yesdayvalue.在线总时长);
                         data2 = parseFloat(todayvalue.在线总时长);
-                        if (data1 == "0" || data2 == "0") { value = 0 } else { value = formatFloat((data2 - data1) * 100 / data1, 1) }
+                        if (data1 == "0" || data2 == "0"  || isNaN(data1)  || isNaN(data2) ) { value = 0 } else { value = formatFloat((data2 - data1) * 100 / data1, 1) }
                         myGaugeChart("zf_gfscl", "在线总时长", value);
                         numchart += 1;
                     }
                     if (arrayval[1] == "1") {
                         data1 = parseFloat(yesdayvalue.在线数);
                         data2 = parseFloat(todayvalue.在线数);
-                        if (data1 == "0" || data2 == "0") { value = 0 } else { value = formatFloat((data2 - data1) * 100 / data1, 1) }
+                        if (data1 == "0" || data2 == "0"  || isNaN(data1)  || isNaN(data2) ) { value = 0 } else { value = formatFloat((data2 - data1) * 100 / data1, 1) }
                         if (numchart > 0) {
                             myGaugeChart("zf_zxshj", "今日在线量", value);
                         } else {
@@ -652,7 +652,7 @@ function createGauge(data) {
                     if (arrayval[2] == "1") {
                         data1 = parseFloat(yesdayvalue.设备数量);
                         data2 = parseFloat(todayvalue.设备数量);
-                        if (data1 == "0" || data2 == "0") { value = 0 } else { value = formatFloat((data2 - data1) * 100 / data1, 1) }
+                        if (data1 == "0" || data2 == "0"  || isNaN(data1)  || isNaN(data2) ) { value = 0 } else { value = formatFloat((data2 - data1) * 100 / data1, 1) }
                         if (numchart > 0) {
                             myGaugeChart("zf_zxshj", "设备配发数", value);
                         } else {
@@ -663,7 +663,7 @@ function createGauge(data) {
                     if (arrayval[3] == "1") {
                         data1 = parseFloat(yesdayvalue.在线数) / parseFloat(yesdayvalue.设备数量);
                         data2 = parseFloat(todayvalue.在线数) / parseFloat(todayvalue.设备数量);
-                        if (data1 == "0" || data2 == "0") { value = 0 } else { value = formatFloat((data2 - data1) * 100 / data1, 1) }
+                        if (data1 == "0" || data2 == "0"  || isNaN(data1)  || isNaN(data2) ) { value = 0 } else { value = formatFloat((data2 - data1) * 100 / data1, 1) }
                         if (numchart > 0) {
                             myGaugeChart("zf_zxshj", "设备使用率", value);
                         } else {
@@ -677,14 +677,14 @@ function createGauge(data) {
                     if (arrayval[0] == "1") {
                         data1 = parseFloat(yesdayvalue.在线总时长);
                         data2 = parseFloat(todayvalue.在线总时长);
-                        if (data1 == "0" || data2 == "0") { value = 0 } else { value = formatFloat((data2 - data1) * 100 / data1, 1) }
+                        if (data1 == "0" || data2 == "0"  || isNaN(data1)  || isNaN(data2) ) { value = 0 } else { value = formatFloat((data2 - data1) * 100 / data1, 1) }
                         myGaugeChart("zf_gfscl", "在线总时长", value);
                         numchart += 1;
                     }
                     if (arrayval[1] == "1") {
                         data1 = parseFloat(yesdayvalue.在线数);
                         data2 = parseFloat(todayvalue.在线数);
-                        if (data1 == "0" || data2 == "0") { value = 0 } else { value = formatFloat((data2 - data1) * 100 / data1, 1) }
+                        if (data1 == "0" || data2 == "0"  || isNaN(data1)  || isNaN(data2) ) { value = 0 } else { value = formatFloat((data2 - data1) * 100 / data1, 1) }
                         if (numchart > 0) {
                             myGaugeChart("zf_zxshj", "今日在线量", value);
                         } else {
@@ -695,7 +695,7 @@ function createGauge(data) {
                     if (arrayval[2] == "1") {
                         data1 = parseFloat(yesdayvalue.设备数量);
                         data2 = parseFloat(todayvalue.设备数量);
-                        if (data1 == "0" || data2 == "0") { value = 0 } else { value = formatFloat((data2 - data1) * 100 / data1, 1) }
+                        if (data1 == "0" || data2 == "0"  || isNaN(data1)  || isNaN(data2) ) { value = 0 } else { value = formatFloat((data2 - data1) * 100 / data1, 1) }
                         if (numchart > 0) {
                             myGaugeChart("zf_zxshj", "设备配发数", value);
                         } else {
@@ -706,7 +706,7 @@ function createGauge(data) {
                     if (arrayval[3] == "1") {
                         data1 = parseFloat(yesdayvalue.在线数) / parseFloat(yesdayvalue.设备数量);
                         data2 = parseFloat(todayvalue.在线数) / parseFloat(todayvalue.设备数量);
-                        if (data1 == "0" || data2 == "0") { value = 0 } else { value = formatFloat((data2 - data1) * 100 / data1, 1) }
+                        if (data1 == "0" || data2 == "0"  || isNaN(data1)  || isNaN(data2) ) { value = 0 } else { value = formatFloat((data2 - data1) * 100 / data1, 1) }
                         if (numchart > 0) {
                             myGaugeChart("zf_zxshj", "设备使用率", value);
                         } else {
@@ -717,7 +717,7 @@ function createGauge(data) {
                     if (arrayval[4] == "1") {
                         data1 = parseFloat(yesdayvalue.处理量) ;
                         data2 = parseFloat(todayvalue.处理量) ;
-                        if (data1 == "0" || data2 == "0") { value = 0 } else { value = formatFloat((data2 - data1) * 100 / data1, 1) }
+                        if (data1 == "0" || data2 == "0"  || isNaN(data1)  || isNaN(data2) ) { value = 0 } else { value = formatFloat((data2 - data1) * 100 / data1, 1) }
                         if (numchart > 0) {
                             myGaugeChart("zf_zxshj", "处理量", value);
                         } else {
@@ -728,7 +728,7 @@ function createGauge(data) {
                     if (arrayval[5] == "1") {
                         data1 = parseFloat(yesdayvalue.查询量);
                         data2 = parseFloat(todayvalue.查询量);
-                        if (data1 == "0" || data2 == "0") { value = 0 } else { value = formatFloat((data2 - data1) * 100 / data1, 1) }
+                        if (data1 == "0" || data2 == "0"  || isNaN(data1)  || isNaN(data2) ) { value = 0 } else { value = formatFloat((data2 - data1) * 100 / data1, 1) }
                         if (numchart > 0) {
                             myGaugeChart("zf_zxshj", "查询量", value);
                         } else {
@@ -741,7 +741,7 @@ function createGauge(data) {
                     if (arrayval[2] == "1") {
                         data1 = parseFloat(yesdayvalue.设备数量);
                         data2 = parseFloat(todayvalue.设备数量);
-                        if (data1 == "0" || data2 == "0") { value = 0 } else { value = formatFloat((data2 - data1) * 100 / data1, 1) }
+                        if (data1 == "0" || data2 == "0"  || isNaN(data1)  || isNaN(data2) ) { value = 0 } else { value = formatFloat((data2 - data1) * 100 / data1, 1) }
                         if (numchart > 0) {
                             myGaugeChart("zf_zxshj", "设备配发数", value);
                         } else {
@@ -752,7 +752,7 @@ function createGauge(data) {
                     if (arrayval[3] == "1") {
                         data1 = parseFloat(yesdayvalue.在线数) / parseFloat(yesdayvalue.设备数量);
                         data2 = parseFloat(todayvalue.在线数) / parseFloat(todayvalue.设备数量);
-                        if (data1 == "0" || data2 == "0") { value = 0 } else { value = formatFloat((data2 - data1) * 100 / data1, 1) }
+                        if (data1 == "0" || data2 == "0"  || isNaN(data1)  || isNaN(data2) ) { value = 0 } else { value = formatFloat((data2 - data1) * 100 / data1, 1) }
                         if (numchart > 0) {
                             myGaugeChart("zf_zxshj", "设备使用率", value);
                         } else {
@@ -763,7 +763,7 @@ function createGauge(data) {
                     if (arrayval[6] == "1") {
                         data1 = parseFloat(yesdayvalue.在线总时长);
                         data2 = parseFloat(todayvalue.在线总时长);
-                        if (data1 == "0" || data2 == "0") { value = 0 } else { value = formatFloat((data2 - data1) * 100 / data1, 1) }
+                        if (data1 == "0" || data2 == "0"  || isNaN(data1)  || isNaN(data2) ) { value = 0 } else { value = formatFloat((data2 - data1) * 100 / data1, 1) }
                         if (numchart > 0) {
                             myGaugeChart("zf_zxshj", "视频长度", value);
                         } else {
@@ -774,7 +774,7 @@ function createGauge(data) {
                     if (arrayval[7] == "1") {
                         data1 = parseFloat(yesdayvalue.文件大小);
                         data2 = parseFloat(todayvalue.文件大小);
-                        if (data1 == "0" || data2 == "0") { value = 0 } else { value = formatFloat((data2 - data1) * 100 / data1, 1) }
+                        if (data1 == "0" || data2 == "0"  || isNaN(data1)  || isNaN(data2) ) { value = 0 } else { value = formatFloat((data2 - data1) * 100 / data1, 1) }
                         if (numchart > 0) {
                             myGaugeChart("zf_zxshj", "视频文件大小", value);
                         } else {
@@ -785,7 +785,7 @@ function createGauge(data) {
                     if (arrayval[8] == "1") {
                         data1 = parseFloat(yesdayvalue.规范上传率);
                         data2 = parseFloat(todayvalue.规范上传率);
-                        if (data1 == "0" || data2 == "0") { value = 0 } else { value = formatFloat((data2 - data1) * 100 / data1, 1) }
+                        if (data1 == "0" || data2 == "0"  || isNaN(data1)  || isNaN(data2) ) { value = 0 } else { value = formatFloat((data2 - data1) * 100 / data1, 1) }
                         if (numchart > 0) {
                             myGaugeChart("zf_zxshj", "规范上传率", value);
                         } else {
@@ -806,7 +806,7 @@ function createGauge(data) {
                     if (arrayval[0] == "1") {
                         data1 = parseFloat(yesdayvalue.在线总时长);
                         data2 = parseFloat(todayvalue.在线总时长);
-                        if (data1 == "0" || data2 == "0") { value = 0 } else { value = formatFloat((data2 - data1) * 100 / data1, 1) }
+                        if (data1 == "0" || data2 == "0"  || isNaN(data1)  || isNaN(data2) ) { value = 0 } else { value = formatFloat((data2 - data1) * 100 / data1, 1) }
                         switch (numchart) {
                             case 0:
                                 myGaugeChart("djj_jrzx", "在线总时长", value);
@@ -823,7 +823,7 @@ function createGauge(data) {
                     if (arrayval[1] == "1") {
                         data1 = parseFloat(yesdayvalue.在线数);
                         data2 = parseFloat(todayvalue.在线数);
-                        if (data1 == "0" || data2 == "0") { value = 0 } else { value = formatFloat((data2 - data1) * 100 / data1, 1) }
+                        if (data1 == "0" || data2 == "0"  || isNaN(data1)  || isNaN(data2) ) { value = 0 } else { value = formatFloat((data2 - data1) * 100 / data1, 1) }
                         switch (numchart) {
                             case 0:
                                 myGaugeChart("djj_jrzx", "今日在线量", value);
@@ -840,7 +840,7 @@ function createGauge(data) {
                     if (arrayval[2] == "1") {
                         data1 = parseFloat(yesdayvalue.设备数量);
                         data2 = parseFloat(todayvalue.设备数量);
-                        if (data1 == "0" || data2 == "0") { value = 0 } else { value = formatFloat((data2 - data1) * 100 / data1, 1) }
+                        if (data1 == "0" || data2 == "0"  || isNaN(data1)  || isNaN(data2) ) { value = 0 } else { value = formatFloat((data2 - data1) * 100 / data1, 1) }
 
                         switch (numchart) {
                             case 0:
@@ -858,7 +858,7 @@ function createGauge(data) {
                     if (arrayval[3] == "1") {
                         data1 = parseFloat(yesdayvalue.在线数) / parseFloat(yesdayvalue.设备数量);
                         data2 = parseFloat(todayvalue.在线数) / parseFloat(todayvalue.设备数量);
-                        if (data1 == "0" || data2 == "0") { value = 0 } else { value = formatFloat((data2 - data1) * 100 / data1, 1) }
+                        if (data1 == "0" || data2 == "0"  || isNaN(data1)  || isNaN(data2) ) { value = 0 } else { value = formatFloat((data2 - data1) * 100 / data1, 1) }
                         switch (numchart) {
                             case 0:
                                 myGaugeChart("djj_jrzx", "设备使用率", value);
@@ -878,7 +878,7 @@ function createGauge(data) {
                     if (arrayval[0] == "1") {
                         data1 = parseFloat(yesdayvalue.在线总时长);
                         data2 = parseFloat(todayvalue.在线总时长);
-                        if (data1 == "0" || data2 == "0") { value = 0 } else { value = formatFloat((data2 - data1) * 100 / data1, 1) }
+                        if (data1 == "0" || data2 == "0"  || isNaN(data1)  || isNaN(data2) ) { value = 0 } else { value = formatFloat((data2 - data1) * 100 / data1, 1) }
                         switch (numchart) {
                             case 0:
                                 myGaugeChart("djj_jrzx", "在线总时长", value);
@@ -895,7 +895,7 @@ function createGauge(data) {
                     if (arrayval[1] == "1") {
                         data1 = parseFloat(yesdayvalue.在线数);
                         data2 = parseFloat(todayvalue.在线数);
-                        if (data1 == "0" || data2 == "0") { value = 0 } else { value = formatFloat((data2 - data1) * 100 / data1, 1) }
+                        if (data1 == "0" || data2 == "0"  || isNaN(data1)  || isNaN(data2) ) { value = 0 } else { value = formatFloat((data2 - data1) * 100 / data1, 1) }
                         switch (numchart) {
                             case 0:
                                 myGaugeChart("djj_jrzx", "今日在线量", value);
@@ -912,7 +912,7 @@ function createGauge(data) {
                     if (arrayval[2] == "1") {
                         data1 = parseFloat(yesdayvalue.设备数量);
                         data2 = parseFloat(todayvalue.设备数量);
-                        if (data1 == "0" || data2 == "0") { value = 0 } else { value = formatFloat((data2 - data1) * 100 / data1, 1) }
+                        if (data1 == "0" || data2 == "0"  || isNaN(data1)  || isNaN(data2) ) { value = 0 } else { value = formatFloat((data2 - data1) * 100 / data1, 1) }
                         switch (numchart) {
                             case 0:
                                 myGaugeChart("djj_jrzx", "设备配发数", value);
@@ -929,7 +929,7 @@ function createGauge(data) {
                     if (arrayval[3] == "1") {
                         data1 = parseFloat(yesdayvalue.在线数) / parseFloat(yesdayvalue.设备数量);
                         data2 = parseFloat(todayvalue.在线数) / parseFloat(todayvalue.设备数量);
-                        if (data1 == "0" || data2 == "0") { value = 0 } else { value = formatFloat((data2 - data1) * 100 / data1, 1) }
+                        if (data1 == "0" || data2 == "0"  || isNaN(data1)  || isNaN(data2) ) { value = 0 } else { value = formatFloat((data2 - data1) * 100 / data1, 1) }
                         switch (numchart) {
                             case 0:
                                 myGaugeChart("djj_jrzx", "设备使用率", value);
@@ -946,7 +946,7 @@ function createGauge(data) {
                     if (arrayval[4] == "1") {
                         data1 = parseFloat(yesdayvalue.处理量);
                         data2 = parseFloat(todayvalue.处理量);
-                        if (data1 == "0" || data2 == "0") { value = 0 } else { value = formatFloat((data2 - data1) * 100 / data1, 1) }
+                        if (data1 == "0" || data2 == "0"  || isNaN(data1)  || isNaN(data2) ) { value = 0 } else { value = formatFloat((data2 - data1) * 100 / data1, 1) }
                         switch (numchart) {
                             case 0:
                                 myGaugeChart("djj_jrzx", "处理量", value);
@@ -963,7 +963,7 @@ function createGauge(data) {
                     if (arrayval[5] == "1") {
                         data1 = parseFloat(yesdayvalue.查询量);
                         data2 = parseFloat(todayvalue.查询量);
-                        if (data1 == "0" || data2 == "0") { value = 0 } else { value = formatFloat((data2 - data1) * 100 / data1, 1) }
+                        if (data1 == "0" || data2 == "0"  || isNaN(data1)  || isNaN(data2) ) { value = 0 } else { value = formatFloat((data2 - data1) * 100 / data1, 1) }
           
                         switch (numchart) {
                             case 0:
@@ -983,7 +983,7 @@ function createGauge(data) {
                     if (arrayval[2] == "1") {
                         data1 = parseFloat(yesdayvalue.设备数量);
                         data2 = parseFloat(todayvalue.设备数量);
-                        if (data1 == "0" || data2 == "0") { value = 0 } else { value = formatFloat((data2 - data1) * 100 / data1, 1) }
+                        if (data1 == "0" || data2 == "0"  || isNaN(data1)  || isNaN(data2) ) { value = 0 } else { value = formatFloat((data2 - data1) * 100 / data1, 1) }
                         switch (numchart) {
                             case 0:
                                 myGaugeChart("djj_jrzx", "设备配发数", value);
@@ -1000,7 +1000,7 @@ function createGauge(data) {
                     if (arrayval[3] == "1") {
                         data1 = parseFloat(yesdayvalue.在线数) / parseFloat(yesdayvalue.设备数量);
                         data2 = parseFloat(todayvalue.在线数) / parseFloat(todayvalue.设备数量);
-                        if (data1 == "0" || data2 == "0") { value = 0 } else { value = formatFloat((data2 - data1) * 100 / data1, 1) }
+                        if (data1 == "0" || data2 == "0"  || isNaN(data1)  || isNaN(data2) ) { value = 0 } else { value = formatFloat((data2 - data1) * 100 / data1, 1) }
                         switch (numchart) {
                             case 0:
                                 myGaugeChart("djj_jrzx", "设备使用率", value);
@@ -1017,7 +1017,7 @@ function createGauge(data) {
                     if (arrayval[6] == "1") {
                         data1 = parseFloat(yesdayvalue.在线总时长);
                         data2 = parseFloat(todayvalue.在线总时长);
-                        if (data1 == "0" || data2 == "0") { value = 0 } else { value = formatFloat((data2 - data1) * 100 / data1, 1) }
+                        if (data1 == "0" || data2 == "0"  || isNaN(data1)  || isNaN(data2) ) { value = 0 } else { value = formatFloat((data2 - data1) * 100 / data1, 1) }
                         switch (numchart) {
                             case 0:
                                 myGaugeChart("djj_jrzx", "视频长度", value);
@@ -1034,7 +1034,7 @@ function createGauge(data) {
                     if (arrayval[7] == "1") {
                         data1 = parseFloat(yesdayvalue.文件大小);
                         data2 = parseFloat(todayvalue.文件大小);
-                        if (data1 == "0" || data2 == "0") { value = 0 } else { value = formatFloat((data2 - data1) * 100 / data1, 1) }
+                        if (data1 == "0" || data2 == "0"  || isNaN(data1)  || isNaN(data2) ) { value = 0 } else { value = formatFloat((data2 - data1) * 100 / data1, 1) }
                         switch (numchart) {
                             case 0:
                                 myGaugeChart("djj_jrzx", "视频文件大小", value);
@@ -1051,7 +1051,7 @@ function createGauge(data) {
                     if (arrayval[8] == "1") {
                         data1 = parseFloat(yesdayvalue.规范上传率);
                         data2 = parseFloat(todayvalue.规范上传率);
-                        if (data1 == "0" || data2 == "0") { value = 0 } else { value = formatFloat((data2 - data1) * 100 / data1, 1) }
+                        if (data1 == "0" || data2 == "0"  || isNaN(data1)  || isNaN(data2) ) { value = 0 } else { value = formatFloat((data2 - data1) * 100 / data1, 1) }
                         switch (numchart) {
                             case 0:
                                 myGaugeChart("djj_jrzx", "规范上传率", value);
@@ -1080,7 +1080,7 @@ function createGauge(data) {
                     if (arrayval[0] == "1") {
                         data1 = parseFloat(yesdayvalue.在线总时长);
                         data2 = parseFloat(todayvalue.在线总时长);
-                        if (data1 == "0" || data2 == "0") { value = 0 } else { value = formatFloat((data2 - data1) * 100 / data1, 1) }
+                        if (data1 == "0" || data2 == "0"  || isNaN(data1)  || isNaN(data2) ) { value = 0 } else { value = formatFloat((data2 - data1) * 100 / data1, 1) }
                         switch (numchart) {
                             case 0:
                                 myGaugeChart("jwt_jrzx", "在线总时长", value);
@@ -1103,7 +1103,7 @@ function createGauge(data) {
                     if (arrayval[1] == "1") {
                         data1 = parseFloat(yesdayvalue.在线数);
                         data2 = parseFloat(todayvalue.在线数);
-                        if (data1 == "0" || data2 == "0") { value = 0 } else { value = formatFloat((data2 - data1) * 100 / data1, 1) }
+                        if (data1 == "0" || data2 == "0"  || isNaN(data1)  || isNaN(data2) ) { value = 0 } else { value = formatFloat((data2 - data1) * 100 / data1, 1) }
                         switch (numchart) {
                             case 0:
                                 myGaugeChart("jwt_jrzx", "今日在线量", value);
@@ -1126,7 +1126,7 @@ function createGauge(data) {
                     if (arrayval[2] == "1") {
                         data1 = parseFloat(yesdayvalue.设备数量);
                         data2 = parseFloat(todayvalue.设备数量);
-                        if (data1 == "0" || data2 == "0") { value = 0 } else { value = formatFloat((data2 - data1) * 100 / data1, 1) }
+                        if (data1 == "0" || data2 == "0"  || isNaN(data1)  || isNaN(data2) ) { value = 0 } else { value = formatFloat((data2 - data1) * 100 / data1, 1) }
 
                         switch (numchart) {
                             case 0:
@@ -1150,7 +1150,7 @@ function createGauge(data) {
                     if (arrayval[3] == "1") {
                         data1 = parseFloat(yesdayvalue.在线数) / parseFloat(yesdayvalue.设备数量);
                         data2 = parseFloat(todayvalue.在线数) / parseFloat(todayvalue.设备数量);
-                        if (data1 == "0" || data2 == "0") { value = 0 } else { value = formatFloat((data2 - data1) * 100 / data1, 1) }
+                        if (data1 == "0" || data2 == "0"  || isNaN(data1)  || isNaN(data2) ) { value = 0 } else { value = formatFloat((data2 - data1) * 100 / data1, 1) }
                         switch (numchart) {
                             case 0:
                                 myGaugeChart("jwt_jrzx", "设备使用率", value);
@@ -1176,7 +1176,7 @@ function createGauge(data) {
                     if (arrayval[0] == "1") {
                         data1 = parseFloat(yesdayvalue.在线总时长);
                         data2 = parseFloat(todayvalue.在线总时长);
-                        if (data1 == "0" || data2 == "0") { value = 0 } else { value = formatFloat((data2 - data1) * 100 / data1, 1) }
+                        if (data1 == "0" || data2 == "0"  || isNaN(data1)  || isNaN(data2) ) { value = 0 } else { value = formatFloat((data2 - data1) * 100 / data1, 1) }
                         switch (numchart) {
                             case 0:
                                 myGaugeChart("jwt_jrzx", "在线总时长", value);
@@ -1199,7 +1199,7 @@ function createGauge(data) {
                     if (arrayval[1] == "1") {
                         data1 = parseFloat(yesdayvalue.在线数);
                         data2 = parseFloat(todayvalue.在线数);
-                        if (data1 == "0" || data2 == "0") { value = 0 } else { value = formatFloat((data2 - data1) * 100 / data1, 1) }
+                        if (data1 == "0" || data2 == "0"  || isNaN(data1)  || isNaN(data2) ) { value = 0 } else { value = formatFloat((data2 - data1) * 100 / data1, 1) }
                         switch (numchart) {
                             case 0:
                                 myGaugeChart("jwt_jrzx", "今日在线量", value);
@@ -1222,7 +1222,7 @@ function createGauge(data) {
                     if (arrayval[2] == "1") {
                         data1 = parseFloat(yesdayvalue.设备数量);
                         data2 = parseFloat(todayvalue.设备数量);
-                        if (data1 == "0" || data2 == "0") { value = 0 } else { value = formatFloat((data2 - data1) * 100 / data1, 1) }
+                        if (data1 == "0" || data2 == "0"  || isNaN(data1)  || isNaN(data2) ) { value = 0 } else { value = formatFloat((data2 - data1) * 100 / data1, 1) }
                         
                         switch (numchart) {
                             case 0:
@@ -1246,7 +1246,7 @@ function createGauge(data) {
                     if (arrayval[3] == "1") {
                         data1 = parseFloat(yesdayvalue.在线数) / parseFloat(yesdayvalue.设备数量);
                         data2 = parseFloat(todayvalue.在线数) / parseFloat(todayvalue.设备数量);
-                        if (data1 == "0" || data2 == "0") { value = 0 } else { value = formatFloat((data2 - data1) * 100 / data1, 1) }
+                        if (data1 == "0" || data2 == "0"  || isNaN(data1)  || isNaN(data2) ) { value = 0 } else { value = formatFloat((data2 - data1) * 100 / data1, 1) }
                         switch (numchart) {
                             case 0:
                                 myGaugeChart("jwt_jrzx", "设备使用率", value);
@@ -1269,7 +1269,7 @@ function createGauge(data) {
                     if (arrayval[4] == "1") {
                         data1 = parseFloat(yesdayvalue.处理量);
                         data2 = parseFloat(todayvalue.处理量);
-                        if (data1 == "0" || data2 == "0") { value = 0 } else { value = formatFloat((data2 - data1) * 100 / data1, 1) }
+                        if (data1 == "0" || data2 == "0"  || isNaN(data1)  || isNaN(data2) ) { value = 0 } else { value = formatFloat((data2 - data1) * 100 / data1, 1) }
                         switch (numchart) {
                             case 0:
                                 myGaugeChart("jwt_jrzx", "处理量", value);
@@ -1292,7 +1292,7 @@ function createGauge(data) {
                     if (arrayval[5] == "1") {
                         data1 = parseFloat(yesdayvalue.查询量);
                         data2 = parseFloat(todayvalue.查询量);
-                        if (data1 == "0" || data2 == "0") { value = 0 } else { value = formatFloat((data2 - data1) * 100 / data1, 1) }
+                        if (data1 == "0" || data2 == "0"  || isNaN(data1)  || isNaN(data2) ) { value = 0 } else { value = formatFloat((data2 - data1) * 100 / data1, 1) }
                         switch (numchart) {
                             case 0:
                                 myGaugeChart("jwt_jrzx", "查询量", value);
@@ -1317,7 +1317,7 @@ function createGauge(data) {
                     if (arrayval[2] == "1") {
                         data1 = parseFloat(yesdayvalue.设备数量);
                         data2 = parseFloat(todayvalue.设备数量);
-                        if (data1 == "0" || data2 == "0") { value = 0 } else { value = formatFloat((data2 - data1) * 100 / data1, 1) }
+                        if (data1 == "0" || data2 == "0"  || isNaN(data1)  || isNaN(data2) ) { value = 0 } else { value = formatFloat((data2 - data1) * 100 / data1, 1) }
                     
                         switch (numchart) {
                             case 0:
@@ -1341,7 +1341,7 @@ function createGauge(data) {
                     if (arrayval[3] == "1") {
                         data1 = parseFloat(yesdayvalue.在线数) / parseFloat(yesdayvalue.设备数量);
                         data2 = parseFloat(todayvalue.在线数) / parseFloat(todayvalue.设备数量);
-                        if (data1 == "0" || data2 == "0") { value = 0 } else { value = formatFloat((data2 - data1) * 100 / data1, 1) }
+                        if (data1 == "0" || data2 == "0"  || isNaN(data1)  || isNaN(data2) ) { value = 0 } else { value = formatFloat((data2 - data1) * 100 / data1, 1) }
                         switch (numchart) {
                             case 0:
                                 myGaugeChart("jwt_jrzx", "设备使用率", value);
@@ -1364,7 +1364,7 @@ function createGauge(data) {
                     if (arrayval[6] == "1") {
                         data1 = parseFloat(yesdayvalue.在线总时长);
                         data2 = parseFloat(todayvalue.在线总时长);
-                        if (data1 == "0" || data2 == "0") { value = 0 } else { value = formatFloat((data2 - data1) * 100 / data1, 1) }
+                        if (data1 == "0" || data2 == "0"  || isNaN(data1)  || isNaN(data2) ) { value = 0 } else { value = formatFloat((data2 - data1) * 100 / data1, 1) }
                         switch (numchart) {
                             case 0:
                                 myGaugeChart("jwt_jrzx", "视频长度", value);
@@ -1387,7 +1387,7 @@ function createGauge(data) {
                     if (arrayval[7] == "1") {
                         data1 = parseFloat(yesdayvalue.文件大小);
                         data2 = parseFloat(todayvalue.文件大小);
-                        if (data1 == "0" || data2 == "0") { value = 0 } else { value = formatFloat((data2 - data1) * 100 / data1, 1) }
+                        if (data1 == "0" || data2 == "0"  || isNaN(data1)  || isNaN(data2) ) { value = 0 } else { value = formatFloat((data2 - data1) * 100 / data1, 1) }
                         switch (numchart) {
                             case 0:
                                 myGaugeChart("jwt_jrzx", "视频文件大小", value);
@@ -1410,7 +1410,7 @@ function createGauge(data) {
                     if (arrayval[8] == "1") {
                         data1 = parseFloat(yesdayvalue.规范上传率);
                         data2 = parseFloat(todayvalue.规范上传率);
-                        if (data1 == "0" || data2 == "0") { value = 0 } else { value = formatFloat((data2 - data1) * 100 / data1, 1) }
+                        if (data1 == "0" || data2 == "0"  || isNaN(data1)  || isNaN(data2) ) { value = 0 } else { value = formatFloat((data2 - data1) * 100 / data1, 1) }
                         switch (numchart) {
                             case 0:
                                 myGaugeChart("jwt_jrzx", "规范上传率", value);

@@ -324,7 +324,7 @@ $(document).on('click.bs.carousel.data-api', '#cz-cx', function (e) {
         },
         error: function (msg) {
             console.debug("错误:ajax");
-            $('.progresshz').hide();
+           $('.progresshz').hide();
         }
     });
 

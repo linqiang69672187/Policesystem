@@ -27,7 +27,7 @@ namespace Policesystem.Handle
             //HttpContext.Current.Response.Cookies.Add(cookie);
 
             HttpCookie cookies = HttpContext.Current.Request.Cookies["cookieName"];
-            string BMDM = "331000000000";
+            string BMDM = "331001000000";
             if (cookies != null)
             {
                 BMDM = cookies["BMDM"];
