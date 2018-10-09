@@ -306,7 +306,7 @@ function loaddata() {
 }
 $(document).on('click.bs.carousel.data-api', '#cz-cx', function (e) {
     $('.progresshz').show();
-
+   
     var data = {
         deviid: $("#histrorysearch .bh").val(),
         requesttype: "轨迹查询",
@@ -321,10 +321,15 @@ $(document).on('click.bs.carousel.data-api', '#cz-cx', function (e) {
         success: function (data) {
             createTrace(data);
             $('.progresshz').hide();
+            for (var n = 0; n < data.length; n++) {
+                if (data[n].data.length > 0) break;
+                $("#alertmodal").modal("show");
+            }
         },
         error: function (msg) {
             console.debug("错误:ajax");
-           $('.progresshz').hide();
+            $('.progresshz').hide();
+            $("#alertmodal").modal("show");
         }
     });
 

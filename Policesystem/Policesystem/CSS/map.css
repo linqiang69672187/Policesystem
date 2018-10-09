@@ -513,6 +513,20 @@ background-color:#fff;
   
  
   }
+
+  #alertmodal .modal-content {
+    border: 1px solid #022396 !important;
+
+    background-color: #000f45;
+    color: #fff;
+}
+ #alertmodal .modal-dialog {
+    width: 400px;
+}
+ #alertmodal .modal-header .close {
+    color: #fff;
+    opacity: .8;
+}
 .zq-bottom {
     background-image: url('../img/deviceClick_bg.png');
     height:22px;
