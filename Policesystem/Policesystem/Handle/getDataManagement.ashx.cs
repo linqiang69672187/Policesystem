@@ -33,6 +33,10 @@ namespace Policesystem.Handle
             string search = context.Request.Form["search"];
             string sreachcondi = "";
 
+            int onlinevalue = int.Parse(context.Request.Form["onlinevalue"])*60;
+            int usedvalue= int.Parse(context.Request.Form["usedvalue"]) * 60;
+
+
             if (search != "")
             {
                 sreachcondi = " (de.[DevId] like '%" + search + "%' or us.[XM] like '%" + search + "%' or us.[JYBH] like '%" + search + "%' ) and ";
@@ -95,8 +99,8 @@ namespace Policesystem.Handle
             string ddtitle;//大队标题
 
 
-            statusvalue = days * 600;//超过10分钟算使用
-            zxstatusvalue = days * 1800;//在线参考值
+            statusvalue = days * usedvalue;//超过10分钟算使用
+            zxstatusvalue = days * onlinevalue;//在线参考值
             DataTable Alarm_EveryDayInfo = null; //每日告警
             DataTable dUser = null;
 
@@ -194,8 +198,8 @@ namespace Policesystem.Handle
                         {
                             case "1":
                                 在线时长 += Convert.ToInt32(item["在线时长"]);
-                                未使用+= ((Convert.ToInt32(item["在线时长"]) - statusvalue)<0)?1:0;
-                                在线 += ((Convert.ToInt32(item["在线时长"]) - zxstatusvalue) >= 0) ? 1 : 0;
+                                未使用+= ((Convert.ToInt32(item["在线时长"]) - statusvalue)<=0)?1:0;
+                                在线 += ((Convert.ToInt32(item["在线时长"]) - zxstatusvalue) > 0) ? 1 : 0;
                                 break;
                             case "2":
                                 处理量 += Convert.ToInt32(item["在线时长"]);
@@ -216,8 +220,8 @@ namespace Policesystem.Handle
                         {
                             tmpRows += 1;  //新设备ID不重复
                             tmpDevid = item["DevId"].ToString();
-                            status += (Convert.ToInt32(item["在线时长"]) / statusvalue >= 1) ? 1 : 0;
-                            allstatu_device += (Convert.ToInt32(item["在线时长"]) / statusvalue >= 1) ? 1 : 0;
+                            status += (Convert.ToInt32(item["在线时长"]) - statusvalue > 0) ? 1 : 0;
+                            allstatu_device += (Convert.ToInt32(item["在线时长"]) - statusvalue > 0) ? 1 : 0;
                         }
 
                     }

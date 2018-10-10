@@ -318,3 +318,17 @@ table.dataTable tbody th, table.dataTable tbody td{
 .infodiv{
     margin-top:-25px !important;
 }
+#configmodal .date input{
+    width:30px;
+}
+#configmodal .date{
+    display:block;
+}
+#configmodal .date label{
+   margin-left:15px;
+   color:#00FF00 ;
+   display:none;
+}
+#configmodal .date .fa-close{
+    margin-right:5px;
+}

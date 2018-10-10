@@ -417,6 +417,9 @@
     <Compile Include="Handle\dataManagement.ashx.cs">
       <DependentUpon>dataManagement.ashx</DependentUpon>
     </Compile>
+    <Compile Include="Handle\dataManagementConfig.ashx.cs">
+      <DependentUpon>dataManagementConfig.ashx</DependentUpon>
+    </Compile>
     <Compile Include="Handle\dataManagementdetail.ashx.cs">
       <DependentUpon>dataManagementdetail.ashx</DependentUpon>
     </Compile>
@@ -462,6 +465,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Handle\dataManagementConfig.ashx" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

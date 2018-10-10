@@ -109,6 +109,62 @@ $.ajax({
     }
 });
 
+$.ajax({
+    type: "POST",
+    url: "../Handle/dataManagementConfig.ashx",
+    data: { 'requesttype': 'Request' },
+    dataType: "json",
+    success: function (data) {
+        if (data.r == "0") {
+            var val = data.result[0].val.split("|");
+            $("#configmodal input:eq(0)").val(val[0]);
+            $("#configmodal input:eq(1)").val(val[1]);
+        }
+    },
+    error: function (msg) {
+        console.debug("错误:ajax");
+    }
+});
+
+$(document).on('click.bs.carousel.data-api', '#configmodal .btn-save', function (e) {
+    $(".alainfo").hide();
+   var _val1 = $("#configmodal input:eq(0)").val();
+   var _val2 = $("#configmodal input:eq(1)").val();
+    if (_val1 == "") {
+        createUserAlarm($("#configmodal .date:eq(0)"), "设备使用标准不能为空");
+        return;
+    }
+    if (_val2 == "") {
+        createUserAlarm($("#configmodal .date:eq(1)"), "设备在线标准不能为空");
+        return;
+    }
+
+    $.ajax({
+        type: "POST",
+        url: "../Handle/dataManagementConfig.ashx",
+        data: { 'requesttype': 'update', 'val': _val1 +"|"+_val2 },
+        dataType: "json",
+        success: function (data) {
+            
+            $("#configmodal").modal("hide");
+
+        },
+        error: function (msg) {
+            console.debug("错误:ajax");
+            $("#configmodal").modal("hide");
+        }
+    });
+
+
+});
+
+
+function createUserAlarm($ele, txt) {
+    var $doc = $ele;
+    $doc.find("label").show();
+}
+
+
 function changesquadronselect(brigadeselectvalue) {
     $("#squadronselect").empty();
     $("#squadronselect").append("<option value='all'>全部</option>");
@@ -162,6 +218,8 @@ $(document).on('change.bs.carousel.data-api', '#brigadeselect', function (e) {
         }
     }
 });
+
+
 //重置按钮
 $(document).on('click.bs.carousel.data-api', '#resetbtn', function (e) {
     $("#deviceselect").val("1");
@@ -196,7 +254,11 @@ $(document).on('click.bs.carousel.data-api', '#addedit', function (e) {
     showetailRS();
 
 });
+//参数配置
+$(document).on('click.bs.carousel.data-api', '#configbtn', function (e) {
+    $("#configmodal").modal("show");
 
+});
 $('.datadetail').on('hidden.bs.modal', function () {
 
     $("#search-result-table").find(".trselect").removeClass("trselect"); //移除选择
@@ -556,6 +618,7 @@ function createDataTable() {
                         search = $(".seach-box input").val();
                         type = $("#deviceselect").val();
                         searchtext = $(".search input").val();
+                       
                         return data = {
                             search: $(".search input").val(),
                             type: $("#deviceselect").val(),
@@ -567,7 +630,9 @@ function createDataTable() {
                             dates: datecompare($(".end_form_datetime").val(), $(".start_form_datetime").val()),
                             ssddtext: $("#brigadeselect").find("option:selected").text(),
                             sszdtext:$("#squadronselect").find("option:selected").text(),
-                            requesttype: "查询报表"
+                            requesttype: "查询报表",
+                            onlinevalue: $("#configmodal input:eq(1)").val(),
+                            usedvalue:$("#configmodal input:eq(0)").val()
                         }
                     }
 

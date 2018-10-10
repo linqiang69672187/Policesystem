@@ -47,6 +47,7 @@
         <div class="cell-button btnsjx" disabled="disabled" >显示数据项</div>
         <div class="cell-button" id="requestbtn">查询</div>
         <div class="cell-button" id="resetbtn">重置</div>
+        <div class="cell-button" id="configbtn">参数配置</div>
         <div class="cell-button shujudiv"><ul id="shujuxiang"><li><i class="fa fa-check-square-o" aria-hidden="true"></i>序号</li><li><i class="fa fa-check-square-o" aria-hidden="true"></i>操作</li></ul></div> 
         </div>
         <div class="row">
@@ -125,6 +126,27 @@
             </div>
         </div>
     </div>
+
+    <div class="modal fade custom-modal in" id="configmodal" tabindex="-1" role="dialog" aria-labelledby="mydeleModeNo" style="display: none">
+        <div class="modal-backdrop fade in" style="height: 955px;z-index: -1;"></div>
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">报表参数设置</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="date">设备使用标准：超过<input type="text" value="10" onkeyup="this.value=this.value.replace(/\D|^/g,'')" onafterpaste="this.value=this.value.replace(/\D|^/g,'')">分钟<label class="alainfo"><i class="fa fa-close"></i>设备使用标准不能为空</label></div>
+                    <div class="date">设备在线标准：超过<input type="text" value="30" onkeyup="this.value=this.value.replace(/\D|^/g,'')" onafterpaste="this.value=this.value.replace(/\D|^/g,'')">分钟<label class="alainfo"><i class="fa fa-close"></i>设备在线标准不能为空</label></div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary btn-save" >保存</button>
+                    <button type="button" class="btn btn-primary btn-qx" data-dismiss="modal">取消</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <script src="comjs/jquery.js"></script>
     <script src="comjs/jquery.cookie.js"></script>
     <script src="comjs/bootstrap.min.js"></script>
