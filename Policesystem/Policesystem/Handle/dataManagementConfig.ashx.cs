@@ -19,6 +19,9 @@ namespace Policesystem.Handle
             context.Response.ContentType = "text/plain";
             string requesttype = context.Request.Form["requesttype"];
             StringBuilder sqltext = new StringBuilder();
+            HttpCookie cookies = new HttpCookie("cookieName_value");
+            cookies.Expires = DateTime.Now.AddDays(99);
+
             switch (requesttype)
             {
                 case "Request":
@@ -35,6 +38,22 @@ namespace Policesystem.Handle
             sqltext.Append("select * from IndexConfigs where ID=4");
             DataTable dt = SQLHelper.ExecuteRead(CommandType.Text, sqltext.ToString(), "DB");
             context.Response.Write(JSON.DatatableToJson(dt, ""));
+
+
+            if (dt.Rows.Count > 0) {
+                cookies["usedvalue"] = dt.Rows[0][2].ToString().Split('|')[0];
+                cookies["onlinevalue"] = dt.Rows[0][2].ToString().Split('|')[1];
+
+            }
+            else
+            {
+                cookies["usedvalue"] ="10";
+                cookies["onlinevalue"] = "30";
+
+            }
+
+            HttpContext.Current.Response.Cookies.Add(cookies);
+
             return;
 
         update: ;
@@ -42,6 +61,12 @@ namespace Policesystem.Handle
             sqltext.Append("if exists (select * from IndexConfigs where id=4) begin update IndexConfigs set val='"+val+"' where id=4 end else begin insert into IndexConfigs (val,id) values ('"+val+"',4) end");
 
             SQLHelper.ExecuteNonQuery(CommandType.Text, sqltext.ToString());
+
+            cookies["usedvalue"] =  val.Split('|')[0];
+            cookies["onlinevalue"] = val.Split('|')[1];
+
+    
+            HttpContext.Current.Response.Cookies.Add(cookies);
 
             context.Response.Write("1");
         }

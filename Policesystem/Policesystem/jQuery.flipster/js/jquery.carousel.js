@@ -35,12 +35,13 @@ var currentIndex=0;
         this.prevBtn.bind("click",function(){
             if(self.rotateFlag){
                 self.rotateFlag = false;
-                crateItem();
+                
                 self.rotateAnimate("left")
             }
         });
         this.nextBtn.bind("click",function(){
-            if(self.rotateFlag){
+            if (self.rotateFlag) {
+              //  crateItem();
                 self.rotateFlag = false;
                 self.rotateAnimate("right")
             }
@@ -63,7 +64,8 @@ var currentIndex=0;
         rotateAnimate:function(type){
             var that = this;
             var zIndexArr = [];
-            if(type == "left"){//向左移动
+            if (type == "left") {//向左移动
+                crateItem();
                 this.posterItems.each(function(){
                    var self = $(this),
                     prev = $(this).next().get(0)?$(this).next():that.firstPosterItem,
@@ -90,7 +92,8 @@ var currentIndex=0;
                     $(this).css("zIndex",zIndexArr[i]);
                 });
             }
-            if(type == "right"){//向右移动
+            if (type == "right") {//向右移动
+                crateItemRight();
                 this.posterItems.each(function(){
                     var self = $(this),
                     next = $(this).prev().get(0)?$(this).prev():that.lastPosterItem,
@@ -353,4 +356,66 @@ function crateItem() {
    
   
     
+}
+
+function crateItemRight() {
+    var data = tabledata;
+
+    if (!data) { return; }
+    var sumonline, sumisused, total, img;
+    sumonline = 0; sumisused = 0; total = 0;
+    for (var i1 = 0; i1 < 30; i1++) {
+        if ($("." + data[currentIndex]["Name"]).length > 0) {
+            if (currentIndex ==0) {
+                currentIndex = data.length - 1;
+            }
+            else {
+                currentIndex -= 1;
+            }
+        }
+        else {
+            break;
+        }
+    }
+
+    $("ul.poster-list>li").each(function (index, ele) {
+        if ($(this).position().left > 0 && $(this).position().top != 0) {
+
+            $(".lbtitle:eq(" + index + ")").html("<i class='fa fa-minus  fa-rotate-90 " + data[currentIndex]["Name"] + "'></i>" + data[currentIndex]["Name"]);
+            $(".divcontentrt:eq(" + index + ") ul").html("");
+            for (var i1 = 0; i1 < data[currentIndex]["data"].length; i1++) {
+                total += parseInt(data[currentIndex]["data"][i1]["count"]);
+                if (data[currentIndex]["data"][i1]["online"] != "" && data[currentIndex]["data"][i1]["online"] != undefined) { sumonline += parseInt(data[currentIndex]["data"][i1]["online"]) };//在线终端总数
+                if (data[currentIndex]["data"][i1]["Isused"] != "" && data[currentIndex]["data"][i1]["Isused"] != undefined) { sumisused += parseInt(data[currentIndex]["data"][i1]["Isused"]) };//当日使用终端数
+
+                switch (data[currentIndex]["data"][i1]["TypeName"]) {
+                    case "车载视频":
+                        img = "../Image/index_chezaiship.png";
+                        break;
+                    case "警务通":
+                        img = "../Image/index_jingwutong.png";
+                        break;
+                    case "拦截仪":
+                        img = "../Image/index_lanjieyi.png";
+                        break;
+                    case "对讲机":
+                        img = "../Image/index_duijiangji.png";
+                        break;
+                    case "执法记录仪":
+                        img = "../Image/index_zhifajiluyi.png";
+                        break;
+                    default:
+                        img = "../Image/index_chezaiship.png";
+                        break;
+                }
+
+                $(".divcontentrt:eq(" + index + ") ul").append("<li><img src='" + img + "' /><span>" + data[currentIndex]["data"][i1]["TypeName"] + ":</span><span>" + data[currentIndex]["data"][i1]["count"] + "</span></li>")
+            }
+            $(".divcontentrt:eq(" + index + ") ul").append("<li><span>" + "在线数" + ":</span><span>" + sumonline + "</span></li>");
+            $(".divcontentlf:eq(" + index + ") div:eq(3)").text(total);
+            $(".divcontentlf:eq(" + index + ") div:eq(7)").text(formatSeconds(sumisused / total, 2) + "%");
+        }
+
+    });
+
 }
