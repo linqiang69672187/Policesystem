@@ -16,6 +16,7 @@ namespace Policesystem.Handle
     public class saveindexconfig : IHttpHandler
     {
 
+
         public void ProcessRequest(HttpContext context)
         {
             context.Response.ContentType = "text/plain";
@@ -47,9 +48,9 @@ namespace Policesystem.Handle
             try
             {
                 string strHostName = Dns.GetHostName(); //得到本机的主机名 
-                IPHostEntry ipEntry = Dns.GetHostEntry(strHostName); //取得本机IP 
-                string IP = ipEntry.AddressList[1].ToString();
-
+                 //IPHostEntry ipEntry = Dns.GetHostEntry(strHostName); //取得本机IP 
+                 //string IP = TOOL.Login.IP;
+                string IP ="";
                 HttpCookie cookies = HttpContext.Current.Request.Cookies["cookieName"];
                 string JYBH = "331000000000";
                 if (cookies != null)
