@@ -1,6 +1,7 @@
 ﻿var indexconfigdata;
 var hchart = 400;
 var chartdata;
+var zf_gfscl, zf_zxshj, djj_jrzx, djj_gfscl, djj_zxshj, jwt_jrzx, jwt_cxl, jwt_rjcf, jwt_jrcl, jwt_pjcf;
 setInterval(function () {
     var date = new Date();
     var year = date.getFullYear();
@@ -281,7 +282,6 @@ function createChart(id, type, data, color, totalvalue, fontweight) {
             },
             gridLineDashStyle: 'Dash', //Dash,Dot,Solid,默认Solid
         },
-
         title: {
             floating: true,
             text: totalvalue,
@@ -312,6 +312,11 @@ function createChart(id, type, data, color, totalvalue, fontweight) {
                         mouseOver: function (e) {  // 鼠标滑过时动态更新标题
                             chart.setTitle({
                                 text: e.target.y
+                            });
+                        },
+                        mouseOut: function (e) {  // 鼠标滑过时动态更新标题
+                            chart.setTitle({
+                                text: totalvalue
                             });
                         }
                         //, 
@@ -346,6 +351,7 @@ function createChart(id, type, data, color, totalvalue, fontweight) {
 
 
 function myGaugeChart(containerId, label, value) {
+    var chart
     var oper = '环比增加' + value + '%<i class="fa fa-arrow-up" aria-hidden="true"></i><br/> <span style="hbclasslabel">● ' + label + ' ● </span>';
     var colorarray = ['#467ddf', '#964edf', '#ff0000', '#008000']
 
@@ -355,8 +361,53 @@ function myGaugeChart(containerId, label, value) {
          colorarray = ['#467ddf', '#964edf', '#ff0000', '#FF0000']
 
     }
+    switch (containerId) {
+        case "zf_gfscl":
+            chart = zf_gfscl;
+            break;
+        case "zf_zxshj":
+            chart = zf_zxshj;
+            break;
+        case "djj_jrzx":
+            chart = djj_jrzx;
+            break;
+        case "djj_gfscl":
+            chart = djj_gfscl;
+            break;
+        case "djj_zxshj":
+            chart = djj_zxshj;
+            break;
+        case "jwt_jrzx":
+            chart = jwt_jrzx;
+            break;
+        case "jwt_cxl":
+            chart = jwt_cxl;
+            break;
+        case "jwt_rjcf":
+            chart = jwt_rjcf;
+            break;
+        case "jwt_jrcl":
+            chart = jwt_jrcl;
+            break;
+        case "jwt_pjcf":
+            chart = jwt_pjcf;
+            break;
+        default:
+            break;
 
-    var chart = Highcharts.chart(containerId, {
+    }
+    if (chart) {
+        var point = chart.series[0].points[0];
+        chart.update({
+            title: {
+                text: oper
+            }
+        })
+        point.update(value);
+        return;
+    }
+
+    chart= Highcharts.chart(containerId, {
         chart: {
             type: 'gauge',
             plotBackgroundColor: 'rgba(0,0,0,0)',
@@ -468,6 +519,42 @@ function myGaugeChart(containerId, label, value) {
         //    }, 3000);
         //}
     });
+
+    switch (containerId) {
+        case "zf_gfscl":
+            zf_gfscl = chart;
+            break;
+        case "zf_zxshj":
+            zf_zxshj = chart;
+            break;
+        case "djj_jrzx":
+            djj_jrzx = chart;
+            break;
+        case "djj_gfscl":
+            djj_gfscl = chart;
+            break;
+        case "djj_zxshj":
+            djj_zxshj = chart;
+            break;
+        case "jwt_jrzx":
+            jwt_jrzx = chart;
+            break;
+        case "jwt_cxl":
+            jwt_cxl = chart;
+            break;
+        case "jwt_rjcf":
+            jwt_rjcf = chart;
+            break;
+        case "jwt_jrcl":
+            jwt_jrcl  = chart;
+            break;
+        case "jwt_pjcf":
+            jwt_pjcf = chart;
+            break;
+        default:
+            break;
+
+    }
 }
 
 function loadGaugeData() {

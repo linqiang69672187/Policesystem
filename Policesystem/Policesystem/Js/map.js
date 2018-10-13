@@ -434,46 +434,47 @@ function createtable(data) {
     var type = $("#deviceselect").val();
     var labeltext = "记录条数";
     $(".table thead tr,.table tbody").empty();
-    switch (type) {
-        case "0":    //人员
-            $(".table thead tr").append("<th style='width:46px;'></th><th style='width:113px;'>所属单位</th><th style='width:113px;'>联系人</th><th style='width:80px;'>在线时长</th><th></th>")
-            coumm2 = "data[i].XM";
-            break;
-        case "1": //车载视频
-        case "2": //对讲机
-        case "3": //拦截仪
-        case "4": //警务通
-        case "5": //执法记录仪
-        case "6": //辅警通  
-        case "7": //测速仪
-        case "8": //酒精测试仪
-            $(".table thead tr").append("<th style='width:46px;'></th><th style='width:113px;'>所属单位</th><th style='width:113px;'>设备编号</th><th style='width:80px;'>在线时长</th><th></th>")
-            coumm2 = "data[i].DevId";
-            break;
-        default:
-            break;
+    //switch (type) {
+    //    case "0":    //人员
+    //        coumm2 = "data[i].XM";
+    //        break;
+    //    case "1": //车载视频
+    //    case "2": //对讲机
+    //    case "3": //拦截仪
+    //    case "4": //警务通
+    //    case "5": //执法记录仪
+    //    case "6": //辅警通  
+    //    case "7": //测速仪
+    //    case "8": //酒精测试仪
+    //        $(".table thead tr").append("<th style='width:46px;'></th><th style='width:113px;'>所属单位</th><th style='width:113px;'>设备编号</th><th style='width:80px;'>在线时长</th><th></th>")
+    //     //   coumm2 = "data[i].DevId";
+    //        break;
+    //    default:
+    //        break;
 
-    }
+    //}
+    $(".table thead tr").append("<th style='width:10px;'></th><th style='width:113px;'>所属单位</th><th >设备类型</th><th style='width:113px;'>联系人</th><th >设备编号</th><th style='width:80px;'>在线时长</th><th></th>")
+
 
     for (var i = 0; i < data.length; ++i) {
 
         switch (data[i].IsOnline) {
             case "1":
-                $doc.append(" <tr bh='" + data[i].DevId + "' jy='" + data[i].JYBH + "'><td ><i class='fa fa-square-o'></i></td><td class='simg' style='width: 113px;text-align: left;padding-left:5px'><span>" + data[i].BMJC + "</span></td><td style='text-align:center;width:113px;'><span>" + eval(coumm2) + "</span></td><td style='text-align:center;width:80px;'><span>" + formatSeconds(data[i].OnlineTime, 1) + "</span></td><td><i class='fa fa-map-marker fa-2x fa-map-marker-color-online' aria-hidden='true'  bh='" + data[i].DevId + "' Dt='" + data[i].DevType + "'></i></td></tr>");
+                $doc.append(" <tr bh='" + data[i].DevId + "' jy='" + data[i].JYBH + "'><td ><i class='fa fa-square-o'></i></td><td class='simg' style='width: 113px;text-align: left;padding-left:5px'><span>" + data[i].BMJC + "</span></td><td style='text-align:center;width:113px;'><span>" + data[i].DevType + "</span></td><td style='text-align:center;width:113px;'><span>" + data[i].XM + "</span></td><td style='text-align:center;width:113px;'><span>" + data[i].DevId + "</span></td><td style='text-align:center;width:80px;'><span>" + formatSeconds(data[i].OnlineTime, 1) + "</span></td><td><i class='fa fa-map-marker fa-2x fa-map-marker-color-online' aria-hidden='true'  bh='" + data[i].DevId + "' Dt='" + data[i].DevType + "'></i></td></tr>");
                 sc +=(data[i].OnlineTime!="")? parseInt(data[i].OnlineTime):0;
                 zx += 1;
                 break;
             case "0":
-                $doc.append(" <tr bh='" + data[i].DevId + "' jy='" + data[i].JYBH + "'><td ><i class='fa fa-square-o'></i></td><td class='simg' style='width: 113px;text-align: left;padding-left:5px'><span>" + data[i].BMJC + "</span></td><td style='text-align:center;width:113px;'><span>" + eval(coumm2) + "</span></td><td style='text-align:center;width:80px;'><span>" + formatSeconds(data[i].OnlineTime, 1) + "</span></td><td><i class='fa fa-map-marker fa-2x fa-map-marker-color-unline' aria-hidden='true'  bh='" + data[i].DevId + "'  Dt='" + data[i].DevType + "'></i></td></tr>");
+                $doc.append(" <tr bh='" + data[i].DevId + "' jy='" + data[i].JYBH + "'><td ><i class='fa fa-square-o'></i></td><td class='simg' style='width: 113px;text-align: left;padding-left:5px'><span>" + data[i].BMJC + "</span></td><td style='text-align:center;width:113px;'><span>" + data[i].DevType + "</span></td><td style='text-align:center;width:113px;'><span>" + data[i].XM + "</span></td><td style='text-align:center;width:113px;'><span>" + data[i].DevId + "</span></td><td style='text-align:center;width:80px;'><span>" + formatSeconds(data[i].OnlineTime, 1) + "</span></td><td><i class='fa fa-map-marker fa-2x fa-map-marker-color-unline' aria-hidden='true'  bh='" + data[i].DevId + "'  Dt='" + data[i].DevType + "'></i></td></tr>");
                 sc +=(data[i].OnlineTime!="")? parseInt(data[i].OnlineTime):0;
                 lx +=1
                 break;
             case "":
-                $doc.append(" <tr bh='" + data[i].DevId + "' jy='" + data[i].JYBH + "'><td ><i class='fa fa-square-o'></i></td><td class='simg' style='width: 113px;text-align: left;padding-left:5px'><span>" + data[i].BMJC + "</span></td><td style='text-align:center;width:113px;'><span>" + eval(coumm2) + "</span></td><td style='text-align:center;width:80px;'><span>" + formatSeconds(data[i].OnlineTime, 1) + "</span></td><td></td></tr>");
+                $doc.append(" <tr bh='" + data[i].DevId + "' jy='" + data[i].JYBH + "'><td ><i class='fa fa-square-o'></i></td><td class='simg' style='width: 113px;text-align: left;padding-left:5px'><span>" + data[i].BMJC + "</span></td><td style='text-align:center;width:113px;'><span>" + data[i].DevType + "</span></td><td style='text-align:center;width:113px;'><span>" + data[i].XM + "</span></td><td style='text-align:center;width:113px;'><span>" + data[i].DevId + "</span></td><td style='text-align:center;width:80px;'><span>" + formatSeconds(data[i].OnlineTime, 1) + "</span></td><td></td></tr>");
                 sc += (data[i].OnlineTime != "") ? parseInt(data[i].OnlineTime) : 0;
                 break;
             default:
-                $doc.append(" <tr bh='" + data[i].DevId + "' jy='" + data[i].JYBH + "'><td ><i class='fa fa-square-o'></i></td><td class='simg' style='width: 113px;text-align: left;padding-left:5px'><span>" + data[i].BMJC + "</span></td><td style='text-align:center;width:113px;'><span>" + eval(coumm2) + "</span></td><td style='text-align:center;width:80px;'><span>" + formatSeconds(data[i].OnlineTime, 1) + "</span></td><td></td></tr>");
+                $doc.append(" <tr bh='" + data[i].DevId + "' jy='" + data[i].JYBH + "'><td ><i class='fa fa-square-o'></i></td><td class='simg' style='width: 113px;text-align: left;padding-left:5px'><span>" + data[i].BMJC + "</span></td></td><td style='text-align:center;width:113px;'><span>" + data[i].DevType + "</span></td><td style='text-align:center;width:113px;'><span>" + data[i].XM + "</span></td><td style='text-align:center;width:113px;'><span>" + data[i].DevId + "</span></td><td style='text-align:center;width:80px;'><span>" + formatSeconds(data[i].OnlineTime, 1) + "</span></td><td></td></tr>");
                 sc += (data[i].OnlineTime != "") ? parseInt(data[i].OnlineTime) : 0;
 
                 break;

@@ -104,3 +104,7 @@ body{color:#666; background-color:#fff;font: 12px/1.5 'Î¢ÈíÑÅºÚ',tahoma,arial,'H
    vertical-align:middle;
    color:#fff;
 }
+
+.fa-chevron-left,.fa-chevron-right{
+    display:none !important;
+}

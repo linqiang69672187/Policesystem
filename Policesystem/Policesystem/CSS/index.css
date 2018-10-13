@@ -17,6 +17,9 @@
         background-size: 100% 100%;
         /*-moz-background-size:100% 100%;*/
     }
+    .col-lg-12 .row:nth-child(2){
+        margin-top:80px;
+    }
     #alertmodal .modal-header div {
     font-size: 48px;
      }
@@ -315,7 +318,7 @@
     }
 
     .row2n, .row1n {
-        margin-top: 10px;
+        margin-top: 26px;
         margin-bottom: 5px;
         height: 330px;
         width: 780px;
