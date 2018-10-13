@@ -43,7 +43,7 @@ function transferDate(date) {
 }
 
 
-$(document).on('click.bs.carousel.data-api', '.boxleft > .row li > div', function (e) {
+$(document).on('click.bs.carousel.data-api', '.boxleft > .row li:gt(0) > div', function (e) {
     $('.leftactive').removeClass();
     $(this).addClass('leftactive');
     switch (e.target.id) {
@@ -352,6 +352,21 @@ $(document).on('click.bs.carousel.data-api', '.table .fa-square-o,.table .fa-squ
     }
 });
 
+$(".boxleft").on('click.bs.carousel.data-api', '.fa-arrow-circle-o-left,.fa-arrow-circle-o-right', function (e) {
+    if ($(".boxleft_right").is(':visible')){
+    $(".boxleft_right").hide();
+    $(".boxleft").width(60);
+    $(this).removeClass("fa-arrow-circle-o-left");
+    $(this).addClass("fa-arrow-circle-o-right");
+    } else {
+        $(".boxleft_right").show();
+        $(".boxleft").width(500);
+        $(this).removeClass("fa-arrow-circle-o-right");
+        $(this).addClass("fa-arrow-circle-o-left");
+    }
+})
+
+
 $(document).on('click.bs.carousel.data-api', '.table .fa-map-marker', function (e) {
     var devid;
     var detype;
@@ -423,6 +438,39 @@ function localFeatureInfo(feature) {
     showfeatureinfo(IsOnline, Contacts, Name, Tel, devid, PlateNumber, DevType, pixel, IMEI, UserNum, IdentityPosition);
 }
 
+function devitypename(typeid) {
+    var typename = "";
+    switch (typeid) {
+        case "1":
+            typename = "车载视频";
+            break;
+        case "2":
+            typename = "对讲机";
+            break;
+        case "3":
+            typename = "拦截仪";
+            break;
+        case "4":
+            typename = "警务通";
+            break;
+        case "5":
+            typename = "执法记录仪";
+            break;
+        case "6":
+            typename = "警务通";
+            break;
+        case "7":
+            typename = "测速仪";
+            break;
+        case "8":
+            typename = "酒精测试仪";
+            break;
+        default:
+            typename = "";
+            break;
+    }
+    return typename;
+}
 function createtable(data) {
     var $doc = $(".table tbody");
     var total = data.length;
@@ -453,28 +501,29 @@ function createtable(data) {
     //        break;
 
     //}
-    $(".table thead tr").append("<th style='width:10px;'></th><th style='width:113px;'>所属单位</th><th >设备类型</th><th style='width:113px;'>联系人</th><th >设备编号</th><th style='width:80px;'>在线时长</th><th></th>")
+
+    $(".table thead tr").append("<th style='width:10px;'></th><th style='width:88px;'>所属单位</th><th style='width:63px;'>设备类型</th><th style='width:56px;style='text-align: center;'>联系人</th><th  style='width:127px;'>设备编号</th><th style='width:60px;'>在线时长</th><th></th>")
 
 
     for (var i = 0; i < data.length; ++i) {
 
         switch (data[i].IsOnline) {
             case "1":
-                $doc.append(" <tr bh='" + data[i].DevId + "' jy='" + data[i].JYBH + "'><td ><i class='fa fa-square-o'></i></td><td class='simg' style='width: 113px;text-align: left;padding-left:5px'><span>" + data[i].BMJC + "</span></td><td style='text-align:center;width:113px;'><span>" + data[i].DevType + "</span></td><td style='text-align:center;width:113px;'><span>" + data[i].XM + "</span></td><td style='text-align:center;width:113px;'><span>" + data[i].DevId + "</span></td><td style='text-align:center;width:80px;'><span>" + formatSeconds(data[i].OnlineTime, 1) + "</span></td><td><i class='fa fa-map-marker fa-2x fa-map-marker-color-online' aria-hidden='true'  bh='" + data[i].DevId + "' Dt='" + data[i].DevType + "'></i></td></tr>");
+                $doc.append(" <tr bh='" + data[i].DevId + "' jy='" + data[i].JYBH + "'><td ><i class='fa fa-square-o'></i></td><td class='simg' style='text-align: left;'><span>" + data[i].BMJC + "</span></td><td ><span>" + devitypename(data[i].DevType) + "</span></td><td style='width:56px;style='text-align: center;'><span>" + data[i].XM + "</span></td><td ><span>" + data[i].DevId + "</span></td><td ><span>" + formatSeconds(data[i].OnlineTime, 1) + "</span></td><td><i class='fa fa-map-marker fa-2x fa-map-marker-color-online' aria-hidden='true'  bh='" + data[i].DevId + "' Dt='" + data[i].DevType + "'></i></td></tr>");
                 sc +=(data[i].OnlineTime!="")? parseInt(data[i].OnlineTime):0;
                 zx += 1;
                 break;
             case "0":
-                $doc.append(" <tr bh='" + data[i].DevId + "' jy='" + data[i].JYBH + "'><td ><i class='fa fa-square-o'></i></td><td class='simg' style='width: 113px;text-align: left;padding-left:5px'><span>" + data[i].BMJC + "</span></td><td style='text-align:center;width:113px;'><span>" + data[i].DevType + "</span></td><td style='text-align:center;width:113px;'><span>" + data[i].XM + "</span></td><td style='text-align:center;width:113px;'><span>" + data[i].DevId + "</span></td><td style='text-align:center;width:80px;'><span>" + formatSeconds(data[i].OnlineTime, 1) + "</span></td><td><i class='fa fa-map-marker fa-2x fa-map-marker-color-unline' aria-hidden='true'  bh='" + data[i].DevId + "'  Dt='" + data[i].DevType + "'></i></td></tr>");
+                $doc.append(" <tr bh='" + data[i].DevId + "' jy='" + data[i].JYBH + "'><td ><i class='fa fa-square-o'></i></td><td class='simg' style='text-align: left;'><span>" + data[i].BMJC + "</span></td><td ><span>" + devitypename(data[i].DevType) + "</span></td><td style='width:56px;style='text-align: center;'><span>" + data[i].XM + "</span></td><td ><span>" + data[i].DevId + "</span></td><td ><span>" + formatSeconds(data[i].OnlineTime, 1) + "</span></td><td><i class='fa fa-map-marker fa-2x fa-map-marker-color-unline' aria-hidden='true'  bh='" + data[i].DevId + "'  Dt='" + data[i].DevType + "'></i></td></tr>");
                 sc +=(data[i].OnlineTime!="")? parseInt(data[i].OnlineTime):0;
                 lx +=1
                 break;
             case "":
-                $doc.append(" <tr bh='" + data[i].DevId + "' jy='" + data[i].JYBH + "'><td ><i class='fa fa-square-o'></i></td><td class='simg' style='width: 113px;text-align: left;padding-left:5px'><span>" + data[i].BMJC + "</span></td><td style='text-align:center;width:113px;'><span>" + data[i].DevType + "</span></td><td style='text-align:center;width:113px;'><span>" + data[i].XM + "</span></td><td style='text-align:center;width:113px;'><span>" + data[i].DevId + "</span></td><td style='text-align:center;width:80px;'><span>" + formatSeconds(data[i].OnlineTime, 1) + "</span></td><td></td></tr>");
+                $doc.append(" <tr bh='" + data[i].DevId + "' jy='" + data[i].JYBH + "'><td ><i class='fa fa-square-o'></i></td><td class='simg' style='text-align: left;'><span>" + data[i].BMJC + "</span></td><td ><span>" + devitypename(data[i].DevType) + "</span></td><td style='width:56px;style='text-align: center;'><span>" + data[i].XM + "</span></td><td ><span>" + data[i].DevId + "</span></td><td ><span>" + formatSeconds(data[i].OnlineTime, 1) + "</span></td><td></td></tr>");
                 sc += (data[i].OnlineTime != "") ? parseInt(data[i].OnlineTime) : 0;
                 break;
             default:
-                $doc.append(" <tr bh='" + data[i].DevId + "' jy='" + data[i].JYBH + "'><td ><i class='fa fa-square-o'></i></td><td class='simg' style='width: 113px;text-align: left;padding-left:5px'><span>" + data[i].BMJC + "</span></td></td><td style='text-align:center;width:113px;'><span>" + data[i].DevType + "</span></td><td style='text-align:center;width:113px;'><span>" + data[i].XM + "</span></td><td style='text-align:center;width:113px;'><span>" + data[i].DevId + "</span></td><td style='text-align:center;width:80px;'><span>" + formatSeconds(data[i].OnlineTime, 1) + "</span></td><td></td></tr>");
+                $doc.append(" <tr bh='" + data[i].DevId + "' jy='" + data[i].JYBH + "'><td ><i class='fa fa-square-o'></i></td><td class='simg' style='text-align: left;'><span>" + data[i].BMJC + "</span></td></td><td ><span>" + devitypename(data[i].DevType) + "</span></td><td style='width:56px;style='text-align: center;'><span>" + data[i].XM + "</span></td><td ><span>" + data[i].DevId + "</span></td><td ><span>" + formatSeconds(data[i].OnlineTime, 1) + "</span></td><td></td></tr>");
                 sc += (data[i].OnlineTime != "") ? parseInt(data[i].OnlineTime) : 0;
 
                 break;

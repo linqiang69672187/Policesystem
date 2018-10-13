@@ -24,6 +24,7 @@
 }
 .table>tbody>tr>td{
     padding:2px 0;
+    text-align:left;
 }
 #mapdraw {
     width: 100%;
@@ -361,7 +362,6 @@ background-color: #213366 !important;
 }
 .tab-maxh .table tr td{
     padding:4px,2px;
-    text-align:center;
     vertical-align:middle;
 }
 .equipmentNumb{
@@ -568,3 +568,17 @@ background-color:#fff;
         border-radius: 10px;
         background: #EDEDED;
     }
+.table>thead>tr>th{
+    padding:6px 0;
+    text-align:left;
+}
+.fa-arrow-circle-o-left,.fa-arrow-circle-o-right{
+    font-size:24px !important;
+    margin-top:4px;
+    margin-left:4px;
+    cursor:pointer;
+}
+
+.fa-arrow-circle-o-left:hover,.fa-arrow-circle-o-right:hover{
+   color:rgb(17, 107, 242);
+}
