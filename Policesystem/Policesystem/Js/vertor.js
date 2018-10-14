@@ -344,7 +344,7 @@ function addmarks(points) {
             Tel: point.Tel,
             DevId: point.DevId,
             IMEI: point.IMEI,
-            UserNum: point.UserNum,
+            UserNum: point.JYBH,
             PlateNumber: point.PlateNumber,
             IdentityPosition: point.IdentityPosition
         });
