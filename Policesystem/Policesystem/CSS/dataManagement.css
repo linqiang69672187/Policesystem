@@ -183,7 +183,7 @@ cursor:pointer;
 font-weight:400;
 padding:0 5px;
 background-color:#116bf2;
-text-align:center;
+text-align:left;
 height:25px;
 }
 .row>table tr:nth-child(2n+1),#search-result-table tr:nth-child(2n+1),#detailgr-result-table tr:nth-child(2n+1){

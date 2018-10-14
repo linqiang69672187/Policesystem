@@ -45,7 +45,7 @@
     background-repeat: repeat-x;
     background-size: 100% 100%;
     color:#48b5d4;
-    z-index: 1;
+    z-index: 999;
 }
 
     .boxleft > .row > div:nth-child(1) {
@@ -460,7 +460,7 @@ background-color: #213366 !important;
 }
  .zq1{
    width:260px;top:100px;position:absolute;left:100px;
-    z-index:999;
+    z-index:998;
     display:none;
   }
   .zq1 .zq-tl1{
