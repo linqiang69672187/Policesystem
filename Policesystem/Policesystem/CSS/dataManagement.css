@@ -332,3 +332,6 @@ table.dataTable tbody th, table.dataTable tbody td{
 #configmodal .date .fa-close{
     margin-right:5px;
 }
+.daochu{
+    margin-left:0px !important;
+}

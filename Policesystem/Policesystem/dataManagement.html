@@ -20,33 +20,35 @@
     <div class="tablediv">
         <div class="row"><label>| 车载视频报表</label></div>
         <div class="row">
+            <label>  设备类型:</label>
+            <div class="sentity">
+                <select id="deviceselect">
+                    <option value="1">车载视频</option>
+                    <option value="5">执法记录仪</option>
+                    <option value="6">辅警通</option>
+                    <option value="4">警务通</option>
+                    <option value="3">拦截仪</option>
+                    <option value="2">对讲机</option>
+                </select>
+            </div>
+            <label>单位:</label>
+            <div class="sentity"> <select id="brigadeselect"><option value="all">全部</option></select></div>
+            <div class="sentity"> <select id="squadronselect" disabled="disabled"><option value="all">全部</option></select></div>
+        </div>
+        <div class="row">
          <label>统计时间:</label>
         <div class="date" ><input type="text" class=" start_form_datetime"><i class="fa fa-calendar"></i></div>
          <label>—</label>
          <div class="date"><input type="text" class=" end_form_datetime"><i class="fa fa-calendar"></i></div>
          <div class="date search"><input type="text"  placeholder="请输入设备编号" ><i class="fa fa-search" aria-hidden="true"></i></div>
+         <div class="cell-button" id="requestbtn">查询</div>
+         <div class="cell-button" id="resetbtn">重置</div>
          </div>
-        <div class="row">
-        <label>单位:</label>
-        <div class="sentity"> <select id="brigadeselect"><option value="all">全部</option></select></div>
-        <div class="sentity"> <select id="squadronselect"  disabled="disabled"><option value="all">全部</option></select></div>
-        <label>  设备类型:</label>
-        <div class="sentity">
-            <select id="deviceselect">
-                <option value="1">车载视频</option>
-                <option value="5">执法记录仪</option> 
-                <option value="6">辅警通</option>
-                <option value="4">警务通</option>
-                <option value="3">拦截仪</option>
-                <option value="2">对讲机</option>
-            </select></div>
- 
-        </div>
+     
         <div class="row">
         <div class="cell-button daochu">导出</div>
         <div class="cell-button btnsjx" disabled="disabled" >显示数据项</div>
-        <div class="cell-button" id="requestbtn">查询</div>
-        <div class="cell-button" id="resetbtn">重置</div>
+
         <div class="cell-button" id="configbtn">参数配置</div>
         <div class="cell-button shujudiv"><ul id="shujuxiang"><li><i class="fa fa-check-square-o" aria-hidden="true"></i>序号</li><li><i class="fa fa-check-square-o" aria-hidden="true"></i>操作</li></ul></div> 
         </div>

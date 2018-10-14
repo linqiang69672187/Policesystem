@@ -272,6 +272,9 @@ map.on('click', function (evt) {
         function (feature) {
             return feature;
         });
+    createfeatureinfo(feature);
+});
+function createfeatureinfo(feature) {
     if (feature) {
         var coordinates = feature.getGeometry().getCoordinates();
         var pixel = map.getPixelFromCoordinate(coordinates);
@@ -290,12 +293,11 @@ map.on('click', function (evt) {
         showfeatureinfo(IsOnline, Contacts, Name, Tel, devid, PlateNumber, DevType, pixel, IMEI, UserNum, IdentityPosition);
 
     }
-});
+}
 
 // change mouse cursor when over marker
 map.on('pointermove', function (e) {
     if (e.dragging) {
-        $(".zq1").hide();
         $(".table .localtd").removeClass("localtd"); //移出定位
         point_overlay.setPosition([0, 0]);
         return;
@@ -305,6 +307,23 @@ map.on('pointermove', function (e) {
     map.getTarget().style.cursor = hit ? 'pointer' : '';
 });
 
+
+
+function createinfovisible(){
+
+    if ($(".zq1").is(':visible')) {
+        var devid = $(".zq-cwrap1 .col-md-7:eq(0)").text();
+        var feature = vectorLayer.getSource().getFeatureById(devid);
+        //$(".zq1").hide();
+        if (!feature) {
+            feature = vectorLayerjwt.getSource().getFeatureById(devid);
+        }
+        if (!feature) {
+            feature = vectorLayerdjj.getSource().getFeatureById(devid);
+        }
+        createfeatureinfo(feature);
+    }
+}
 
 
 
@@ -399,7 +418,9 @@ var view = map.getView();
 
 view.on('change:resolution', function (e) {
     //   loadmarks();
+    createinfovisible();
 });
 view.on('change:center', function (e) {
     //    loadmarks();
+    createinfovisible();
 });
