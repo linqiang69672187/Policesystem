@@ -32,24 +32,24 @@ var currentIndex=0;
         this.setSlicePosition();
         //旋转
         this.rotateFlag = true;
-        this.prevBtn.bind("click",function(){
-            if(self.rotateFlag){
-                self.rotateFlag = false;
-                
-                self.rotateAnimate("left")
-            }
-        });
-        this.nextBtn.bind("click",function(){
+        this.prevBtn.off("click").on("click", function () {
             if (self.rotateFlag) {
-              //  crateItem();
+                crateItem();
+                self.rotateFlag = false;
+                self.rotateAnimate("left")
+            } 
+        });
+        this.nextBtn.off("click").on("click", function () {
+            if (self.rotateFlag) {
+                crateItemRight();
                 self.rotateFlag = false;
                 self.rotateAnimate("right")
-            }
+            } 
         });
         if(this.setting.isAutoplay){
             this.autoPlay();
             this.caroursel.hover(function () { clearInterval(self.timer) }, function () { self.autoPlay() });
-           // crateItem();
+            
         }
     };
     Caroursel.prototype = {
@@ -65,7 +65,6 @@ var currentIndex=0;
             var that = this;
             var zIndexArr = [];
             if (type == "left") {//向左移动
-                crateItem();
                 this.posterItems.each(function(){
                    var self = $(this),
                     prev = $(this).next().get(0)?$(this).next():that.firstPosterItem,
@@ -93,7 +92,6 @@ var currentIndex=0;
                 });
             }
             if (type == "right") {//向右移动
-                crateItemRight();
                 this.posterItems.each(function(){
                     var self = $(this),
                     next = $(this).prev().get(0)?$(this).prev():that.lastPosterItem,
