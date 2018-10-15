@@ -186,6 +186,7 @@ function createcolum(id, type, data, color,fontweight) {
         chart: {
             backgroundColor: 'rgba(0,0,0,0)'
         },
+      
         credits: {
             enabled: false
         },
@@ -200,6 +201,7 @@ function createcolum(id, type, data, color,fontweight) {
         
         },
         yAxis: {
+            max:100,
             labels: {
                 style: {
                     color: '#fff',

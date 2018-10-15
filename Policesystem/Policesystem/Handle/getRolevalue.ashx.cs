@@ -1,5 +1,7 @@
-﻿using System;
+﻿using DbComponent;
+using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Web;
@@ -17,13 +19,16 @@ namespace Policesystem.Handle
             context.Response.ContentType = "text/plain";
 
             HttpCookie cookies = HttpContext.Current.Request.Cookies["cookieName"];
-            string JYBH = "331000000000";
+            string JYBH = "000570";
             if (cookies != null)
             {
                 JYBH = cookies["JYBH"];
             }
             StringBuilder sqltext = new StringBuilder();
-            sqltext.Append("SELECT BMJC,BMDM,SJBM from [Entity] a where [SJBM]  = '331000000000' and [BMJC] IS NOT NULL AND BMJC <> '' union all select BMJC,BMDM,SJBM from  [Entity] b where b.SJBM in (SELECT BMDM from [Entity]  where [SJBM]  = '331000000000' and   [BMJC] IS NOT NULL AND BMJC <> '')");
+            sqltext.Append("SELECT ro.Power FROM [ACL_USER] al LEFT JOIN Role ro on ro.ID = al.JSID where al.JYBH='"+ JYBH + "'");
+            DataTable dt = SQLHelper.ExecuteRead(CommandType.Text, sqltext.ToString(), "DB");
+
+            context.Response.Write(JSON.DatatableToDatatableJS(dt, "1"));
 
         }
 
