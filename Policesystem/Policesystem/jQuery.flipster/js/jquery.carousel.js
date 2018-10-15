@@ -236,19 +236,31 @@ function createChar() {
         success: function (data) {
             Caroursel.init($('.caroursel'));
             tabledata = data;
-        
+            var n = 0;
             var sumonline, sumisused, total, img;
             $("ul.poster-list").empty();
             for (var i = 0; i < data.length&&i<3; i++) {
+          
+                switch (i){
+                    case 0:
+                        n = 0;
+                        break;
+                    case 1:
+                        n = 3;
+                        break;
+                    case 2:
+                        n = 1;
+                        break;
+                }
                 $("ul.poster-list").append( '<li class="poster-item"><div><div class="lbtitle"></div><div class="divcontent"><div class="divcontentlf"><div><div><i class="fa fa-windows" aria-hidden="true"></i></div><div>总设备数</div><div>87</div></div><div><div><i class="fa fa-pie-chart"></i></div><div>设备使用率</div><div>50%</div></div></div><div class="divcontentrt"><ul></ul></div></div></div></li>');
                 sumonline = 0; sumisused = 0; total = 0;
-                $(".lbtitle:eq(" + i + ")").html("<i class='fa fa-minus  fa-rotate-90 " + data[i]["Name"] + "'></i>" + data[i]["Name"]);
-                for (var i1 = 0; i1 < data[i]["data"].length; i1++) {
-                    total += parseInt(data[i]["data"][i1]["count"]);
-                    if (data[i]["data"][i1]["online"] != "") { sumonline += parseInt(data[i]["data"][i1]["online"]) };//在线终端总数
-                    if (data[i]["data"][i1]["Isused"] != "") { sumisused += parseInt(data[i]["data"][i1]["Isused"]) };//当日使用终端数
+                $(".lbtitle:eq(" + i + ")").html("<i class='fa fa-minus  fa-rotate-90 " + data[n]["Name"] + "'></i>" + data[n]["Name"]);
+                for (var i1 = 0; i1 < data[n]["data"].length; i1++) {
+                    total += parseInt(data[n]["data"][i1]["count"]);
+                    if (data[n]["data"][i1]["online"] != "") { sumonline += parseInt(data[n]["data"][i1]["online"]) };//在线终端总数
+                    if (data[n]["data"][i1]["Isused"] != "") { sumisused += parseInt(data[n]["data"][i1]["Isused"]) };//当日使用终端数
                   
-                    switch (data[i]["data"][i1]["TypeName"]) {
+                    switch (data[n]["data"][i1]["TypeName"]) {
                         case "车载视频":
                             img = "../Image/index_chezaiship.png";
                             break;
@@ -268,7 +280,7 @@ function createChar() {
                             img = "../Image/index_chezaiship.png";
                             break;
                     }
-                    $(".divcontentrt:eq(" + i + ") ul").append("<li><img src='" + img + "' /><span>" + data[i]["data"][i1]["TypeName"] + ":</span><span>" + data[i]["data"][i1]["count"] + "</span></li>")
+                    $(".divcontentrt:eq(" + i + ") ul").append("<li><img src='" + img + "' /><span>" + data[n]["data"][i1]["TypeName"] + ":</span><span>" + data[n]["data"][i1]["count"] + "</span></li>")
                 }
                 $(".divcontentrt:eq(" + i + ") ul").append("<li><span>" + "在线数" + ":</span><span>" + sumonline + "</span></li>");
                 $(".divcontentlf:eq(" + i + ") div:eq(3)").text(total);

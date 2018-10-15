@@ -502,7 +502,7 @@ function createtable(data) {
 
     //}
 
-    $(".table thead tr").append("<th style='width:10px;'></th><th style='width:88px;'>所属单位</th><th style='width:63px;'>设备类型</th><th style='width:56px;style='text-align: center;'>联系人</th><th  style='width:127px;'>设备编号</th><th style='width:60px;'>在线时长</th><th></th>")
+    $(".table thead tr").append("<th style='width:11px;'></th><th style='width:88px;'>所属单位</th><th style='width:63px;'>设备类型</th><th style='width:56px;style='text-align: center;'>联系人</th><th  style='width:127px;'>设备编号</th><th style='width:60px;'>在线时长</th><th></th>")
 
 
     for (var i = 0; i < data.length; ++i) {

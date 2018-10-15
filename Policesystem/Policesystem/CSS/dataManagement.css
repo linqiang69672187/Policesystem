@@ -189,14 +189,14 @@ height:25px;
 .row>table tr:nth-child(2n+1),#search-result-table tr:nth-child(2n+1),#detailgr-result-table tr:nth-child(2n+1){
 font-weight:400;
 background-color:#13204d;
-text-align:center;
+text-align:left;
 height:22px;
 
 }
 .row>table tr:nth-child(2n),#search-result-table tr:nth-child(2n),#detailgr-result-table tr:nth-child(2n){
 font-weight:400;
 background-color:#213366;
-text-align:center;
+text-align:left;
 height:22px;
 }
 .tablediv table {
@@ -287,7 +287,7 @@ div #txbox .dataTables_wrapper .dataTables_paginate .disabled,.tablediv .dataTab
     line-height: 20px;
 }
 table.dataTable tbody th, table.dataTable tbody td{
- padding:3px !important;
+ padding:0px !important;
 }
 #txbox table.dataTable tbody td{
     padding:8px  !important;

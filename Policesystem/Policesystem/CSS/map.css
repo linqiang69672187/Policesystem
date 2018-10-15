@@ -582,3 +582,13 @@ background-color:#fff;
 .fa-arrow-circle-o-left:hover,.fa-arrow-circle-o-right:hover{
    color:rgb(17, 107, 242);
 }
+.table tbody tr td:nth-child(1){
+    width:11px;
+} 
+
+.table tbody tr td:nth-child(2){
+    width:88px;
+} 
+.table tbody tr td:nth-child(3){
+    width:63px;
+} 

@@ -435,6 +435,9 @@
     <Compile Include="Handle\GetEntitys.ashx.cs">
       <DependentUpon>GetEntitys.ashx</DependentUpon>
     </Compile>
+    <Compile Include="Handle\getRolevalue.ashx.cs">
+      <DependentUpon>getRolevalue.ashx</DependentUpon>
+    </Compile>
     <Compile Include="Handle\index.ashx.cs">
       <DependentUpon>index.ashx</DependentUpon>
     </Compile>
@@ -466,6 +469,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Handle\dataManagementConfig.ashx" />
+    <Content Include="Handle\getRolevalue.ashx" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
