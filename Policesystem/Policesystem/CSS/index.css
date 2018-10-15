@@ -679,9 +679,17 @@
         height:160px;
         overflow:hidden;
      }
-    #zf_gfscl, #zf_zxshj, #djj_jrzx, #djj_gfscl, #djj_zxshj {
+    #zf_gfscl, #zf_zxshj
+    {
     margin-top: 0px;
-    width: 160px;
+    width: 50%;
+    height: 110px;
+    display: inline-block;
+    }
+
+     #djj_jrzx, #djj_gfscl, #djj_zxshj {
+    margin-top: 0px;
+    width: 33.3%;
     height: 110px;
     display: inline-block;
     }
@@ -712,7 +720,7 @@
             display: inline-block;
             border: 1px solid #29599b;
             height: 100%;
-            width: 350px;
+            width: calc(40% - 30px);
             float: left;
             margin-left: 25px;
             text-align:center;
@@ -726,7 +734,7 @@
             display: inline-block;
             border: 1px solid #29599b;
             height: 100%;
-            width:550px;
+            width: calc(60% - 45px);
             float: right;
               text-align:center;
         }
