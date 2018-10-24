@@ -395,6 +395,7 @@ namespace Policesystem.Handle
                     typename = "辅警通";
                     break;
             }
+            
 
             sheet.Rows[0].Cells["A"].Value = begintime.Replace("/", "-") + "_" + endtime.Replace("/", "-") + Entityname + typename + "报表";
             switch (type)

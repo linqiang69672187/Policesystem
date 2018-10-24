@@ -127,6 +127,7 @@
     <Content Include="comjs\highchart.js" />
     <Content Include="comjs\highcharts-more.js" />
     <Content Include="comjs\highcharts.js" />
+    <Content Include="comjs\highmap.js" />
     <Content Include="comjs\ion.rangeSlider.js" />
     <Content Include="comjs\jquery-1.12.3.min - 复制.js" />
     <Content Include="comjs\jquery-1.12.3.min.js" />
@@ -152,7 +153,10 @@
     <Content Include="CSS\map.css" />
     <Content Include="CSS\ol.css" />
     <Content Include="CSS\top.css" />
+    <Content Include="data.html" />
     <Content Include="dataManagement.html" />
+    <Content Include="demo.html" />
+    <Content Include="Handle\WebForm1.aspx" />
     <Content Include="Images\favicon.ico" />
     <Content Include="Images\sort_asc.png" />
     <Content Include="Images\sort_asc_disabled.png" />
@@ -257,6 +261,7 @@
     <Content Include="jQuery.flipster\js\jquery.js" />
     <Content Include="Js\config.js" />
     <Content Include="Js\dataManagement.js" />
+    <Content Include="Js\demo.js" />
     <Content Include="Js\entitymanage.js" />
     <Content Include="Js\index.js" />
     <Content Include="Js\indexconfig.js" />
@@ -455,6 +460,13 @@
     </Compile>
     <Compile Include="Handle\TotalDevices.ashx.cs">
       <DependentUpon>TotalDevices.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="Handle\WebForm1.aspx.cs">
+      <DependentUpon>WebForm1.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Handle\WebForm1.aspx.designer.cs">
+      <DependentUpon>WebForm1.aspx</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
