@@ -1181,10 +1181,10 @@ function createGauge(data) {
                                 myGaugeChart("jwt_rjcf", "在线总时长", value);
                                 break;
                             case 3:
-                                myGaugeChart("jwt_jrcl", "在线总时长", value);
+                             //   myGaugeChart("jwt_jrcl", "在线总时长", value);
                                 break;
                             case 4:
-                                myGaugeChart("jwt_pjcf", "在线总时长", value);
+                              //  myGaugeChart("jwt_pjcf", "在线总时长", value);
                                 break;
                         }
                         numchart += 1;
@@ -1204,10 +1204,10 @@ function createGauge(data) {
                                 myGaugeChart("jwt_rjcf", "今日在线量", value);
                                 break;
                             case 3:
-                                myGaugeChart("jwt_jrcl", "今日在线量", value);
+                             //   myGaugeChart("jwt_jrcl", "今日在线量", value);
                                 break;
                             case 4:
-                                myGaugeChart("jwt_pjcf", "今日在线量", value);
+                             //   myGaugeChart("jwt_pjcf", "今日在线量", value);
                                 break;
                         }
                         numchart += 1;
@@ -1228,10 +1228,10 @@ function createGauge(data) {
                                 myGaugeChart("jwt_rjcf", "设备配发数", value);
                                 break;
                             case 3:
-                                myGaugeChart("jwt_jrcl", "设备配发数", value);
+                              //  myGaugeChart("jwt_jrcl", "设备配发数", value);
                                 break;
                             case 4:
-                                myGaugeChart("jwt_pjcf", "设备配发数", value);
+                              //  myGaugeChart("jwt_pjcf", "设备配发数", value);
                                 break;
                         }
                         numchart += 1;
@@ -1251,10 +1251,10 @@ function createGauge(data) {
                                 myGaugeChart("jwt_rjcf", "设备使用率", value);
                                 break;
                             case 3:
-                                myGaugeChart("jwt_jrcl", "设备使用率", value);
+                             //   myGaugeChart("jwt_jrcl", "设备使用率", value);
                                 break;
                             case 4:
-                                myGaugeChart("jwt_pjcf", "设备使用率", value);
+                              //  myGaugeChart("jwt_pjcf", "设备使用率", value);
                                 break;
                         }
                         numchart += 1;
@@ -1277,10 +1277,10 @@ function createGauge(data) {
                                 myGaugeChart("jwt_rjcf", "在线总时长", value);
                                 break;
                             case 3:
-                                myGaugeChart("jwt_jrcl", "在线总时长", value);
+                              //  myGaugeChart("jwt_jrcl", "在线总时长", value);
                                 break;
                             case 4:
-                                myGaugeChart("jwt_pjcf", "在线总时长", value);
+                              //  myGaugeChart("jwt_pjcf", "在线总时长", value);
                                 break;
                         }
                         numchart += 1;
@@ -1300,10 +1300,10 @@ function createGauge(data) {
                                 myGaugeChart("jwt_rjcf", "今日在线量", value);
                                 break;
                             case 3:
-                                myGaugeChart("jwt_jrcl", "今日在线量", value);
+                             //   myGaugeChart("jwt_jrcl", "今日在线量", value);
                                 break;
                             case 4:
-                                myGaugeChart("jwt_pjcf", "今日在线量", value);
+                              //  myGaugeChart("jwt_pjcf", "今日在线量", value);
                                 break;
                         }
                         numchart += 1;
@@ -1324,10 +1324,10 @@ function createGauge(data) {
                                 myGaugeChart("jwt_rjcf", "设备配发数", value);
                                 break;
                             case 3:
-                                myGaugeChart("jwt_jrcl", "设备配发数", value);
+                             //   myGaugeChart("jwt_jrcl", "设备配发数", value);
                                 break;
                             case 4:
-                                myGaugeChart("jwt_pjcf", "设备配发数", value);
+                              //  myGaugeChart("jwt_pjcf", "设备配发数", value);
                                 break;
                         }
                         numchart += 1;
@@ -1347,10 +1347,10 @@ function createGauge(data) {
                                 myGaugeChart("jwt_rjcf", "设备使用率", value);
                                 break;
                             case 3:
-                                myGaugeChart("jwt_jrcl", "设备使用率", value);
+                              //  myGaugeChart("jwt_jrcl", "设备使用率", value);
                                 break;
                             case 4:
-                                myGaugeChart("jwt_pjcf", "设备使用率", value);
+                               // myGaugeChart("jwt_pjcf", "设备使用率", value);
                                 break;
                         }
                         numchart += 1;
@@ -1370,10 +1370,10 @@ function createGauge(data) {
                                 myGaugeChart("jwt_rjcf", "处理量", value);
                                 break;
                             case 3:
-                                myGaugeChart("jwt_jrcl", "处理量", value);
+                              //  myGaugeChart("jwt_jrcl", "处理量", value);
                                 break;
                             case 4:
-                                myGaugeChart("jwt_pjcf", "处理量", value);
+                              //  myGaugeChart("jwt_pjcf", "处理量", value);
                                 break;
                         }
                         numchart += 1;
@@ -1393,10 +1393,10 @@ function createGauge(data) {
                                 myGaugeChart("jwt_rjcf", "查询量", value);
                                 break;
                             case 3:
-                                myGaugeChart("jwt_jrcl", "查询量", value);
+                             //   myGaugeChart("jwt_jrcl", "查询量", value);
                                 break;
                             case 4:
-                                myGaugeChart("jwt_pjcf", "查询量", value);
+                              //  myGaugeChart("jwt_pjcf", "查询量", value);
                                 break;
                         }
                         numchart += 1;
@@ -1419,10 +1419,10 @@ function createGauge(data) {
                                 myGaugeChart("jwt_rjcf", "设备配发数", value);
                                 break;
                             case 3:
-                                myGaugeChart("jwt_jrcl", "设备配发数", value);
+                             //   myGaugeChart("jwt_jrcl", "设备配发数", value);
                                 break;
                             case 4:
-                                myGaugeChart("jwt_pjcf", "设备配发数", value);
+                              //  myGaugeChart("jwt_pjcf", "设备配发数", value);
                                 break;
                         }
                         numchart += 1;
@@ -1442,10 +1442,10 @@ function createGauge(data) {
                                 myGaugeChart("jwt_rjcf", "设备使用率", value);
                                 break;
                             case 3:
-                                myGaugeChart("jwt_jrcl", "设备使用率", value);
+                               // myGaugeChart("jwt_jrcl", "设备使用率", value);
                                 break;
                             case 4:
-                                myGaugeChart("jwt_pjcf", "设备使用率", value);
+                               // myGaugeChart("jwt_pjcf", "设备使用率", value);
                                 break;
                         }
                         numchart += 1;
@@ -1465,10 +1465,10 @@ function createGauge(data) {
                                 myGaugeChart("jwt_rjcf", "视频长度", value);
                                 break;
                             case 3:
-                                myGaugeChart("jwt_jrcl", "视频长度", value);
+                              //  myGaugeChart("jwt_jrcl", "视频长度", value);
                                 break;
                             case 4:
-                                myGaugeChart("jwt_pjcf", "视频长度", value);
+                               // myGaugeChart("jwt_pjcf", "视频长度", value);
                                 break;
                         }
                         numchart += 1;
@@ -1488,10 +1488,10 @@ function createGauge(data) {
                                 myGaugeChart("jwt_rjcf", "视频文件大小", value);
                                 break;
                             case 3:
-                                myGaugeChart("jwt_jrcl", "视频文件大小", value);
+                               // myGaugeChart("jwt_jrcl", "视频文件大小", value);
                                 break;
                             case 4:
-                                myGaugeChart("jwt_pjcf", "视频文件大小", value);
+                               // myGaugeChart("jwt_pjcf", "视频文件大小", value);
                                 break;
                         }
                         numchart += 1;
@@ -1511,10 +1511,10 @@ function createGauge(data) {
                                 myGaugeChart("jwt_rjcf", "规范上传率", value);
                                 break;
                             case 3:
-                                myGaugeChart("jwt_jrcl", "规范上传率", value);
+                              //  myGaugeChart("jwt_jrcl", "规范上传率", value);
                                 break;
                             case 4:
-                                myGaugeChart("jwt_pjcf", "规范上传率", value);
+                              //  myGaugeChart("jwt_pjcf", "规范上传率", value);
                                 break;
                         }
                         numchart += 1;
@@ -1568,4 +1568,190 @@ $(document).on('click.bs.carousel.data-api', '.moreinfo', function (e) {
 
     return;
 
+});
+
+var chart = Highcharts.chart('jwt_jrcl', {
+    chart: {
+        zoomType: 'x',
+        type: 'area',
+        backgroundColor: 'rgba(0,0,0,0)',//设置背景透明
+        marginRight: 0,
+        height:130,
+        events: {
+            load: function () {
+                var series = this.series[0],
+					chart = this;
+                setInterval(function () {
+                    var x = (new Date()).getTime(), // 当前时间
+						y = Math.random()*1000;          // 随机值
+                    series.addPoint([x, y], true, true);
+                }, 1000);
+            }
+        }
+    },
+    mapNavigation: {
+        enabled: true,
+        enableButtons: false
+    },
+    credits: {
+        enabled: false
+    },
+    title: {
+        text: "<span class='hbclasslabel sslable'>● 警务通处理量 ● </span>",
+        verticalAlign: 'bottom',
+        style:{
+               color:'#ffffff'
+             }
+    },
+    xAxis: {
+        type: 'datetime',
+        tickPixelInterval: 70,
+        labels: {
+            style: {
+                color: '#ffffff'
+            }
+        }
+    },
+    yAxis: {
+        title: {
+            text: '处理量',
+            style: {
+                color: '#ffffff'
+            }
+        },
+        tickPixelInterval: 50,
+        labels: {
+    style: {
+    color: '#ffffff'
+}
+}
+    },
+    tooltip: {
+        formatter: function () {
+            return '<b>' + this.series.name + '</b><br/>' +
+				Highcharts.dateFormat('%Y-%m-%d %H:%M:%S', this.x) + '<br/>' +
+				Highcharts.numberFormat(this.y, 2);
+        }
+    },
+    legend: {
+        enabled: false
+    },
+
+   dataZoom: [{
+    type: 'inside',
+    start: 0,
+    end: 10
+       }],
+    series: [{
+        name: '随机数据',
+        data: (function () {
+            // 生成随机值
+            var data = [],
+				time = (new Date()).getTime(),
+				i;
+            for (i = -19; i <= 0; i += 1) {
+                data.push({
+                    x: time + i * 1000,
+                    y: Math.random()*1000
+                });
+            }
+            return data;
+        }())
+    }]
+});
+
+$(function () {
+
+    $.getJSON('HtmlPage1.html', function (data) {
+        $('#jwt_pjcf').highcharts({
+            chart: {
+                zoomType: 'x',
+                height: 130,
+                type: 'area',
+                backgroundColor: 'rgba(0,0,0,0)',//设置背景透明
+            },
+            mapNavigation: {
+                enabled: true,
+                enableButtons: false
+            },
+            title: {
+                text: "<span class='hbclasslabel sslable'>● 警务通上传率 ● </span>",
+        verticalAlign: 'bottom',
+        style:{
+            color:'#ffffff'
+        }
+            },
+            credits: {
+                enabled: false
+            },
+        
+            xAxis: {
+                type: 'datetime',
+                dateTimeLabelFormats: {
+                    millisecond: '%H:%M:%S.%L',
+                    second: '%H:%M:%S',
+                    minute: '%H:%M',
+                    hour: '%H:%M',
+                    day: '%m-%d',
+                    week: '%m-%d',
+                    month: '%Y-%m',
+                    year: '%Y'
+                },
+                labels: {
+                    style: {
+                        color: '#ffffff'
+                    }
+                }
+            },
+            tooltip: {
+                dateTimeLabelFormats: {
+                    millisecond: '%H:%M:%S.%L',
+                    second: '%H:%M:%S',
+                    minute: '%H:%M',
+                    hour: '%H:%M',
+                    day: '%Y-%m-%d',
+                    week: '%m-%d',
+                    month: '%Y-%m',
+                    year: '%Y'
+                }
+            },
+            yAxis: {
+                title: {
+                    text: '上传率',
+                    style: {
+                        color: '#ffffff'
+                    }
+
+                },
+                labels: {
+                    style: {
+                        color: '#ffffff'
+                    }
+                }
+            },
+            legend: {
+                enabled: false
+            },
+            plotOptions: {
+                area: {
+                    marker: {
+                        radius: 2
+                    },
+                    lineWidth: 1,
+                    states: {
+                        hover: {
+                            lineWidth: 1
+                        }
+                    },
+                    threshold: null
+                }
+            },
+            series: [{
+                type: 'area',
+                name: '上传率',
+                data: data,
+                color: '#FF0000'
+            }]
+        });
+    });
 });
