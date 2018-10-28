@@ -1603,6 +1603,20 @@ var chart = Highcharts.chart('jwt_jrcl', {
                color:'#ffffff'
              }
     },
+    plotOptions: {
+        area: {
+            marker: {
+                enabled: false
+            },
+            lineWidth: 1,
+            states: {
+                hover: {
+                    lineWidth: 1
+                }
+            },
+            threshold: null
+        }
+    },
     xAxis: {
         type: 'datetime',
         tickPixelInterval: 70,
@@ -1735,7 +1749,7 @@ $(function () {
             plotOptions: {
                 area: {
                     marker: {
-                        radius: 2
+                        enabled: false
                     },
                     lineWidth: 1,
                     states: {
