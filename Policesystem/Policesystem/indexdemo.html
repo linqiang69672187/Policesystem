@@ -1,0 +1,147 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title></title>
+	<meta charset="utf-8" />
+    <link href="Static_Seed_Project/css/bootstrap.min.css" rel="stylesheet">
+    <link href="Static_Seed_Project/font-awesome/css/font-awesome.min.css" rel="stylesheet" />
+    <link href="css/index.css" rel="stylesheet">
+
+ 
+</head>
+<body >
+  <div id="header"></div>
+   <div id="bodybg" class="row">
+       <div class="col-md-12 col-lg-12">
+         
+           <div class="row">
+               <div  class="col-md-12 col-lg-12" banner">
+                   <div class="row">
+                       <div class="col-md-9 col-lg-9">
+                         <img src="Image/bannar-logo_L.png" />
+                       </div>
+                       <div class="col-md-3 col-lg-3">
+                           <div class="timebanner">
+                           <label></label>
+                           </div>
+                       </div>
+                       </div>
+                   </div>
+           </div>
+
+           <div class="row">
+               <div class="leftbox">
+                     <div class="row"><!--<i class="fa fa-th-list" aria-hidden="true"></i><label>业务系统</label>--><div class="qjxinxi">
+                         <div >全局设备情况</div><div><ul>
+                         <li><i class="fa fa-windows" aria-hidden="true"></i><label></label><label>总设备数</label></li>
+                         <li><i class="fa fa-university"></i><label></label><label>总执法量</label></li>
+                         <li><i class="fa fa-signal"></i><label></label><label>总在线数</label></li>
+                         <li><i class="fa fa-clock-o"></i><label></label><label>总在线(h)</label></li>
+                         </ul></div></div></div>
+                     <div class="row xzlb">
+                        <iframe src="jQuery.flipster/index.html">
+
+                        </iframe>
+                     </div>
+                     <div class="row"><i class="fa fa-tachometer" aria-hidden="true"></i>信息</div>
+                     <div class="row">
+                   <div class="col5 col-md-4">
+                         <div class="xixi1"><img src="Image/index_zhifajiluyi.png" /><label>执法记录仪</label></div>
+                              <div><div id="zf_gfscl"></div><div id="zf_zxshj"></div></div>
+                         </div> 
+                   <div class="col7"><div class="xixi2"><img src="Image/index_duijiangji.png" /><label>对讲机</label></div>
+
+                         <div id="djj_jrzx"></div><div id="djj_gfscl"></div><div id="djj_zxshj"></div>
+                    </div>
+                       
+
+                     </div>
+                     <div class="row">
+                         <div class="col12"><div class="xixi3"><img src="Image/index_jingwutong.png" /><label>警务通</label></div>
+                             <div id="jwt_jrzx"></div><div id="jwt_cxl"></div><div id="jwt_rjcf"></div><div id="jwt_jrcl"></div><div id="jwt_pjcf"></div><div class="jwt_logo"></div>
+                         </div>
+                   </div>
+               </div>
+               <div class="rightbox">
+
+                       <div class="entitylist">
+                           <ul>
+                             
+                           </ul>
+                           </div>
+                   <div class="row2n">
+                       <div><img src="Image/index_jingwutong.png" /><label>警务通</label><img src="Image/index_bz.png" /></div>
+                       <div class="rlchars"><ul><li>配发数量</li><li><div id="jwtchart"></div></li><li>设备使用率</li><li><div id="jwtcolumn"></div></li></ul></div>
+                       <div><!--<span>更多</span><span>更多</span>--></div>
+                   </div>
+                   <div class="row1n">
+                       <div><img src="Image/index_lanjieyi.png" /><label>拦截仪</label><img src="Image/index_bz.png" /></div>
+                       <div class="rlchars"><ul><li>配发数量</li><li><div id="ljychart"></div></li><li>设备使用率</li><li><div id="ljycolumn"></div></li></ul></div>
+                       <div></div>
+                   </div>
+                   <div class="row2n">
+                       <div><img src="Image/index_duijiangji.png" /><label>对讲机</label><img src="Image/index_bz.png" /></div>
+                       <div class="rlchars"><ul><li>配发数量</li><li><div id="djjchart"></div></li><li>设备使用率</li><li><div id="djjcolumn"></div></li></ul></div>
+                       <div></div>
+                   </div>
+                   <div class="row1n">
+                       <div><img src="Image/index_chezaiship.png" /><label>车载视频</label><img src="Image/index_bz.png" /></div>
+                       <div class="rlchars"><ul><li>配发数量</li><li><div id="czchart"></div></li><li>设备使用率</li><li><div id="czcolumn"></div></li></ul></div>
+                       <div></div>
+                   </div>
+                   <div class="row2n">
+                       <div><img src="Image/index_zhifajiluyi.png" /><label>执法记录仪</label><img src="Image/index_bz.png" /></div>
+                       <div class="rlchars"><ul><li>配发数量</li><li><div id="zfchart"></div></li><li>设备使用率</li><li><div id="zfcolumn"></div></li></ul></div>
+                       <div></div>
+                   </div>
+               </div>
+           </div>
+       </div>
+   </div>
+    <div class="modal fade custom-modal in" id="alertmodal" tabindex="-1" role="dialog" aria-labelledby="mydeleModeNo" >
+        <div class="modal-backdrop fade in" style="height: 955px;z-index: -1;"></div>
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <div>警务通</div>
+
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                   
+                </div>
+                <div class="modal-body">
+                    <div class="chars"><ul><li>配发数量</li><li><div id="chart"></div></li><li>设备使用率</li><li><div id="column"></div></li></ul></div>
+
+                </div>
+                
+            </div>
+        </div>
+    </div>
+
+
+    <div class="modal fade custom-modal in" id="infomodal" tabindex="-1" role="dialog" aria-labelledby="mydeleModeNo">
+        <div class="modal-backdrop fade in" style="height: 955px;z-index: -1;"></div>
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <div></div>
+
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+
+                </div>
+                <div class="modal-body">
+                   <ul><li>配发数量</li></ul>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <!-- Mainly scripts -->
+    <script src="Static_Seed_Project/js/jquery-3.1.1.min.js"></script>
+    <script src="Static_Seed_Project/js/bootstrap.min.js"></script>
+    <script src="comjs/highcharts.js"></script>
+    <script src="comjs/highcharts-more.js"></script>
+    <script src="Js/indexdemo.js"></script>
+</body>
+</html>
