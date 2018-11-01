@@ -367,12 +367,16 @@ namespace Policesystem.Handle
                 case "1":
                 case "2":
                 case "3":
+                    tmpath = HttpContext.Current.Server.MapPath("templet\\1.xls");
+                    break;
                 case "5":
-                    tmpath= HttpContext.Current.Server.MapPath("templet\\1.xls");
+                    tmpath= HttpContext.Current.Server.MapPath("templet\\5.xls");
                     break;
                 case "4":
-                case "6":
                     tmpath = HttpContext.Current.Server.MapPath("templet\\4.xls");
+                    break;
+                case "6":
+                    tmpath = HttpContext.Current.Server.MapPath("templet\\6.xls");
                     break;
 
             }
@@ -413,7 +417,6 @@ namespace Policesystem.Handle
                 case "1":
                 case "2":
                 case "3":
-                case "5":
                     for (int i = 0; i < dt.Rows.Count; i++)
                     {
                         sheet.Rows[i + 2].Cells["A"].Style.Borders.SetBorders(MultipleBorders.Outside, Color.FromArgb(0, 0, 0), LineStyle.Thin);
@@ -433,6 +436,10 @@ namespace Policesystem.Handle
                         sheet.Rows[i + 2].Cells["H"].Style.Borders.SetBorders(MultipleBorders.Outside, Color.FromArgb(0, 0, 0), LineStyle.Thin);
                         sheet.Rows[i + 2].Cells["H"].Value = dt.Rows[i][7].ToString();
                     }
+                    break;
+
+                case "5":
+
                     break;
                 case "4":
                 case "6":

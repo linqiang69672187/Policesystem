@@ -488,6 +488,8 @@
   <ItemGroup>
     <Content Include="Handle\dataManagementConfig.ashx" />
     <Content Include="Handle\getRolevalue.ashx" />
+    <Content Include="Handle\templet\5.xls" />
+    <Content Include="Handle\templet\6.xls" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
