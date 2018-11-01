@@ -352,7 +352,25 @@ function createTatolRS(data) {
         var intpf1 = parseInt(data.result[1].Value);
         var intpf2 = parseInt(data.result[5].Value);
         var tbpf = (intpf1 - intpf2) * 100 / intpf2;
-        $("#ulsysc li:eq(0)").text(formatFloat(intpf1 / 3600,1)+"h");
+        switch ($("#deviceselect").val()) {
+            case "1":   //车载视频
+            case "2":
+            case "3":
+            case "7":
+            case "5":
+                $("#ulsysc li:eq(0)").text(formatFloat(intpf1 / 3600, 1) + "h");
+                $("#ulsysc li:eq(1)").text("使用时长");
+                break;
+            case "4":
+                $("#ulsysc li:eq(0)").text(formatFloat(intpf1 / 3600, 1));
+                $("#ulsysc li:eq(1)").text("处罚量");
+                break;
+            case "6":
+                $("#ulsysc li:eq(0)").text(formatFloat(intpf1 / 3600, 1));
+                $("#ulsysc li:eq(1)").text("违停采集");
+                break;
+
+        }
         if (tbpf < 0) {
             $("#ulsysc li:eq(2)").html("同比上周减少" + formatFloat(tbpf, 1) + "%<i class='fa fa-arrow-down' aria-hidden='true'>");
         }
@@ -436,6 +454,38 @@ function showetailRS() {
   
 }
 
+function resizetbwidth() {
+    switch ($("#deviceselect").val()) {
+        case "1":   //车载视频
+        case "2":
+        case "3":
+        case "7":
+            $('#search-result-table tr:eq(0) th:eq(0)').css('width', '200px');
+            $('#search-result-table tr:eq(0) th:eq(1)').css('width', '100px');
+            $('#search-result-table tr:eq(0) th:eq(2)').css('width', '100px');
+            $('#search-result-table tr:eq(0) th:eq(3)').css('width', '100px');
+            $('#search-result-table tr:eq(0) th:eq(4)').css('width', '100px');
+            $('#search-result-table tr:eq(0) th:eq(5)').css('width', '100px');
+            break;
+        case "4":   //车载视频
+        case "6":
+            $('#search-result-table tr:eq(0) th:eq(0)').css('width', '200px');
+            $('#search-result-table tr:eq(0) th:eq(1)').css('width', '60px');
+            $('#search-result-table tr:eq(0) th:eq(2)').css('width', '60px');
+            $('#search-result-table tr:eq(0) th:eq(3)').css('width', '60px');
+            $('#search-result-table tr:eq(0) th:eq(4)').css('width', '60px');
+            $('#search-result-table tr:eq(0) th:eq(5)').css('width', '60px');
+            $('#search-result-table tr:eq(0) th:eq(6)').css('width', '80px');
+            $('#search-result-table tr:eq(0) th:eq(7)').css('width', '60px');
+            $('#search-result-table tr:eq(0) th:eq(8)').css('width', '90px');
+            break;
+        case "5":
+            $('#search-result-table tr:eq(0) th:eq(0)').css('width', '200px');
+
+            break;
+    }
+}
+
 function createtabledetail() {
 
     tablezd = $('#detailgr-result-table')
@@ -513,16 +563,18 @@ function createtabledetail() {
 function createDataTable() {
 
         var columns = [
-                          { "data": "cloum1","orderable": false  },
+                          { "data": "cloum1","orderable": false },
                           { "data": "cloum2" },
                           { "data": "cloum3" },
                           { "data": "cloum4" },
+                          { "data": "cloum9" },
                           { "data": "cloum5" },
-                          { "data": "cloum6" },
+                          { "data": "cloum4" },
                           { "data": "cloum7" },
+                          { "data": "cloum6" },
                           { "data": "cloum8" },
-                          { "data": "cloum9", "visible": false },
-                          { "data": "cloum10", "visible": false },
+                          { "data": "cloum9", "visible": false},
+                          { "data": "cloum10", "visible": false},
                           { "data": "cloum11", "visible": false },
                           { "data": null, "orderable": false }
         ];
@@ -539,58 +591,138 @@ function createDataTable() {
 
              .on('xhr.dt', function (e, settings, json, xhr) {
                  if (json.data.length > 0) {
+                     var n = json.data.length - 1;
                      todaytotaldata.length = 0;
-                     todaytotaldata.push(json.data[0]["cloum3"]);
-                     todaytotaldata.push(json.data[0]["cloum4"]);
-                     todaytotaldata.push(json.data[0]["cloum5"]);
-                     todaytotaldata.push(json.data[0]["cloum14"]);
+                     todaytotaldata.push(json.data[n]["cloum3"]);
+
+                     switch ($("#deviceselect").val()) {
+                         case "1":   //车载视频
+                         case "2":
+                         case "3":
+                         case "7":
+                         case "5":
+                             todaytotaldata.push(json.data[n]["cloum4"]);
+                             todaytotaldata.push(json.data[n]["cloum5"]);
+
+                             break;
+                         case "4":
+                         case "6":
+                             todaytotaldata.push(json.data[n]["cloum9"]);
+                             todaytotaldata.push(json.data[n]["cloum1"]);
+                             break;
+
+                     }
+                
+                     todaytotaldata.push(json.data[n]["cloum14"]);
                  }
                  $('.progresshz').hide();
                  $('#search-result-table').show();
                  $('.btnsjx').removeAttr("disabled");
 
                  seltype = $("#deviceselect").val();
-                 table.column(1).visible(true);
-                 table.column(2).visible(true);
-                 table.column(3).visible(true);
-                 table.column(4).visible(true);
-                 table.column(5).visible(true);
-                 table.column(6).visible(true);
-                 table.column(7).visible(true);
+
                  switch ($("#deviceselect").val()) {
                      case "1":   //车载视频
                      case "2":  
                      case "3":   
-                     case "5":   
-                     case "7":   
+                     case "7":
+                         table.column(0).visible(false);
+                         table.column(1).visible(true);
+                         table.column(2).visible(true);
+                         table.column(5).visible(true);
+                         table.column(6).visible(true);
+                         table.column(7).visible(true);
+                         table.column(3).visible(false);
+                         table.column(4).visible(false);
                          table.column(8).visible(false);
-                         table.column(9).visible(false);
+                         table.column(9).visible(true);
                          table.column(10).visible(false);
-                         $('#search-result-table tr:eq(0) th:eq(0)').text("序号");
-                         $('#search-result-table tr:eq(0) th:eq(1)').text("部门");
-                         $('#search-result-table tr:eq(0) th:eq(2)').text("配发数");
-                         $('#search-result-table tr:eq(0) th:eq(3)').text("在线时长（h）");
-                         $('#search-result-table tr:eq(0) th:eq(4)').text("设备使用数量");
-                         $('#search-result-table tr:eq(0) th:eq(5)').text("未使用数量");
-                         $('#search-result-table tr:eq(0) th:eq(6)').text("设备使用率（%）");
-                         $('#search-result-table tr:eq(0) th:eq(7)').text("使用率排名");
+                         table.column(11).visible(false);
+                         table.column(12).visible(false);
+                         $('#search-result-table tr:eq(0) th:eq(0)').text("部门");
+                         $('#search-result-table tr:eq(0) th:eq(1)').text("设备配发数（台）");
+                         $('#search-result-table tr:eq(0) th:eq(2)').text("设备使用数量（台）");
+                         $('#search-result-table tr:eq(0) th:eq(3)').text("在线时长（小时）");
+                         $('#search-result-table tr:eq(0) th:eq(4)').text("设备使用率（%）");
+                         $('#search-result-table tr:eq(0) th:eq(5)').text("使用率排名");
+                       
                          break;
-                     case "4":
-                     case "6":
+
+                     case "5":
+                         table.column(0).visible(false);
+                         table.column(1).visible(true);
+                         table.column(2).visible(true);
+                         table.column(5).visible(true);
+                         table.column(6).visible(true);
+                         table.column(7).visible(true);
                          table.column(8).visible(true);
                          table.column(9).visible(true);
-                         table.column(10).visible(true);
-                         $('#search-result-table tr:eq(0) th:eq(0)').text("序号");
-                         $('#search-result-table tr:eq(0) th:eq(1)').text("部门");
-                         $('#search-result-table tr:eq(0) th:eq(2)').text("配发数");
-                         $('#search-result-table tr:eq(0) th:eq(3)').text("处罚量");
+                         table.column(10).visible(false);
+                         table.column(11).visible(false);
+                         table.column(12).visible(false);
+                         table.column(3).visible(true);
+                         table.column(4).visible(true);
+                         $('#search-result-table tr:eq(0) th:eq(2)').text("视频时长总合（小时）");
+                         $('#search-result-table tr:eq(0) th:eq(3)').text("视频大小（GB）");
+                         $('#search-result-table tr:eq(0) th:eq(0)').text("部门");
+                         $('#search-result-table tr:eq(0) th:eq(1)').text("设备配发数（台）");
+                         $('#search-result-table tr:eq(0) th:eq(4)').text("设备使用数量（台）");
+                         $('#search-result-table tr:eq(0) th:eq(5)').text("在线时长（小时）");
+                         $('#search-result-table tr:eq(0) th:eq(6)').text("设备使用率（%）");
+                         $('#search-result-table tr:eq(0) th:eq(7)').text("设备未使用数量（台）");
+                         $('#search-result-table tr:eq(0) th:eq(8)').text("使用率排名");
+                         table.column(6).visible(false);
+
+                         break;
+                     case "4":
+                         table.column(0).visible(false);
+                         table.column(1).visible(true);
+                         table.column(2).visible(true);
+                         table.column(3).visible(true);
+                         table.column(4).visible(true);
+                         table.column(5).visible(true);
+
+
+                         table.column(6).visible(false);
+                         table.column(7).visible(true);
+                         table.column(8).visible(true);
+                         table.column(9).visible(true);
+                         table.column(10).visible(false);
+                         table.column(11).visible(false);
+                         table.column(12).visible(true);
+                         $('#search-result-table tr:eq(0) th:eq(0)').text("部门");
+                         $('#search-result-table tr:eq(0) th:eq(1)').text("配发数");
+                         $('#search-result-table tr:eq(0) th:eq(2)').text("警员数");
+                         $('#search-result-table tr:eq(0) th:eq(3)').text("警务通处罚数");
                          $('#search-result-table tr:eq(0) th:eq(4)').text("人均处罚量");
                          $('#search-result-table tr:eq(0) th:eq(5)').text("查询量");
-                         $('#search-result-table tr:eq(0) th:eq(6)').text("平均处罚量");
+                         $('#search-result-table tr:eq(0) th:eq(6)').text("设备平均处罚量");
                          $('#search-result-table tr:eq(0) th:eq(7)').text("排名");
-                         $('#search-result-table tr:eq(0) th:eq(8)').text("无处罚量");
-                         $('#search-result-table tr:eq(0) th:eq(9)').text("未使用");
-                         $('#search-result-table tr:eq(0) th:eq(10)').text("无查询量");
+                         $('#search-result-table tr:eq(0) th:eq(8)').text("无处罚数量");
+                         break;
+                     case "6":
+                         table.column(0).visible(false);
+                         table.column(1).visible(true);
+                         table.column(2).visible(true);
+                         table.column(3).visible(true);
+                         table.column(4).visible(true);
+                         table.column(5).visible(true);
+                         table.column(6).visible(false);
+                         table.column(7).visible(true);
+                         table.column(8).visible(true);
+                         table.column(9).visible(true);
+                         table.column(10).visible(false);
+                         table.column(11).visible(false);
+                         table.column(12).visible(true);
+                         $('#search-result-table tr:eq(0) th:eq(0)').text("部门");
+                         $('#search-result-table tr:eq(0) th:eq(1)').text("配发数");
+                         $('#search-result-table tr:eq(0) th:eq(2)').text("辅警数");
+                         $('#search-result-table tr:eq(0) th:eq(3)').text("违停采集(例)");
+                         $('#search-result-table tr:eq(0) th:eq(4)').text("人均处罚量");
+                         $('#search-result-table tr:eq(0) th:eq(5)').text("查询量");
+                         $('#search-result-table tr:eq(0) th:eq(6)').text("设备平均处罚量");
+                         $('#search-result-table tr:eq(0) th:eq(7)').text("排名");
+                         $('#search-result-table tr:eq(0) th:eq(8)').text("无违停采集设备（台）");
                          break;
                      default:
                          break;
@@ -599,11 +731,11 @@ function createDataTable() {
                  $('.daochu').html("<a class='buttons-excel'  href='../Handle/upload/" + json.title + "'><span>导 出</span></a>");
                  rebuildsjx();
                  loadTatolData();
-
              })
             .on('draw.dt', function () {
                 //给第一列编号
-     
+                setTimeout(resizetbwidth, 50);
+          
             })
 
             .DataTable({
@@ -648,7 +780,7 @@ function createDataTable() {
                 columns: columns,
                 columnDefs: [
                          {
-                             targets:11,
+                             targets:13,
                              render: function (a, b, c, d) { var html = "<a  class=\'btn btn-sm btn-primary txzs-btn\' id='addedit' entityid='" + c.cloum12 + "'  >查看详情</a>"; return html; }
                          }
                 ],
