@@ -1591,13 +1591,11 @@ function loadAlarmUser() {
         data: { 'alarmindex': alarmindex },
         dataType: "json",
         success: function (data) {
-            var n = data.data.length - 1;
-            alarmindex = data.data[n]["ID"];
             
             for (var i = 0; i < data.data.length; i++) {
+                alarmindex = data.data[i]["ID"];
                 $(".entitylist ul li").empty();
-                $(".entitylist ul li").append('<i class="fa fa-circle"></i> ' + data.data[n]["XM"] + '(' + data.data[n]["DevId"] + ')已经三天未登录')
-
+                $(".entitylist ul li").append('<i class="fa fa-circle"></i> ' + data.data[i]["XM"] + '(' + data.data[i]["DevId"] + ')已经' + datecompare(data.data[i]["QQSJ"]) + '天未登录')
             }
            
         },
@@ -1606,3 +1604,11 @@ function loadAlarmUser() {
         }
     });
 }
+
+function datecompare(start) {
+    start = new Date(start).getTime();
+   var end = new Date().getTime();
+    var time = 0
+    time = end - start;
+    return Math.floor(time / 86400000) + 1;
+};
