@@ -441,6 +441,9 @@
     <Compile Include="Handle\entitymanage.ashx.cs">
       <DependentUpon>entitymanage.ashx</DependentUpon>
     </Compile>
+    <Compile Include="Handle\getAlarmdays.ashx.cs">
+      <DependentUpon>getAlarmdays.ashx</DependentUpon>
+    </Compile>
     <Compile Include="Handle\getAlarmuser.ashx.cs">
       <DependentUpon>getAlarmuser.ashx</DependentUpon>
     </Compile>
@@ -502,6 +505,7 @@
     <Content Include="Handle\templet\6.xls" />
     <Content Include="Handle\Jingwutongdemo.ashx" />
     <Content Include="Handle\getAlarmuser.ashx" />
+    <Content Include="Handle\getAlarmdays.ashx" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

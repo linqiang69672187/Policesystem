@@ -490,6 +490,15 @@ function createtabledetail() {
              $("#myModaltxzsLabel").text(ssddtext + "设备详情");
              $(".search-result-flooterleft  span:eq(0)").text("共" + json.data.length + "条记录");
              $('.daochumx').html("<a class='buttons-excel'  href='../Handle/upload/" + json.title + "'><span>导 出</span></a>");
+             switch (seltype) {
+                 case "5":
+                     $('#detailgr-result-table tr:eq(0) th:eq(5)').text("视频时长");
+                     break;
+                 default:
+                     $('#detailgr-result-table tr:eq(0) th:eq(5)').text("在线时长");
+                     break;
+
+             }
          })
         .DataTable({
             ajax: {

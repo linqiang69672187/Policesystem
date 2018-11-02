@@ -3,6 +3,7 @@ var hchart = 400;
 var chartdata;
 var zf_gfscl, zf_zxshj, djj_jrzx, djj_gfscl, djj_zxshj, jwt_jrzx, jwt_cxl, jwt_rjcf, jwt_jrcl, jwt_pjcf;
 var alarmindex = 0;
+var alarmdays = 30;
 setInterval(function () {
     var date = new Date();
     var year = date.getFullYear();
@@ -1579,8 +1580,24 @@ $(function () {
         pause: 5000,
         animation: "fade"
     });
-    loadAlarmUser();
-    setInterval(loadAlarmUser, 10000);
+    $.ajax({
+        type: "POST",
+        url: "Handle/getAlarmdays.ashx",
+        data: { 'alarmindex': alarmindex },
+        dataType: "json",
+        success: function (data) {
+            for (var i = 0; i < data.data.length; i++) {
+                alarmdays = data.data[i]["val"];
+            }
+            loadAlarmUser();
+            setInterval(loadAlarmUser, 10000);
+
+        },
+        error: function (msg) {
+            console.debug("错误:ajax");
+        }
+    });
+    
 });
 
 
@@ -1588,7 +1605,7 @@ function loadAlarmUser() {
     $.ajax({
         type: "POST",
         url: "Handle/getAlarmuser.ashx",
-        data: { 'alarmindex': alarmindex },
+        data: { 'alarmindex': alarmindex, 'alarmdays': alarmdays },
         dataType: "json",
         success: function (data) {
             
