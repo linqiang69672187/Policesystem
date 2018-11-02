@@ -265,7 +265,7 @@ namespace Policesystem.Handle
                     case "3":
                     case "5":
                         dr["cloum4"] = ((double)在线时长 / 3600).ToString("0.00");
-                        zxsc += (double)在线时长 / 3600;
+             
                         dr["cloum5"] = status;
                         dr["cloum6"] = countdevices - status;
                         dr["cloum9"] = ((double)文件大小 / 1048576).ToString("0.00"); //转换为GB
@@ -276,6 +276,8 @@ namespace Policesystem.Handle
                     default:
                         break;
                 }
+                dr["cloum13"] = 在线时长 / 3600;
+                zxsc += (double)在线时长 / 3600;
                 zxsb += 在线;
                 dr["cloum14"] = 在线;
                 dr["cloum12"] = dtEntity.Rows[i1]["ID"].ToString();
@@ -307,10 +309,10 @@ namespace Policesystem.Handle
                 orderno += 1;
             }
 
-            query=query.OrderBy(p =>p["cloum13"]);
-            dtreturns =query.CopyToDataTable<DataRow>();
+          //  query=query.OrderBy(p =>p["cloum13"]);
+          //  dtreturns =query.CopyToDataTable<DataRow>();
             DataRow drtz = dtreturns.NewRow();
-            drtz["cloum1"] = allstatu_device;
+            drtz["cloum1"] = dtreturns.Rows.Count+1;
             drtz["cloum2"] = "合计";//ddtitle;
             drtz["cloum3"] = devicescount;
        
@@ -340,6 +342,7 @@ namespace Policesystem.Handle
                 default:
                     break;
             }
+            drtz["cloum13"] = zxsc;
             drtz["cloum14"] = zxsb;
             drtz["cloum12"] = bmdm;
             drtz["cloum8"] = "/";
@@ -426,19 +429,39 @@ namespace Policesystem.Handle
                         sheet.Rows[i + 2].Cells["C"].Style.Borders.SetBorders(MultipleBorders.Outside, Color.FromArgb(0, 0, 0), LineStyle.Thin);
                         sheet.Rows[i + 2].Cells["C"].Value = dt.Rows[i][2].ToString();
                         sheet.Rows[i + 2].Cells["D"].Style.Borders.SetBorders(MultipleBorders.Outside, Color.FromArgb(0, 0, 0), LineStyle.Thin);
-                        sheet.Rows[i + 2].Cells["D"].Value = dt.Rows[i][3].ToString();
+                        sheet.Rows[i + 2].Cells["D"].Value = dt.Rows[i][4].ToString();
                         sheet.Rows[i + 2].Cells["E"].Style.Borders.SetBorders(MultipleBorders.Outside, Color.FromArgb(0, 0, 0), LineStyle.Thin);
-                        sheet.Rows[i + 2].Cells["E"].Value = dt.Rows[i][4].ToString();
+                        sheet.Rows[i + 2].Cells["E"].Value = dt.Rows[i][3].ToString();
                         sheet.Rows[i + 2].Cells["F"].Style.Borders.SetBorders(MultipleBorders.Outside, Color.FromArgb(0, 0, 0), LineStyle.Thin);
-                        sheet.Rows[i + 2].Cells["F"].Value = dt.Rows[i][5].ToString();
+                        sheet.Rows[i + 2].Cells["F"].Value = dt.Rows[i][6].ToString();
                         sheet.Rows[i + 2].Cells["G"].Style.Borders.SetBorders(MultipleBorders.Outside, Color.FromArgb(0, 0, 0), LineStyle.Thin);
-                        sheet.Rows[i + 2].Cells["G"].Value = dt.Rows[i][6].ToString();
-                        sheet.Rows[i + 2].Cells["H"].Style.Borders.SetBorders(MultipleBorders.Outside, Color.FromArgb(0, 0, 0), LineStyle.Thin);
-                        sheet.Rows[i + 2].Cells["H"].Value = dt.Rows[i][7].ToString();
+                        sheet.Rows[i + 2].Cells["G"].Value = dt.Rows[i][7].ToString();
+
                     }
                     break;
 
                 case "5":
+                    for (int i = 0; i < dt.Rows.Count; i++)
+                    {
+                        sheet.Rows[i + 2].Cells["A"].Style.Borders.SetBorders(MultipleBorders.Outside, Color.FromArgb(0, 0, 0), LineStyle.Thin);
+                        sheet.Rows[i + 2].Cells["A"].Value = dt.Rows[i][0].ToString();
+                        sheet.Rows[i + 2].Cells["B"].Style.Borders.SetBorders(MultipleBorders.Outside, Color.FromArgb(0, 0, 0), LineStyle.Thin);
+                        sheet.Rows[i + 2].Cells["B"].Value = dt.Rows[i][1].ToString();
+                        sheet.Rows[i + 2].Cells["C"].Style.Borders.SetBorders(MultipleBorders.Outside, Color.FromArgb(0, 0, 0), LineStyle.Thin);
+                        sheet.Rows[i + 2].Cells["C"].Value = dt.Rows[i][2].ToString();
+                        sheet.Rows[i + 2].Cells["D"].Style.Borders.SetBorders(MultipleBorders.Outside, Color.FromArgb(0, 0, 0), LineStyle.Thin);
+                        sheet.Rows[i + 2].Cells["D"].Value = dt.Rows[i][3].ToString();
+                        sheet.Rows[i + 2].Cells["E"].Style.Borders.SetBorders(MultipleBorders.Outside, Color.FromArgb(0, 0, 0), LineStyle.Thin);
+                        sheet.Rows[i + 2].Cells["E"].Value = dt.Rows[i][8].ToString();
+                        sheet.Rows[i + 2].Cells["F"].Style.Borders.SetBorders(MultipleBorders.Outside, Color.FromArgb(0, 0, 0), LineStyle.Thin);
+                        sheet.Rows[i + 2].Cells["F"].Value = dt.Rows[i][4].ToString();
+                        sheet.Rows[i + 2].Cells["G"].Style.Borders.SetBorders(MultipleBorders.Outside, Color.FromArgb(0, 0, 0), LineStyle.Thin);
+                        sheet.Rows[i + 2].Cells["G"].Value = dt.Rows[i][6].ToString();
+                        sheet.Rows[i + 2].Cells["H"].Style.Borders.SetBorders(MultipleBorders.Outside, Color.FromArgb(0, 0, 0), LineStyle.Thin);
+                        sheet.Rows[i + 2].Cells["H"].Value = dt.Rows[i][5].ToString();
+                        sheet.Rows[i + 2].Cells["I"].Style.Borders.SetBorders(MultipleBorders.Outside, Color.FromArgb(0, 0, 0), LineStyle.Thin);
+                        sheet.Rows[i + 2].Cells["I"].Value = dt.Rows[i][7].ToString();
+                    }
 
                     break;
                 case "4":
@@ -454,20 +477,17 @@ namespace Policesystem.Handle
                         sheet.Rows[i + 2].Cells["D"].Style.Borders.SetBorders(MultipleBorders.Outside, Color.FromArgb(0, 0, 0), LineStyle.Thin);
                         sheet.Rows[i + 2].Cells["D"].Value = dt.Rows[i][3].ToString();
                         sheet.Rows[i + 2].Cells["E"].Style.Borders.SetBorders(MultipleBorders.Outside, Color.FromArgb(0, 0, 0), LineStyle.Thin);
-                        sheet.Rows[i + 2].Cells["E"].Value = dt.Rows[i][4].ToString();
+                        sheet.Rows[i + 2].Cells["E"].Value = dt.Rows[i][8].ToString();
                         sheet.Rows[i + 2].Cells["F"].Style.Borders.SetBorders(MultipleBorders.Outside, Color.FromArgb(0, 0, 0), LineStyle.Thin);
-                        sheet.Rows[i + 2].Cells["F"].Value = dt.Rows[i][5].ToString();
+                        sheet.Rows[i + 2].Cells["F"].Value = dt.Rows[i][4].ToString();
                         sheet.Rows[i + 2].Cells["G"].Style.Borders.SetBorders(MultipleBorders.Outside, Color.FromArgb(0, 0, 0), LineStyle.Thin);
                         sheet.Rows[i + 2].Cells["G"].Value = dt.Rows[i][6].ToString();
                         sheet.Rows[i + 2].Cells["H"].Style.Borders.SetBorders(MultipleBorders.Outside, Color.FromArgb(0, 0, 0), LineStyle.Thin);
-                        sheet.Rows[i + 2].Cells["H"].Value = dt.Rows[i][7].ToString();
+                        sheet.Rows[i + 2].Cells["H"].Value = dt.Rows[i][5].ToString();
                         sheet.Rows[i + 2].Cells["I"].Style.Borders.SetBorders(MultipleBorders.Outside, Color.FromArgb(0, 0, 0), LineStyle.Thin);
-                        sheet.Rows[i + 2].Cells["I"].Value = dt.Rows[i][8].ToString();
+                        sheet.Rows[i + 2].Cells["I"].Value = dt.Rows[i][7].ToString();
                         sheet.Rows[i + 2].Cells["J"].Style.Borders.SetBorders(MultipleBorders.Outside, Color.FromArgb(0, 0, 0), LineStyle.Thin);
-                        sheet.Rows[i + 2].Cells["J"].Value = dt.Rows[i][9].ToString();
-                        sheet.Rows[i + 2].Cells["K"].Style.Borders.SetBorders(MultipleBorders.Outside, Color.FromArgb(0, 0, 0), LineStyle.Thin);
-                        sheet.Rows[i + 2].Cells["K"].Value = dt.Rows[i][10].ToString();
-
+                        sheet.Rows[i + 2].Cells["J"].Value = dt.Rows[i][10].ToString();
                     }
 
                     break;
