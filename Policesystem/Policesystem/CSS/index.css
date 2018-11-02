@@ -818,8 +818,8 @@
         font-size:8px !important;
     }
          .row2n, .row1n {
-        margin-top: 5px;
-        margin-bottom: 2px;
+        margin-top: 10px;
+        margin-bottom: 10px;
         height: 130px;
         width: 320px;
         background-color: #082653;
@@ -879,6 +879,17 @@
     position: absolute;
     width: 100%;
     }
+
+  .entitylist .demo2{
+      overflow-y: hidden; height: 30px;
+      border:none;
+      margin-left:10px !important;
+  }
+    .entitylist .demo2 li{
+       height: 30px;
+       width:100%;
+      
+  }
   
 }
 

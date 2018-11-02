@@ -132,12 +132,16 @@
     <Content Include="comjs\ion.rangeSlider.js" />
     <Content Include="comjs\jquery-1.12.3.min - 复制.js" />
     <Content Include="comjs\jquery-1.12.3.min.js" />
+    <Content Include="comjs\jquery.bootstrap.newsbox.js" />
+    <Content Include="comjs\jquery.bootstrap.newsbox.min.js" />
     <Content Include="comjs\jquery.cookie.js" />
     <Content Include="comjs\jquery.dataTables.js" />
     <Content Include="comjs\jquery.Huploadify.js" />
     <Content Include="comjs\jquery.js" />
     <Content Include="comjs\jquery.orgchart.js" />
     <Content Include="comjs\jquery.pagination.js" />
+    <Content Include="comjs\jquery.vticker.js" />
+    <Content Include="comjs\jquery.vticker.min.js" />
     <Content Include="comjs\moment-with-locales.js" />
     <Content Include="comjs\moment.js" />
     <Content Include="comjs\myHeatmap2.0.min.js" />
@@ -437,6 +441,9 @@
     <Compile Include="Handle\entitymanage.ashx.cs">
       <DependentUpon>entitymanage.ashx</DependentUpon>
     </Compile>
+    <Compile Include="Handle\getAlarmuser.ashx.cs">
+      <DependentUpon>getAlarmuser.ashx</DependentUpon>
+    </Compile>
     <Compile Include="Handle\GetaMarksbyBound.ashx.cs">
       <DependentUpon>GetaMarksbyBound.ashx</DependentUpon>
     </Compile>
@@ -454,6 +461,9 @@
     </Compile>
     <Compile Include="Handle\indexconfig.ashx.cs">
       <DependentUpon>indexconfig.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="Handle\Jingwutongdemo.ashx.cs">
+      <DependentUpon>Jingwutongdemo.ashx</DependentUpon>
     </Compile>
     <Compile Include="Handle\Jqueryflipster.ashx.cs">
       <DependentUpon>Jqueryflipster.ashx</DependentUpon>
@@ -490,6 +500,8 @@
     <Content Include="Handle\getRolevalue.ashx" />
     <Content Include="Handle\templet\5.xls" />
     <Content Include="Handle\templet\6.xls" />
+    <Content Include="Handle\Jingwutongdemo.ashx" />
+    <Content Include="Handle\getAlarmuser.ashx" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

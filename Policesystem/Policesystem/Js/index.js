@@ -2,6 +2,7 @@
 var hchart = 400;
 var chartdata;
 var zf_gfscl, zf_zxshj, djj_jrzx, djj_gfscl, djj_zxshj, jwt_jrzx, jwt_cxl, jwt_rjcf, jwt_jrcl, jwt_pjcf;
+var alarmindex = 0;
 setInterval(function () {
     var date = new Date();
     var year = date.getFullYear();
@@ -84,7 +85,7 @@ function createdata(data, types) {
     var totalvalue = 0;
     var color = ['#4c8afa', '#f2ab22', '#43db89', '#38e8e8', '#a24cfa', '#fa4cae', '#59bfa1', '#d7ce56', '#b45538', '#c48b6c', '#c56377', '#86c36a'];
     var colorcount = 0;
-    createTextLabel(data, color);
+    //createTextLabel(data, color);
     for (var i1 = 0; i1 < charttype.length; i1++) {
         totalvalue = 0;
         ddata = [];
@@ -1569,3 +1570,39 @@ $(document).on('click.bs.carousel.data-api', '.moreinfo', function (e) {
     return;
 
 });
+
+
+
+$(function () {
+    $('.entitylist').vTicker({
+        showItems: 1,
+        pause: 5000,
+        animation: "fade"
+    });
+    loadAlarmUser();
+    setInterval(loadAlarmUser, 10000);
+});
+
+
+function loadAlarmUser() {
+    $.ajax({
+        type: "POST",
+        url: "Handle/getAlarmuser.ashx",
+        data: { 'alarmindex': alarmindex },
+        dataType: "json",
+        success: function (data) {
+            var n = data.data.length - 1;
+            alarmindex = data.data[n]["ID"];
+            
+            for (var i = 0; i < data.data.length; i++) {
+                $(".entitylist ul li").empty();
+                $(".entitylist ul li").append('<i class="fa fa-circle"></i> ' + data.data[n]["XM"] + '(' + data.data[n]["DevId"] + ')已经三天未登录')
+
+            }
+           
+        },
+        error: function (msg) {
+            console.debug("错误:ajax");
+        }
+    });
+}
