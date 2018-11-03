@@ -189,9 +189,17 @@ namespace Policesystem.Handle
                 int 在线 = 0;
                 int status = 0;//设备使用正常、周1次，月4次，季度12次
                 var rows = from p in Alarm_EveryDayInfo.AsEnumerable()
-                           where (p.Field<string>("ParentID") == dtEntity.Rows[i1]["ID"].ToString()|| p.Field<string>("BMDM") == dtEntity.Rows[i1]["ID"].ToString())
+                           where (p.Field<string>("ParentID") == dtEntity.Rows[i1]["ID"].ToString() || p.Field<string>("BMDM") == dtEntity.Rows[i1]["ID"].ToString())
                            orderby p.Field<string>("DevId")
                            select p;
+                if(dtEntity.Rows[i1]["ID"].ToString() == "33100000000x") {
+                     rows = from p in Alarm_EveryDayInfo.AsEnumerable()
+                         where (p.Field<string>("ParentID") == dtEntity.Rows[i1]["ID"].ToString( ) || p.Field<string>("ParentID") == "331000000400" || p.Field<string>("BMDM") == dtEntity.Rows[i1]["ID"].ToString())
+                         orderby p.Field<string>("DevId")
+                               select p;
+                }
+                
+               
                 //获得设备数量，及正常使用设备
                 tmpRows = 0;
                 foreach (var item in rows)
