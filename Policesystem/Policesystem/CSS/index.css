@@ -318,8 +318,8 @@
     }
 
     .row2n, .row1n {
-        margin-top: 26px;
-        margin-bottom: 5px;
+        margin-top: 32px;
+        margin-bottom: 25px;
         height: 330px;
         width: 780px;
         background-color: #082653;
@@ -519,6 +519,25 @@
       #header{
        display:none;
       }
+        .entitylist{
+ height: 60px !important;
+        }
+      .entitylist .demo2{
+      overflow-y: hidden; height: 60px !important;
+      border:none;
+      margin-left:10px !important;
+  }
+    .entitylist .demo2 li{
+       height: 60px !important;
+       margin: 0 auto;
+       width:100% !important;
+       display:block;
+      font-size:30px;
+      color:#ffffff;
+      vertical-align:middle;
+      line-height:60px;
+  }
+
 }
 @media screen and (max-width: 2000px) {
       html, body {

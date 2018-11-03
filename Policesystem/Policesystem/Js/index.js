@@ -53,7 +53,7 @@ switch (true) {
         hchart = 400;
         datalabelsize = '28px';//
         baseWidth = '8';
-        distance = -40;
+        distance = -60;
         minorTickLength = 10;
         minorTickWidth = 2;
         titley = 300;
@@ -451,10 +451,10 @@ function myGaugeChart(containerId, label, value) {
             tickLength: tickLength,
             tickColor: '#fff',
             labels: {
-                step: 2,
+                step: baseWidth,
                 distance: distance,
                 rotation: 'auto',
-                style: {color: '#fff' }
+                style: { color: '#fff', fontSize: titlefontsize }
             },
             title: {
                 text: ''
@@ -1577,8 +1577,7 @@ $(document).on('click.bs.carousel.data-api', '.moreinfo', function (e) {
 $(function () {
     $('.entitylist').vTicker({
         showItems: 1,
-        pause: 5000,
-        animation: "fade"
+        pause: 5000
     });
     $.ajax({
         type: "POST",
