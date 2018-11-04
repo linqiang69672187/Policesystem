@@ -271,15 +271,24 @@ namespace Policesystem.Handle
                     case "1":
                     case "2":
                     case "3":
-                    case "5":
                         dr["cloum4"] = ((double)在线时长 / 3600).ToString("0.00");
-             
+
                         dr["cloum5"] = status;
                         dr["cloum6"] = countdevices - status;
                         dr["cloum9"] = ((double)文件大小 / 1048576).ToString("0.00"); //转换为GB
                         spdx += ((double)文件大小 / 1048576);
                         dr["cloum7"] = (countdevices != 0) ? (deviceuse) : 0;
                         pxstring = "cloum7";
+                        break;
+                    case "5":
+                        dr["cloum7"] = ((double)在线时长 / 3600).ToString("0.00"); //第4列，视频时长
+
+                        dr["cloum4"] = status;
+                        dr["cloum9"] = countdevices - status; //设备未使用项目，第8列
+                        dr["cloum5"] = ((double)文件大小 / 1048576).ToString("0.00"); //转换为GB，第5列
+                        spdx += ((double)文件大小 / 1048576);
+                        dr["cloum6"] = (countdevices != 0) ? (deviceuse) : 0; //使用数量，第6列
+                        pxstring = "cloum6";
                         break;
                     default:
                         break;
@@ -325,6 +334,7 @@ namespace Policesystem.Handle
             drtz["cloum3"] = devicescount;
        
             drtz["cloum5"] = allstatu_device;
+            Double sbsyl;
             switch (type)
             {
                 case "4":
@@ -340,12 +350,21 @@ namespace Policesystem.Handle
                 case "1":
                 case "2":
                 case "3":
-                case "5":
                     drtz["cloum6"] = devicescount - allstatu_device;
                     drtz["cloum4"] = zxsc.ToString("0.00");
                     drtz["cloum9"] = spdx.ToString("0.00");
-                    Double sbsyl = (devicescount == 0) ? 0 : ((double)allstatu_device * 100 / devicescount);
+                    sbsyl = (devicescount == 0) ? 0 : ((double)allstatu_device * 100 / devicescount);
                     drtz["cloum7"] = Math.Round(sbsyl, 2);
+                    break;
+                case "5":
+                    drtz["cloum5"] = allstatu_device;// devicescount - allstatu_device;
+                    drtz["cloum7"] = zxsc.ToString("0.00");
+                    drtz["cloum5"] = spdx.ToString("0.00");
+                    sbsyl = (devicescount == 0) ? 0 : ((double)allstatu_device * 100 / devicescount);
+                    drtz["cloum6"] = Math.Round(sbsyl, 2);
+                    drtz["cloum4"] = allstatu_device;
+                    drtz["cloum9"] = devicescount - allstatu_device; //设备未使用项目，第8列
+
                     break;
                 default:
                     break;

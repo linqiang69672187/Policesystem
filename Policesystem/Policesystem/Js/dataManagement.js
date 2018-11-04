@@ -663,12 +663,11 @@ function createDataTable() {
                          $('#search-result-table tr:eq(0) th:eq(0)').text("序号");
                          $('#search-result-table tr:eq(0) th:eq(1)').text("部门");
                          $('#search-result-table tr:eq(0) th:eq(2)').text("设备配发数（台）");
-                         $('#search-result-table tr:eq(0) th:eq(3)').text("视频时长总合（小时）");
-                         $('#search-result-table tr:eq(0) th:eq(4)').text("视频大小（GB）");
-                         $('#search-result-table tr:eq(0) th:eq(5)').text("设备使用数量（台）");
-                         $('#search-result-table tr:eq(0) th:eq(6)').text("在线时长（小时）");
-                         $('#search-result-table tr:eq(0) th:eq(7)').text("设备使用率（%）");
-                         $('#search-result-table tr:eq(0) th:eq(8)').text("设备未使用数量（台）");
+                         $('#search-result-table tr:eq(0) th:eq(3)').text("设备使用数量（台）");
+                         $('#search-result-table tr:eq(0) th:eq(4)').text("设备未使用数量（台）");
+                         $('#search-result-table tr:eq(0) th:eq(5)').text("视频时长总合（小时）");
+                         $('#search-result-table tr:eq(0) th:eq(7)').text("视频大小（GB）");
+                         $('#search-result-table tr:eq(0) th:eq(8)').text("设备使用率（%）");
                          $('#search-result-table tr:eq(0) th:eq(9)').text("使用率排名");
                          table.column(6).visible(false);
 
@@ -830,7 +829,7 @@ function rebuildsjx() {
             $('#shujuxiang').html('<li><i class="fa fa-check-square-o" aria-hidden="true"></i>部门</li><li><i class="fa fa-check-square-o" aria-hidden="true"></i>配发数</li><li><i class="fa fa-check-square-o" aria-hidden="true"></i>设备使用数量</li><li><i class="fa fa-check-square-o" aria-hidden="true"></i>在线时长</li><li><i class="fa fa-check-square-o" aria-hidden="true"></i>设备使用率</li><li><i class="fa fa-check-square-o" aria-hidden="true"></i>使用率排名</li>')
             break;
         case "5":
-            $('#shujuxiang').html('<li><i class="fa fa-check-square-o" aria-hidden="true"></i>部门</li><li><i class="fa fa-check-square-o" aria-hidden="true"></i>配发数</li><li><i class="fa fa-check-square-o" aria-hidden="true"></i>视频时长</li><li><i class="fa fa-check-square-o" aria-hidden="true"></i>视频大小</li><li><i class="fa fa-check-square-o" aria-hidden="true"></i>设备使用数量</li><li><i class="fa fa-check-square-o" aria-hidden="true"></i>设备使用率</li><li><i class="fa fa-check-square-o" aria-hidden="true"></i>设备未使用数量</li><li><i class="fa fa-check-square-o" aria-hidden="true"></i>使用率排名</li>')
+            $('#shujuxiang').html('<li><i class="fa fa-check-square-o" aria-hidden="true"></i>部门</li><li><i class="fa fa-check-square-o" aria-hidden="true"></i>配发数</li><li><i class="fa fa-check-square-o" aria-hidden="true"></i>设备使用数量</li><li><i class="fa fa-check-square-o" aria-hidden="true"></i>设备未使用数量</li><li><i class="fa fa-check-square-o" aria-hidden="true"></i>视频时长</li><li><i class="fa fa-check-square-o" aria-hidden="true"></i>视频大小</li><li><i class="fa fa-check-square-o" aria-hidden="true"></i>设备使用率</li><li><i class="fa fa-check-square-o" aria-hidden="true"></i>使用率排名</li>')
             break;
         case "4":
             $('#shujuxiang').html('<li><i class="fa fa-check-square-o" aria-hidden="true"></i>部门</li><li><i class="fa fa-check-square-o" aria-hidden="true"></i>配发数</li><li><i class="fa fa-check-square-o" aria-hidden="true"></i>警员数</li><li><i class="fa fa-check-square-o" aria-hidden="true"></i>警务通处罚数</li><li><i class="fa fa-check-square-o" aria-hidden="true"></i>人均处罚量</li><li><i class="fa fa-check-square-o" aria-hidden="true"></i>查询量</li><li><i class="fa fa-check-square-o" aria-hidden="true"></i>设备平均处罚量</li><li><i class="fa fa-check-square-o" aria-hidden="true"></i>设备平均处罚量排名</li><li><i class="fa fa-check-square-o" aria-hidden="true"></i>无处罚量设备</li>')
@@ -886,19 +885,19 @@ $(document).on('click.bs.carousel.data-api', '#shujuxiang li', function (e) {
                     table.column(2).visible(!ischeck);
                     break;
                 case "视频时长":
-                    table.column(3).visible(!ischeck);
-                    break;
-                case "视频大小":
-                    table.column(4).visible(!ischeck);
-                    break;
-                case "设备使用数量":
                     table.column(5).visible(!ischeck);
                     break;
-                case "设备使用率":
+                case "视频大小":
                     table.column(7).visible(!ischeck);
                     break;
-                case "设备未使用数量":
+                case "设备使用数量":
+                    table.column(3).visible(!ischeck);
+                    break;
+                case "设备使用率":
                     table.column(8).visible(!ischeck);
+                    break;
+                case "设备未使用数量":
+                    table.column(4).visible(!ischeck);
                     break;
                 case "使用率排名":
                     table.column(9).visible(!ischeck);
