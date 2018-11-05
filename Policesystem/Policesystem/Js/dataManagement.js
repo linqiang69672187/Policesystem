@@ -665,7 +665,7 @@ function createDataTable() {
                          $('#search-result-table tr:eq(0) th:eq(2)').text("设备配发数（台）");
                          $('#search-result-table tr:eq(0) th:eq(3)').text("设备使用数量（台）");
                          $('#search-result-table tr:eq(0) th:eq(4)').text("设备未使用数量（台）");
-                         $('#search-result-table tr:eq(0) th:eq(5)').text("视频时长总合（小时）");
+                         $('#search-result-table tr:eq(0) th:eq(5)').text("视频时长总和（小时）");
                          $('#search-result-table tr:eq(0) th:eq(7)').text("视频大小（GB）");
                          $('#search-result-table tr:eq(0) th:eq(8)').text("设备使用率（%）");
                          $('#search-result-table tr:eq(0) th:eq(9)').text("使用率排名");

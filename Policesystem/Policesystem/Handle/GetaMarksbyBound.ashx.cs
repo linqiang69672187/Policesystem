@@ -40,11 +40,11 @@ namespace Policesystem.Handle
                 {
                     if (status == "all")
                     {
-                        sqltext.Append("SELECT g.[ID],[IsOnline],g.Lo,g.La,u.XM as Contacts,u.SJ as Tel,e.BMJC as Name,d.[DevType],d.[Cartype],d.DevId,d.[PlateNumber],d.[IMEI],u.JYBH,u.JYLX as [IdentityPosition] FROM [ACL_USER] U LEFT JOIN Device d  on U.JYBH = d.JYBH LEFT JOIN Entity e  on d.BMDM = e.BMDM LEFT JOIN Gps g on g.PDAID = d.DevId WHERE e.BMJC  is NOT NULL");
+                        sqltext.Append("SELECT g.[ID],[IsOnline],g.Lo,g.La,u.XM as Contacts,u.SJ as Tel,e.BMJC as Name,d.[DevType],d.[Cartype],d.DevId,d.[PlateNumber],d.[IMEI],u.JYBH,pt.TypeName as [IdentityPosition] FROM [ACL_USER] U LEFT JOIN Device d  on U.JYBH = d.JYBH LEFT JOIN Entity e  on d.BMDM = e.BMDM LEFT JOIN Gps g on g.PDAID = d.DevId LEFT JOIN PoliceType pt on u.JYLX = pt.ID  WHERE e.BMJC  is NOT NULL");
                     }
                     else
                     {
-                        sqltext.Append("SELECT  g.[ID],[IsOnline],g.Lo,g.La,u.XM as Contacts,u.SJ as Tel,e.BMJC as Name,d.[DevType],d.[Cartype],d.DevId,d.[PlateNumber],d.[IMEI],u.JYBH,u.JYLX as [IdentityPosition] FROM [ACL_USER] U LEFT JOIN Device d  on U.JYBH = d.JYBH LEFT JOIN Entity e  on d.BMDM = e.BMDM LEFT JOIN Gps g on g.PDAID = d.DevId WHERE   g.IsOnline = " + status + " and e.BMJC is NOT NULL");
+                        sqltext.Append("SELECT  g.[ID],[IsOnline],g.Lo,g.La,u.XM as Contacts,u.SJ as Tel,e.BMJC as Name,d.[DevType],d.[Cartype],d.DevId,d.[PlateNumber],d.[IMEI],u.JYBH,pt.TypeName as [IdentityPosition] FROM [ACL_USER] U LEFT JOIN Device d  on U.JYBH = d.JYBH LEFT JOIN Entity e  on d.BMDM = e.BMDM LEFT JOIN Gps g on g.PDAID = d.DevId  LEFT JOIN PoliceType pt on u.JYLX = pt.ID WHERE   g.IsOnline = " + status + " and e.BMJC is NOT NULL");
 
                     }
 
@@ -55,11 +55,11 @@ namespace Policesystem.Handle
                 {
                     if (status == "all")
                     {
-                        sqltext.Append("WITH childtable(BMMC,BMDM,SJBM) as (SELECT BMMC,BMDM,SJBM FROM [Entity] WHERE SJBM= '" + ssdd + "' UNION ALL SELECT A.BMMC,A.BMDM,A.SJBM FROM [Entity] A,childtable b where a.SJBM = b.BMDM ) SELECT g.[ID],[IsOnline],g.Lo,g.La,u.XM as Contacts,u.SJ as Tel,e.BMJC as Name,d.[DevType],d.[Cartype],d.DevId,d.[PlateNumber],d.[IMEI],u.JYBH,u.JYLX as [IdentityPosition] FROM [ACL_USER] U LEFT JOIN Device d  on U.JYBH = d.JYBH LEFT JOIN Entity e  on d.BMDM = e.BMDM LEFT JOIN Gps g on g.PDAID = d.DevId WHERE e.BMDM in (SELECT BMDM from childtable) and e.BMJC  is NOT NULL");
+                        sqltext.Append("WITH childtable(BMMC,BMDM,SJBM) as (SELECT BMMC,BMDM,SJBM FROM [Entity] WHERE SJBM= '" + ssdd + "' UNION ALL SELECT A.BMMC,A.BMDM,A.SJBM FROM [Entity] A,childtable b where a.SJBM = b.BMDM ) SELECT g.[ID],[IsOnline],g.Lo,g.La,u.XM as Contacts,u.SJ as Tel,e.BMJC as Name,d.[DevType],d.[Cartype],d.DevId,d.[PlateNumber],d.[IMEI],u.JYBH,pt.TypeName as [IdentityPosition] FROM [ACL_USER] U LEFT JOIN Device d  on U.JYBH = d.JYBH LEFT JOIN Entity e  on d.BMDM = e.BMDM LEFT JOIN Gps g on g.PDAID = d.DevId  LEFT JOIN PoliceType pt on u.JYLX = pt.ID WHERE e.BMDM in (SELECT BMDM from childtable) and e.BMJC  is NOT NULL");
                     }
                     else
                     {
-                        sqltext.Append("WITH childtable(BMMC,BMDM,SJBM) as (SELECT BMMC,BMDM,SJBM FROM [Entity] WHERE SJBM= '" + ssdd + "' UNION ALL SELECT A.BMMC,A.BMDM,A.SJBM FROM [Entity] A,childtable b where a.SJBM = b.BMDM ) SELECT  g.[ID],[IsOnline],g.Lo,g.La,u.XM as Contacts,u.SJ as Tel,e.BMJC as Name,d.[DevType],d.[Cartype],d.DevId,d.[PlateNumber],d.[IMEI],u.JYBH,u.JYLX as [IdentityPosition] FROM [ACL_USER] U LEFT JOIN Device d  on U.JYBH = d.JYBH LEFT JOIN Entity e  on d.BMDM = e.BMDM LEFT JOIN Gps g on g.PDAID = d.DevId WHERE e.BMDM in (SELECT BMDM from childtable) and  g.IsOnline = " + status + " and e.BMJC is NOT NULL");
+                        sqltext.Append("WITH childtable(BMMC,BMDM,SJBM) as (SELECT BMMC,BMDM,SJBM FROM [Entity] WHERE SJBM= '" + ssdd + "' UNION ALL SELECT A.BMMC,A.BMDM,A.SJBM FROM [Entity] A,childtable b where a.SJBM = b.BMDM ) SELECT  g.[ID],[IsOnline],g.Lo,g.La,u.XM as Contacts,u.SJ as Tel,e.BMJC as Name,d.[DevType],d.[Cartype],d.DevId,d.[PlateNumber],d.[IMEI],u.JYBH,pt.TypeName as [IdentityPosition] FROM [ACL_USER] U LEFT JOIN Device d  on U.JYBH = d.JYBH LEFT JOIN Entity e  on d.BMDM = e.BMDM LEFT JOIN Gps g on g.PDAID = d.DevId  LEFT JOIN PoliceType pt on u.JYLX = pt.ID WHERE e.BMDM in (SELECT BMDM from childtable) and  g.IsOnline = " + status + " and e.BMJC is NOT NULL");
 
                     }
 
@@ -68,11 +68,11 @@ namespace Policesystem.Handle
 
                 if (status == "all")
                 {
-                    sqltext.Append("SELECT g.[ID],[IsOnline],g.Lo,g.La,u.XM as Contacts,u.SJ as Tel,e.BMJC as Name,d.[DevType],d.[Cartype],d.DevId,d.[PlateNumber],d.[IMEI],u.JYBH,u.JYLX as [IdentityPosition] FROM [ACL_USER] U LEFT JOIN Device d  on U.JYBH = d.JYBH LEFT JOIN Entity e  on d.BMDM = e.BMDM LEFT JOIN Gps g on g.PDAID = d.DevId WHERE  e.BMDM ='" + sszd + "'  and e.BMJC  is NOT NULL");
+                    sqltext.Append("SELECT g.[ID],[IsOnline],g.Lo,g.La,u.XM as Contacts,u.SJ as Tel,e.BMJC as Name,d.[DevType],d.[Cartype],d.DevId,d.[PlateNumber],d.[IMEI],u.JYBH,pt.TypeName as [IdentityPosition] FROM [ACL_USER] U LEFT JOIN Device d  on U.JYBH = d.JYBH LEFT JOIN Entity e  on d.BMDM = e.BMDM LEFT JOIN Gps g on g.PDAID = d.DevId  LEFT JOIN PoliceType pt on u.JYLX = pt.ID WHERE  e.BMDM ='" + sszd + "'  and e.BMJC  is NOT NULL");
                 }
                 else
                 {
-                    sqltext.Append("SELECT  g.[ID],[IsOnline],g.Lo,g.La,u.XM as Contacts,u.SJ as Tel,e.BMJC as Name,d.[DevType],d.[Cartype],d.DevId,d.[PlateNumber],d.[IMEI],u.JYBH,u.JYLX as [IdentityPosition] FROM [ACL_USER] U LEFT JOIN Device d  on U.JYBH = d.JYBH LEFT JOIN Entity e  on d.BMDM = e.BMDM LEFT JOIN Gps g on g.PDAID = d.DevId WHERE e.BMDM ='" + sszd + "' and  g.IsOnline = " + status + " and e.BMJC is NOT NULL");
+                    sqltext.Append("SELECT  g.[ID],[IsOnline],g.Lo,g.La,u.XM as Contacts,u.SJ as Tel,e.BMJC as Name,d.[DevType],d.[Cartype],d.DevId,d.[PlateNumber],d.[IMEI],u.JYBH,pt.TypeName as [IdentityPosition] FROM [ACL_USER] U LEFT JOIN Device d  on U.JYBH = d.JYBH LEFT JOIN Entity e  on d.BMDM = e.BMDM LEFT JOIN Gps g on g.PDAID = d.DevId  LEFT JOIN PoliceType pt on u.JYLX = pt.ID WHERE e.BMDM ='" + sszd + "' and  g.IsOnline = " + status + " and e.BMJC is NOT NULL");
 
                 }
 

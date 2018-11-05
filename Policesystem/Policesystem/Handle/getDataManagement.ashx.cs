@@ -256,7 +256,7 @@ namespace Policesystem.Handle
                         hzusecount += usercount;
                         zxsc += 处理量;
                         cxl += 查询量;
-                        dr["cloum5"] = Math.Round((double)处理量 / usercount, 2);
+                        dr["cloum5"] = (countdevices != 0) ? Math.Round((double)处理量 / usercount, 2):0;
                         dr["cloum7"] = 查询量;
                         dr["cloum11"] = 无处罚量;
                         dr["cloum9"] = 处理量;//无处罚量;
@@ -278,6 +278,7 @@ namespace Policesystem.Handle
                         dr["cloum9"] = ((double)文件大小 / 1048576).ToString("0.00"); //转换为GB
                         spdx += ((double)文件大小 / 1048576);
                         dr["cloum7"] = (countdevices != 0) ? (deviceuse) : 0;
+                        zxsc += (double)在线时长 / 3600;
                         pxstring = "cloum7";
                         break;
                     case "5":
@@ -288,13 +289,13 @@ namespace Policesystem.Handle
                         dr["cloum5"] = ((double)文件大小 / 1048576).ToString("0.00"); //转换为GB，第5列
                         spdx += ((double)文件大小 / 1048576);
                         dr["cloum6"] = (countdevices != 0) ? (deviceuse) : 0; //使用数量，第6列
+                        zxsc += (double)在线时长 / 3600;
                         pxstring = "cloum6";
                         break;
                     default:
                         break;
                 }
                 dr["cloum13"] = 在线时长 / 3600;
-                zxsc += (double)在线时长 / 3600;
                 zxsb += 在线;
                 dr["cloum14"] = 在线;
                 dr["cloum12"] = dtEntity.Rows[i1]["ID"].ToString();

@@ -156,7 +156,7 @@ function showfeatureinfo(IsOnline, Contacts, Name, Tel, devid, PlateNumber, DevT
  
     $(".zq-cwrap1 .col-md-7:eq(5)").text(Tel);
     $(".zq-cwrap1 .col-md-7:eq(6)").text(Name);
-    $(".zq-cwrap1 .col-md-7:eq(7)").text(idpositionText[IdentityPosition]);
+    $(".zq-cwrap1 .col-md-7:eq(7)").text(IdentityPosition);
     $(".zq-cwrap1 .col-md-7:eq(8)").text(IsOnline);
 
 
