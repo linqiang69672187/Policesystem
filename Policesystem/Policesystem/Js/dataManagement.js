@@ -597,8 +597,11 @@ function createDataTable() {
                          case "2":
                          case "3":
                          case "7":
-                         case "5":
                              todaytotaldata.push(json.data[n]["cloum4"]);
+                             todaytotaldata.push(json.data[n]["cloum5"]);
+                             break;
+                         case "5":
+                             todaytotaldata.push(json.data[n]["cloum7"]);
                              todaytotaldata.push(json.data[n]["cloum5"]);
 
                              break;

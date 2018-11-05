@@ -91,6 +91,7 @@ namespace Policesystem.Handle
             double zxsc = 0.0;  //汇总在线时长
             double spdx = 0.0;  //汇总视频大小
             Int64 cxl = 0;  //汇总查询量
+            Int64 jwtzxsc = 0;  //警务通在线时长
             int hzusecount = 0;
             int wcxl = 0;   //无查询量设备数量
             int wcfl = 0;   //无处罚量设备数量
@@ -119,11 +120,11 @@ namespace Policesystem.Handle
                 {
                     case "5":
                         Alarm_EveryDayInfo = SQLHelper.ExecuteRead(CommandType.Text, "SELECT en.BMDM, en.SJBM as [ParentID],us.XM as [Contacts],de.[DevId],ala.在线时长,ala.[AlarmType],ala.文件大小 from (SELECT [DevId],sum([VideLength]) as 在线时长,sum([FileSize]) as 文件大小,1 as AlarmType from [EveryDayInfo_ZFJLY]   where  [Time] >='" + begintime + "' and [Time] <='" + endtime + "'   group by [DevId] ) as ala left join [Device] as de on de.[DevId] = ala.[DevId] left join [Entity] as en on en.[BMDM] = de.[BMDM] left join ACL_USER as us on de.JYBH = us.JYBH  where "+ sreachcondi + " de.[DevType]=" + type, "Alarm_EveryDayInfo");
-                        dtEntity = SQLHelper.ExecuteRead(CommandType.Text, "SELECT BMDM as ID,BMJC as Name,SJBM as ParentID,BMJB AS Depth from [Entity] a where [SJBM]  = '331000000000' and [BMJC] IS NOT NULL AND BMJC <> '' ORDER BY Sort", "2");
+                        dtEntity = SQLHelper.ExecuteRead(CommandType.Text, "SELECT BMDM as ID,BMJC as Name,SJBM as ParentID,BMJB AS Depth from [Entity] a where [SJBM]  = '331000000000' and [BMJC] IS NOT NULL AND BMJC <> '' ORDER  BY CASE WHEN Sort IS NULL THEN 1 ELSE Sort END desc", "2");
                         break;
                     default:
                         Alarm_EveryDayInfo = SQLHelper.ExecuteRead(CommandType.Text, "SELECT en.BMDM, en.SJBM as [ParentID],us.XM as [Contacts],de.[DevId],ala.在线时长,ala.[AlarmType],0 as 文件大小 from (SELECT [DevId],[AlarmType],sum([Value]) as 在线时长 from [Alarm_EveryDayInfo]   where [AlarmType] <>6 and  [AlarmDay ] >='" + begintime + "' and [AlarmDay ] <='" + endtime + "'   group by [DevId],[AlarmType] ) as ala left join [Device] as de on de.[DevId] = ala.[DevId] left join [Entity] as en on en.[BMDM] = de.[BMDM] left join ACL_USER as us on de.JYBH = us.JYBH  where " + sreachcondi + " de.[DevType]=" + type, "Alarm_EveryDayInfo");
-                        dtEntity = SQLHelper.ExecuteRead(CommandType.Text, "SELECT BMDM as ID,BMJC as Name,SJBM as ParentID,BMJB AS Depth from [Entity] a where [SJBM]  = '331000000000' and [BMJC] IS NOT NULL AND BMJC <> '' AND BMDM <> '33100000000x' ORDER BY Sort", "2");
+                        dtEntity = SQLHelper.ExecuteRead(CommandType.Text, "SELECT BMDM as ID,BMJC as Name,SJBM as ParentID,BMJB AS Depth from [Entity] a where [SJBM]  = '331000000000' and [BMJC] IS NOT NULL AND BMJC <> '' AND BMDM <> '33100000000x' ORDER  BY CASE WHEN Sort IS NULL THEN 1 ELSE Sort END desc", "2");
 
                         break;
                 }
@@ -146,7 +147,7 @@ namespace Policesystem.Handle
                             break;
                     }
                     //   hbAlarm_EveryDayInfo = SQLHelper.ExecuteRead(CommandType.Text, "WITH childtable(Name,ID,ParentID) as (SELECT Name,ID,ParentID FROM [Entity] WHERE id=" + ssdd + " UNION ALL SELECT A.[Name],A.[ID],A.[ParentID] FROM [Entity] A,childtable b where a.[ParentID] = b.[ID])SELECT convert(nvarchar(10),en.[ID]) as ParentID,de.[Contacts],de.[DevId],ala.在线时长 from (SELECT [DevId]  ,sum([Value]) as 在线时长 from [Alarm_EveryDayInfo]   where [AlarmType] = 1 and  [AlarmDay ] >='" + hbbegintime + "' and [AlarmDay ] <='" + hbendtime + "'   group by [DevId] ) as ala left join [Device] as de on de.[DevId] = ala.[DevId] left join [Entity] as en on en.[ID] = de.[EntityId] where de.[DevType]=1 and de.EntityId in (select ID from childtable)", "Alarm_EveryDayInfo");
-                    dtEntity = SQLHelper.ExecuteRead(CommandType.Text, "WITH childtable(BMMC,BMDM,SJBM) as (SELECT BMMC,BMDM,SJBM FROM [Entity] WHERE SJBM= '" + ssdd + "' OR BMDM = '" + ssdd + "' UNION ALL SELECT A.BMMC,A.BMDM,A.SJBM FROM [Entity] A,childtable b where a.SJBM = b.BMDM ) SELECT BMDM as [ID] ,BMJC as [Name] ,SJBM as [ParentID],BMJB as [Depth] from [Entity] where [BMDM] in (select BMDM from childtable)   order by sort", "2");
+                    dtEntity = SQLHelper.ExecuteRead(CommandType.Text, "WITH childtable(BMMC,BMDM,SJBM) as (SELECT BMMC,BMDM,SJBM FROM [Entity] WHERE SJBM= '" + ssdd + "' OR BMDM = '" + ssdd + "' UNION ALL SELECT A.BMMC,A.BMDM,A.SJBM FROM [Entity] A,childtable b where a.SJBM = b.BMDM ) SELECT BMDM as [ID] ,BMJC as [Name] ,SJBM as [ParentID],BMJB as [Depth] from [Entity] where [BMDM] in (select BMDM from childtable)   order BY CASE WHEN Sort IS NULL THEN 1 ELSE Sort END desc", "2");
                     dUser = SQLHelper.ExecuteRead(CommandType.Text, "SELECT en.SJBM,us.BMDM FROM [ACL_USER] us left join Entity en on us.BMDM = en.BMDM where en.SJBM='"+ssdd+"'", "user");
 
                 }
@@ -264,7 +265,7 @@ namespace Policesystem.Handle
                         wcxl += 无查询量;
                         wcfl += 无处罚量;
                         dr["cloum10"] = 未使用;
-                       
+                        jwtzxsc += 在线时长;
                         wsysb += 未使用;
                         pxstring = "cloum6";
                         break;
@@ -347,6 +348,8 @@ namespace Policesystem.Handle
                     drtz["cloum9"] = zxsc;//wcfl;
                     drtz["cloum10"] = wsysb;
                     drtz["cloum6"] = (devicescount == 0) ? "0" : (zxsc / devicescount).ToString("0.00");
+                    drtz["cloum13"] = zxsc;// jwtzxsc;//zxsc;
+
                     break;
                 case "1":
                 case "2":
@@ -356,6 +359,8 @@ namespace Policesystem.Handle
                     drtz["cloum9"] = spdx.ToString("0.00");
                     sbsyl = (devicescount == 0) ? 0 : ((double)allstatu_device * 100 / devicescount);
                     drtz["cloum7"] = Math.Round(sbsyl, 2);
+                    drtz["cloum13"] = zxsc;
+
                     break;
                 case "5":
                     drtz["cloum5"] = allstatu_device;// devicescount - allstatu_device;
@@ -365,12 +370,12 @@ namespace Policesystem.Handle
                     drtz["cloum6"] = Math.Round(sbsyl, 2);
                     drtz["cloum4"] = allstatu_device;
                     drtz["cloum9"] = devicescount - allstatu_device; //设备未使用项目，第8列
+                    drtz["cloum13"] = zxsc;
 
                     break;
                 default:
                     break;
             }
-            drtz["cloum13"] = zxsc;
             drtz["cloum14"] = zxsb;
             drtz["cloum12"] = bmdm;
             drtz["cloum8"] = "/";
