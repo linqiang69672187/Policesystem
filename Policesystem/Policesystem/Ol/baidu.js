@@ -104,14 +104,24 @@ controls.push(mousePositionControl);
 
 
 // 百度地图层
-var baiduMapLayer2 = new ol.layer.Tile({
-    source: baiduSource,
-    title: '百度',
-    type: 'base',
-    visible: true,
-});
+//var baiduMapLayer2 = new ol.layer.Tile({
+//    source: baiduSource,
+//    title: '百度',
+//    type: 'base',
+//    visible: true,
+//});
 
+var url = "../baidu/tiles/" + "{z}/{x}/{y}" + ".jpg";
 
+var baiduMapLayer2 =new ol.layer.Tile({
+    source: new ol.source.XYZ({
+        minZoom: 2,
+        maxZoom: 14,
+        projection: 'EPSG:3857',
+        tileSize: 256,
+        url: url
+    })
+})
 
 
 // 创建地图
