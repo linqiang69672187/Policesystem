@@ -12,6 +12,28 @@ var tilegrid = new ol.tilegrid.TileGrid({
 });
 
 // 创建百度地图的数据源
+//var baiduSource = new ol.source.TileImage({
+//    projection: 'EPSG:3857',
+//    tileGrid: tilegrid,
+//    tileUrlFunction: function (tileCoord, pixelRatio, proj) {
+//        var z = tileCoord[0];
+//        var x = tileCoord[1];
+//        var y = tileCoord[2];
+
+//        // 百度瓦片服务url将负数使用M前缀来标识
+//        if (x < 0) {
+//            x = -x;
+//        }
+//        if (y < 0) {
+//            y = -y;
+//        }
+
+//        return "../baidu/tiles/" + z + "/" + x + "/" + y + ".jpg";
+//    }
+//});
+
+var url = "../baidu/tiles/" + "{z}/{x}/{-y}" + ".jpg";
+// 创建百度地图的数据源
 var baiduSource = new ol.source.TileImage({
     projection: 'EPSG:3857',
     tileGrid: tilegrid,
@@ -24,13 +46,20 @@ var baiduSource = new ol.source.TileImage({
         if (x < 0) {
             x = -x;
         }
-        if (y < 0) {
             y = -y;
-        }
 
         return "../baidu/tiles/" + z + "/" + x + "/" + y + ".jpg";
     }
 });
+var baiduSource = new ol.layer.Tile({
+    source: new ol.source.XYZ({
+        minZoom: 2,
+        maxZoom: 14,
+        tileSize: 256,
+        projection: 'EPSG:3857',
+        url: url
+    })
+})
 
 var controls = new Array();
 /**
