@@ -1,7 +1,7 @@
 ﻿var vectorSource = new ol.source.Vector({
     features: [] //add an array of features
 });
-var offset = { x: 0.006641, y: 0.160775 }; //28.6699850000,121.5158010000---28.50921,121.50916
+var offset = { x: 0, y: 0 }; //28.6699850000,121.5158010000---28.50921,121.50916
 
 var vectorSourcejwt = new ol.source.Vector({
     features: [] //add an array of features

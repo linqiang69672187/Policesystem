@@ -34,23 +34,7 @@ var tilegrid = new ol.tilegrid.TileGrid({
 
 var url = "../baidu/tiles/" + "{z}/{x}/{-y}" + ".jpg";
 // 创建百度地图的数据源
-var baiduSource = new ol.source.TileImage({
-    projection: 'EPSG:3857',
-    tileGrid: tilegrid,
-    tileUrlFunction: function (tileCoord, pixelRatio, proj) {
-        var z = tileCoord[0];
-        var x = tileCoord[1];
-        var y = tileCoord[2];
 
-        // 百度瓦片服务url将负数使用M前缀来标识
-        if (x < 0) {
-            x = -x;
-        }
-            y = -y;
-
-        return "../baidu/tiles/" + z + "/" + x + "/" + y + ".jpg";
-    }
-});
 var baiduSource = new ol.layer.Tile({
     source: new ol.source.XYZ({
         minZoom: 2,
@@ -133,13 +117,23 @@ controls.push(mousePositionControl);
 
 
 // 百度地图层
-var baiduMapLayer2 = new ol.layer.Tile({
-    source: baiduSource,
-    title: '百度',
-    type: 'base',
-    visible: true,
-});
+//var baiduMapLayer2 = new ol.layer.Tile({
+//    source: baiduSource,
+//    title: '百度',
+//    type: 'base',
+//    visible: true,
+//});
+var url = "../baidu/tiles/" + "{z}/{x}/{-y}" + ".jpg";
 
+var baiduMapLayer2 = new ol.layer.Tile({
+    source: new ol.source.XYZ({
+        minZoom: 2,
+        maxZoom: 14,
+        projection: 'EPSG:3857',
+        tileSize: 256,
+        url: url
+    })
+})
 
 
 
@@ -157,7 +151,7 @@ var map = new ol.Map({
     }).extend(controls),
     view: new ol.View({
         // 设置地图中心
-        center: ol.proj.transform([121.41071, 28.49096], 'EPSG:4326', 'EPSG:3857'),
+        center: ol.proj.transform([121.26303583068851, 28.652394518616234], 'EPSG:4326', 'EPSG:3857'),
         zoom: 12,
         maxZoom: 17,
         minZoom: 10
