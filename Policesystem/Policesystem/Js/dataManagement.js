@@ -487,15 +487,72 @@ function createtabledetail() {
          .on('xhr.dt', function (e, settings, json, xhr) {
              $('.progressdt').hide();
              $('#detailgr-result-table').show();
-             $("#myModaltxzsLabel").text(ssddtext + "设备详情");
+             var typename;
+             switch (seltype) {
+                 case "1":
+                     typename = "车载视频";
+                     break;
+                 case "2":
+                     typename = "对讲机";
+                     break;
+                 case "3":
+                     typename = "拦截仪";
+                     break;
+                 case "5":
+                     typename = "执法记录仪";
+                     break;
+                 case "4":
+                     typename = "警务通";
+                     break;
+                 case "6":
+                     typename = "辅警通";
+                     break;
+             }
+             $("#myModaltxzsLabel").text(ssddtext + typename + "设备详情");
              $(".search-result-flooterleft  span:eq(0)").text("共" + json.data.length + "条记录");
              $('.daochumx').html("<a class='buttons-excel'  href='../Handle/upload/" + json.title + "'><span>导 出</span></a>");
              switch (seltype) {
                  case "5":
-                     $('#detailgr-result-table tr:eq(0) th:eq(5)').text("视频时长");
+                     tablezd.column(5).visible(false);
+                     tablezd.column(6).visible(true);
+                     tablezd.column(7).visible(true);
+                     $('#detailgr-result-table tr:eq(0) th:eq(4)').text("设备编号");
+                     $('#detailgr-result-table tr:eq(0) th:eq(5)').text("视频时长总和(小时)");
+                     $('#detailgr-result-table tr:eq(0) th:eq(6)').text("视频大小(GB)");
                      break;
+                 case "4":
+                     tablezd.column(5).visible(false);
+                     tablezd.column(6).visible(true);
+                     tablezd.column(7).visible(true);
+                     $('#detailgr-result-table tr:eq(0) th:eq(4)').text("设备编号");
+                     $('#detailgr-result-table tr:eq(0) th:eq(5)').text("警务通处罚数");
+                     $('#detailgr-result-table tr:eq(0) th:eq(6)').text("查询量");
+                  
+                     break;
+                 case "6":
+                     tablezd.column(5).visible(false);
+                     tablezd.column(6).visible(true);
+                     tablezd.column(7).visible(true);
+                     $('#detailgr-result-table tr:eq(0) th:eq(4)').text("PDAID");
+                     $('#detailgr-result-table tr:eq(0) th:eq(5)').text("违停采集量");
+                     $('#detailgr-result-table tr:eq(0) th:eq(6)').text("查询量");
+                 
+                     break;
+                 case "2":
+                     tablezd.column(5).visible(true);
+                     tablezd.column(6).visible(false);
+                     tablezd.column(7).visible(false);
+                     $('#detailgr-result-table tr:eq(0) th:eq(4)').text("呼号");
+               
+                     break;
+
                  default:
+                     tablezd.column(5).visible(true);
+                     tablezd.column(6).visible(false);
+                     tablezd.column(7).visible(false);
+                     $('#detailgr-result-table tr:eq(0) th:eq(4)').text("设备编号");
                      $('#detailgr-result-table tr:eq(0) th:eq(5)').text("在线时长");
+                 
                      break;
 
              }
@@ -525,15 +582,17 @@ function createtabledetail() {
             paging: true,
             autoWidth: true,
 
-            "order": [[1, 'asc']],
+            "order":"",
             columns: [
                       
-                         { "data": "cloum1" },
-                         { "data": "cloum2" },
-                         { "data": "cloum3" },
-                         { "data": "cloum4" },
-                         { "data": "cloum5" },
-                         { "data": "cloum6" }
+                         { "data": "cloum1","orderable": false },
+                         { "data": "cloum2","orderable": false },
+                         { "data": "cloum3","orderable": false },
+                         { "data": "cloum4", "orderable": false },
+                         { "data": "cloum5", "orderable": false },
+                         { "data": "cloum6", "orderable": false },
+                         { "data": "cloum7", "orderable": false },
+                         { "data": "cloum8", "orderable": false },
                    
             ],
             columnDefs: [

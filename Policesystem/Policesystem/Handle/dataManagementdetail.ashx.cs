@@ -38,8 +38,9 @@ namespace Policesystem.Handle
             dtreturns.Columns.Add("cloum4");
             dtreturns.Columns.Add("cloum5");
             dtreturns.Columns.Add("cloum6");
-
-         switch (search)
+            dtreturns.Columns.Add("cloum7");
+            dtreturns.Columns.Add("cloum8");
+            switch (search)
             {
                 case "":
                     break;
@@ -53,12 +54,12 @@ namespace Policesystem.Handle
                 switch (type)
                 {
                     case "5":
-                        Alarm_EveryDayInfo = SQLHelper.ExecuteRead(CommandType.Text, "WITH childtable(BMMC,BMDM,SJBM) as (SELECT BMMC,BMDM,SJBM FROM [Entity] WHERE SJBM in ('331001000000','331002000000','331003000000','331004000000','33100000000x') OR BMDM in ('331001000000','331002000000','331003000000','331004000000','33100000000x') UNION ALL SELECT A.BMMC,A.BMDM,A.SJBM FROM [Entity] A,childtable b where a.SJBM = b.BMDM ) select data.Devid,data.AlarmType,data.val,us.JYBH,us.XM,us.SJ from (SELECT DevId,1 as AlarmType,SUM([VideLength]) val from EveryDayInfo_ZFJLY where Entity in(SELECT BMDM FROM childtable)  AND [Time]  >='" + begintime + "' and [Time] <='" + endtime + "'   GROUP BY DevId) as data left join Device de on de.DevId = data.DevId left join ACL_USER us on us.JYBH = de.JYBH where de.BMDM in (SELECT BMDM FROM childtable)  " + sreachcondi + "   order by data.DevId", "Alarm_EveryDayInfo");
-                        distinctdevic = SQLHelper.ExecuteRead(CommandType.Text, "WITH childtable(BMMC,BMDM,SJBM) as (SELECT BMMC,BMDM,SJBM FROM [Entity] WHERE SJBM in ('331001000000','331002000000','331003000000','331004000000','33100000000x') OR BMDM in ('331001000000','331002000000','331003000000','331004000000','33100000000x') UNION ALL SELECT A.BMMC,A.BMDM,A.SJBM FROM [Entity] A,childtable b where a.SJBM = b.BMDM ) select data.Devid from (select DISTINCT Devid from EveryDayInfo_ZFJLY where  [Time] >='" + begintime + "' and [Time] <='" + endtime + "' ) as data left join Device de on de.DevId = data.DevId left join ACL_USER us on us.JYBH = de.JYBH where de.BMDM in (SELECT BMDM FROM childtable) " + sreachcondi, "devcie");
+                        Alarm_EveryDayInfo = SQLHelper.ExecuteRead(CommandType.Text, "WITH childtable(BMMC,BMDM,SJBM) as (SELECT BMMC,BMDM,SJBM FROM [Entity] WHERE SJBM in ('331001000000','331002000000','331003000000','331004000000','33100000000x') OR BMDM in ('331001000000','331002000000','331003000000','331004000000','33100000000x') UNION ALL SELECT A.BMMC,A.BMDM,A.SJBM FROM [Entity] A,childtable b where a.SJBM = b.BMDM ) select data.Devid,data.AlarmType,data.val,data.val1,us.JYBH,us.XM,us.SJ from (SELECT DevId,3 as AlarmType,SUM([VideLength]) val,SUM([FileSize]) val1 from EveryDayInfo_ZFJLY where Entity in(SELECT BMDM FROM childtable)  AND [Time]  >='" + begintime + "' and [Time] <='" + endtime + "'   GROUP BY DevId) as data left join Device de on de.DevId = data.DevId left join ACL_USER us on us.JYBH = de.JYBH where de.BMDM in (SELECT BMDM FROM childtable)  " + sreachcondi + "   order by data.DevId", "Alarm_EveryDayInfo");
+                        distinctdevic = SQLHelper.ExecuteRead(CommandType.Text, "WITH childtable(BMMC,BMDM,SJBM) as (SELECT BMMC,BMDM,SJBM FROM [Entity] WHERE SJBM in ('331001000000','331002000000','331003000000','331004000000','33100000000x') OR BMDM in ('331001000000','331002000000','331003000000','331004000000','33100000000x') UNION ALL SELECT A.BMMC,A.BMDM,A.SJBM FROM [Entity] A,childtable b where a.SJBM = b.BMDM ) select data.Devid,en.BMMC from (select DISTINCT Devid from EveryDayInfo_ZFJLY where  [Time] >='" + begintime + "' and [Time] <='" + endtime + "' ) as data left join Device de on de.DevId = data.DevId left join ACL_USER us on us.JYBH = de.JYBH left join Entity en on en.BMDM = de.BMDM left join Position po on po.id=us.LDJB where de.BMDM in (SELECT BMDM FROM childtable) " + sreachcondi + " ORDER BY en.Sort,po.Weight,us.JYBH desc", "devcie");
                         break;
                     default:
-                        Alarm_EveryDayInfo = SQLHelper.ExecuteRead(CommandType.Text, "WITH childtable(BMMC,BMDM,SJBM) as (SELECT BMMC,BMDM,SJBM FROM [Entity] WHERE SJBM in ('331001000000','331002000000','331003000000','331004000000','33100000000x') OR BMDM in ('331001000000','331002000000','331003000000','331004000000','33100000000x') UNION ALL SELECT A.BMMC,A.BMDM,A.SJBM FROM [Entity] A,childtable b where a.SJBM = b.BMDM ) select data.Devid,data.AlarmType,data.val,us.JYBH,us.XM,us.SJ from (SELECT DevId,AlarmType,SUM(value) val from Alarm_EveryDayInfo where AlarmType<>6 AND AlarmDay >='" + begintime + "' and AlarmDay <='" + endtime + "'  and DevType = " + type + "  GROUP BY DevId,AlarmType) as data left join Device de on de.DevId = data.DevId left join ACL_USER us on us.JYBH = de.JYBH where de.BMDM in (SELECT BMDM FROM childtable)  " + sreachcondi + "  order by data.DevId", "Alarm_EveryDayInfo");
-                        distinctdevic = SQLHelper.ExecuteRead(CommandType.Text, "WITH childtable(BMMC,BMDM,SJBM) as (SELECT BMMC,BMDM,SJBM FROM [Entity] WHERE SJBM in ('331001000000','331002000000','331003000000','331004000000','33100000000x') OR BMDM in ('331001000000','331002000000','331003000000','331004000000','33100000000x') UNION ALL SELECT A.BMMC,A.BMDM,A.SJBM FROM [Entity] A,childtable b where a.SJBM = b.BMDM ) select data.Devid from (select DISTINCT Devid from Alarm_EveryDayInfo where  AlarmType<>6 AND AlarmDay >='" + begintime + "' and AlarmDay <='" + endtime + "'  and DevType = " + type + ") as data left join Device de on de.DevId = data.DevId left join ACL_USER us on us.JYBH = de.JYBH  where de.BMDM in (SELECT BMDM FROM childtable) " + sreachcondi, "devcie");
+                        Alarm_EveryDayInfo = SQLHelper.ExecuteRead(CommandType.Text, "WITH childtable(BMMC,BMDM,SJBM) as (SELECT BMMC,BMDM,SJBM FROM [Entity] WHERE SJBM in ('331001000000','331002000000','331003000000','331004000000') OR BMDM in ('331001000000','331002000000','331003000000','331004000000') UNION ALL SELECT A.BMMC,A.BMDM,A.SJBM FROM [Entity] A,childtable b where a.SJBM = b.BMDM ) select data.Devid,data.AlarmType,data.val,us.JYBH,us.XM,us.SJ from (SELECT DevId,AlarmType,SUM(value) val from Alarm_EveryDayInfo where AlarmType<>6 AND AlarmDay >='" + begintime + "' and AlarmDay <='" + endtime + "'  and DevType = " + type + "  GROUP BY DevId,AlarmType) as data left join Device de on de.DevId = data.DevId left join ACL_USER us on us.JYBH = de.JYBH where de.BMDM in (SELECT BMDM FROM childtable)  " + sreachcondi + "  order by data.DevId", "Alarm_EveryDayInfo");
+                        distinctdevic = SQLHelper.ExecuteRead(CommandType.Text, "WITH childtable(BMMC,BMDM,SJBM) as (SELECT BMMC,BMDM,SJBM FROM [Entity] WHERE SJBM in ('331001000000','331002000000','331003000000','331004000000') OR BMDM in ('331001000000','331002000000','331003000000','331004000000') UNION ALL SELECT A.BMMC,A.BMDM,A.SJBM FROM [Entity] A,childtable b where a.SJBM = b.BMDM ) select data.Devid,en.BMMC from (select DISTINCT Devid from Alarm_EveryDayInfo where  AlarmType<>6 AND AlarmDay >='" + begintime + "' and AlarmDay <='" + endtime + "'  and DevType = " + type + ") as data left join Device de on de.DevId = data.DevId left join ACL_USER us on us.JYBH = de.JYBH  left join Entity en on en.BMDM = de.BMDM left join Position po on po.id=us.LDJB   where de.BMDM in (SELECT BMDM FROM childtable) " + sreachcondi + " ORDER BY en.Sort,po.Weight,us.JYBH desc", "devcie");
                         break;
                 }
             }
@@ -67,13 +68,13 @@ namespace Policesystem.Handle
                 switch (type)
                 {
                     case "5":
-                        Alarm_EveryDayInfo = SQLHelper.ExecuteRead(CommandType.Text, "WITH childtable(BMMC,BMDM,SJBM) as (SELECT BMMC,BMDM,SJBM FROM [Entity] WHERE SJBM ='" + entityid + "' OR BMDM = '" + entityid + "' UNION ALL SELECT A.BMMC,A.BMDM,A.SJBM FROM [Entity] A,childtable b where a.SJBM = b.BMDM ) select data.Devid,data.AlarmType,data.val,us.JYBH,us.XM,us.SJ from (SELECT DevId,1 as AlarmType,SUM([VideLength]) val from EveryDayInfo_ZFJLY where   [Time] >='" + begintime + "' and [Time] <='" + endtime + "'  GROUP BY DevId) as data left join Device de on de.DevId = data.DevId left join ACL_USER us on us.JYBH = de.JYBH where de.BMDM in (SELECT BMDM FROM childtable)   " + sreachcondi + " order by data.DevId", "Alarm_EveryDayInfo");
-                        distinctdevic = SQLHelper.ExecuteRead(CommandType.Text, "WITH childtable(BMMC,BMDM,SJBM) as (SELECT BMMC,BMDM,SJBM FROM [Entity] WHERE SJBM ='" + entityid + "' OR BMDM ='" + entityid + "' UNION ALL SELECT A.BMMC,A.BMDM,A.SJBM FROM [Entity] A,childtable b where a.SJBM = b.BMDM ) select data.Devid from (select DISTINCT Devid from EveryDayInfo_ZFJLY where  [Time] >='" + begintime + "' and [Time] <='" + endtime + "' ) as data left join Device de on de.DevId = data.DevId left join ACL_USER us on us.JYBH = de.JYBH where de.BMDM in (SELECT BMDM FROM childtable)  " + sreachcondi, "devcie");
+                        Alarm_EveryDayInfo = SQLHelper.ExecuteRead(CommandType.Text, "WITH childtable(BMMC,BMDM,SJBM) as (SELECT BMMC,BMDM,SJBM FROM [Entity] WHERE SJBM ='" + entityid + "' OR BMDM = '" + entityid + "' UNION ALL SELECT A.BMMC,A.BMDM,A.SJBM FROM [Entity] A,childtable b where a.SJBM = b.BMDM ) select data.Devid,data.AlarmType,data.val,data.val1,us.JYBH,us.XM,us.SJ from (SELECT DevId,3 as AlarmType,SUM([VideLength]) val,SUM([FileSize]) val1  from EveryDayInfo_ZFJLY where   [Time] >='" + begintime + "' and [Time] <='" + endtime + "'  GROUP BY DevId) as data left join Device de on de.DevId = data.DevId left join ACL_USER us on us.JYBH = de.JYBH where de.BMDM in (SELECT BMDM FROM childtable)   " + sreachcondi + " order by data.DevId", "Alarm_EveryDayInfo");
+                        distinctdevic = SQLHelper.ExecuteRead(CommandType.Text, "WITH childtable(BMMC,BMDM,SJBM) as (SELECT BMMC,BMDM,SJBM FROM [Entity] WHERE SJBM ='" + entityid + "' OR BMDM ='" + entityid + "' UNION ALL SELECT A.BMMC,A.BMDM,A.SJBM FROM [Entity] A,childtable b where a.SJBM = b.BMDM ) select data.Devid,en.BMMC from (select DISTINCT Devid from EveryDayInfo_ZFJLY where  [Time] >='" + begintime + "' and [Time] <='" + endtime + "' ) as data left join Device de on de.DevId = data.DevId left join ACL_USER us on us.JYBH = de.JYBH  left join Entity en on en.BMDM = de.BMDM left join Position po on po.id=us.LDJB  where de.BMDM in (SELECT BMDM FROM childtable)  " + sreachcondi + " ORDER BY en.Sort,po.Weight,us.JYBH desc", "devcie");
                         break;
                     default:
 
                         Alarm_EveryDayInfo = SQLHelper.ExecuteRead(CommandType.Text, "WITH childtable(BMMC,BMDM,SJBM) as (SELECT BMMC,BMDM,SJBM FROM [Entity] WHERE SJBM ='" + entityid + "' OR BMDM = '" + entityid + "' UNION ALL SELECT A.BMMC,A.BMDM,A.SJBM FROM [Entity] A,childtable b where a.SJBM = b.BMDM ) select data.Devid,data.AlarmType,data.val,us.JYBH,us.XM,us.SJ from (SELECT DevId,AlarmType,SUM(value) val from Alarm_EveryDayInfo where  AlarmType<>6 AND AlarmDay >='" + begintime + "' and AlarmDay <='" + endtime + "' and DevType = " + type + "  GROUP BY DevId,AlarmType) as data left join Device de on de.DevId = data.DevId left join ACL_USER us on us.JYBH = de.JYBH   where de.BMDM in (SELECT BMDM FROM childtable)  " + sreachcondi + " order by data.DevId", "Alarm_EveryDayInfo");
-                        distinctdevic = SQLHelper.ExecuteRead(CommandType.Text, "WITH childtable(BMMC,BMDM,SJBM) as (SELECT BMMC,BMDM,SJBM FROM [Entity] WHERE SJBM ='" + entityid + "' OR BMDM ='" + entityid + "' UNION ALL SELECT A.BMMC,A.BMDM,A.SJBM FROM [Entity] A,childtable b where a.SJBM = b.BMDM ) select data.Devid from (select DISTINCT Devid from Alarm_EveryDayInfo where AlarmType<>6 AND AlarmDay >='" + begintime + "' and AlarmDay <='" + endtime + "'  and DevType = " + type + ") as data left join Device de on de.DevId = data.DevId left join ACL_USER us on us.JYBH = de.JYBH  where de.BMDM in (SELECT BMDM FROM childtable)  " + sreachcondi, "devcie");
+                        distinctdevic = SQLHelper.ExecuteRead(CommandType.Text, "WITH childtable(BMMC,BMDM,SJBM) as (SELECT BMMC,BMDM,SJBM FROM [Entity] WHERE SJBM ='" + entityid + "' OR BMDM ='" + entityid + "' UNION ALL SELECT A.BMMC,A.BMDM,A.SJBM FROM [Entity] A,childtable b where a.SJBM = b.BMDM ) select data.Devid,en.BMMC from (select DISTINCT Devid from Alarm_EveryDayInfo where AlarmType<>6 AND AlarmDay >='" + begintime + "' and AlarmDay <='" + endtime + "'  and DevType = " + type + ") as data left join Device de on de.DevId = data.DevId left join ACL_USER us on us.JYBH = de.JYBH  left join Entity en on en.BMDM = de.BMDM left join Position po on po.id=us.LDJB   where de.BMDM in (SELECT BMDM FROM childtable)  " + sreachcondi + " ORDER BY en.Sort,po.Weight,us.JYBH desc", "devcie");
                         break;
                 }
             }
@@ -83,7 +84,7 @@ namespace Policesystem.Handle
 
                 DataRow dr = dtreturns.NewRow();
                 dr["cloum1"] = (i1 + 1).ToString(); ;
-                dr["cloum2"] = distinctdevic.Rows[i1]["DevId"].ToString();
+                dr["cloum2"] = distinctdevic.Rows[i1]["BMMC"].ToString();
                 var rows = from p in Alarm_EveryDayInfo.AsEnumerable() where (p.Field<string>("DevId") == distinctdevic.Rows[i1]["DevId"].ToString()) select p;
                         foreach (var item in rows)
                         {
@@ -96,21 +97,21 @@ namespace Policesystem.Handle
                                 dr["cloum6"] = Math.Round((double)Convert.ToInt32(item["val"]) / 3600, 2); ; ;
                                 break;
                             case "2":
+                                dr["cloum7"] = item["val"];
                                 break;
                             case "3":
-                                break;
-                            case "4":
+                                dr["cloum7"] = Math.Round((double)Convert.ToInt32(item["val"]) / 3600, 2);
+                                dr["cloum8"] = Math.Round((double)Convert.ToInt32(item["val1"]) / 1048576, 2);
                                 break;
                             case "5":
+                                dr["cloum8"] = item["val"];
                                 break;
                             }
-
-
 
                         }
                     dr["cloum3"] = item["XM"];
                     dr["cloum4"] = item["JYBH"];
-                    dr["cloum5"] = item["SJ"];
+                    dr["cloum5"] = item["Devid"];
                 }
                 dtreturns.Rows.Add(dr);
 
@@ -129,7 +130,7 @@ namespace Policesystem.Handle
             var tmpath = "";
             string Entityname = "";
             Entityname += (ssddtext == "全部") ? "台州交警局" : ssddtext;
-            tmpath = HttpContext.Current.Server.MapPath("templet\\mingxi\\1.xls");
+            tmpath = HttpContext.Current.Server.MapPath("templet\\mingxi\\"+ type + ".xls");
             excelFile.LoadXls(tmpath);
             ExcelWorksheet sheet = excelFile.Worksheets[0];
 
@@ -150,7 +151,6 @@ namespace Policesystem.Handle
                     break;
                 case "5":
                     typename = "执法记录仪";
-                    sheet.Rows[1].Cells["F"].Value = "视频时长（h）";
                     break;
                 case "4":
                     typename = "警务通";
@@ -175,7 +175,22 @@ namespace Policesystem.Handle
                 sheet.Rows[i + 2].Cells["E"].Style.Borders.SetBorders(MultipleBorders.Outside, Color.FromArgb(0, 0, 0), LineStyle.Thin);
                 sheet.Rows[i + 2].Cells["E"].Value = dt.Rows[i][4].ToString();
                 sheet.Rows[i + 2].Cells["F"].Style.Borders.SetBorders(MultipleBorders.Outside, Color.FromArgb(0, 0, 0), LineStyle.Thin);
-                sheet.Rows[i + 2].Cells["F"].Value = dt.Rows[i][5].ToString();
+
+                switch (type)
+                {
+                    case "1":
+                    case "2":
+                    case "3":
+                        sheet.Rows[i + 2].Cells["F"].Value = dt.Rows[i][5].ToString();
+                        break;
+                    case "5":
+                    case "4":
+                    case "6":
+                        sheet.Rows[i + 2].Cells["F"].Value = dt.Rows[i][6].ToString();
+                        sheet.Rows[i + 2].Cells["G"].Style.Borders.SetBorders(MultipleBorders.Outside, Color.FromArgb(0, 0, 0), LineStyle.Thin);
+                        sheet.Rows[i + 2].Cells["G"].Value = dt.Rows[i][7].ToString();
+                        break;
+                }
             }
 
             tmpath = HttpContext.Current.Server.MapPath("upload\\" + sheet.Rows[0].Cells[0].Value + ".xls");

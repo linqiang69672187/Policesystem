@@ -199,6 +199,22 @@ background-color:#213366;
 text-align:left;
 height:22px;
 }
+
+#detailgr-result-table th:nth-child(n+6){
+    width:120px !important;
+}
+#detailgr-result-table th:nth-child(2){
+    width:300px !important;
+}
+#detailgr-result-table th:nth-child(1){
+    width:60px !important;
+}
+#detailgr-result-table th:nth-child(3){
+    width:80px !important;
+}
+#detailgr-result-table th:nth-child(4){
+    width:100px !important;
+}
 .tablediv table {
 width:100%;
 color:#fff;
