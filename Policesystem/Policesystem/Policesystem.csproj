@@ -295,7 +295,6 @@
     <Content Include="Ol\resources\zeroclipboard\ZeroClipboard.js" />
     <Content Include="Ol\resources\zeroclipboard\ZeroClipboard.min.js" />
     <Content Include="Ol\resources\zeroclipboard\ZeroClipboard.swf" />
-    <Content Include="Ol\vertor.js" />
     <Content Include="Ol\xyz-esri.html" />
     <Content Include="Ol\xyz-esri.js" />
     <Content Include="packages.config" />
