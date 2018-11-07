@@ -505,6 +505,11 @@
     <Content Include="Handle\Jingwutongdemo.ashx" />
     <Content Include="Handle\getAlarmuser.ashx" />
     <Content Include="Handle\getAlarmdays.ashx" />
+    <Content Include="Handle\templet\mingxi\2.xls" />
+    <Content Include="Handle\templet\mingxi\3.xls" />
+    <Content Include="Handle\templet\mingxi\4.xls" />
+    <Content Include="Handle\templet\mingxi\5.xls" />
+    <Content Include="Handle\templet\mingxi\6.xls" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
