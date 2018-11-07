@@ -47,10 +47,10 @@ namespace Policesystem.Handle
             {
                 case "":
                 case null://所有大队
-                    sqltext.Append("SELECT BMJC,BMDM,SJBM from [Entity] a where [SJBM]  = '331000000000' and [BMJC] IS NOT NULL AND BMJC <> '' union all select BMJC,BMDM,SJBM from  [Entity] b where b.SJBM in (SELECT BMDM from [Entity]  where [SJBM]  = '331000000000' and   [BMJC] IS NOT NULL AND BMJC <> '')");
+                    sqltext.Append("SELECT BMJC,BMDM,SJBM,Sort from [Entity] a where [SJBM]  = '331000000000' and [BMJC] IS NOT NULL AND BMJC <> '' union all select BMJC,BMDM,SJBM,Sort from  [Entity] b where b.SJBM in (SELECT BMDM from [Entity]  where [SJBM]  = '331000000000' and   [BMJC] IS NOT NULL AND BMJC <> '') order by Sort");
                     break;
                 case "所有单位":
-                    sqltext.Append("SELECT BMJC,BMDM,SJBM,BMMC from [Entity] a where [SJBM]  = '331000000000' ");
+                    sqltext.Append("SELECT BMJC,BMDM,SJBM,BMMC from [Entity] a where [SJBM]  = '331000000000'  order by Sort");
                     break;
                 default:
                     break;
