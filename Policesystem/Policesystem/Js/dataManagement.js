@@ -12,8 +12,27 @@ var seltype;
 var pagecount;
 var todaytotaldata = [];
 var searchtext;
+var selEntityID;
 $("#header").load('top.html', function () {
     $("#header ul li:eq(3)").addClass("active");
+});
+
+
+$.ajax({
+    type: "POST",
+    url: "../Handle/getDevices.ashx",
+    data: { 'requesttype': 'huizong' },
+    dataType: "json",
+    success: function (data) {
+        var data = data.data;
+        for (var i = 0; i < data.length; i++) {
+            $("#deviceselect").append("<option value='" + data[i].ID + "' >" + data[i].TypeName + "</option>");
+
+        }
+    },
+    error: function (msg) {
+        console.debug("错误:ajax");
+    }
 });
 
 switch (true) {
@@ -125,6 +144,8 @@ $.ajax({
         console.debug("错误:ajax");
     }
 });
+
+
 
 $(document).on('click.bs.carousel.data-api', '#configmodal .btn-save', function (e) {
     $(".alainfo").hide();
@@ -248,7 +269,7 @@ $(document).on('click.bs.carousel.data-api', '#addedit', function (e) {
     //var data = $('#search-result-table').DataTable().row($doc).data();
    // date = data["AlarmDay"];
     $doc.addClass("trselect");
-    ssdd = $(this).attr("entityid");
+    selEntityID = $(this).attr("entityid");
     ssddtext = $doc.find("td:eq(1)").text();
     $(".datadetail").modal("show");
     showetailRS();
@@ -309,7 +330,7 @@ function joinData(data) {
     var val8 = { Value: {} };
     val1.Value = todaytotaldata[0];
     creadata.result.push(val1)
-    val2.Value = parseFloat(todaytotaldata[1]) * 3600;
+    val2.Value = parseFloat(todaytotaldata[1]);
     creadata.result.push(val2)
     val3.Value = todaytotaldata[2];
     creadata.result.push(val3)
@@ -353,8 +374,26 @@ function createTatolRS(data) {
         var intpf2 = parseInt(data.result[5].Value);
         var tbpf = (intpf1 - intpf2) * 100 / intpf2;
 
-       $("#ulsysc li:eq(0)").text(formatFloat(intpf1 / 3600, 1) + "h");
-       $("#ulsysc li:eq(1)").text("使用时长");
+       
+        switch (type) {
+            case "4":
+                $("#ulsysc li:eq(0)").text(formatFloat(intpf1, 1))
+                $("#ulsysc li:eq(1)").text("处理量");
+                break;
+            case "6":
+                $("#ulsysc li:eq(0)").text(formatFloat(intpf1 , 1))
+                $("#ulsysc li:eq(1)").text("违停采集量");
+                break;
+            case "5":
+                $("#ulsysc li:eq(1)").text("视频时长");
+                $("#ulsysc li:eq(0)").text(formatFloat(intpf1, 1) + "h");
+                break;
+            default:
+                $("#ulsysc li:eq(1)").text("使用时长");
+                $("#ulsysc li:eq(0)").text(formatFloat(intpf1, 1) + "h");
+                break;
+        }
+
 
         if (tbpf < 0) {
             $("#ulsysc li:eq(2)").html("同比上周减少" + formatFloat(tbpf, 1) + "%<i class='fa fa-arrow-down' aria-hidden='true'>");
@@ -565,11 +604,13 @@ function createtabledetail() {
                     return    data = {
                         search: search,
                         type: type,
-                        entityid: ssdd,
+                        entityid: selEntityID,
                         starttime: starttime,
                         endtime: endtime,
                         ssddtext: ssddtext,
-                        searchtext: searchtext
+                        searchtext: searchtext,
+                        ssdd: ssdd,
+                        sszd:sszd
                     };
 
                 }
@@ -660,8 +701,8 @@ function createDataTable() {
                              todaytotaldata.push(json.data[n]["cloum5"]);
                              break;
                          case "5":
-                             todaytotaldata.push(json.data[n]["cloum7"]);
                              todaytotaldata.push(json.data[n]["cloum5"]);
+                             todaytotaldata.push(json.data[n]["cloum4"]);
 
                              break;
                          case "4":

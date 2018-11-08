@@ -27,6 +27,8 @@ namespace Policesystem.Handle
             string endtime = context.Request.Form["endtime"];
             string entityid = context.Request.Form["entityid"];
             string ssddtext = context.Request.Form["ssddtext"];
+            string sszd = context.Request.Form["sszd"];
+            string ssdd = context.Request.Form["ssdd"];
             string sreachcondi = "";
             StringBuilder sqltext = new StringBuilder();
             DataTable Alarm_EveryDayInfo = null; //每日告警
@@ -69,12 +71,23 @@ namespace Policesystem.Handle
                 {
                     case "5":
                         Alarm_EveryDayInfo = SQLHelper.ExecuteRead(CommandType.Text, "WITH childtable(BMMC,BMDM,SJBM) as (SELECT BMMC,BMDM,SJBM FROM [Entity] WHERE SJBM ='" + entityid + "' OR BMDM = '" + entityid + "' UNION ALL SELECT A.BMMC,A.BMDM,A.SJBM FROM [Entity] A,childtable b where a.SJBM = b.BMDM ) select data.Devid,data.AlarmType,data.val,data.val1,us.JYBH,us.XM,us.SJ from (SELECT DevId,3 as AlarmType,SUM([VideLength]) val,SUM([FileSize]) val1  from EveryDayInfo_ZFJLY where   [Time] >='" + begintime + "' and [Time] <='" + endtime + "'  GROUP BY DevId) as data left join Device de on de.DevId = data.DevId left join ACL_USER us on us.JYBH = de.JYBH where de.BMDM in (SELECT BMDM FROM childtable)   " + sreachcondi + " order by data.DevId", "Alarm_EveryDayInfo");
-                        distinctdevic = SQLHelper.ExecuteRead(CommandType.Text, "WITH childtable(BMMC,BMDM,SJBM) as (SELECT BMMC,BMDM,SJBM FROM [Entity] WHERE SJBM ='" + entityid + "' OR BMDM ='" + entityid + "' UNION ALL SELECT A.BMMC,A.BMDM,A.SJBM FROM [Entity] A,childtable b where a.SJBM = b.BMDM ) select data.Devid,en.BMMC from (select DISTINCT Devid from EveryDayInfo_ZFJLY where  [Time] >='" + begintime + "' and [Time] <='" + endtime + "' ) as data left join Device de on de.DevId = data.DevId left join ACL_USER us on us.JYBH = de.JYBH  left join Entity en on en.BMDM = de.BMDM left join Position po on po.id=us.LDJB  where de.BMDM in (SELECT BMDM FROM childtable)  " + sreachcondi + " ORDER BY en.Sort,po.Weight,us.JYBH desc", "devcie");
+                 
+                       distinctdevic = SQLHelper.ExecuteRead(CommandType.Text, "WITH childtable(BMMC,BMDM,SJBM) as (SELECT BMMC,BMDM,SJBM FROM [Entity] WHERE SJBM ='" + entityid + "' OR BMDM ='" + entityid + "' UNION ALL SELECT A.BMMC,A.BMDM,A.SJBM FROM [Entity] A,childtable b where a.SJBM = b.BMDM ) select data.Devid,en.BMMC from (select DISTINCT Devid from EveryDayInfo_ZFJLY where  [Time] >='" + begintime + "' and [Time] <='" + endtime + "' ) as data left join Device de on de.DevId = data.DevId left join ACL_USER us on us.JYBH = de.JYBH  left join Entity en on en.BMDM = de.BMDM left join Position po on po.id=us.LDJB  where de.BMDM in (SELECT BMDM FROM childtable)  " + sreachcondi + " ORDER BY en.Sort,po.Weight,us.JYBH desc", "devcie");
+                       
+                       
                         break;
                     default:
 
                         Alarm_EveryDayInfo = SQLHelper.ExecuteRead(CommandType.Text, "WITH childtable(BMMC,BMDM,SJBM) as (SELECT BMMC,BMDM,SJBM FROM [Entity] WHERE SJBM ='" + entityid + "' OR BMDM = '" + entityid + "' UNION ALL SELECT A.BMMC,A.BMDM,A.SJBM FROM [Entity] A,childtable b where a.SJBM = b.BMDM ) select data.Devid,data.AlarmType,data.val,us.JYBH,us.XM,us.SJ from (SELECT DevId,AlarmType,SUM(value) val from Alarm_EveryDayInfo where  AlarmType<>6 AND AlarmDay >='" + begintime + "' and AlarmDay <='" + endtime + "' and DevType = " + type + "  GROUP BY DevId,AlarmType) as data left join Device de on de.DevId = data.DevId left join ACL_USER us on us.JYBH = de.JYBH   where de.BMDM in (SELECT BMDM FROM childtable)  " + sreachcondi + " order by data.DevId", "Alarm_EveryDayInfo");
-                        distinctdevic = SQLHelper.ExecuteRead(CommandType.Text, "WITH childtable(BMMC,BMDM,SJBM) as (SELECT BMMC,BMDM,SJBM FROM [Entity] WHERE SJBM ='" + entityid + "' OR BMDM ='" + entityid + "' UNION ALL SELECT A.BMMC,A.BMDM,A.SJBM FROM [Entity] A,childtable b where a.SJBM = b.BMDM ) select data.Devid,en.BMMC from (select DISTINCT Devid from Alarm_EveryDayInfo where AlarmType<>6 AND AlarmDay >='" + begintime + "' and AlarmDay <='" + endtime + "'  and DevType = " + type + ") as data left join Device de on de.DevId = data.DevId left join ACL_USER us on us.JYBH = de.JYBH  left join Entity en on en.BMDM = de.BMDM left join Position po on po.id=us.LDJB   where de.BMDM in (SELECT BMDM FROM childtable)  " + sreachcondi + " ORDER BY en.Sort,po.Weight,us.JYBH desc", "devcie");
+                        if (ssdd == "all")
+                        {
+                            distinctdevic = SQLHelper.ExecuteRead(CommandType.Text, "WITH childtable(BMMC,BMDM,SJBM) as (SELECT BMMC,BMDM,SJBM FROM [Entity] WHERE SJBM ='" + entityid + "' OR BMDM ='" + entityid + "' UNION ALL SELECT A.BMMC,A.BMDM,A.SJBM FROM [Entity] A,childtable b where a.SJBM = b.BMDM ) select data.Devid,en.BMMC from (select DISTINCT Devid from Alarm_EveryDayInfo where AlarmType<>6 AND AlarmDay >='" + begintime + "' and AlarmDay <='" + endtime + "'  and DevType = " + type + ") as data left join Device de on de.DevId = data.DevId left join ACL_USER us on us.JYBH = de.JYBH  left join Entity en on en.BMDM = de.BMDM left join Position po on po.id=us.LDJB   where de.BMDM in (SELECT BMDM FROM childtable)  " + sreachcondi + " ORDER BY en.Sort,po.Weight,us.JYBH desc", "devcie");
+                        }
+                        else
+                        {
+                            distinctdevic = SQLHelper.ExecuteRead(CommandType.Text, "select data.Devid,en.BMMC from (select DISTINCT Devid from Alarm_EveryDayInfo where AlarmType<>6 AND AlarmDay >='" + begintime + "' and AlarmDay <='" + endtime + "'  and DevType = " + type + ") as data left join Device de on de.DevId = data.DevId left join ACL_USER us on us.JYBH = de.JYBH  left join Entity en on en.BMDM = de.BMDM left join Position po on po.id=us.LDJB   where de.BMDM ='"+entityid+ "' " + sreachcondi + " ORDER BY en.Sort,po.Weight,us.JYBH desc", "devcie");
+
+                        }
                         break;
                 }
             }

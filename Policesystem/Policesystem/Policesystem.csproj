@@ -451,6 +451,9 @@
     <Compile Include="Handle\getDataManagement.ashx.cs">
       <DependentUpon>getDataManagement.ashx</DependentUpon>
     </Compile>
+    <Compile Include="Handle\getDevices.ashx.cs">
+      <DependentUpon>getDevices.ashx</DependentUpon>
+    </Compile>
     <Compile Include="Handle\GetEntitys.ashx.cs">
       <DependentUpon>GetEntitys.ashx</DependentUpon>
     </Compile>
@@ -509,6 +512,7 @@
     <Content Include="Handle\templet\mingxi\4.xls" />
     <Content Include="Handle\templet\mingxi\5.xls" />
     <Content Include="Handle\templet\mingxi\6.xls" />
+    <Content Include="Handle\getDevices.ashx" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

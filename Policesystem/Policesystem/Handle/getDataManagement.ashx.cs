@@ -119,11 +119,11 @@ namespace Policesystem.Handle
                 switch (type)
                 {
                     case "5":
-                        Alarm_EveryDayInfo = SQLHelper.ExecuteRead(CommandType.Text, "SELECT en.BMDM, en.SJBM as [ParentID],us.XM as [Contacts],de.[DevId],ala.在线时长,ala.[AlarmType],ala.文件大小 from (SELECT [DevId],sum([VideLength]) as 在线时长,sum([FileSize]) as 文件大小,1 as AlarmType from [EveryDayInfo_ZFJLY]   where  [Time] >='" + begintime + "' and [Time] <='" + endtime + "'   group by [DevId] ) as ala left join [Device] as de on de.[DevId] = ala.[DevId] left join [Entity] as en on en.[BMDM] = de.[BMDM] left join ACL_USER as us on de.JYBH = us.JYBH  where "+ sreachcondi + " de.[DevType]=" + type, "Alarm_EveryDayInfo");
+                        Alarm_EveryDayInfo = SQLHelper.ExecuteRead(CommandType.Text, "SELECT en.BMDM, en.SJBM as [ParentID],en1.[SJBM] as DJBM,us.XM as [Contacts],de.[DevId],ala.在线时长,ala.[AlarmType],ala.文件大小 from (SELECT [DevId],sum([VideLength]) as 在线时长,sum([FileSize]) as 文件大小,1 as AlarmType from [EveryDayInfo_ZFJLY]   where  [Time] >='" + begintime + "' and [Time] <='" + endtime + "'   group by [DevId] ) as ala left join [Device] as de on de.[DevId] = ala.[DevId] left join [Entity] as en on en.[BMDM] = de.[BMDM] left join  [Entity] en1 on en.[SJBM] = en1.[BMDM] left join ACL_USER as us on de.JYBH = us.JYBH  where " + sreachcondi + " de.[DevType]=" + type, "Alarm_EveryDayInfo");
                         dtEntity = SQLHelper.ExecuteRead(CommandType.Text, "SELECT BMDM as ID,BMJC as Name,SJBM as ParentID,BMJB AS Depth from [Entity] a where [SJBM]  = '331000000000' and [BMJC] IS NOT NULL AND BMJC <> '' ORDER  BY CASE WHEN Sort IS NULL THEN 1 ELSE Sort END desc", "2");
                         break;
                     default:
-                        Alarm_EveryDayInfo = SQLHelper.ExecuteRead(CommandType.Text, "SELECT en.BMDM, en.SJBM as [ParentID],us.XM as [Contacts],de.[DevId],ala.在线时长,ala.[AlarmType],0 as 文件大小 from (SELECT [DevId],[AlarmType],sum([Value]) as 在线时长 from [Alarm_EveryDayInfo]   where [AlarmType] <>6 and  [AlarmDay ] >='" + begintime + "' and [AlarmDay ] <='" + endtime + "'   group by [DevId],[AlarmType] ) as ala left join [Device] as de on de.[DevId] = ala.[DevId] left join [Entity] as en on en.[BMDM] = de.[BMDM] left join ACL_USER as us on de.JYBH = us.JYBH  where " + sreachcondi + " de.[DevType]=" + type, "Alarm_EveryDayInfo");
+                        Alarm_EveryDayInfo = SQLHelper.ExecuteRead(CommandType.Text, "SELECT en.BMDM, en.SJBM as [ParentID],'xxxxxxx' as DJBM,us.XM as [Contacts],de.[DevId],ala.在线时长,ala.[AlarmType],0 as 文件大小 from (SELECT [DevId],[AlarmType],sum([Value]) as 在线时长 from [Alarm_EveryDayInfo]   where [AlarmType] <>6 and  [AlarmDay ] >='" + begintime + "' and [AlarmDay ] <='" + endtime + "'   group by [DevId],[AlarmType] ) as ala left join [Device] as de on de.[DevId] = ala.[DevId] left join [Entity] as en on en.[BMDM] = de.[BMDM]     left join ACL_USER as us on de.JYBH = us.JYBH  where " + sreachcondi + " de.[DevType]=" + type, "Alarm_EveryDayInfo");
                         dtEntity = SQLHelper.ExecuteRead(CommandType.Text, "SELECT BMDM as ID,BMJC as Name,SJBM as ParentID,BMJB AS Depth from [Entity] a where [SJBM]  = '331000000000' and [BMJC] IS NOT NULL AND BMJC <> '' AND BMDM <> '33100000000x' ORDER  BY CASE WHEN Sort IS NULL THEN 1 ELSE Sort END desc", "2");
 
                         break;
@@ -140,15 +140,19 @@ namespace Policesystem.Handle
                     switch (type)
                     {
                         case "5":
-                            Alarm_EveryDayInfo = SQLHelper.ExecuteRead(CommandType.Text, "WITH childtable(BMMC,BMDM,SJBM) as (SELECT BMMC,BMDM,SJBM FROM [Entity] WHERE SJBM= '" + ssdd + "' OR BMDM = '" + ssdd + "' UNION ALL SELECT A.BMMC,A.BMDM,A.SJBM FROM [Entity] A,childtable b where a.SJBM = b.BMDM ) SELECT en.BMDM, en.[BMDM] as ParentID,us.XM as [Contacts],de.[DevId],[AlarmType],ala.在线时长,ala.文件大小 from (SELECT [DevId],sum([VideLength]) as 在线时长,sum([FileSize]) as 文件大小,1 as AlarmType from [EveryDayInfo_ZFJLY]   where  [Time] >='" + begintime + "' and [Time] <='" + endtime + "'   group by [DevId] ) as ala left join [Device] as de on de.[DevId] = ala.[DevId] left join [Entity] as en on en.[BMDM] = de.[BMDM] left join ACL_USER as us on de.JYBH = us.JYBH where " + sreachcondi + " de.[DevType]=" + type + " and de.BMDM in (select BMDM from childtable) ", "Alarm_EveryDayInfo");
+                            Alarm_EveryDayInfo = SQLHelper.ExecuteRead(CommandType.Text, "WITH childtable(BMMC,BMDM,SJBM) as (SELECT BMMC,BMDM,SJBM FROM [Entity] WHERE SJBM= '" + ssdd + "' OR BMDM = '" + ssdd + "' UNION ALL SELECT A.BMMC,A.BMDM,A.SJBM FROM [Entity] A,childtable b where a.SJBM = b.BMDM ) SELECT en.BMDM, en.[SJBM] as ParentID,'xxxxxx' as DJBM,us.XM as [Contacts],de.[DevId],[AlarmType],ala.在线时长,ala.文件大小 from (SELECT [DevId],sum([VideLength]) as 在线时长,sum([FileSize]) as 文件大小,1 as AlarmType from [EveryDayInfo_ZFJLY]   where  [Time] >='" + begintime + "' and [Time] <='" + endtime + "'   group by [DevId] ) as ala left join [Device] as de on de.[DevId] = ala.[DevId] left join [Entity] as en on en.[BMDM] = de.[BMDM]   left join ACL_USER as us on de.JYBH = us.JYBH where " + sreachcondi + " de.[DevType]=" + type + " and de.BMDM in (select BMDM from childtable) ", "Alarm_EveryDayInfo");
+                            dtEntity = SQLHelper.ExecuteRead(CommandType.Text, "SELECT BMDM as [ID] ,BMJC as [Name] ,SJBM as [ParentID],BMJB as [Depth] from [Entity] where [SJBM] ='" + ssdd + "'   order BY CASE WHEN Sort IS NULL THEN 1 ELSE Sort END desc", "2");
+                            dUser = SQLHelper.ExecuteRead(CommandType.Text, "SELECT en.SJBM,us.BMDM FROM [ACL_USER] us left join Entity en on us.BMDM = en.BMDM where en.SJBM='" + ssdd + "'", "user");
+
                             break;
                         default:
-                            Alarm_EveryDayInfo = SQLHelper.ExecuteRead(CommandType.Text, "WITH childtable(BMMC,BMDM,SJBM) as (SELECT BMMC,BMDM,SJBM FROM [Entity] WHERE SJBM= '" + ssdd + "' OR BMDM = '" + ssdd + "' UNION ALL SELECT A.BMMC,A.BMDM,A.SJBM FROM [Entity] A,childtable b where a.SJBM = b.BMDM ) SELECT en.BMDM, en.[BMDM] as ParentID,us.XM as [Contacts],de.[DevId],[AlarmType],ala.在线时长,0 as 文件大小 from (SELECT [DevId],[AlarmType]  ,sum([Value]) as 在线时长 from [Alarm_EveryDayInfo]   where [AlarmType] <> 6 and  [AlarmDay ] >='" + begintime + "' and [AlarmDay ] <='" + endtime + "'   group by [DevId],[AlarmType]  ) as ala left join [Device] as de on de.[DevId] = ala.[DevId] left join [Entity] as en on en.[BMDM] = de.[BMDM] left join ACL_USER as us on de.JYBH = us.JYBH where " + sreachcondi + " de.[DevType]=" + type + " and de.BMDM in (select BMDM from childtable) ", "Alarm_EveryDayInfo");
+                            Alarm_EveryDayInfo = SQLHelper.ExecuteRead(CommandType.Text, "WITH childtable(BMMC,BMDM,SJBM) as (SELECT BMMC,BMDM,SJBM FROM [Entity] WHERE SJBM= '" + ssdd + "' OR BMDM = '" + ssdd + "' UNION ALL SELECT A.BMMC,A.BMDM,A.SJBM FROM [Entity] A,childtable b where a.SJBM = b.BMDM ) SELECT en.BMDM, 'xxxxxx' as ParentID,'xxxxxx' as DJBM,us.XM as [Contacts],de.[DevId],[AlarmType],ala.在线时长,0 as 文件大小 from (SELECT [DevId],[AlarmType]  ,sum([Value]) as 在线时长 from [Alarm_EveryDayInfo]   where [AlarmType] <> 6 and  [AlarmDay ] >='" + begintime + "' and [AlarmDay ] <='" + endtime + "'   group by [DevId],[AlarmType]  ) as ala left join [Device] as de on de.[DevId] = ala.[DevId] left join [Entity] as en on en.[BMDM] = de.[BMDM]    left join ACL_USER as us on de.JYBH = us.JYBH where " + sreachcondi + " de.[DevType]=" + type + " and de.BMDM in (select BMDM from childtable) ", "Alarm_EveryDayInfo");
+                            dtEntity = SQLHelper.ExecuteRead(CommandType.Text, "SELECT BMDM as [ID] ,BMJC as [Name] ,SJBM as [ParentID],BMJB as [Depth] from [Entity] where [SJBM] ='" + ssdd + "' or [BMDM]='"+ssdd+"'   order BY CASE WHEN Sort IS NULL THEN 1 ELSE Sort END desc", "2");
+                            dUser = SQLHelper.ExecuteRead(CommandType.Text, "SELECT en.SJBM,us.BMDM FROM [ACL_USER] us left join Entity en on us.BMDM = en.BMDM where en.SJBM='" + ssdd + "'", "user");
+
                             break;
                     }
                     //   hbAlarm_EveryDayInfo = SQLHelper.ExecuteRead(CommandType.Text, "WITH childtable(Name,ID,ParentID) as (SELECT Name,ID,ParentID FROM [Entity] WHERE id=" + ssdd + " UNION ALL SELECT A.[Name],A.[ID],A.[ParentID] FROM [Entity] A,childtable b where a.[ParentID] = b.[ID])SELECT convert(nvarchar(10),en.[ID]) as ParentID,de.[Contacts],de.[DevId],ala.在线时长 from (SELECT [DevId]  ,sum([Value]) as 在线时长 from [Alarm_EveryDayInfo]   where [AlarmType] = 1 and  [AlarmDay ] >='" + hbbegintime + "' and [AlarmDay ] <='" + hbendtime + "'   group by [DevId] ) as ala left join [Device] as de on de.[DevId] = ala.[DevId] left join [Entity] as en on en.[ID] = de.[EntityId] where de.[DevType]=1 and de.EntityId in (select ID from childtable)", "Alarm_EveryDayInfo");
-                    dtEntity = SQLHelper.ExecuteRead(CommandType.Text, "WITH childtable(BMMC,BMDM,SJBM) as (SELECT BMMC,BMDM,SJBM FROM [Entity] WHERE SJBM= '" + ssdd + "' OR BMDM = '" + ssdd + "' UNION ALL SELECT A.BMMC,A.BMDM,A.SJBM FROM [Entity] A,childtable b where a.SJBM = b.BMDM ) SELECT BMDM as [ID] ,BMJC as [Name] ,SJBM as [ParentID],BMJB as [Depth] from [Entity] where [BMDM] in (select BMDM from childtable)   order BY CASE WHEN Sort IS NULL THEN 1 ELSE Sort END desc", "2");
-                    dUser = SQLHelper.ExecuteRead(CommandType.Text, "SELECT en.SJBM,us.BMDM FROM [ACL_USER] us left join Entity en on us.BMDM = en.BMDM where en.SJBM='"+ssdd+"'", "user");
 
                 }
                 else
@@ -158,10 +162,10 @@ namespace Policesystem.Handle
                     switch (type)
                     {
                         case "5":
-                            Alarm_EveryDayInfo = SQLHelper.ExecuteRead(CommandType.Text, "SELECT en.BMDM ,en.BMDM as [ParentID],us.XM as [Contacts],de.[DevId],ala.在线时长,ala.[AlarmType],ala.文件大小 from (SELECT [DevId],sum([VideLength]) as 在线时长,sum([FileSize]) as 文件大小,1 as AlarmType from [EveryDayInfo_ZFJLY]   where  [Time] >='" + begintime + "' and [Time] <='" + endtime + "'   group by [DevId] ) as ala left join [Device] as de on de.[DevId] = ala.[DevId] left join [Entity] as en on en.[BMDM] = de.[BMDM] left join ACL_USER as us on de.JYBH = us.JYBH  where " + sreachcondi + " de.[DevType]=" + type + " and en.BMDM='" + sszd + "'", "Alarm_EveryDayInfo");
+                            Alarm_EveryDayInfo = SQLHelper.ExecuteRead(CommandType.Text, "WITH childtable(BMMC,BMDM,SJBM) as (SELECT BMMC,BMDM,SJBM FROM [Entity] WHERE SJBM= '" + ssdd + "' OR BMDM = '" + ssdd + "' UNION ALL SELECT A.BMMC,A.BMDM,A.SJBM FROM [Entity] A,childtable b where a.SJBM = b.BMDM ) SELECT en.BMDM ,en.SJBM as [ParentID],'xxxxxxx' as DJBM,us.XM as [Contacts],de.[DevId],ala.在线时长,ala.[AlarmType],ala.文件大小 from (SELECT [DevId],sum([VideLength]) as 在线时长,sum([FileSize]) as 文件大小,1 as AlarmType from [EveryDayInfo_ZFJLY]   where  [Time] >='" + begintime + "' and [Time] <='" + endtime + "'   group by [DevId] ) as ala left join [Device] as de on de.[DevId] = ala.[DevId] left join [Entity] as en on en.[BMDM] = de.[BMDM]  left join ACL_USER as us on de.JYBH = us.JYBH  where " + sreachcondi + " de.[DevType]=" + type + " and en.BMDM in (select BMDM from childtable)", "Alarm_EveryDayInfo");
                             break;
                         default:
-                            Alarm_EveryDayInfo = SQLHelper.ExecuteRead(CommandType.Text, "SELECT en.BMDM ,en.BMDM as [ParentID],us.XM as [Contacts],de.[DevId],ala.在线时长,ala.[AlarmType],0 as 文件大小 from (SELECT [DevId],[AlarmType],sum([Value]) as 在线时长 from [Alarm_EveryDayInfo]   where [AlarmType] <> 6 and  [AlarmDay ] >='" + begintime + "' and [AlarmDay ] <='" + endtime + "'   group by [DevId],[AlarmType] ) as ala left join [Device] as de on de.[DevId] = ala.[DevId] left join [Entity] as en on en.[BMDM] = de.[BMDM] left join ACL_USER as us on de.JYBH = us.JYBH  where " + sreachcondi + " de.[DevType]=" + type + " and en.BMDM='" + sszd + "'", "Alarm_EveryDayInfo");
+                            Alarm_EveryDayInfo = SQLHelper.ExecuteRead(CommandType.Text, "SELECT en.BMDM ,en.SJBM as [ParentID],'xxxxxxx' as DJBM,us.XM as [Contacts],de.[DevId],ala.在线时长,ala.[AlarmType],0 as 文件大小 from (SELECT [DevId],[AlarmType],sum([Value]) as 在线时长 from [Alarm_EveryDayInfo]   where [AlarmType] <> 6 and  [AlarmDay ] >='" + begintime + "' and [AlarmDay ] <='" + endtime + "'   group by [DevId],[AlarmType] ) as ala left join [Device] as de on de.[DevId] = ala.[DevId] left join [Entity] as en on en.[BMDM] = de.[BMDM]  left join ACL_USER as us on de.JYBH = us.JYBH  where " + sreachcondi + " de.[DevType]=" + type + " and en.BMDM='" + sszd + "'", "Alarm_EveryDayInfo");
                             break;
                     }
                     //  hbAlarm_EveryDayInfo = SQLHelper.ExecuteRead(CommandType.Text, "SELECT en.[ParentID],de.[Contacts],de.[DevId],ala.在线时长 from (SELECT [DevId]  ,sum([Value]) as 在线时长 from [Alarm_EveryDayInfo]   where [AlarmType] = 1 and  [AlarmDay ] >='" + hbbegintime + "' and [AlarmDay ] <='" + hbendtime + "'   group by [DevId] ) as ala left join [Device] as de on de.[DevId] = ala.[DevId] left join [Entity] as en on en.[ID] = de.[EntityId] where de.[DevType]=1", "Alarm_EveryDayInfo");
@@ -190,15 +194,15 @@ namespace Policesystem.Handle
                 int 在线 = 0;
                 int status = 0;//设备使用正常、周1次，月4次，季度12次
                 var rows = from p in Alarm_EveryDayInfo.AsEnumerable()
-                           where (p.Field<string>("ParentID") == dtEntity.Rows[i1]["ID"].ToString() || p.Field<string>("BMDM") == dtEntity.Rows[i1]["ID"].ToString())
+                           where (p.Field<string>("ParentID") == dtEntity.Rows[i1]["ID"].ToString() || p.Field<string>("BMDM") == dtEntity.Rows[i1]["ID"].ToString() || p.Field<string>("DJBM") == dtEntity.Rows[i1]["ID"].ToString())
                            orderby p.Field<string>("DevId")
                            select p;
-                if(dtEntity.Rows[i1]["ID"].ToString() == "33100000000x") {
-                     rows = from p in Alarm_EveryDayInfo.AsEnumerable()
-                         where (p.Field<string>("ParentID") == dtEntity.Rows[i1]["ID"].ToString( ) || p.Field<string>("ParentID") == "331000000400" || p.Field<string>("BMDM") == dtEntity.Rows[i1]["ID"].ToString())
-                         orderby p.Field<string>("DevId")
-                               select p;
-                }
+                //if(dtEntity.Rows[i1]["ID"].ToString() == "33100000000x") {
+                //     rows = from p in Alarm_EveryDayInfo.AsEnumerable()
+                //         where (p.Field<string>("ParentID") == dtEntity.Rows[i1]["ID"].ToString( ) || p.Field<string>("ParentID") == "331000000400" || p.Field<string>("BMDM") == dtEntity.Rows[i1]["ID"].ToString())
+                //         orderby p.Field<string>("DevId")
+                //               select p;
+                //}
                 
                
                 //获得设备数量，及正常使用设备
@@ -283,11 +287,11 @@ namespace Policesystem.Handle
                         pxstring = "cloum7";
                         break;
                     case "5":
-                        dr["cloum7"] = ((double)在线时长 / 3600).ToString("0.00"); //第4列，视频时长
+                        dr["cloum5"] = ((double)在线时长 / 3600).ToString("0.00"); //第4列，视频时长
 
                         dr["cloum4"] = status;
                         dr["cloum9"] = countdevices - status; //设备未使用项目，第8列
-                        dr["cloum5"] = ((double)文件大小 / 1048576).ToString("0.00"); //转换为GB，第5列
+                        dr["cloum7"] = ((double)文件大小 / 1048576).ToString("0.00"); //转换为GB，第5列
                         spdx += ((double)文件大小 / 1048576);
                         dr["cloum6"] = (countdevices != 0) ? (deviceuse) : 0; //使用数量，第6列
                         zxsc += (double)在线时长 / 3600;
@@ -298,7 +302,7 @@ namespace Policesystem.Handle
                 }
                 dr["cloum13"] = 在线时长 / 3600;
                 zxsb += 在线;
-                dr["cloum14"] = 在线;
+                dr["cloum14"] = zxsb;
                 dr["cloum12"] = dtEntity.Rows[i1]["ID"].ToString();
                 dtreturns.Rows.Add(dr);
             }
@@ -390,6 +394,7 @@ namespace Policesystem.Handle
         }
 
 
+    
 
         public string ExportExcel(DataTable dt, string type, string begintime, string endtime, string entityTitle, string ssdd, string sszd, string ssddtext, string sszdtext)
         {

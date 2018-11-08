@@ -5,6 +5,24 @@ var typename = ["车载视频", "对讲机", "拦截仪", "警务通", "执法�
 $("#header").load('top.html', function () {
     $("#header ul li:eq(2)").addClass("active");
 });
+
+$.ajax({
+    type: "POST",
+    url: "../Handle/getDevices.ashx",
+    data: { 'requesttype': 'huizong' },
+    dataType: "json",
+    success: function (data) {
+        var data = data.data;
+        for (var i = 0; i < data.length; i++) {
+            $("#deviceselect").append("<option value='" + data[i].ID + "' >" + data[i].TypeName + "</option>");
+
+        }
+    },
+    error: function (msg) {
+        console.debug("错误:ajax");
+    }
+});
+
 $('.start_form_datetime').datetimepicker({
     format: 'yyyy/mm/dd',
     autoclose: true,
