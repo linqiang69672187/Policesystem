@@ -162,7 +162,6 @@
     <Content Include="data.html" />
     <Content Include="dataManagement.html" />
     <Content Include="demo.html" />
-    <Content Include="demo2.html" />
     <Content Include="Handle\WebForm1.aspx" />
     <Content Include="HtmlPage1.html" />
     <Content Include="Images\favicon.ico" />
