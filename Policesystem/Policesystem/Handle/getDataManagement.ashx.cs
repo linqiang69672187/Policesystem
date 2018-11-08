@@ -368,8 +368,8 @@ namespace Policesystem.Handle
                     break;
                 case "5":
                     drtz["cloum5"] = allstatu_device;// devicescount - allstatu_device;
-                    drtz["cloum7"] = zxsc.ToString("0.00");
-                    drtz["cloum5"] = spdx.ToString("0.00");
+                    drtz["cloum5"] = zxsc.ToString("0.00");
+                    drtz["cloum7"] = spdx.ToString("0.00");
                     sbsyl = (devicescount == 0) ? 0 : ((double)allstatu_device * 100 / devicescount);
                     drtz["cloum6"] = Math.Round(sbsyl, 2);
                     drtz["cloum4"] = allstatu_device;
