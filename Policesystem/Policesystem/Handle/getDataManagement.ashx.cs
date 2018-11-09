@@ -17,7 +17,8 @@ namespace Policesystem.Handle
     /// </summary>
     public class getDataManagement : IHttpHandler
     {
-
+        DataTable Alarm_EveryDayInfo = null; //每日告警
+        DataTable dUser = null;
 
         public void ProcessRequest(HttpContext context)
         {
@@ -105,8 +106,7 @@ namespace Policesystem.Handle
 
             statusvalue = days * usedvalue;//超过10分钟算使用
             zxstatusvalue = days * onlinevalue;//在线参考值
-            DataTable Alarm_EveryDayInfo = null; //每日告警
-            DataTable dUser = null;
+
 
 
 
@@ -193,54 +193,70 @@ namespace Policesystem.Handle
                 int usercount = 0;
                 int 在线 = 0;
                 int status = 0;//设备使用正常、周1次，月4次，季度12次
-                var rows = from p in Alarm_EveryDayInfo.AsEnumerable()
-                           where (p.Field<string>("ParentID") == dtEntity.Rows[i1]["ID"].ToString() || p.Field<string>("BMDM") == dtEntity.Rows[i1]["ID"].ToString() || p.Field<string>("DJBM") == dtEntity.Rows[i1]["ID"].ToString())
-                           orderby p.Field<string>("DevId")
-                           select p;
-                //if(dtEntity.Rows[i1]["ID"].ToString() == "33100000000x") {
-                //     rows = from p in Alarm_EveryDayInfo.AsEnumerable()
-                //         where (p.Field<string>("ParentID") == dtEntity.Rows[i1]["ID"].ToString( ) || p.Field<string>("ParentID") == "331000000400" || p.Field<string>("BMDM") == dtEntity.Rows[i1]["ID"].ToString())
-                //         orderby p.Field<string>("DevId")
-                //               select p;
-                //}
-                
-               
-                //获得设备数量，及正常使用设备
-                tmpRows = 0;
-                foreach (var item in rows)
+              
+            
+                   var rows = GetSonID(dtEntity.Rows[i1]["ID"].ToString());
+
+                        //(from p in Alarm_EveryDayInfo.AsEnumerable()
+                        //   where (p.Field<string>("ParentID") == dtEntity.Rows[i1]["ID"].ToString() || p.Field<string>("BMDM") == dtEntity.Rows[i1]["ID"].ToString() || p.Field<string>("DJBM") == dtEntity.Rows[i1]["ID"].ToString())
+                        //   orderby p.Field<string>("DevId")
+                        //                select new dataStruct
+                        //                  {
+                        //                      BMDM = p.Field<string>("BMDM"),
+                        //                      ParentID = p.Field<string>("ParentID"),
+                        //                      在线时长 = p.Field<int>("在线时长"),
+                        //                      文件大小 = p.Field<int>("文件大小"),
+                        //                      AlarmType = p.Field<int>("AlarmType"),
+                        //                      DevId = p.Field<string>("DevId")
+                        //                }).ToList<dataStruct>();
+
+                    //if(dtEntity.Rows[i1]["ID"].ToString() == "33100000000x") {
+                    //     rows = from p in Alarm_EveryDayInfo.AsEnumerable()
+                    //         where (p.Field<string>("ParentID") == dtEntity.Rows[i1]["ID"].ToString( ) || p.Field<string>("ParentID") == "331000000400" || p.Field<string>("BMDM") == dtEntity.Rows[i1]["ID"].ToString())
+                    //         orderby p.Field<string>("DevId")
+                    //               select p;
+                    //}
+                    if (dtEntity.Rows[i1]["ID"].ToString() == "33100000000x")
                 {
-                    if (item["在线时长"] is DBNull) { }
-                    else
-                    {
-                        switch (item["AlarmType"].ToString())
+                    testExportExcel(rows);
+                }
+
+                    //获得设备数量，及正常使用设备
+                    tmpRows = 0;
+                foreach (dataStruct item in rows)
+                {
+                  
+                        switch (item.AlarmType.ToString())
                         {
                             case "1":
-                                在线时长 += Convert.ToInt32(item["在线时长"]);
-                                未使用+= ((Convert.ToInt32(item["在线时长"]) - statusvalue)<=0)?1:0;
-                                在线 += ((Convert.ToInt32(item["在线时长"]) - zxstatusvalue) > 0) ? 1 : 0;
-                                文件大小 += Convert.ToInt32(item["文件大小"]);
+                                在线时长 += Convert.ToInt32(item.在线时长);
+                                未使用+= ((Convert.ToInt32(item.在线时长) - statusvalue)<=0)?1:0;
+                                在线 += ((Convert.ToInt32(item.在线时长) - zxstatusvalue) > 0) ? 1 : 0;
+                                文件大小 += Convert.ToInt32(item.文件大小);
                                 break;
                             case "2":
-                                处理量 += Convert.ToInt32(item["在线时长"]);
-                                无处罚量 += (Convert.ToInt32(item["在线时长"]) == 0) ? 1 : 0;
+                                处理量 += Convert.ToInt32(item.在线时长);
+                                无处罚量 += (Convert.ToInt32(item.在线时长) == 0) ? 1 : 0;
                                 break;
                             case "5":
-                                查询量 += Convert.ToInt32(item["在线时长"]);
-                                无查询量 += (Convert.ToInt32(item["在线时长"]) == 0) ? 1 : 0;
+                                查询量 += Convert.ToInt32(item.在线时长);
+                                无查询量 += (Convert.ToInt32(item.在线时长) == 0) ? 1 : 0;
                                 break;
                         }
-                        if (item["DevId"].ToString() != tmpDevid)
+                        if (item.DevId.ToString() != tmpDevid)
                         {
                             tmpRows += 1;  //新设备ID不重复
-                            tmpDevid = item["DevId"].ToString();
-                            status += (Convert.ToInt32(item["在线时长"]) - statusvalue > 0) ? 1 : 0;
-                            allstatu_device += (Convert.ToInt32(item["在线时长"]) - statusvalue > 0) ? 1 : 0;
+                            tmpDevid = item.DevId.ToString();
+                            status += (Convert.ToInt32(item.在线时长) - statusvalue > 0) ? 1 : 0;
+                            allstatu_device += (Convert.ToInt32(item.在线时长) - statusvalue > 0) ? 1 : 0;
                         }
 
-                    }
+                   
 
 
                 }
+
+              
 
                 var userrows = from p in dUser.AsEnumerable()
                            where (p.Field<string>("SJBM") == dtEntity.Rows[i1]["ID"].ToString()|| p.Field<string>("BMDM") == dtEntity.Rows[i1]["ID"].ToString()) select p;
@@ -393,8 +409,74 @@ namespace Policesystem.Handle
             context.Response.Write(JSON.DatatableToDatatableJS(dtreturns, reTitle));
         }
 
+        public IEnumerable<dataStruct> GetSonID(string p_id)
+        {
+            try { 
+            var query = (from p in Alarm_EveryDayInfo.AsEnumerable()
+                         where (p.Field<string>("ParentID") == p_id  )
+                         select new dataStruct
+                         {
+                             BMDM = p.Field<string>("BMDM"),
+                             ParentID = p.Field<string>("ParentID"),
+                             在线时长 = p.Field<int>("在线时长"),
+                             文件大小 = p.Field<int>("文件大小"),
+                             AlarmType = p.Field<int>("AlarmType"),
+                             DevId = p.Field<string>("DevId")
+                         }).ToList<dataStruct>();
+                return query.ToList().Concat(query.ToList().SelectMany(t => GetSonID(t.BMDM)));
+            }
+            catch (Exception e) {
+                return null;
+            }
+          
+        }
 
-    
+
+        public class dataStruct
+        {
+            public string BMDM = "BMDM";
+            public string ParentID = "ParentID";
+            public int 在线时长 = 0;
+            public int 文件大小 = 0;
+            public int AlarmType = 0;
+            public string DevId = "DevId";
+        }
+
+
+        public string testExportExcel(IEnumerable<dataStruct> rows)
+        {
+            ExcelFile excelFile = new ExcelFile();
+            var tmpath = "";
+            tmpath = HttpContext.Current.Server.MapPath("templet\\xx.xls");
+                
+
+            excelFile.LoadXls(tmpath);
+            ExcelWorksheet sheet = excelFile.Worksheets[0];
+
+            int i = 0;
+
+
+            foreach (dataStruct item in rows)
+            {
+
+                sheet.Rows[i + 2].Cells["A"].Value = item.BMDM;
+                sheet.Rows[i + 2].Cells["B"].Value = item.DevId;
+                sheet.Rows[i + 2].Cells["C"].Value = item.ParentID;
+                        sheet.Rows[i + 2].Cells["D"].Value = item.在线时长;
+                        sheet.Rows[i + 2].Cells["E"].Value = item.文件大小;
+                        sheet.Rows[i + 2].Cells["F"].Value = item.AlarmType;
+                
+                i += 1;
+
+            }
+                   
+
+            tmpath = HttpContext.Current.Server.MapPath("upload\\xx.xls");
+
+            excelFile.SaveXls(tmpath);
+            return sheet.Rows[0].Cells[0].Value + ".xls";
+        }
+
 
         public string ExportExcel(DataTable dt, string type, string begintime, string endtime, string entityTitle, string ssdd, string sszd, string ssddtext, string sszdtext)
         {
