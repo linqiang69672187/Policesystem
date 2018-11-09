@@ -19,7 +19,7 @@ namespace Policesystem.Handle
     {
         DataTable Alarm_EveryDayInfo = null; //每日告警
         DataTable dUser = null;
-
+        List<dataStruct> tmpList = new List<dataStruct>();
         public void ProcessRequest(HttpContext context)
         {
             context.Response.ContentType = "text/plain";
@@ -195,8 +195,8 @@ namespace Policesystem.Handle
                 int status = 0;//设备使用正常、周1次，月4次，季度12次
               
             
-                   var rows = GetSonID(dtEntity.Rows[i1]["ID"].ToString());
-
+                   var rows = findallchildren(dtEntity.Rows[i1]["ID"].ToString());
+             
                         //(from p in Alarm_EveryDayInfo.AsEnumerable()
                         //   where (p.Field<string>("ParentID") == dtEntity.Rows[i1]["ID"].ToString() || p.Field<string>("BMDM") == dtEntity.Rows[i1]["ID"].ToString() || p.Field<string>("DJBM") == dtEntity.Rows[i1]["ID"].ToString())
                         //   orderby p.Field<string>("DevId")
@@ -210,13 +210,13 @@ namespace Policesystem.Handle
                         //                      DevId = p.Field<string>("DevId")
                         //                }).ToList<dataStruct>();
 
-                    //if(dtEntity.Rows[i1]["ID"].ToString() == "33100000000x") {
-                    //     rows = from p in Alarm_EveryDayInfo.AsEnumerable()
-                    //         where (p.Field<string>("ParentID") == dtEntity.Rows[i1]["ID"].ToString( ) || p.Field<string>("ParentID") == "331000000400" || p.Field<string>("BMDM") == dtEntity.Rows[i1]["ID"].ToString())
-                    //         orderby p.Field<string>("DevId")
-                    //               select p;
-                    //}
-                    if (dtEntity.Rows[i1]["ID"].ToString() == "33100000000x")
+                //if(dtEntity.Rows[i1]["ID"].ToString() == "33100000000x") {
+                //     rows = from p in Alarm_EveryDayInfo.AsEnumerable()
+                //         where (p.Field<string>("ParentID") == dtEntity.Rows[i1]["ID"].ToString( ) || p.Field<string>("ParentID") == "331000000400" || p.Field<string>("BMDM") == dtEntity.Rows[i1]["ID"].ToString())
+                //         orderby p.Field<string>("DevId")
+                //               select p;
+                //}
+                if (dtEntity.Rows[i1]["ID"].ToString() == "33100000000x")
                 {
                     testExportExcel(rows);
                 }
@@ -256,7 +256,7 @@ namespace Policesystem.Handle
 
                 }
 
-              
+                tmpList.Clear();
 
                 var userrows = from p in dUser.AsEnumerable()
                            where (p.Field<string>("SJBM") == dtEntity.Rows[i1]["ID"].ToString()|| p.Field<string>("BMDM") == dtEntity.Rows[i1]["ID"].ToString()) select p;
@@ -430,6 +430,32 @@ namespace Policesystem.Handle
             }
           
         }
+
+        public List<dataStruct> findallchildren(string parentid)
+        {
+            var list = (from p in Alarm_EveryDayInfo.AsEnumerable()
+                        where p.Field<string>("ParentID") == parentid
+                        select new dataStruct
+                        {
+                            BMDM = p.Field<string>("BMDM"),
+                            ParentID = p.Field<string>("ParentID"),
+                            在线时长 = p.Field<int>("在线时长"),
+                            文件大小 = p.Field<int>("文件大小"),
+                            AlarmType = p.Field<int>("AlarmType"),
+                            DevId = p.Field<string>("DevId")
+                        }).ToList<dataStruct>();
+            if (list.Count != 0)
+            {
+                tmpList.AddRange(list);
+            }
+            foreach (dataStruct single in list)
+            { 
+                List<dataStruct> tmpChildren = findallchildren(single.BMDM);
+               
+              }
+            return tmpList;
+        }
+
 
 
         public class dataStruct

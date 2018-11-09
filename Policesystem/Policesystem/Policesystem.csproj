@@ -513,6 +513,7 @@
     <Content Include="Handle\templet\mingxi\5.xls" />
     <Content Include="Handle\templet\mingxi\6.xls" />
     <Content Include="Handle\getDevices.ashx" />
+    <Content Include="Handle\templet\xx.xls" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
