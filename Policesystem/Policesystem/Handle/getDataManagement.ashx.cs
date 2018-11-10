@@ -439,9 +439,9 @@ namespace Policesystem.Handle
 
         }
 
-        public List<dataStruct> findallchildren(string parentid)
+        public List<dataStruct> findallchildren(string parentid,DataTable dt)
         {
-            var list = (from p in Alarm_EveryDayInfo.AsEnumerable()
+            var list = (from p in dt.AsEnumerable()
                         where p.Field<string>("ParentID") == parentid
                         select new dataStruct
                         {
@@ -458,7 +458,7 @@ namespace Policesystem.Handle
             }
             foreach (dataStruct single in list)
             {
-                List<dataStruct> tmpChildren = findallchildren(single.BMDM);
+                List<dataStruct> tmpChildren = findallchildren(single.BMDM,dt);
 
             }
             return tmpList;
