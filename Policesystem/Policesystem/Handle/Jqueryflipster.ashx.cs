@@ -41,7 +41,7 @@ namespace Policesystem.Handle
                 case "331002000000":
                 case "331003000000":
                 case "331004000000":
-                    sbSQL = "WITH childtable(BMMC,BMDM,SJBM) as (SELECT BMMC,BMDM,SJBM FROM [Entity] WHERE SJBM ='" + BMDM + "' OR BMDM ='" + BMDM + "' UNION ALL SELECT A.BMMC,A.BMDM,A.SJBM FROM [Entity] A,childtable b where a.SJBM = b.BMDM ) SELECT BMMC,BMDM from [Entity] where BMDM in (SELECT BMDM FROM childtable) order by Sort";
+                    sbSQL = "WITH childtable(BMMC,BMDM,SJBM) as (SELECT BMMC,BMDM,SJBM FROM [Entity] WHERE SJBM ='" + BMDM + "' OR BMDM ='" + BMDM + "' UNION ALL SELECT A.BMMC,A.BMDM,A.SJBM FROM [Entity] A,childtable b where a.SJBM = b.BMDM ) SELECT BMMC,BMDM from [Entity] where BMDM in (SELECT BMDM FROM childtable) order BY CASE WHEN Sort IS NULL THEN 1 ELSE Sort END desc";
                     break;
                 default:
                     sbSQL = "SELECT BMMC,BMDM from [Entity] where [BMDM] = '"+BMDM+"' "; //目前只需要查询四个大队
