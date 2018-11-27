@@ -192,6 +192,7 @@
     <Content Include="Image\leftbootombg.png" />
     <Content Include="Image\leftbootombg_1.png" />
     <Content Include="Image\left_bannerbg.png" />
+    <Content Include="Image\rightbox_bg.png" />
     <Content Include="Image\sort_asc.png" />
     <Content Include="Image\sort_asc_disabled.png" />
     <Content Include="Image\sort_both.png" />

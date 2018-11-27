@@ -1,20 +1,34 @@
-﻿[
- 
-  [1540656000000, 0.8857],
-  [1540659600000, 0.8862],
-  [1540663200000, 0.8829],
-  [1540666800000, 0.8882],
-  [1540670400000, 0.8873],
-  [1540674000000, 0.8913],
-  [1540677600000, 0.8862],
-  [1540681200000, 0.8891],
-  [1540684800000, 0.8821],
-  [1540688400000, 0.8802],
-  [1540692000000, 0.8808],
-  [1540695600000, 0.8794],
-  [1540699200000, 0.8818],
-  [1540702800000, 0.8952],
-  [1540706400000, 0.8924],
-  [1540710000000, 0.8925],
-  [1540713600000, 0.8955]
-]
+﻿<!DOCTYPE html>
+<html lang='en'>
+<head>
+    <meta charset='utf-8' />
+    <title>My OpenLayers Map</title>
+    <script src="Static_Seed_Project/js/jquery-3.1.1.min.js"></script>
+    <script type='text/javascript'>
+
+        var map;
+
+       function init() {
+           $.ajax({
+               type: "POST",
+               url: "http://127.0.0.1:9000/",
+               data: { 'name': '林强' },
+               dataType: "json",
+               success: function (data) {
+                 
+                   alert(data[0].name);
+               },
+               error: function (msg) {
+                   console.debug("错误:ajax");
+               }
+           });
+       }
+
+    </script>
+</head>
+
+<body onload='init();'>
+    <div id='map_element' style='width: 500px; height: 500px;'>
+    </div>
+</body>
+</html>
