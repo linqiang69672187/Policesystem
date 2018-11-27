@@ -32,13 +32,26 @@
 
            <div class="row">
                <div class="leftbox">
-                     <div class="row"><!--<i class="fa fa-th-list" aria-hidden="true"></i><label>业务系统</label>--><div class="qjxinxi">
+                     <div class="row"><!--<i class="fa fa-th-list" aria-hidden="true"></i><label>业务系统</label>-->
+                   <div class="qjxinxi  col12">
                          <div >全局设备情况</div><div><ul>
+                         <li><label>全市</label></li>
                          <li><i class="fa fa-windows" aria-hidden="true"></i><label></label><label>总设备数</label></li>
                          <li><i class="fa fa-university"></i><label></label><label>总执法量</label></li>
                          <li><i class="fa fa-signal"></i><label></label><label>总在线数</label></li>
                          <li><i class="fa fa-clock-o"></i><label></label><label>总在线(h)</label></li>
-                         </ul></div></div></div>
+                         </ul></div>
+                        <div>
+                            <ul>
+                                <li><label>支队</label></li>
+                                <li><i class="fa fa-windows" aria-hidden="true"></i><label></label><label>总设备数</label></li>
+                                <li><i class="fa fa-university"></i><label></label><label>总执法量</label></li>
+                                <li><i class="fa fa-signal"></i><label></label><label>总在线数</label></li>
+                                <li><i class="fa fa-clock-o"></i><label></label><label>总在线(h)</label></li>
+                            </ul>
+                        </div>
+
+                         </div></div>
                      <div class="row xzlb">
                         <iframe src="jQuery.flipster/index.html">
 
@@ -57,11 +70,24 @@
                        
 
                      </div>
-                     <div class="row">
+                   <div class="row">
+                       <div class="col5 col-md-4">
+                           <div class="xixi1"><img src="Image/index_zhifajiluyi.png" /><label>执法记录仪</label></div>
+                           <div><div id="zf_gfscl"></div><div id="zf_zxshj"></div></div>
+                       </div>
+                       <div class="col7">
+                           <div class="xixi2"><img src="Image/index_duijiangji.png" /><label>对讲机</label></div>
+
+                           <div id="djj_jrzx"></div><div id="djj_gfscl"></div><div id="djj_zxshj"></div>
+                       </div>
+
+
+                   </div>
+                     <!--<div class="row">
                          <div class="col12"><div class="xixi3"><img src="Image/index_jingwutong.png" /><label>警务通</label></div>
                              <div id="jwt_jrzx"></div><div id="jwt_cxl"></div><div id="jwt_rjcf"></div><div id="jwt_jrcl"></div><div id="jwt_pjcf"></div><div class="jwt_logo"></div>
                          </div>
-                   </div>
+                   </div>-->
                </div>
                <div class="rightbox">
 
@@ -69,11 +95,11 @@
                            <ul class="demo2">
                                <li class="news-item"></li>
                            </ul>
-                           </div>
-                   <div class="row2n">
+                        </div>
+                   <div class="row2n" style="display:none">
                        <div><img src="Image/index_jingwutong.png" /><label>警务通</label><img src="Image/index_bz.png" /></div>
                        <div class="rlchars"><ul><li>配发数量</li><li><div id="jwtchart"></div></li><li>设备使用率</li><li><div id="jwtcolumn"></div></li></ul></div>
-                       <div><!--<span>更多</span><span>更多</span>--></div>
+                       <div><span>更多</span><span>更多</span></div>
                    </div>
                    <div class="row1n">
                        <div><img src="Image/index_lanjieyi.png" /><label>拦截仪</label><img src="Image/index_bz.png" /></div>

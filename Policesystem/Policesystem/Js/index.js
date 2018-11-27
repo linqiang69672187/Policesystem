@@ -615,7 +615,7 @@ function loadTotalDevices() {
         data: "",
         dataType: "json",
         success: function (data) {
-
+            return;
             $(".qjxinxi label:eq(0)").text(data.data["0"].value);
             $(".qjxinxi label:eq(2)").text(data.data["1"].value);
             $(".qjxinxi label:eq(4)").text(data.data["2"].value);
