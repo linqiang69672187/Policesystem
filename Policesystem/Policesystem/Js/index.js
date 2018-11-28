@@ -496,12 +496,7 @@ function myRealtimeChart(label, value, index, chartnum) {
             }
         },
         yAxis: {
-            title: {
-                text: '处理量',
-                style: {
-                    color: '#ffffff'
-                }
-            },
+            title: null,
             tickPixelInterval: 50,
             labels: {
                 style: {
@@ -528,16 +523,16 @@ function myRealtimeChart(label, value, index, chartnum) {
             end: 10
         }],
         series: [{
-            name: '随机数据',
+            name: '处理量',
             data: (function () {
                 // 生成随机值
                 var data = [],
                     time = (new Date()).getTime(),
                     i;
-                for (i = -19; i <= 0; i += 1) {
+                for (i = -1; i <= 0; i += 1) {
                     data.push({
-                        x: time + i * 1000,
-                        y: Math.random() * 1000
+                        x: time + i * 5000,
+                        y: value
                     });
                 }
                 return data;
@@ -1039,7 +1034,7 @@ function createGauge(data) {
                     if (arrayval[0] == "1") {
                         value = dataValue(parseFloat(yesdayvalue.在线总时长), parseFloat(todayvalue.在线总时长))
                       //  myGaugeChart("在线总时长", value, i, numchart);
-                        myRealtimeChart("在线总时长", value, i, numchart);
+                        myRealtimeChart("在线总时长", parseFloat(todayvalue.在线总时长), i, numchart);
                         numchart += 1;
                     }
                     if (arrayval[1] == "1") {
