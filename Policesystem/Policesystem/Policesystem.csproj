@@ -467,6 +467,9 @@
     <Compile Include="Handle\indexconfig.ashx.cs">
       <DependentUpon>indexconfig.ashx</DependentUpon>
     </Compile>
+    <Compile Include="Handle\index_24histroy.ashx.cs">
+      <DependentUpon>index_24histroy.ashx</DependentUpon>
+    </Compile>
     <Compile Include="Handle\Jingwutongdemo.ashx.cs">
       <DependentUpon>Jingwutongdemo.ashx</DependentUpon>
     </Compile>
@@ -515,6 +518,7 @@
     <Content Include="Handle\templet\mingxi\6.xls" />
     <Content Include="Handle\getDevices.ashx" />
     <Content Include="Handle\templet\xx.xls" />
+    <Content Include="Handle\index_24histroy.ashx" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
