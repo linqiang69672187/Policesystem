@@ -692,7 +692,7 @@
 
     }
 
-    #zf_gfscl, #zf_zxshj
+    #zf_gfscl, #zf_zxshj,#jwt_jrcl,#jwt_pjcf
     {
     margin-top: 0px;
     width: 50%;
@@ -700,7 +700,7 @@
     display: inline-block;
     }
 
-     #djj_jrzx, #djj_gfscl, #djj_zxshj {
+    #djj_jrzx, #djj_gfscl, #djj_zxshj,#jwt_jrzx,#jwt_cxl,#jwt_rjcf {
     margin-top: 0px;
     width: 33.3%;
     height: 110px;
@@ -723,11 +723,7 @@
     transform: scale(0.5)
     }
 
-    #jwt_jrzx, #jwt_cxl, #jwt_rjcf, #jwt_jrcl, #jwt_pjcf {
-        margin-top: -20px;
-        display: inline-block;
-        width: 16.66%;
-    }
+
      .leftbox div:nth-child(4) .col5,    .leftbox div:nth-child(5) .col5 {
             border-radius: 4px;
             display: inline-block;
@@ -759,7 +755,7 @@
           float: left !important;
           margin-right:0px !important;
     }
-        .xixi1,.xixi2{
+        .xixi1,.xixi2,.xixi3,.xixi4{
             text-align:left;
         }
 

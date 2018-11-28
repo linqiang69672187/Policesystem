@@ -355,6 +355,235 @@ function createChart(id, type, data, color, totalvalue, fontweight) {
 }
 
 
+
+function myRealtimeChart(label, value, index, chartnum) {
+
+    var chart;
+    var containerId;
+    switch (index) {
+        case 0:
+            switch (chartnum) {
+                case 0:
+                    containerId = "zf_gfscl";
+                    break;
+                default:
+                    containerId = "zf_zxshj";
+                    break;
+            }
+
+            break;
+        case 1:
+            switch (chartnum) {
+                case 0:
+                    containerId = "djj_jrzx";
+                    break;
+                case 1:
+                    containerId = "djj_gfscl";
+                    break;
+                default:
+                    containerId = "djj_zxshj";
+                    break;
+            }
+            break;
+        case 2:
+            switch (chartnum) {
+                case 0:
+                    containerId = "jwt_jrzx";
+                    break;
+                case 1:
+                    containerId = "jwt_cxl";
+                    break;
+                default:
+                    containerId = "jwt_rjcf";
+                    break;
+            }
+            break;
+        case 3:
+            switch (chartnum) {
+                case 0:
+                    containerId = "jwt_jrcl";
+                    break;
+                default:
+                    containerId = "jwt_pjcf";
+                    break;
+            }
+            break;
+        default:
+            return;
+            break;
+    }
+    switch (containerId) {
+        case "zf_gfscl":
+            chart = zf_gfscl;
+            break;
+        case "zf_zxshj":
+            chart = zf_zxshj;
+            break;
+        case "djj_jrzx":
+            chart = djj_jrzx;
+            break;
+        case "djj_gfscl":
+            chart = djj_gfscl;
+            break;
+        case "djj_zxshj":
+            chart = djj_zxshj;
+            break;
+        case "jwt_jrzx":
+            chart = jwt_jrzx;
+            break;
+        case "jwt_cxl":
+            chart = jwt_cxl;
+            break;
+        case "jwt_rjcf":
+            chart = jwt_rjcf;
+            break;
+        case "jwt_jrcl":
+            chart = jwt_jrcl;
+            break;
+        case "jwt_pjcf":
+            chart = jwt_pjcf;
+            break;
+        default:
+            break;
+
+    }
+    chart = djj_jrzx;
+    if (chart) {
+        var series = chart.series[0];
+        var x = new Date().getTime();
+        series.addPoint([x, value], true, true);
+        return;
+    }
+
+
+
+    chart = Highcharts.chart('djj_jrzx', {
+        chart: {
+            zoomType: 'x',
+            type: 'area',
+            backgroundColor: 'rgba(0,0,0,0)',//设置背景透明
+            marginRight: 0,
+            height: 130
+        },
+        mapNavigation: {
+            enabled: true,
+            enableButtons: false
+        },
+        credits: {
+            enabled: false
+        },
+        plotOptions: {
+            area: {
+                marker: {
+                    enabled: false
+                },
+                lineWidth: 1,
+                states: {
+                    hover: {
+                        lineWidth: 1
+                    }
+                },
+                threshold: null
+            }
+        },
+        xAxis: {
+            type: 'datetime',
+            tickPixelInterval: 70,
+            labels: {
+                style: {
+                    color: '#ffffff'
+                }
+            }
+        },
+        yAxis: {
+            title: {
+                text: '处理量',
+                style: {
+                    color: '#ffffff'
+                }
+            },
+            tickPixelInterval: 50,
+            labels: {
+                style: {
+                    color: '#ffffff'
+                }
+            }
+        },
+        tooltip: {
+            formatter: function () {
+                return '<b>' + this.series.name + '</b><br/>' +
+                    Highcharts.dateFormat('%Y-%m-%d %H:%M:%S', this.x) + '<br/>' +
+                    Highcharts.numberFormat(this.y, 2);
+            }
+        },
+        legend: {
+            enabled: false
+        },
+        title: {
+            text: null
+        },
+        dataZoom: [{
+            type: 'inside',
+            start: 0,
+            end: 10
+        }],
+        series: [{
+            name: '随机数据',
+            data: (function () {
+                // 生成随机值
+                var data = [],
+                    time = (new Date()).getTime(),
+                    i;
+                for (i = -19; i <= 0; i += 1) {
+                    data.push({
+                        x: time + i * 1000,
+                        y: Math.random() * 1000
+                    });
+                }
+                return data;
+            }())
+        }]
+    });
+
+
+    switch (containerId) {
+        case "zf_gfscl":
+            zf_gfscl = chart;
+            break;
+        case "zf_zxshj":
+            zf_zxshj = chart;
+            break;
+        case "djj_jrzx":
+            djj_jrzx = chart;
+            break;
+        case "djj_gfscl":
+            djj_gfscl = chart;
+            break;
+        case "djj_zxshj":
+            djj_zxshj = chart;
+            break;
+        case "jwt_jrzx":
+            jwt_jrzx = chart;
+            break;
+        case "jwt_cxl":
+            jwt_cxl = chart;
+            break;
+        case "jwt_rjcf":
+            jwt_rjcf = chart;
+            break;
+        case "jwt_jrcl":
+            jwt_jrcl = chart;
+            break;
+        case "jwt_pjcf":
+            jwt_pjcf = chart;
+            break;
+        default:
+            break;
+
+    }
+
+}
+
 function myGaugeChart(label, value,index,chartnum) {
     var chart
     var oper = '环比增加' + value + '%<i class="fa fa-arrow-up" aria-hidden="true"></i><br/> <span style="hbclasslabel">● ' + label + ' ● </span>';
@@ -370,23 +599,50 @@ function myGaugeChart(label, value,index,chartnum) {
     switch (index) {
         case 0:
             switch (chartnum) {
-                case "0":
-
+                case 0:
+                    containerId = "zf_gfscl";
                     break;
                 default:
-
+                    containerId = "zf_zxshj";
                     break;
             }
 
             break;
         case 1:
-
+            switch (chartnum) {
+                case 0:
+                    containerId = "djj_jrzx";
+                    break;
+                case 1:
+                    containerId = "djj_gfscl";
+                    break;
+                default:
+                    containerId = "djj_zxshj";
+                    break;
+            }
             break;
         case 2:
-
+            switch (chartnum) {
+                case 0:
+                    containerId = "jwt_jrzx";
+                    break;
+                case 1:
+                    containerId = "jwt_cxl";
+                    break;
+                default:
+                    containerId = "jwt_rjcf";
+                    break;
+            }
             break;
         case 3:
-
+            switch (chartnum) {
+                case 0:
+                    containerId = "jwt_jrcl";
+                    break;
+                default:
+                    containerId = "jwt_pjcf";
+                    break;
+            }
             break;
         default:
             return;
@@ -536,20 +792,8 @@ function myGaugeChart(label, value,index,chartnum) {
         }]
     }, function (chart) {
         return;
-        //if (!chart.renderer.forExport) {
-            
-        //    setInterval(function () {
-        //        var point = chart.series[0].points[0],
-        //            newVal,
-        //            inc = Math.round((Math.random() - 0.5) * 20);
-        //        newVal = point.y + inc;
-        //        if (newVal < 0 || newVal > 200) {
-        //            newVal = point.y - inc;
-        //        }
-        //        point.update(newVal);
-        //    }, 3000);
-        //}
     });
+
 
     switch (containerId) {
         case "zf_gfscl":
@@ -676,7 +920,9 @@ $(function () {
     loadHistoryData();
 });
 var Totalinter = setInterval(loadTotalDevices, 60000);//一分钟重新加载全局设备情况
-var Gaugeinter = setInterval(loadGaugeData, 120000);//2分钟加载仪表盘
+var Gaugeinter = setInterval(loadGaugeData, 5000);//2分钟加载仪表盘
+
+
 
 function createGaugeTile(domid,type) {
     switch (type) {
@@ -690,6 +936,9 @@ function createGaugeTile(domid,type) {
             if (domid == 2) {
                 $(".xixi3").html("<img src='image/index_chezaiship.png'><label>车载视频</label>")
             }
+            if (domid == 3) {
+                $(".xixi4").html("<img src='image/index_chezaiship.png'><label>车载视频</label>")
+            }
             break;
         case "2":
             if (domid == 0) {
@@ -700,6 +949,9 @@ function createGaugeTile(domid,type) {
             }
             if (domid == 2) {
                 $(".xixi3").html("<img src='image/index_duijiangji.png'><label>对讲机</label>")
+            }
+            if (domid == 3) {
+                $(".xixi4").html("<img src='image/index_duijiangji.png'><label>对讲机</label>")
             }
             break;
         case "3":
@@ -712,6 +964,9 @@ function createGaugeTile(domid,type) {
             if (domid == 2) {
                 $(".xixi3").html("<img src='image/index_lanjieyi.png'><label>拦截仪</label>")
             }
+            if (domid == 3) {
+                $(".xixi4").html("<img src='image/index_lanjieyi.png'><label>拦截仪</label>")
+            }
             break;
         case "4":
             if (domid == 0) {
@@ -722,6 +977,9 @@ function createGaugeTile(domid,type) {
             }
             if (domid == 2) {
                 $(".xixi3").html("<img src='image/index_jingwutong.png'><label>警务通</label>")
+            }
+            if (domid == 3) {
+                $(".xixi4").html("<img src='image/index_jingwutong.png'><label>警务通</label>")
             }
             break;
         case "5":
@@ -734,6 +992,9 @@ function createGaugeTile(domid,type) {
             if (domid == 2) {
                 $(".xixi3").html("<img src='image/index_zhifajiluyi.png'><label>执法记录仪</label>")
             }
+            if (domid == 3) {
+                $(".xixi4").html("<img src='image/index_zhifajiluyi.png'><label>执法记录仪</label>")
+            }
             break;
         case "6":
             if (domid == 0) {
@@ -744,6 +1005,9 @@ function createGaugeTile(domid,type) {
             }
             if (domid == 2) {
                 $(".xixi3").html("<img src='image/index_jingwutong.png'><label>辅警通</label>")
+            }
+            if (domid == 3) {
+                $(".xixi4").html("<img src='image/index_jingwutong.png'><label>辅警通</label>")
             }
             break;
     }
@@ -767,15 +1031,15 @@ function createGauge(data) {
         arrayval = indexconfigdata[i].val.split(",");
         numchart = 0;
         createGaugeTile(i, indexconfigdata[i].DevType);
-        if (i == 0) {   //第一个栏仪盘
           
-            switch (indexconfigdata[i].DevType) {
+        switch (indexconfigdata[i].DevType) {
                 case "1":
                 case "2":
                 case "3":
                     if (arrayval[0] == "1") {
                         value = dataValue(parseFloat(yesdayvalue.在线总时长), parseFloat(todayvalue.在线总时长))
-                        myGaugeChart("在线总时长", value, i , numchart);
+                      //  myGaugeChart("在线总时长", value, i, numchart);
+                        myRealtimeChart("在线总时长", value, i, numchart);
                         numchart += 1;
                     }
                     if (arrayval[1] == "1") {
@@ -870,7 +1134,6 @@ function createGauge(data) {
 
             }
 
-        }
     
 
     }
@@ -884,7 +1147,7 @@ function loadindexconfigdata() {
         data: "",
         dataType: "json",
         success: function (data) {
-            if (data.data.length == 3) {
+            if (data.data.length == 4) {
                 indexconfigdata = data.data;
                 loadGaugeData();
             }
