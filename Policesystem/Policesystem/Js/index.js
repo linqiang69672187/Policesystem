@@ -464,7 +464,7 @@ function myRealtimeChart(label, value, index, chartnum, rebuildchar) {
             var data = [],
                     time = (new Date()).getTime(),
                     i;
-            for (i = -19; i <= 0; i += 1) {
+            for (i = -1; i < 0; i += 1) {
                 data.push({
                     x: time + i * 1000,
                     y: value
@@ -478,7 +478,7 @@ function myRealtimeChart(label, value, index, chartnum, rebuildchar) {
         }
         else{
             var x = new Date().getTime();
-            series.addPoint([x, value], true, true);
+            series.addPoint([x, value]);
         }
         return;
     }
@@ -573,13 +573,15 @@ function myRealtimeChart(label, value, index, chartnum, rebuildchar) {
            // lineColor: areacolor,
             color: areacolor,
             fillOpacity: 0.8,
-            enabled: false,
+            marker: {
+                enabled:false
+            },
             data: (function () {
                 // 生成随机值
                 var data = [],
                     time = (new Date()).getTime(),
                     i;
-                for (i = -19; i <= 0; i += 1) {
+                for (i = -1; i < 0; i += 1) {
                     data.push({
                         x: time + i * 1000,
                         y: value
@@ -1278,7 +1280,7 @@ function loadindexconfigdata() {
                 indexconfigdata = data.data;
                // loadGaugeData();
                  Totalinter = setInterval(loadTotalDevices, 60000);//一分钟重新加载全局设备情况
-                 Gaugeinter = setInterval(loadGaugeData, 5000);//2分钟加载仪表盘
+                 Gaugeinter = setInterval(loadGaugeData, 1000);//2分钟加载仪表盘
             }
         },
         error: function (msg) {
