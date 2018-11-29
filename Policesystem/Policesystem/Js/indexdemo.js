@@ -1597,7 +1597,7 @@ var chart = Highcharts.chart('jwt_jrcl', {
         enabled: false
     },
     title: {
-        text: "<span class='hbclasslabel sslable'>● 警务通处理量 ● </span>",
+        text: null,
         verticalAlign: 'bottom',
         style:{
                color:'#ffffff'
@@ -1619,7 +1619,10 @@ var chart = Highcharts.chart('jwt_jrcl', {
     },
     xAxis: {
         type: 'datetime',
-        tickPixelInterval: 70,
+        dateTimeLabelFormats: {
+            second: '%M:%S'
+        },
+        tickPixelInterval:40,
         labels: {
             style: {
                 color: '#ffffff'
@@ -1628,7 +1631,7 @@ var chart = Highcharts.chart('jwt_jrcl', {
     },
     yAxis: {
         title: {
-            text: '处理量',
+            text: null,
             style: {
                 color: '#ffffff'
             }

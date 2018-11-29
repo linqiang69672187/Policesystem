@@ -5,6 +5,8 @@ var zf_gfscl, zf_zxshj, djj_jrzx, djj_gfscl, djj_zxshj, jwt_jrzx, jwt_cxl, jwt_r
 var alarmindex = 0;
 var alarmdays = 30;
 var historydata;
+var Totalinter;//一分钟重新加载全局设备情况
+var Gaugeinter;//2分钟加载仪表盘
 setInterval(function () {
     var date = new Date();
     var year = date.getFullYear();
@@ -481,8 +483,9 @@ function myRealtimeChart(label, value, index, chartnum) {
         },
         xAxis: {
             type: 'datetime',
+            tickPixelInterval: 40,
             dateTimeLabelFormats: {
-                second: '%S'
+                second: '%M:%S'
             },
             labels: {
                 style: {
@@ -904,8 +907,7 @@ $(function () {
     loadindexconfigdata();//加载仪表盘数据
  //   loadHistoryData();
 });
-var Totalinter = setInterval(loadTotalDevices, 60000);//一分钟重新加载全局设备情况
-var Gaugeinter = setInterval(loadGaugeData, 5000);//2分钟加载仪表盘
+
 
 
 
@@ -1195,6 +1197,8 @@ function loadindexconfigdata() {
             if (data.data.length == 4) {
                 indexconfigdata = data.data;
                 loadGaugeData();
+                 Totalinter = setInterval(loadTotalDevices, 60000);//一分钟重新加载全局设备情况
+                 Gaugeinter = setInterval(loadGaugeData, 5000);//2分钟加载仪表盘
             }
         },
         error: function (msg) {
