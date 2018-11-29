@@ -1045,3 +1045,12 @@ padding:2px 5px 0 0;
  margin-right:20px;
  margin-top:5px;
 }
+
+.leftbox .highcharts-container {
+    position:absolute !important;
+}   
+
+.highcharts-axis-labels{
+    color:#ffffff ;
+    font-size:11px ;
+}

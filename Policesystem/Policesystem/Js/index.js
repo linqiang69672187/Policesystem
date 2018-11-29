@@ -364,6 +364,7 @@ function myRealtimeChart(label, value, index, chartnum) {
     var containerId;
     switch (index) {
         case 0:
+            if (chartnum > 1) return;
             switch (chartnum) {
                 case 0:
                     containerId = "zf_gfscl";
@@ -375,6 +376,7 @@ function myRealtimeChart(label, value, index, chartnum) {
 
             break;
         case 1:
+            if (chartnum > 2) return;
             switch (chartnum) {
                 case 0:
                     containerId = "djj_jrzx";
@@ -388,6 +390,7 @@ function myRealtimeChart(label, value, index, chartnum) {
             }
             break;
         case 2:
+            if (chartnum > 2) return;
             switch (chartnum) {
                 case 0:
                     containerId = "jwt_jrzx";
@@ -401,6 +404,7 @@ function myRealtimeChart(label, value, index, chartnum) {
             }
             break;
         case 3:
+            if (chartnum > 1) return;
             switch (chartnum) {
                 case 0:
                     containerId = "jwt_jrcl";
@@ -451,55 +455,85 @@ function myRealtimeChart(label, value, index, chartnum) {
     }
     if (chart) {
         var series = chart.series[0];
-        var x = new Date().getTime();
-        series.addPoint([x, value], true, true);
+            var x = new Date().getTime();
+            series.addPoint([x, value], true, true);
         return;
     }
 
+    var areacolor;
+    switch (label) {
+        case "在线总时长":
+            areacolor = '#5d3b9d';
+            break;
+        case "设备配发数":
+            areacolor = '#3d4a82';
+            break;
+        case "设备使用率":
+            areacolor = '#51e97c';
+            break;
+        case "今日在线量":
+            areacolor = '#884646';
+            break;
+        case "处理量":
+            areacolor = '#806e47';
+            break;
+        case "查询量":
+            areacolor = '#5c389a';
+            break;
+        case "视频长度":
+            areacolor = '#823f76';
+            break;
+        case "视频文件大小":
+            areacolor = '#2c559b';
+            break;
+        case "规范上传率":
+            areacolor = '#2c559b';
+            break;
+    }
 
 
-    chart = Highcharts.chart(containerId, {
+    var chart = Highcharts.chart(containerId, {
         chart: {
-            zoomType: 'x',
             type: 'area',
+            marginRight: 0,
+            events: {},
             backgroundColor: 'rgba(0,0,0,0)',//设置背景透明
             marginRight: 0,
             height: 130
-        }
-        ,
-        plotOptions: {
-            area: {
-                marker: {
-                    enabled: false
-                },
-                lineWidth: 1,
-                states: {
-                    hover: {
-                        lineWidth: 1
-                    }
-                },
-                threshold: null
-            }
+        },
+        title: {
+            text: null
+        },
+        credits: {
+            enabled: false
         },
         xAxis: {
             type: 'datetime',
-            tickPixelInterval: 40,
+            tickPixelInterval: 55,
             dateTimeLabelFormats: {
                 second: '%M:%S'
             },
             labels: {
                 style: {
-                    color: '#ffffff'
+                    "color": "#ffffff",
+                    "fontSize": "11px"
                 }
+
             }
         },
         yAxis: {
-            title: null,
-            tickPixelInterval: 10,
+            title: {
+                text: null
+            },
+            lineWidth: 1,
+            gridLineWidth: 0,
+            tickPixelInterval: 30,
             labels: {
                 style: {
-                    color: '#ffffff'
+                    "color": "#ffffff",
+                     "fontSize": "11px"
                 }
+
             }
         },
         tooltip: {
@@ -512,20 +546,20 @@ function myRealtimeChart(label, value, index, chartnum) {
         legend: {
             enabled: false
         },
-        title: {
-            text: null
-        },
         series: [{
-            name: '处理量',
+            name:label,
+           // lineColor: areacolor,
+            color: areacolor,
+            fillOpacity: 0.8,
             data: (function () {
                 // 生成随机值
                 var data = [],
                     time = (new Date()).getTime(),
                     i;
-                for (i = -1; i <= 0; i += 1) {
+                for (i = -19; i <= 0; i += 1) {
                     data.push({
-                        x: time + i * 5000,
-                        y: value
+                        x: time + i * 1000,
+                        y: Math.random(value)
                     });
                 }
                 return data;
@@ -586,6 +620,7 @@ function myGaugeChart(label, value,index,chartnum) {
     var containerId;
     switch (index) {
         case 0:
+            if (chartnum > 1) return;
             switch (chartnum) {
                 case 0:
                     containerId = "zf_gfscl";
@@ -597,6 +632,7 @@ function myGaugeChart(label, value,index,chartnum) {
 
             break;
         case 1:
+            if (chartnum > 2) return;
             switch (chartnum) {
                 case 0:
                     containerId = "djj_jrzx";
@@ -610,6 +646,8 @@ function myGaugeChart(label, value,index,chartnum) {
             }
             break;
         case 2:
+            if (chartnum > 2) return;
+
             switch (chartnum) {
                 case 0:
                     containerId = "jwt_jrzx";
@@ -623,6 +661,7 @@ function myGaugeChart(label, value,index,chartnum) {
             }
             break;
         case 3:
+            if (chartnum > 1) return;
             switch (chartnum) {
                 case 0:
                     containerId = "jwt_jrcl";
@@ -908,7 +947,9 @@ $(function () {
  //   loadHistoryData();
 });
 
-
+function changeCarouseEntity() {
+    alert($("#ifr").contents().find(".lbtitle:eq(1)").attr("data-BMDM"));
+}
 
 
 function createGaugeTile(domid,type) {
@@ -1060,6 +1101,7 @@ function createGauge(data) {
                     }
                     if (arrayval[3] == "11") {
                         value = parseFloat(todayvalue.在线数) / parseFloat(todayvalue.设备数量);
+                        value = formatFloat(value,2)
                         myRealtimeChart("设备使用率", value, i, numchart);
                         numchart += 1;
                     }
@@ -1103,7 +1145,9 @@ function createGauge(data) {
                         numchart += 1;
                     }
                     if (arrayval[3] == "11") {
-                        myRealtimeChart("设备使用率", parseFloat(todayvalue.在线数) / parseFloat(todayvalue.设备数量), i, numchart);
+                        value=parseFloat(todayvalue.在线数) / parseFloat(todayvalue.设备数量)
+                        value = formatFloat(value, 2)
+                        myRealtimeChart("设备使用率", value, i, numchart);
                         numchart += 1;
                     }
                     if (arrayval[4] == "10") {
@@ -1146,6 +1190,7 @@ function createGauge(data) {
                     }
                     if (arrayval[3] == "11") {
                         value = parseFloat(todayvalue.在线数) / parseFloat(todayvalue.设备数量);
+                        value = formatFloat(value, 2)
                         myRealtimeChart("设备使用率", value, i, numchart);
                         numchart += 1;
                     }
@@ -1174,7 +1219,7 @@ function createGauge(data) {
                         numchart += 1;
                     }
                     if (arrayval[8] == "11") {
-                        myGaugeCmyRealtimeCharthart("规范上传率", parseFloat(todayvalue.规范上传率), i, numchart);
+                        myRealtimeChart("规范上传率", parseFloat(todayvalue.规范上传率), i, numchart);
                         numchart += 1;
                     }
                     break;
@@ -1285,3 +1330,6 @@ function datecompare(start) {
     time = end - start;
     return Math.floor(time / 86400000) + 1;
 };
+
+
+

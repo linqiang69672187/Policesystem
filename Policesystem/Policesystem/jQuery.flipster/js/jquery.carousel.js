@@ -65,7 +65,7 @@ var currentIndex=0;
             var that = this;
             var zIndexArr = [];
             if (type == "left") {//向左移动
-          
+            
                 this.posterItems.each(function(){
                    var self = $(this),
                     prev = $(this).next().get(0)?$(this).next():that.firstPosterItem,
@@ -93,7 +93,7 @@ var currentIndex=0;
                 });
             }
             if (type == "right") {//向右移动
-        
+               
                 this.posterItems.each(function(){
                     var self = $(this),
                     next = $(this).prev().get(0)?$(this).prev():that.lastPosterItem,
@@ -119,6 +119,7 @@ var currentIndex=0;
                     $(this).css("zIndex",zIndexArr[i]);
                 });
             }
+            window.parent.changeCarouseEntity();
         },
         setFirstPosition:function(){
             this.caroursel.css({"width":this.setting.width,"height":this.setting.height});
@@ -255,6 +256,7 @@ function createChar() {
                 $("ul.poster-list").append( '<li class="poster-item"><div><div class="lbtitle"></div><div class="divcontent"><div class="divcontentlf"><div><div><i class="fa fa-windows" aria-hidden="true"></i></div><div>总设备数</div><div>87</div></div><div><div><i class="fa fa-pie-chart"></i></div><div>设备使用率</div><div>50%</div></div></div><div class="divcontentrt"><ul></ul></div></div></div></li>');
                 sumonline = 0; sumisused = 0; total = 0;
                 $(".lbtitle:eq(" + i + ")").html("<i class='fa fa-minus  fa-rotate-90 " + data[n]["Name"] + "'></i>" + data[n]["Name"]);
+                $(".lbtitle:eq(" + i + ")").attr("data-BMDM", data[n]["BMDM"])
                 for (var i1 = 0; i1 < data[n]["data"].length; i1++) {
                     total += parseInt(data[n]["data"][i1]["count"]);
                     if (data[n]["data"][i1]["online"] != "") { sumonline += parseInt(data[n]["data"][i1]["online"]) };//在线终端总数
@@ -326,6 +328,7 @@ function crateItem() {
         if ($(this).position().left == 0) {
          
             $(".lbtitle:eq(" + index + ")").html("<i class='fa fa-minus  fa-rotate-90 " + data[currentIndex]["Name"] + "'></i>" + data[currentIndex]["Name"]);
+            $(".lbtitle:eq(" + index + ")").attr("data-BMDM", data[currentIndex]["BMDM"]);
             $(".divcontentrt:eq(" + index + ") ul").html("");
             for (var i1 = 0; i1 < data[currentIndex]["data"].length; i1++) {
                 total += parseInt(data[currentIndex]["data"][i1]["count"]);
@@ -394,6 +397,7 @@ function crateItemRight() {
         if ($(this).position().left > 0 && $(this).position().top != 0) {
 
             $(".lbtitle:eq(" + index + ")").html("<i class='fa fa-minus  fa-rotate-90 " + data[currentIndex]["Name"] + "'></i>" + data[currentIndex]["Name"]);
+            $(".lbtitle:eq(" + index + ")").attr("data-BMDM", data[currentIndex]["BMDM"]);
             $(".divcontentrt:eq(" + index + ") ul").html("");
             for (var i1 = 0; i1 < data[currentIndex]["data"].length; i1++) {
                 total += parseInt(data[currentIndex]["data"][i1]["count"]);

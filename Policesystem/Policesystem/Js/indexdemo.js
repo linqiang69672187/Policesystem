@@ -181,7 +181,8 @@ function createdatadetail(data, types) {
 
 }
 
-function createcolum(id, type, data, color,fontweight) {
+function createcolum(id, type, data, color, fontweight) {
+    return;
     var chart = Highcharts.chart(id, {
         chart: {
             backgroundColor: 'rgba(0,0,0,0)'
@@ -256,6 +257,7 @@ function createcolum(id, type, data, color,fontweight) {
     });
 }
 function createChart(id, type, data, color, totalvalue, fontweight) {
+    return;
     var chart = Highcharts.chart(id, {
         chart: {
             backgroundColor: 'rgba(0,0,0,0)'
@@ -1570,112 +1572,7 @@ $(document).on('click.bs.carousel.data-api', '.moreinfo', function (e) {
 
 });
 
-var chart = Highcharts.chart('jwt_jrcl', {
-    chart: {
-        zoomType: 'x',
-        type: 'area',
-        backgroundColor: 'rgba(0,0,0,0)',//设置背景透明
-        marginRight: 0,
-        height:130,
-        events: {
-            load: function () {
-                var series = this.series[0],
-					chart = this;
-                setInterval(function () {
-                    var x = (new Date()).getTime(), // 当前时间
-						y = Math.random()*1000;          // 随机值
-                    series.addPoint([x, y], true, true);
-                }, 1000);
-            }
-        }
-    },
-    mapNavigation: {
-        enabled: true,
-        enableButtons: false
-    },
-    credits: {
-        enabled: false
-    },
-    title: {
-        text: null,
-        verticalAlign: 'bottom',
-        style:{
-               color:'#ffffff'
-             }
-    },
-    plotOptions: {
-        area: {
-            marker: {
-                enabled: false
-            },
-            lineWidth: 1,
-            states: {
-                hover: {
-                    lineWidth: 1
-                }
-            },
-            threshold: null
-        }
-    },
-    xAxis: {
-        type: 'datetime',
-        dateTimeLabelFormats: {
-            second: '%M:%S'
-        },
-        tickPixelInterval:40,
-        labels: {
-            style: {
-                color: '#ffffff'
-            }
-        }
-    },
-    yAxis: {
-        title: {
-            text: null,
-            style: {
-                color: '#ffffff'
-            }
-        },
-        tickPixelInterval: 50,
-        labels: {
-    style: {
-    color: '#ffffff'
-}
-}
-    },
-    tooltip: {
-        formatter: function () {
-            return '<b>' + this.series.name + '</b><br/>' +
-				Highcharts.dateFormat('%Y-%m-%d %H:%M:%S', this.x) + '<br/>' +
-				Highcharts.numberFormat(this.y, 2);
-        }
-    },
-    legend: {
-        enabled: false
-    },
 
-   dataZoom: [{
-    type: 'inside',
-    start: 0,
-    end: 10
-       }],
-    series: [{
-        name: '随机数据',
-        data: (function () {
-            // 生成随机值
-            var data = [],
-				time = (new Date()).getTime(),
-				i;
-            for (i = -19; i <= 0; i += 1) {
-                data.push({
-                    x: time + i * 1000,
-                    y: Math.random()*1000
-                });
-            }
-            return data;
-        }())
-    }]
-});
 
 $(function () {
 
@@ -1772,3 +1669,109 @@ $(function () {
         });
     });
 });
+
+var myChart1 = echarts.init(document.getElementById('zf_gfscl'));
+var myChart2 = echarts.init(document.getElementById('zf_zxshj'));
+var myChart3 = echarts.init(document.getElementById('djj_jrzx'));
+var myChart4 = echarts.init(document.getElementById('djj_gfscl'));
+var myChart5 = echarts.init(document.getElementById('djj_zxshj'));
+
+function randomData() {
+    now = new Date();
+    value = value + Math.random() * 21 - 10;
+    return {
+        name: now.toString(),
+        value: [
+            now,
+            Math.round(value)
+        ]
+    }
+}
+
+var data = [];
+var now = +new Date(1997, 9, 3);
+var oneDay = 24 * 3600 * 1000;
+var value = Math.random() * 1000;
+  data.push(randomData());
+
+
+option = {
+    title: {
+        text:null
+    },
+    tooltip:null,
+    xAxis: {
+        type: 'time',
+        axisLabel:{
+            formatter:function (value)
+            {
+                return echarts.format.formatTime('ss:mm', new Date(value));
+            },
+            interval:0
+        },
+        splitLine: {
+            show: false
+        }
+    },
+    
+    yAxis: {
+        type: 'value',
+        boundaryGap: [0, '100%'],
+        splitLine: {
+            show: false
+        },
+        width: '100%',
+        axisLabel: {
+            fontSize:'18px'
+        }
+    },
+    series: [{
+        name: '模拟数据',
+        type: 'line',
+        showSymbol: false,
+        hoverAnimation: false,
+        data: data
+    }]
+};
+
+myChart1.setOption(option);
+myChart2.setOption(option);
+myChart3.setOption(option);
+myChart4.setOption(option);
+myChart5.setOption(option);
+setInterval(function () {
+
+    for (var i = 0; i < 1; i++) {
+        //data.shift();
+        data.push(randomData());
+    }
+
+    myChart1.setOption({
+        series: [{
+            data: data
+        }]
+    });
+    myChart2.setOption({
+        series: [{
+            data: data
+        }]
+    });
+    myChart3.setOption({
+        series: [{
+            data: data
+        }]
+    });
+    myChart4.setOption({
+        series: [{
+            data: data
+        }]
+    });
+    myChart5.setOption({
+        series: [{
+            data: data
+        }]
+    });
+
+}, 1000);
+
+

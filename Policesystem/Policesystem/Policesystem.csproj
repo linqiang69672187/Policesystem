@@ -121,6 +121,8 @@
     <Content Include="comjs\bootstrap.min.js" />
     <Content Include="comjs\datatables.min - 复制.js" />
     <Content Include="comjs\datatables.min.js" />
+    <Content Include="comjs\echarts.js" />
+    <Content Include="comjs\echarts.min.js" />
     <Content Include="comjs\fonts\fontawesome-webfont.svg" />
     <Content Include="comjs\fonts\glyphicons-halflings-regular.svg" />
     <Content Include="comjs\handlebars.js" />
