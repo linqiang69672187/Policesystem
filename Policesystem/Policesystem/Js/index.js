@@ -7,6 +7,7 @@ var alarmdays = 30;
 var historydata;
 var Totalinter;//一分钟重新加载全局设备情况
 var Gaugeinter;//2分钟加载仪表盘
+var carouselEntity;//轮播单位
 setInterval(function () {
     var date = new Date();
     var year = date.getFullYear();
@@ -136,7 +137,7 @@ function createdata(data, types) {
                 break;
           }
     }
-
+    loadGaugeData();//加载
 }
 
 function createTextLabel(data, colors) {
@@ -358,7 +359,7 @@ function createChart(id, type, data, color, totalvalue, fontweight) {
 
 
 
-function myRealtimeChart(label, value, index, chartnum) {
+function myRealtimeChart(label, value, index, chartnum, rebuildchar) {
 
     var chart;
     var containerId;
@@ -453,10 +454,32 @@ function myRealtimeChart(label, value, index, chartnum) {
             break;
 
     }
+
+  
+
     if (chart) {
         var series = chart.series[0];
+        if (rebuildchar) {
+            //series.remove();
+            var data = [],
+                    time = (new Date()).getTime(),
+                    i;
+            for (i = -19; i <= 0; i += 1) {
+                data.push({
+                    x: time + i * 1000,
+                    y: value
+                });
+            }
+
+            series.update({
+                data: data
+            });
+
+        }
+        else{
             var x = new Date().getTime();
             series.addPoint([x, value], true, true);
+        }
         return;
     }
 
@@ -539,8 +562,7 @@ function myRealtimeChart(label, value, index, chartnum) {
         tooltip: {
             formatter: function () {
                 return '<b>' + this.series.name + '</b><br/>' +
-                    Highcharts.dateFormat('%Y-%m-%d %H:%M:%S', this.x) + '<br/>' +
-                    Highcharts.numberFormat(this.y, 2);
+                    Highcharts.dateFormat('%Y-%m-%d %H:%M:%S', this.x) + '<br/>' + this.y;
             }
         },
         legend: {
@@ -551,6 +573,7 @@ function myRealtimeChart(label, value, index, chartnum) {
            // lineColor: areacolor,
             color: areacolor,
             fillOpacity: 0.8,
+            enabled: false,
             data: (function () {
                 // 生成随机值
                 var data = [],
@@ -559,7 +582,7 @@ function myRealtimeChart(label, value, index, chartnum) {
                 for (i = -19; i <= 0; i += 1) {
                     data.push({
                         x: time + i * 1000,
-                        y: Math.random(value)
+                        y: value
                     });
                 }
                 return data;
@@ -606,7 +629,7 @@ function myRealtimeChart(label, value, index, chartnum) {
 
 }
 
-function myGaugeChart(label, value,index,chartnum) {
+function myGaugeChart(label, value,index,chartnum,rebuildchar) {
     var chart
     var oper = '环比增加' + value + '%<i class="fa fa-arrow-up" aria-hidden="true"></i><br/> <span style="hbclasslabel">● ' + label + ' ● </span>';
     var colorarray = ['#467ddf', '#964edf', '#ff0000', '#008000']
@@ -867,10 +890,10 @@ function loadGaugeData() {
     $.ajax({
         type: "POST",
         url: "Handle/index.ashx",
-        data: "",
+        data: { carouselEntity : $("#ifr").contents().find(".lbtitle:eq(1)").attr("data-BMDM")},
         dataType: "json",
         success: function (data) {
-            createGauge(data);
+            createGauge(data,false);
         },
         error: function (msg) {
             console.debug("错误:ajax");
@@ -948,7 +971,19 @@ $(function () {
 });
 
 function changeCarouseEntity() {
-    alert($("#ifr").contents().find(".lbtitle:eq(1)").attr("data-BMDM"));
+    $.ajax({
+        type: "POST",
+        url: "Handle/index.ashx",
+        data: { carouselEntity: $("#ifr").contents().find(".lbtitle:eq(1)").attr("data-BMDM") },
+        dataType: "json",
+        success: function (data) {
+            createGauge(data, true);
+        },
+        error: function (msg) {
+            console.debug("错误:ajax");
+        }
+    });
+   // alert($("#ifr").contents().find(".lbtitle:eq(1)").attr("data-BMDM"));
 }
 
 
@@ -1046,7 +1081,7 @@ function dataValue(data1,data2) {
     return value;
 }
 
-function createGauge(data) {
+function createGauge(data,rebuildchar) {
     var todayvalue, yesdayvalue;
     var numchart = 0;
     var arrayval;
@@ -1066,43 +1101,43 @@ function createGauge(data) {
                 case "3":
                     if (arrayval[0] == "10") {
                         value = dataValue(parseFloat(yesdayvalue.在线总时长), parseFloat(todayvalue.在线总时长))
-                        myGaugeChart("在线总时长", value, i, numchart);
+                        myGaugeChart("在线总时长", value, i, numchart, rebuildchar);
                         numchart += 1;
                     }
                     if (arrayval[0] == "11") {
-                        myRealtimeChart("在线总时长", parseFloat(todayvalue.在线总时长), i, numchart);
+                        myRealtimeChart("在线总时长", parseFloat(todayvalue.在线总时长), i, numchart, rebuildchar);
                         numchart += 1;
                     }
 
                     if (arrayval[1] == "10") {
                         value = dataValue(parseFloat(yesdayvalue.在线数), parseFloat(todayvalue.在线数))
-                        myGaugeChart("今日在线量", value, i ,numchart);
+                        myGaugeChart("今日在线量", value, i, numchart, rebuildchar);
                         numchart += 1;
                     }
                     if (arrayval[1] == "11") {
-                        myRealtimeChart("在线总时长", parseFloat(todayvalue.在线数), i, numchart);
+                        myRealtimeChart("在线总时长", parseFloat(todayvalue.在线数), i, numchart, rebuildchar)
                         numchart += 1;
                     }
                     if (arrayval[2] == "10") {
                         value = dataValue(parseFloat(yesdayvalue.设备数量), parseFloat(todayvalue.设备数量))
-                        myGaugeChart("设备配发数", value, i, numchart);
+                        myGaugeChart("设备配发数", value, i, numchart, rebuildchar);
                         numchart += 1;
                     }
                     if (arrayval[2] == "11") {
-                        myRealtimeChart("设备配发数", parseFloat(todayvalue.设备数量), i, numchart);
+                        myRealtimeChart("设备配发数", parseFloat(todayvalue.设备数量), i, numchart, rebuildchar);
                         numchart += 1;
                     }
                     if (arrayval[3] == "10") {
                         data1 = parseFloat(yesdayvalue.在线数) / parseFloat(yesdayvalue.设备数量);
                         data2 = parseFloat(todayvalue.在线数) / parseFloat(todayvalue.设备数量);
                         value = dataValue(data1, data2)
-                        myGaugeChart("设备使用率", value, i , numchart);
+                        myGaugeChart("设备使用率", value, i, numchart, rebuildchar);
                         numchart += 1;
                     }
                     if (arrayval[3] == "11") {
                         value = parseFloat(todayvalue.在线数) / parseFloat(todayvalue.设备数量);
                         value = formatFloat(value,2)
-                        myRealtimeChart("设备使用率", value, i, numchart);
+                        myRealtimeChart("设备使用率", value, i, numchart, rebuildchar);
                         numchart += 1;
                     }
                     break;
@@ -1110,30 +1145,30 @@ function createGauge(data) {
                 case "6":
                     if (arrayval[0] == "10") {
                         value = dataValue(parseFloat(yesdayvalue.在线总时长), parseFloat(todayvalue.在线总时长));
-                        myGaugeChart("在线总时长", value, i , numchart);
+                        myGaugeChart("在线总时长", value, i, numchart, rebuildchar);
                         numchart += 1;
                     }
                     if (arrayval[0] == "11") {
-                        myRealtimeChart("在线总时长", parseFloat(todayvalue.在线总时长), i, numchart);
+                        myRealtimeChart("在线总时长", parseFloat(todayvalue.在线总时长), i, numchart, rebuildchar);
                         numchart += 1;
                     }
 
                     if (arrayval[1] == "10") {
                         value = dataValue(parseFloat(yesdayvalue.在线数), parseFloat(todayvalue.在线数));
-                        myGaugeChart("今日在线量", value, i , numchart);
+                        myGaugeChart("今日在线量", value, i, numchart, rebuildchar);
                         numchart += 1;
                     }
                     if (arrayval[1] == "11") {
-                        myRealtimeChart("今日在线量", parseFloat(todayvalue.在线数), i, numchart);
+                        myRealtimeChart("今日在线量", parseFloat(todayvalue.在线数), i, numchart, rebuildchar);
                         numchart += 1;
                     }
                     if (arrayval[2] == "10") {
                         value = dataValue(parseFloat(yesdayvalue.设备数量), parseFloat(todayvalue.设备数量));
-                        myGaugeChart("设备配发数", value, i, numchart);
+                        myGaugeChart("设备配发数", value, i, numchart, rebuildchar);
                         numchart += 1;
                     }
                     if (arrayval[2] == "11") {
-                        myRealtimeChart("设备配发数", parseFloat(todayvalue.设备数量), i, numchart);
+                        myRealtimeChart("设备配发数", parseFloat(todayvalue.设备数量), i, numchart, rebuildchar);
                         numchart += 1;
                     }
 
@@ -1141,85 +1176,85 @@ function createGauge(data) {
                         data1 = parseFloat(yesdayvalue.在线数) / parseFloat(yesdayvalue.设备数量);
                         data2 = parseFloat(todayvalue.在线数) / parseFloat(todayvalue.设备数量);
                         value = dataValue(data1, data2)
-                        myGaugeChart("设备使用率", value, i, numchart);
+                        myGaugeChart("设备使用率", value, i, numchart, rebuildchar);
                         numchart += 1;
                     }
                     if (arrayval[3] == "11") {
                         value=parseFloat(todayvalue.在线数) / parseFloat(todayvalue.设备数量)
                         value = formatFloat(value, 2)
-                        myRealtimeChart("设备使用率", value, i, numchart);
+                        myRealtimeChart("设备使用率", value, i, numchart, rebuildchar);
                         numchart += 1;
                     }
                     if (arrayval[4] == "10") {
                         value = dataValue(parseFloat(yesdayvalue.处理量), parseFloat(todayvalue.处理量))
-                        myGaugeChart("处理量", value, i, numchart);
+                        myGaugeChart("处理量", value, i, numchart, rebuildchar);
                         numchart += 1;
                     }
                     if (arrayval[4] == "11") {
-                        myRealtimeChart("处理量", parseFloat(todayvalue.处理量), i, numchart);
+                        myRealtimeChart("处理量", parseFloat(todayvalue.处理量), i, numchart, rebuildchar);
                         numchart += 1;
                     }
                     if (arrayval[5] == "10") {
                         value = dataValue(parseFloat(yesdayvalue.查询量), parseFloat(todayvalue.查询量));
-                        myGaugeChart("查询量", value, i ,numchart);
+                        myGaugeChart("查询量", value, i, numchart, rebuildchar);
                         numchart += 1;
                     }
                     if (arrayval[5] == "11") {
-                        myRealtimeChart("查询量", parseFloat(todayvalue.查询量), i, numchart);
+                        myRealtimeChart("查询量", parseFloat(todayvalue.查询量), i, numchart, rebuildchar);
                         numchart += 1;
                     }
                     break;
                 case "5":
                     if (arrayval[2] == "10") {
                         value = dataValue(parseFloat(yesdayvalue.设备数量), parseFloat(todayvalue.设备数量));
-                        myGaugeChart("设备配发数", value, i ,numchart);
+                        myGaugeChart("设备配发数", value, i, numchart, rebuildchar);
                         numchart += 1;
                     }
 
                     if (arrayval[2] == "11") {
-                        myRealtimeChart("设备配发数", parseFloat(todayvalue.设备数量), i, numchart);
+                        myRealtimeChart("设备配发数", parseFloat(todayvalue.设备数量), i, numchart, rebuildchar);
                         numchart += 1;
                     }
                     if (arrayval[3] == "10") {
                         data1 = parseFloat(yesdayvalue.在线数) / parseFloat(yesdayvalue.设备数量);
                         data2 = parseFloat(todayvalue.在线数) / parseFloat(todayvalue.设备数量);
                         value = dataValue(data1, data2);
-                        myGaugeChart("设备使用率", value, i, numchart);
+                        myGaugeChart("设备使用率", value, i, numchart, rebuildchar);
                         numchart += 1;
 
                     }
                     if (arrayval[3] == "11") {
                         value = parseFloat(todayvalue.在线数) / parseFloat(todayvalue.设备数量);
                         value = formatFloat(value, 2)
-                        myRealtimeChart("设备使用率", value, i, numchart);
+                        myRealtimeChart("设备使用率", value, i, numchart, rebuildchar);
                         numchart += 1;
                     }
                     if (arrayval[6] == "10") {
                         value = dataValue(parseFloat(yesdayvalue.在线总时长), parseFloat(todayvalue.在线总时长));
-                        myGaugeChart("视频长度", value, i , numchart);
+                        myGaugeChart("视频长度", value, i, numchart, rebuildchar);
                         numchart += 1;
                     }
                     if (arrayval[6] == "11") {
-                        myRealtimeChart("视频长度", parseFloat(todayvalue.在线总时长), i, numchart);
+                        myRealtimeChart("视频长度", parseFloat(todayvalue.在线总时长), i, numchart, rebuildchar);
                         numchart += 1;
                     }
 
                     if (arrayval[7] == "10") {
                         value = dataValue(parseFloat(yesdayvalue.文件大小), parseFloat(todayvalue.文件大小));
-                        myGaugeChart("视频文件大小", value, i , numchart);
+                        myGaugeChart("视频文件大小", value, i, numchart, rebuildchar);
                         numchart += 1;
                     }
                     if (arrayval[7] == "11") {
-                        myRealtimeChart("视频文件大小", parseFloat(todayvalue.文件大小), i, numchart);
+                        myRealtimeChart("视频文件大小", parseFloat(todayvalue.文件大小), i, numchart, rebuildchar);
                         numchart += 1;
                     }
                     if (arrayval[8] == "10") {
                         value = dataValue(parseFloat(yesdayvalue.规范上传率), parseFloat(todayvalue.规范上传率));
-                        myGaugeChart("规范上传率", value, i , numchart);
+                        myGaugeChart("规范上传率", value, i, numchart, rebuildchar);
                         numchart += 1;
                     }
                     if (arrayval[8] == "11") {
-                        myRealtimeChart("规范上传率", parseFloat(todayvalue.规范上传率), i, numchart);
+                        myRealtimeChart("规范上传率", parseFloat(todayvalue.规范上传率), i, numchart, rebuildchar);
                         numchart += 1;
                     }
                     break;
@@ -1241,7 +1276,7 @@ function loadindexconfigdata() {
         success: function (data) {
             if (data.data.length == 4) {
                 indexconfigdata = data.data;
-                loadGaugeData();
+               // loadGaugeData();
                  Totalinter = setInterval(loadTotalDevices, 60000);//一分钟重新加载全局设备情况
                  Gaugeinter = setInterval(loadGaugeData, 5000);//2分钟加载仪表盘
             }

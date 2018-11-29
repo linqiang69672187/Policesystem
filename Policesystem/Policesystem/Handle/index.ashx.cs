@@ -21,17 +21,19 @@ namespace Policesystem.Handle
 
             // context.Response.Cookies["BMDM"].Value = "331001000000";
 
-                //HttpCookie cookie = new HttpCookie("cookieName");
-                //cookie.Value = "331001000000";
-                //HttpContext.Current.Response.Cookies.Add(cookie);
-       
+            //HttpCookie cookie = new HttpCookie("cookieName");
+            //cookie.Value = "331001000000";
+            //HttpContext.Current.Response.Cookies.Add(cookie);
 
-            HttpCookie cookies = HttpContext.Current.Request.Cookies["cookieName"];
+            // carouselEntity
+            string carouselEntity = context.Request.Form["carouselEntity"];
+
+           // HttpCookie cookies = HttpContext.Current.Request.Cookies["cookieName"];
 
             string BMDM = "331000000000";
-            if (cookies != null)
+            if (carouselEntity != null)
             {
-                BMDM = cookies["BMDM"];
+                BMDM = carouselEntity;
             }
             switch (BMDM)
             {
