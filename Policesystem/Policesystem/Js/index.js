@@ -978,11 +978,40 @@ function loadTotalDevices() {
         data: "",
         dataType: "json",
         success: function (data) {
-            return;
-            $(".qjxinxi label:eq(0)").text(data.data["0"].value);
-            $(".qjxinxi label:eq(2)").text(data.data["1"].value);
-            $(".qjxinxi label:eq(4)").text(data.data["2"].value);
-            $(".qjxinxi label:eq(6)").text(formatSeconds(data.data["1"].value2, 1));
+
+            $(".count-title").each(function (index, element) {
+                var from = $(this).attr("data-to");
+                var to;
+                switch (index) {
+                    case 0:
+                    case 1:
+                    case 2:
+                        to = data.data[index].value;
+                        break;
+                    case 3:
+                        to = formatSeconds(data.data[1].value2, 1);
+                        break;
+                    case 4:
+                    case 5:
+                    case 6:
+                        to = data.data[index-1].value;
+                        break;
+                    case 7:
+                        to = formatSeconds(data.data[3].value2, 1);
+                        break;
+                    default:
+                        break;
+                }
+                if (to != from){
+                $(this).attr("data-from", from);
+                $(this).attr("data-to", to);
+                $(this).each(count);
+                }
+
+            })
+
+
+
         },
         error: function (msg) {
             console.debug("错误:ajax");
@@ -1302,7 +1331,7 @@ function loadindexconfigdata() {
             if (data.data.length == 4) {
                 indexconfigdata = data.data;
                // loadGaugeData();
-                 Totalinter = setInterval(loadTotalDevices, 60000);//一分钟重新加载全局设备情况
+                 Totalinter = setInterval(loadTotalDevices, 10000);//一分钟重新加载全局设备情况
                  Gaugeinter = setInterval(loadGaugeData, 1000);//2分钟加载仪表盘
             }
         },
