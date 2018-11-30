@@ -82,9 +82,9 @@ switch (true) {
 
 }
 
-function createdata(data, types) {
+function createdata(data) {
 
-    var charttype = types;
+    var charttype = data[0]["squee"].split(",");
     var ddata = new Array();
     var ddatacolumn = new Array();
     var totalvalue = 0;
@@ -96,9 +96,34 @@ function createdata(data, types) {
         ddata = [];
         ddatacolumn = [];
         colorcount = 0;
+        var lab = $.trim(charttype[i1]);
+        $(".listtitle:eq(" + i1 + ")").text(lab);
+        switch (lab) {
+            case "对讲机":
+                $(".imglable:eq(" + i1 + ")").attr('src', 'Image/index_duijiangji.png');
+                break;
+            case "执法记录仪":
+                $(".imglable:eq(" + i1 + ")").attr('src', 'Image/index_zhifajiluyi.png');
+                break;
+            case "警务通":
+                $(".imglable:eq(" + i1 + ")").attr('src', 'Image/index_jingwutong.png');
+                break;
+            case "辅警通":
+                $(".imglable:eq(" + i1 + ")").attr('src', 'Image/index_fujingtong.png');
+                $(".imglable:eq(" + i1 + ")").width(30);
+                break;
+            case "车载视频":
+                $(".imglable:eq(" + i1 + ")").attr('src', 'Image/index_chezaiship.png');
+                break;
+            case "拦截仪":
+                $(".imglable:eq(" + i1 + ")").attr('src', 'Image/index_lanjieyi.png');
+                break;
+            default:
+                break;
+        }
         for (var i = 0; i < data.length; i++) {
             for (var i2 = 0; i2 < data[i]["data"].length; i2++) {
-                if (data[i]["data"][i2]["TypeName"] == charttype[i1]) {
+                if (data[i]["data"][i2]["TypeName"] == $.trim(charttype[i1])) {
                     var obj1 = JSON.parse('{"name":"' + data[i]["Name"] + '","y":' + data[i]["data"][i2]["count"] + '}');
                     totalvalue += parseInt(data[i]["data"][i2]["count"]);
                     ddata.push(obj1);
@@ -112,32 +137,12 @@ function createdata(data, types) {
 
         }
      
-        switch(charttype[i1]){
-            case "警务通":
-                    createChart("jwtchart", "pie", ddata, color, totalvalue);//创建饼图
-                    createcolum("jwtcolumn", "column", ddatacolumn, color);
-                    break;
-            case "拦截仪":
-                createChart("ljychart", "pie", ddata, color, totalvalue);//创建饼图
-                createcolum("ljycolumn", "column", ddatacolumn, color);
-                break;
-            case "对讲机":
-                createChart("djjchart", "pie", ddata, color, totalvalue);//创建饼图
-                createcolum("djjcolumn", "column", ddatacolumn, color);
-                break;
-            case "车载视频":
-                createChart("czchart", "pie", ddata, color, totalvalue);//创建饼图
-                createcolum("czcolumn", "column", ddatacolumn, color);
-                break;
-            case "执法记录仪":
-                createChart("zfchart", "pie", ddata, color, totalvalue);//创建饼图
-                createcolum("zfcolumn", "column", ddatacolumn, color);
-                break;
-            default:
-                break;
-          }
+
+          createChart(i1, "pie", ddata, color, totalvalue);//创建饼图
+          createcolum(i1, "column", ddatacolumn, color);//创建柱图
+            
     }
-    loadGaugeData();//加载
+    loadGaugeData();//加载仪表盘
 }
 
 function createTextLabel(data, colors) {
@@ -187,7 +192,8 @@ function createdatadetail(data, types) {
 
 }
 
-function createcolum(id, type, data, color,fontweight) {
+function createcolum(index, type, data, color, fontweight) {
+    var id = $(".rlchars:eq(" + index + ") div:eq(2)").attr('id');
     var chart = Highcharts.chart(id, {
         chart: {
             backgroundColor: 'rgba(0,0,0,0)'
@@ -261,7 +267,9 @@ function createcolum(id, type, data, color,fontweight) {
         }]
     });
 }
-function createChart(id, type, data, color, totalvalue, fontweight) {
+function createChart(index, type, data, color, totalvalue, fontweight) {
+   
+    var id = $(".rlchars:eq(" + index + ") div:eq(0)").attr('id');
     var chart = Highcharts.chart(id, {
         chart: {
             backgroundColor: 'rgba(0,0,0,0)'
@@ -464,7 +472,7 @@ function myRealtimeChart(label, value, index, chartnum, rebuildchar) {
             var data = [],
                     time = (new Date()).getTime(),
                     i;
-            for (i = -1; i < 0; i += 1) {
+            for (i = -1; i <= 0; i += 1) {
                 data.push({
                     x: time + i * 1000,
                     y: value
@@ -487,30 +495,39 @@ function myRealtimeChart(label, value, index, chartnum, rebuildchar) {
     switch (label) {
         case "在线总时长":
             areacolor = '#5d3b9d';
+            maxvalue = value*1.5;
             break;
         case "设备配发数":
             areacolor = '#3d4a82';
+            maxvalue = value * 1.5;
             break;
         case "设备使用率":
             areacolor = '#51e97c';
+            maxvalue = 1;
             break;
         case "今日在线量":
             areacolor = '#884646';
+            maxvalue = value * 1.5;
             break;
         case "处理量":
             areacolor = '#806e47';
+            maxvalue = value * 1.5;
             break;
         case "查询量":
             areacolor = '#5c389a';
+            maxvalue = value * 1.5;
             break;
         case "视频长度":
             areacolor = '#823f76';
+            maxvalue = value * 1.5;
             break;
         case "视频文件大小":
             areacolor = '#2c559b';
+            maxvalue = value * 1.5;
             break;
         case "规范上传率":
             areacolor = '#2c559b';
+            maxvalue = 1;
             break;
     }
 
@@ -524,23 +541,39 @@ function myRealtimeChart(label, value, index, chartnum, rebuildchar) {
             marginRight: 0,
             height: 130
         },
-        title: {
-            text: null
+        legend: {
+            title: {
+
+                style: {
+                    "color": "#ffffff",
+                    "fontSize": "12px"
+                }
+            },
+            floating:true,
+            align: 'center',
+            y: -15,
+            x:10,
+            verticalAlign: 'top',
+            itemStyle:{ "color": "#ffffff", "cursor": "pointer", "fontSize": "12px", "fontWeight": "normal" },
+            lineHeight:20
         },
+        title:null,
         credits: {
             enabled: false
         },
         xAxis: {
             type: 'datetime',
-            tickPixelInterval: 55,
+    
             dateTimeLabelFormats: {
                 second: '%M:%S'
             },
+            tickLength: 5,
             labels: {
                 style: {
                     "color": "#ffffff",
                     "fontSize": "11px"
-                }
+                },
+                y: 15
 
             }
         },
@@ -551,11 +584,17 @@ function myRealtimeChart(label, value, index, chartnum, rebuildchar) {
             lineWidth: 1,
             gridLineWidth: 0,
             tickPixelInterval: 30,
+            min: 0,
+            max:maxvalue,
             labels: {
                 style: {
                     "color": "#ffffff",
                      "fontSize": "11px"
-                }
+                },
+
+                x: -5,
+                y: 5
+   
 
             }
         },
@@ -565,9 +604,7 @@ function myRealtimeChart(label, value, index, chartnum, rebuildchar) {
                     Highcharts.dateFormat('%Y-%m-%d %H:%M:%S', this.x) + '<br/>' + this.y;
             }
         },
-        legend: {
-            enabled: false
-        },
+        
         series: [{
             name:label,
            // lineColor: areacolor,
@@ -581,7 +618,7 @@ function myRealtimeChart(label, value, index, chartnum, rebuildchar) {
                 var data = [],
                     time = (new Date()).getTime(),
                     i;
-                for (i = -1; i < 0; i += 1) {
+                for (i = -1; i <= 0; i += 1) {
                     data.push({
                         x: time + i * 1000,
                         y: value
@@ -1314,10 +1351,14 @@ $(document).on('click.bs.carousel.data-api', '.moreinfo', function (e) {
 
 
 $(function () {
-    $('.entitylist').vTicker({
-        showItems: 1,
+    $('#alarmlist').vTicker({
+        showItems: 4,
         pause: 5000
     });
+    $('.devicelist').vTicker({
+            showItems: 4,
+            pause: 10000
+        });
     $.ajax({
         type: "POST",
         url: "Handle/getAlarmdays.ashx",
@@ -1346,11 +1387,10 @@ function loadAlarmUser() {
         data: { 'alarmindex': alarmindex, 'alarmdays': alarmdays },
         dataType: "json",
         success: function (data) {
-            
+            $(".entitylist ul").empty();
             for (var i = 0; i < data.data.length; i++) {
                 alarmindex = data.data[i]["ID"];
-                $(".entitylist ul li").empty();
-                $(".entitylist ul li").append('<i class="fa fa-circle"></i> ' + data.data[i]["XM"] + '(' + data.data[i]["DevId"] + ')已经' + datecompare(data.data[i]["QQSJ"]) + '天未登录')
+                $(".entitylist ul ").append('<li class="news-item"><i class="fa fa-circle"></i> ' + data.data[i]["XM"] + '(' + data.data[i]["DevId"] + ')已经' + datecompare(data.data[i]["QQSJ"]) + '天未登录</li>')
             }
            
         },

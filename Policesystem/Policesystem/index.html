@@ -57,7 +57,7 @@
 
                         </iframe>
                      </div>
-                     <div class="row"><i class="fa fa-tachometer" aria-hidden="true"></i>信息</div>
+                     <div class="row" style="display:none;"><i class="fa fa-tachometer" aria-hidden="true"></i>信息</div>
                      <div class="row">
                    <div class="col5 col-md-4">
                          <div class="xixi1"><img src="Image/index_zhifajiluyi.png" /><label>执法记录仪</label></div>
@@ -90,36 +90,65 @@
                    </div>-->
                </div>
                <div class="rightbox">
-
-                       <div class="entitylist">
-                           <ul class="demo2">
-                               <li class="news-item"></li>
-                           </ul>
+                   <div class="entitylist">
+                           <div class="alramtitle"><i class="fa fa-bell"></i><label>预警通报</label><img src="Image/index_bz.png"></div>
+                           <div id="alarmlist">
+                               <ul class="demo2">
+                         
+                               </ul>
+                           </div>
                         </div>
-                   <div class="row2n" style="display:none">
-                       <div><img src="Image/index_jingwutong.png" /><label>警务通</label><img src="Image/index_bz.png" /></div>
-                       <div class="rlchars"><ul><li>配发数量</li><li><div id="jwtchart"></div></li><li>设备使用率</li><li><div id="jwtcolumn"></div></li></ul></div>
-                       <div><span>更多</span><span>更多</span></div>
-                   </div>
-                   <div class="row1n">
-                       <div><img src="Image/index_lanjieyi.png" /><label>拦截仪</label><img src="Image/index_bz.png" /></div>
-                       <div class="rlchars"><ul><li>配发数量</li><li><div id="ljychart"></div></li><li>设备使用率</li><li><div id="ljycolumn"></div></li></ul></div>
-                       <div></div>
-                   </div>
-                   <div class="row2n">
-                       <div><img src="Image/index_duijiangji.png" /><label>对讲机</label><img src="Image/index_bz.png" /></div>
-                       <div class="rlchars"><ul><li>配发数量</li><li><div id="djjchart"></div></li><li>设备使用率</li><li><div id="djjcolumn"></div></li></ul></div>
-                       <div></div>
-                   </div>
-                   <div class="row1n">
-                       <div><img src="Image/index_chezaiship.png" /><label>车载视频</label><img src="Image/index_bz.png" /></div>
-                       <div class="rlchars"><ul><li>配发数量</li><li><div id="czchart"></div></li><li>设备使用率</li><li><div id="czcolumn"></div></li></ul></div>
-                       <div></div>
-                   </div>
-                   <div class="row2n">
-                       <div><img src="Image/index_zhifajiluyi.png" /><label>执法记录仪</label><img src="Image/index_bz.png" /></div>
-                       <div class="rlchars"><ul><li>配发数量</li><li><div id="zfchart"></div></li><li>设备使用率</li><li><div id="zfcolumn"></div></li></ul></div>
-                       <div></div>
+                   <div class="devicelist">
+                       <ul>
+                           <li>
+                               <div class="row2n">
+                                   <div><img class="imglable" src="Image/index_jingwutong.png" /><label class="listtitle"></label><img src="Image/index_bz.png" /></div>
+                                   <div class="rlchars"><ul><li>配发数量</li><li><div id="jwtchart"></div></li><li>设备使用率</li><li><div id="jwtcolumn"></div></li></ul></div>
+                                   <div></div>
+                               </div>
+                           </li>
+                           <li>
+                               <div class="row1n">
+                                   <div><img class="imglable" src="Image/index_lanjieyi.png" /><label class="listtitle"></label><img src="Image/index_bz.png" /></div>
+                                   <div class="rlchars"><ul><li>配发数量</li><li><div id="ljychart"></div></li><li>设备使用率</li><li><div id="ljycolumn"></div></li></ul></div>
+                                   <div></div>
+                               </div>
+                           </li>
+                           <li>
+                               <div class="row2n">
+                                   <div><img class="imglable" src="Image/index_duijiangji.png" /><label class="listtitle"></label><img src="Image/index_bz.png" /></div>
+                                   <div class="rlchars"><ul><li>配发数量</li><li><div id="djjchart"></div></li><li>设备使用率</li><li><div id="djjcolumn"></div></li></ul></div>
+                                   <div></div>
+                               </div>
+                           </li>
+                           <li>
+                               <div class="row1n">
+                                   <div><img class="imglable" src="Image/index_chezaiship.png" /><label class="listtitle"></label><img src="Image/index_bz.png" /></div>
+                                   <div class="rlchars"><ul><li>配发数量</li><li><div id="czchart"></div></li><li>设备使用率</li><li><div id="czcolumn"></div></li></ul></div>
+                                   <div></div>
+                               </div>
+                           </li>
+                           <li>
+                               <div class="row2n">
+                                   <div><img class="imglable" src="Image/index_zhifajiluyi.png" /><label class="listtitle"></label><img src="Image/index_bz.png" /></div>
+                                   <div class="rlchars"><ul><li>配发数量</li><li><div id="zfchart"></div></li><li>设备使用率</li><li><div id="zfcolumn"></div></li></ul></div>
+                                   <div></div>
+                               </div>
+                           </li>
+                           <li>
+                               <div class="row1n">
+                                   <div><img class="imglable" src="Image/index_chezaiship.png" /><label class="listtitle"></label><img src="Image/index_bz.png" /></div>
+                                   <div class="rlchars"><ul><li>配发数量</li><li><div id="fjtchart"></div></li><li>设备使用率</li><li><div id="fjtcolumn"></div></li></ul></div>
+                                   <div></div>
+                               </div>
+                           </li>
+                       </ul>
+                
+                       
+                       
+                       
+                       
+                       
                    </div>
                </div>
            </div>
@@ -168,7 +197,7 @@
     <script src="Static_Seed_Project/js/bootstrap.min.js"></script>
     <script src="comjs/highcharts.js"></script>
     <script src="comjs/highcharts-more.js"></script>
-    <script src="comjs/jquery.vticker.js"></script>
+    <script src="comjs/jquery.vticker.min.js"></script>
     <script src="Js/index.js"></script>
 </body>
 </html>

@@ -694,16 +694,17 @@
 
     #zf_gfscl, #zf_zxshj,#jwt_jrcl,#jwt_pjcf
     {
-    margin-top: 0px;
+    margin-top: 20px;
     width: 50%;
-    height: 110px;
+    height: 130px;
     display: inline-block;
+    
     }
 
     #djj_jrzx, #djj_gfscl, #djj_zxshj,#jwt_jrzx,#jwt_cxl,#jwt_rjcf {
-    margin-top: 0px;
+    margin-top: 20px;
     width: 33.3%;
-    height: 110px;
+    height: 130px;
     display: inline-block;
     }
   
@@ -757,11 +758,12 @@
     }
         .xixi1,.xixi2,.xixi3,.xixi4{
             text-align:left;
+            height:20px;
         }
 
        .entitylist{
          width:320px;
-        height: 174px !important;
+        height: 145px !important;
         border: 1px solid #29599b;
         border-radius: 1px;
         font-size: 12px;
@@ -770,7 +772,7 @@
         text-align:left;
        }
     .entitylist ul,.entitylist ul li {
-        display:inline-block;
+        display:block;
         list-style:none;
         padding-left:5px;
     }
@@ -822,7 +824,7 @@
             color: #fff;
             height: 100%;
         }
-            #jwtcolumn, #ljycolumn, #czcolumn, #zfcolumn, #djjcolumn {
+            #jwtcolumn, #ljycolumn, #czcolumn, #zfcolumn, #djjcolumn, #fjtcolumn {
         margin-top: -10px;
         width: 200px;
         height: 110px;
@@ -837,7 +839,7 @@
         border: 1px solid #29599b;
         border-radius: 2px;
     }
-       #jwtchart, #ljychart, #czchart, #zfchart, #djjchart {
+       #jwtchart, #ljychart, #czchart, #zfchart, #djjchart,#fjtchart {
         margin-top: -20px;
         width: 80px;
         margin-left: 0px;
@@ -891,16 +893,43 @@
     width: 100%;
     }
 
-  .entitylist .demo2{
-      overflow-y: hidden; height: 30px;
-      border:none;
-      margin-left:10px !important;
+  .alramtitle{
+      height:20px;
+      width:100%
   }
-    .entitylist .demo2 li{
-       height: 30px;
+
+
+  .alramtitle i{
+ margin-left:5px;
+  }
+ .alramtitle label{
+ margin-left:5px;
+  }
+  .alramtitle img{
+  float:right;
+  }
+    #alarmlist{
+      height:110px !important;
+      width:100%;
+  }
+
+    .alarmlist .demo2 li{
+       height: 22px;
        width:100%;
       
   }
+
+.devicelist{
+    height:560px !important;
+    width:320px;
+}
+.devicelist ul li{
+    height:130px;
+    width:320px;
+    list-style:none;
+    margin-left:-40px;
+}
+
   
 }
 

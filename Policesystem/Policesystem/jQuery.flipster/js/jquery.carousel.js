@@ -289,7 +289,7 @@ function createChar() {
                 $(".divcontentlf:eq(" + i + ") div:eq(7)").text(formatSeconds(sumisused / total, 2) + "%");
             };
             currentIndex = 3;
-            window.parent.createdata(data, ["警务通", "拦截仪", "对讲机", "车载视频", "执法记录仪"]);
+            window.parent.createdata(data);
             window.parent.chartdata = data;
             Caroursel.init($('.caroursel'));
         },
