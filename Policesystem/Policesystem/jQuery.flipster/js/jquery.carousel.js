@@ -253,7 +253,7 @@ function createChar() {
                         n = 1;
                         break;
                 }
-                $("ul.poster-list").append( '<li class="poster-item"><div><div class="lbtitle"></div><div class="divcontent"><div class="divcontentlf"><div><div><i class="fa fa-windows" aria-hidden="true"></i></div><div>总设备数</div><div>87</div></div><div><div><i class="fa fa-pie-chart"></i></div><div>设备使用率</div><div>50%</div></div></div><div class="divcontentrt"><ul></ul></div></div></div></li>');
+                $("ul.poster-list").append('<li class="poster-item"><div><div class="lbtitle"></div><div class="divcontent"><div class="divcontentlf"><div><div><i class="fa fa-windows" aria-hidden="true"></i></div><div>总设备数</div><div>87</div></div><div><div><i class="fa fa-pie-chart"></i></div><div>设备使用率</div><div>50%</div></div><div><div><i class="fa fa-heartbeat"></i></div><div>在线数</div><div>50%</div></div></div><div class="divcontentrt"><ul></ul></div></div></div></li>');
                 sumonline = 0; sumisused = 0; total = 0;
                 $(".lbtitle:eq(" + i + ")").html("<i class='fa fa-minus  fa-rotate-90 " + data[n]["Name"] + "'></i>" + data[n]["Name"]);
                 $(".lbtitle:eq(" + i + ")").attr("data-BMDM", data[n]["BMDM"])
@@ -279,16 +279,17 @@ function createChar() {
                             img = "../Image/index_zhifajiluyi.png";
                             break;
                         default:
-                            img = "../Image/index_chezaiship.png";
+                            img = "../Image/index_fujingtong.png";
                             break;
                     }
                     $(".divcontentrt:eq(" + i + ") ul").append("<li><img src='" + img + "' /><span>" + data[n]["data"][i1]["TypeName"] + ":</span><span>" + data[n]["data"][i1]["count"] + "</span></li>")
                 }
-                $(".divcontentrt:eq(" + i + ") ul").append("<li><span>" + "在线数" + ":</span><span>" + sumonline + "</span></li>");
                 $(".divcontentlf:eq(" + i + ") div:eq(3)").text(total);
                 $(".divcontentlf:eq(" + i + ") div:eq(7)").text(formatSeconds(sumisused / total, 2) + "%");
+                $(".divcontentlf:eq(" + i + ") div:eq(11)").text(sumonline);
             };
             currentIndex = 3;
+            data.shift();
             window.parent.createdata(data);
             window.parent.chartdata = data;
             Caroursel.init($('.caroursel'));
@@ -352,7 +353,7 @@ function crateItem() {
                         img = "../Image/index_zhifajiluyi.png";
                         break;
                     default:
-                        img = "../Image/index_chezaiship.png";
+                        img = "../Image/index_fujingtong.png";
                         break;
                 }
                 

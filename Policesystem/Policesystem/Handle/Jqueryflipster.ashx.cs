@@ -35,7 +35,7 @@ namespace Policesystem.Handle
             switch (BMDM)
             {
                 case "331000000000":
-                    sbSQL = "SELECT BMMC,BMDM from [Entity] where [SJBM] = '331000000000' and BMMC like '台州市交通警察支队直属%' order by Sort"; //目前只需要查询四个大队
+                    sbSQL = "SELECT BMMC,BMDM from [Entity] where  BMDM ='331000000000' OR ([SJBM] = '331000000000' and BMMC like '台州市交通警察支队直属%')  order by Sort desc"; //目前只需要查询四个大队
                     break;
                 case "331001000000":
                 case "331002000000":
@@ -53,14 +53,15 @@ namespace Policesystem.Handle
             json.Append("[");
             for (int i1 = 0; i1 < dtfrist.Rows.Count; i1++)
             {
-                dwmc = dtfrist.Rows[i1]["BMMC"].ToString();
+                dwmc =(dtfrist.Rows[i1]["BMDM"].ToString()== "331000000000")?"交警总队": dtfrist.Rows[i1]["BMMC"].ToString().Substring(11);
+          
                 if (i1 > 0)
                 {
                     json.Append(',');
                 };
                 json.Append("{\"Name\":");
                 json.Append('"');
-                json.Append(dwmc.Substring(11));
+                json.Append(dwmc);
                 json.Append('"');
                 json.Append(",\"BMDM\":");
                 json.Append('"');
