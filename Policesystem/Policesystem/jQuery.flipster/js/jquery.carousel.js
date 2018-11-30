@@ -247,7 +247,7 @@ function createChar() {
                         n = 0;
                         break;
                     case 1:
-                        n = 3;
+                        n = 4;
                         break;
                     case 2:
                         n = 1;
@@ -289,9 +289,10 @@ function createChar() {
                 $(".divcontentlf:eq(" + i + ") div:eq(11)").text(sumonline);
             };
             currentIndex = 3;
-            data.shift();
-            window.parent.createdata(data);
-            window.parent.chartdata = data;
+            var senddata  = [].concat(data);
+            senddata.shift();
+            window.parent.createdata(senddata);
+            window.parent.chartdata = senddata;
             Caroursel.init($('.caroursel'));
         },
         error: function (msg) {
@@ -359,9 +360,9 @@ function crateItem() {
                 
                 $(".divcontentrt:eq(" + index + ") ul").append("<li><img src='" + img + "' /><span>" + data[currentIndex]["data"][i1]["TypeName"] + ":</span><span>" + data[currentIndex]["data"][i1]["count"] + "</span></li>")
             }
-            $(".divcontentrt:eq(" + index + ") ul").append("<li><span>" + "在线数" + ":</span><span>" + sumonline + "</span></li>");
             $(".divcontentlf:eq(" + index + ") div:eq(3)").text(total);
             $(".divcontentlf:eq(" + index + ") div:eq(7)").text(formatSeconds(sumisused / total, 2) + "%");
+            $(".divcontentlf:eq(" + index + ") div:eq(11)").text(sumonline);
         }
        
     });
@@ -428,9 +429,9 @@ function crateItemRight() {
 
                 $(".divcontentrt:eq(" + index + ") ul").append("<li><img src='" + img + "' /><span>" + data[currentIndex]["data"][i1]["TypeName"] + ":</span><span>" + data[currentIndex]["data"][i1]["count"] + "</span></li>")
             }
-            $(".divcontentrt:eq(" + index + ") ul").append("<li><span>" + "在线数" + ":</span><span>" + sumonline + "</span></li>");
             $(".divcontentlf:eq(" + index + ") div:eq(3)").text(total);
             $(".divcontentlf:eq(" + index + ") div:eq(7)").text(formatSeconds(sumisused / total, 2) + "%");
+            $(".divcontentlf:eq(" + index + ") div:eq(11)").text(sumonline);
         }
 
     });
