@@ -465,29 +465,11 @@ function myRealtimeChart(label, value, index, chartnum, rebuildchar) {
 
   
 
-    if (chart) {
+    if (chart&&!rebuildchar) {
         var series = chart.series[0];
-        if (rebuildchar) {
-            //series.remove();
-            var data = [],
-                    time = (new Date()).getTime(),
-                    i;
-            for (i = -1; i <= 0; i += 1) {
-                data.push({
-                    x: time + i * 1000,
-                    y: value
-                });
-            }
-
-            series.update({
-                data: data
-            });
-
-        }
-        else{
+    
             var x = new Date().getTime();
             series.addPoint([x, value]);
-        }
         return;
     }
 
