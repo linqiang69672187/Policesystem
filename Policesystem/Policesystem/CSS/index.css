@@ -768,7 +768,7 @@
         border-radius: 1px;
         font-size: 12px;
         vertical-align:middle;
-        line-height:30px;
+        line-height:22px;
         text-align:left;
        }
     .entitylist ul,.entitylist ul li {
@@ -914,8 +914,9 @@
   }
 
     .alarmlist .demo2 li{
-       height: 22px;
+       height: 20px !important;
        width:100%;
+       line-height:20px !important;
       
   }
 
@@ -1082,4 +1083,7 @@ padding:2px 5px 0 0;
 .highcharts-axis-labels{
     color:#ffffff ;
     font-size:11px ;
+}
+.highcharts-legend-item:hover{
+    color:#ffffff !important;
 }

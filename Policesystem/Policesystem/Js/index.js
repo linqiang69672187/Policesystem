@@ -537,7 +537,11 @@ function myRealtimeChart(label, value, index, chartnum, rebuildchar) {
             x:10,
             verticalAlign: 'top',
             itemStyle:{ "color": "#ffffff", "cursor": "pointer", "fontSize": "12px", "fontWeight": "normal" },
-            lineHeight:20
+            lineHeight: 20,
+            itemHoverStyle: {
+                color: '#fff'
+            }
+
         },
         title:null,
         credits: {
@@ -1334,7 +1338,7 @@ $(document).on('click.bs.carousel.data-api', '.moreinfo', function (e) {
 
 $(function () {
     $('#alarmlist').vTicker({
-        showItems: 4,
+        showItems: 5,
         pause: 5000
     });
     $('.devicelist').vTicker({
