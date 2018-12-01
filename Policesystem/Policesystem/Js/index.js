@@ -1199,180 +1199,99 @@ function createGauge(data,rebuildchar) {
         numchart = 0;
         createGaugeTile(i, indexconfigdata[i].DevType);
         if (!todayvalue) return;//没有数据
-        switch (indexconfigdata[i].DevType) {
-                case "1":
-                case "2":
-                case "3":
-                    if (arrayval[0] == "10") {
-                        value = dataValue(parseFloat(yesdayvalue.在线总时长), parseFloat(todayvalue.在线总时长))
-                        myGaugeChart("在线总时长", value, i, numchart, rebuildchar);
-                        numchart += 1;
-                    }
-                    if (arrayval[0] == "11") {
-                        myRealtimeChart("在线总时长", parseFloat(todayvalue.在线总时长), i, numchart, rebuildchar);
-                        numchart += 1;
-                    }
-
-                    if (arrayval[1] == "10") {
-                        value = dataValue(parseFloat(yesdayvalue.在线数), parseFloat(todayvalue.在线数))
-                        myGaugeChart("今日在线量", value, i, numchart, rebuildchar);
-                        numchart += 1;
-                    }
-                    if (arrayval[1] == "11") {
-                        myRealtimeChart("今日在线量", parseFloat(todayvalue.在线数), i, numchart, rebuildchar)
-                        numchart += 1;
-                    }
-                    if (arrayval[2] == "10") {
-                        value = dataValue(parseFloat(yesdayvalue.设备数量), parseFloat(todayvalue.设备数量))
-                        myGaugeChart("设备配发数", value, i, numchart, rebuildchar);
-                        numchart += 1;
-                    }
-                    if (arrayval[2] == "11") {
-                        myRealtimeChart("设备配发数", parseFloat(todayvalue.设备数量), i, numchart, rebuildchar);
-                        numchart += 1;
-                    }
-                    if (arrayval[3] == "10") {
-                        data1 = parseFloat(yesdayvalue.在线数) / parseFloat(yesdayvalue.设备数量);
-                        data2 = parseFloat(todayvalue.在线数) / parseFloat(todayvalue.设备数量);
-                        value = dataValue(data1, data2)
-                        myGaugeChart("设备使用率", value, i, numchart, rebuildchar);
-                        numchart += 1;
-                    }
-                    if (arrayval[3] == "11") {
-                        value = parseFloat(todayvalue.在线数) / parseFloat(todayvalue.设备数量);
-                        value = formatFloat(value,2)
-                        myRealtimeChart("设备使用率", value, i, numchart, rebuildchar);
-                        numchart += 1;
-                    }
+        for (var i1 = 0; i1 < arrayval.length; i1++) {
+            switch (arrayval[i1]) {
+                case "00":
+                    value = dataValue(parseFloat(yesdayvalue.在线总时长), parseFloat(todayvalue.在线总时长))
+                    myGaugeChart("在线总时长", value, i, numchart, rebuildchar);
+                    numchart += 1;
                     break;
-                case "4":
-                case "6":
-                    if (arrayval[0] == "10") {
-                        value = dataValue(parseFloat(yesdayvalue.在线总时长), parseFloat(todayvalue.在线总时长));
-                        myGaugeChart("在线总时长", value, i, numchart, rebuildchar);
-                        numchart += 1;
-                    }
-                    if (arrayval[0] == "11") {
-                        myRealtimeChart("在线总时长", parseFloat(todayvalue.在线总时长), i, numchart, rebuildchar);
-                        numchart += 1;
-                    }
-
-                    if (arrayval[1] == "10") {
-                        value = dataValue(parseFloat(yesdayvalue.在线数), parseFloat(todayvalue.在线数));
-                        myGaugeChart("今日在线量", value, i, numchart, rebuildchar);
-                        numchart += 1;
-                    }
-                    if (arrayval[1] == "11") {
-                        myRealtimeChart("今日在线量", parseFloat(todayvalue.在线数), i, numchart, rebuildchar);
-                        numchart += 1;
-                    }
-                    if (arrayval[2] == "10") {
-                        value = dataValue(parseFloat(yesdayvalue.设备数量), parseFloat(todayvalue.设备数量));
-                        myGaugeChart("设备配发数", value, i, numchart, rebuildchar);
-                        numchart += 1;
-                    }
-                    if (arrayval[2] == "11") {
-                        myRealtimeChart("设备配发数", parseFloat(todayvalue.设备数量), i, numchart, rebuildchar);
-                        numchart += 1;
-                    }
-
-                    if (arrayval[3] == "10") {
-                        data1 = parseFloat(yesdayvalue.在线数) / parseFloat(yesdayvalue.设备数量);
-                        data2 = parseFloat(todayvalue.在线数) / parseFloat(todayvalue.设备数量);
-                        value = dataValue(data1, data2)
-                        myGaugeChart("设备使用率", value, i, numchart, rebuildchar);
-                        numchart += 1;
-                    }
-                    if (arrayval[3] == "11") {
-                        value=parseFloat(todayvalue.在线数) / parseFloat(todayvalue.设备数量)
-                        value = formatFloat(value, 2)
-                        myRealtimeChart("设备使用率", value, i, numchart, rebuildchar);
-                        numchart += 1;
-                    }
-                    if (arrayval[4] == "10") {
-                        value = dataValue(parseFloat(yesdayvalue.处理量), parseFloat(todayvalue.处理量))
-                        myGaugeChart("处理量", value, i, numchart, rebuildchar);
-                        numchart += 1;
-                    }
-                    if (arrayval[4] == "11") {
-                        myRealtimeChart("处理量", parseFloat(todayvalue.处理量), i, numchart, rebuildchar);
-                        numchart += 1;
-                    }
-                    if (arrayval[5] == "10") {
-                        value = dataValue(parseFloat(yesdayvalue.查询量), parseFloat(todayvalue.查询量));
-                        myGaugeChart("查询量", value, i, numchart, rebuildchar);
-                        numchart += 1;
-                    }
-                    if (arrayval[5] == "11") {
-                        myRealtimeChart("查询量", parseFloat(todayvalue.查询量), i, numchart, rebuildchar);
-                        numchart += 1;
-                    }
+                case "10":
+                    value = dataValue(parseFloat(yesdayvalue.在线数), parseFloat(todayvalue.在线数))
+                    myGaugeChart("今日在线量", value, i, numchart, rebuildchar);
+                    numchart += 1;
                     break;
-            case "5":
-                    if (arrayval[1] == "10") {
-                        value = dataValue(parseFloat(yesdayvalue.在线数), parseFloat(todayvalue.在线数))
-                        myGaugeChart("今日在线量", value, i, numchart, rebuildchar);
-                        numchart += 1;
-                    }
-                    if (arrayval[1] == "11") {
-                        myRealtimeChart("今日在线量", parseFloat(todayvalue.在线数), i, numchart, rebuildchar)
-                        numchart += 1;
-                    }
-                    if (arrayval[2] == "10") {
-                        value = dataValue(parseFloat(yesdayvalue.设备数量), parseFloat(todayvalue.设备数量));
-                        myGaugeChart("设备配发数", value, i, numchart, rebuildchar);
-                        numchart += 1;
-                    }
-
-                    if (arrayval[2] == "11") {
-                        myRealtimeChart("设备配发数", parseFloat(todayvalue.设备数量), i, numchart, rebuildchar);
-                        numchart += 1;
-                    }
-                    if (arrayval[3] == "10") {
-                        data1 = parseFloat(yesdayvalue.在线数) / parseFloat(yesdayvalue.设备数量);
-                        data2 = parseFloat(todayvalue.在线数) / parseFloat(todayvalue.设备数量);
-                        value = dataValue(data1, data2);
-                        myGaugeChart("设备使用率", value, i, numchart, rebuildchar);
-                        numchart += 1;
-
-                    }
-                    if (arrayval[3] == "11") {
-                        value = parseFloat(todayvalue.在线数) / parseFloat(todayvalue.设备数量);
-                        value = formatFloat(value, 2)
-                        myRealtimeChart("设备使用率", value, i, numchart, rebuildchar);
-                        numchart += 1;
-                    }
-                    if (arrayval[6] == "10") {
-                        value = dataValue(parseFloat(yesdayvalue.在线总时长), parseFloat(todayvalue.在线总时长));
-                        myGaugeChart("视频长度", value, i, numchart, rebuildchar);
-                        numchart += 1;
-                    }
-                    if (arrayval[6] == "11") {
-                        myRealtimeChart("视频长度", parseFloat(todayvalue.在线总时长), i, numchart, rebuildchar);
-                        numchart += 1;
-                    }
-
-                    if (arrayval[7] == "10") {
-                        value = dataValue(parseFloat(yesdayvalue.文件大小), parseFloat(todayvalue.文件大小));
-                        myGaugeChart("视频文件大小", value, i, numchart, rebuildchar);
-                        numchart += 1;
-                    }
-                    if (arrayval[7] == "11") {
-                        myRealtimeChart("视频文件大小", parseFloat(todayvalue.文件大小), i, numchart, rebuildchar);
-                        numchart += 1;
-                    }
-                    if (arrayval[8] == "10") {
-                        value = dataValue(parseFloat(yesdayvalue.规范上传率), parseFloat(todayvalue.规范上传率));
-                        myGaugeChart("规范上传率", value, i, numchart, rebuildchar);
-                        numchart += 1;
-                    }
-                    if (arrayval[8] == "11") {
-                        myRealtimeChart("规范上传率", parseFloat(todayvalue.规范上传率), i, numchart, rebuildchar);
-                        numchart += 1;
-                    }
+                case "20":
+                    value = dataValue(parseFloat(yesdayvalue.设备数量), parseFloat(todayvalue.设备数量))
+                    myGaugeChart("设备配发数", value, i, numchart, rebuildchar);
+                    numchart += 1;
                     break;
-
+                case "30":
+                    data1 = parseFloat(yesdayvalue.在线数) / parseFloat(yesdayvalue.设备数量);
+                    data2 = parseFloat(todayvalue.在线数) / parseFloat(todayvalue.设备数量);
+                    value = dataValue(data1, data2)
+                    myGaugeChart("设备使用率", value, i, numchart, rebuildchar);
+                    numchart += 1;
+                    break;
+                case "40":
+                    value = dataValue(parseFloat(yesdayvalue.处理量), parseFloat(todayvalue.处理量))
+                    myGaugeChart("处理量", value, i, numchart, rebuildchar);
+                    numchart += 1;
+                    break;
+                case "50":
+                    value = dataValue(parseFloat(yesdayvalue.查询量), parseFloat(todayvalue.查询量));
+                    myGaugeChart("查询量", value, i, numchart, rebuildchar);
+                    numchart += 1;
+                    break;
+                case "60":
+                    value = dataValue(parseFloat(yesdayvalue.在线总时长), parseFloat(todayvalue.在线总时长));
+                    myGaugeChart("视频长度", value, i, numchart, rebuildchar);
+                    numchart += 1;
+                    break;
+                case "70":
+                    value = dataValue(parseFloat(yesdayvalue.在线总时长), parseFloat(todayvalue.在线总时长));
+                    myGaugeChart("视频长度", value, i, numchart, rebuildchar);
+                    numchart += 1;
+                    break;
+                case "80":
+                    value = dataValue(parseFloat(yesdayvalue.规范上传率), parseFloat(todayvalue.规范上传率));
+                    myGaugeChart("规范上传率", value, i, numchart, rebuildchar);
+                    numchart += 1;
+                    break;
+                case "01":
+                    myRealtimeChart("在线总时长", parseFloat(todayvalue.在线总时长), i, numchart, rebuildchar);
+                    numchart += 1;
+                    break;
+                case "11":
+                    myRealtimeChart("今日在线量", parseFloat(todayvalue.在线数), i, numchart, rebuildchar)
+                    numchart += 1;
+                    break;
+                case "21":
+                    myRealtimeChart("设备配发数", parseFloat(todayvalue.设备数量), i, numchart, rebuildchar);
+                    numchart += 1;
+                    break;
+                case "31":
+                    value = parseFloat(todayvalue.在线数) / parseFloat(todayvalue.设备数量);
+                    value = formatFloat(value, 2)
+                    myRealtimeChart("设备使用率", value, i, numchart, rebuildchar);
+                    numchart += 1;
+                    break;
+                case "41":
+                    myRealtimeChart("处理量", parseFloat(todayvalue.处理量), i, numchart, rebuildchar);
+                    numchart += 1;
+                    break;
+                case "51":
+                    myRealtimeChart("查询量", parseFloat(todayvalue.查询量), i, numchart, rebuildchar);
+                    numchart += 1;
+                    break;
+                case "61":
+                    myRealtimeChart("视频长度", parseFloat(todayvalue.在线总时长), i, numchart, rebuildchar);
+                    numchart += 1;
+                    break;
+                case "71":
+                    myRealtimeChart("视频文件大小", parseFloat(todayvalue.文件大小), i, numchart, rebuildchar);
+                    numchart += 1;
+                    break;
+                case "81":
+                    myRealtimeChart("规范上传率", parseFloat(todayvalue.规范上传率), i, numchart, rebuildchar);
+                    numchart += 1;
+                    break;
+                default:
+                    break;
             }
+
+
+        }
 
     
 

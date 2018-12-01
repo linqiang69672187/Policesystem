@@ -596,7 +596,7 @@
         height: 22px;
         background-color: transparent;
         line-height: 22px;
-        margin-left: 20px;
+        margin-left: 10px;
     }
    .qjxinxi i{
        font-size:30px;
@@ -636,7 +636,7 @@
    }
     .qjxinxi li {
         position: relative;
-        width: 20%;
+        width:18%;
     }
      .qjxinxi li:nth-child(1) {
         position: relative;
