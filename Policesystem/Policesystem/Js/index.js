@@ -40,7 +40,7 @@ setInterval(function () {
             weekday = "星期六";
             break;
     }
-    $(".timebanner label").text(year + "-" + month + "-" + day + " " + hour + ":" + min + ":" + sencond+" "+ weekday);
+    $(".timebanner label").text(year + "-" + month + "-" + day + " " + hour + ":" + min + ":" + sencond);
 }, 50);
 
 $("#header").load('top.html', function () {
@@ -164,6 +164,7 @@ function createdatadetail(data, types) {
     var totalvalue = 0;
     var color = ['#4c8afa', '#f2ab22', '#43db89', '#38e8e8', '#a24cfa', '#fa4cae', '#59bfa1', '#d7ce56', '#b45538', '#c48b6c', '#c56377', '#86c36a'];
     var colorcount = 0;
+    try {
     for (var i1 = 0; i1 < charttype.length; i1++) {
         totalvalue = 0;
         ddata = [];
@@ -189,11 +190,14 @@ function createdatadetail(data, types) {
           createcolum("column", "column", ddatacolumn, color,'L');
         
     }
-
+    }
+    catch (e) {
+        console.log(e);
+    }
 }
 
 function createcolum(index, type, data, color, fontweight) {
-    var id = $(".rlchars:eq(" + index + ") div:eq(2)").attr('id');
+    var id =(index=="chart"||index=="column")?index: $(".rlchars:eq(" + index + ") div:eq(2)").attr('id');
     var chart = Highcharts.chart(id, {
         chart: {
             backgroundColor: 'rgba(0,0,0,0)'
@@ -268,8 +272,7 @@ function createcolum(index, type, data, color, fontweight) {
     });
 }
 function createChart(index, type, data, color, totalvalue, fontweight) {
-   
-    var id = $(".rlchars:eq(" + index + ") div:eq(0)").attr('id');
+    var id = (index == "chart" || index == "column") ? index : $(".rlchars:eq(" + index + ") div:eq(0)").attr('id');
     var chart = Highcharts.chart(id, {
         chart: {
             backgroundColor: 'rgba(0,0,0,0)'
@@ -540,7 +543,10 @@ function myRealtimeChart(label, value, index, chartnum, rebuildchar) {
             lineHeight: 20,
             itemHoverStyle: {
                 color: '#fff'
-            }
+            },
+            squareSymbol: false,
+            symbolWidth: 20,
+            symbolRadius: 4
 
         },
         title:null,
@@ -568,9 +574,11 @@ function myRealtimeChart(label, value, index, chartnum, rebuildchar) {
                 text: null
             },
             lineWidth: 1,
-            gridLineWidth: 0,
+            gridLineWidth: 1,
             tickPixelInterval: 30,
+            gridLineColor:'#ded44e',
             min: 0,
+            gridLineDashStyle: 'ShortDot',
             max:maxvalue,
             labels: {
                 style: {
@@ -657,12 +665,12 @@ function myRealtimeChart(label, value, index, chartnum, rebuildchar) {
 function myGaugeChart(label, value,index,chartnum,rebuildchar) {
     var chart
     var oper = '环比增加' + value + '%<i class="fa fa-arrow-up" aria-hidden="true"></i><br/> <span style="hbclasslabel">● ' + label + ' ● </span>';
-    var colorarray = ['#467ddf', '#964edf', '#ff0000', '#008000']
+    var colorarray = ['#df3a20', '#df3a20', '#dccf1d', '#008000']
 
     if (value < 0) {
         value = Math.abs(value);
         oper = '环比减少' + value + '%<i class="fa fa-arrow-down" aria-hidden="true"></i><br/> <span style="hbclasslabel">● ' + label + ' ● </span>';
-         colorarray = ['#467ddf', '#964edf', '#ff0000', '#FF0000']
+        colorarray = ['#df3a20', '#df3a20', '#dccf1d', '#FF0000']
 
     }
     var containerId;
@@ -825,12 +833,12 @@ function myGaugeChart(label, value,index,chartnum,rebuildchar) {
                 color: colorarray[0] // 1
             }, {
                 from: 30,
-                to: 80,
+                to: 60,
                 innerRadius: '100%',
                 outerRadius: '80%',
                 color: colorarray[1] // 2
             }, {
-                from: 80,
+                from: 60,
                 to: 100,
                 innerRadius: '100%',
                 outerRadius: '80%',
@@ -978,8 +986,7 @@ function loadTotalDevices() {
         data: "",
         dataType: "json",
         success: function (data) {
-
-            $(".count-title").each(function (index, element) {
+            $(".count-time").each(function (index, element) {
                 var from = $(this).attr("data-to");
                 var to;
                 switch (index) {

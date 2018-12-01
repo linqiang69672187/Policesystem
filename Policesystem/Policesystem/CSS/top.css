@@ -1,4 +1,11 @@
-﻿
+﻿@font-face {
+    font-family: 'alarm clock';
+    src: url('../font/alarm clock.eot'); /* IE9 Compat Modes */
+    src: url('../font/alarm clock.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+             url('../font/alarm clock.woff') format('woff'), /* Modern Browsers */
+             url('../font/alarm clock.ttf')  format('truetype'), /* Safari, Android, iOS */
+             url('../font/alarm clock.svg#alarm clock') format('svg'); /* Legacy iOS */
+   }
  #header .row{
     height:102px;
     background-image:url(../Image/topbannerbg.png); 
@@ -92,4 +99,7 @@
 }
 .bannertime{
     margin-top:5px !important;
+
+ font-family:'alarm clock';
+
 }

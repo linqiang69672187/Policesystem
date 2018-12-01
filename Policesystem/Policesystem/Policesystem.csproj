@@ -198,6 +198,7 @@
     <Content Include="Image\leftbootombg.png" />
     <Content Include="Image\leftbootombg_1.png" />
     <Content Include="Image\left_bannerbg.png" />
+    <Content Include="Image\policestationlogo.png" />
     <Content Include="Image\rightbox_bg.png" />
     <Content Include="Image\sort_asc.png" />
     <Content Include="Image\sort_asc_disabled.png" />
@@ -528,6 +529,7 @@
     <Content Include="Handle\index_24histroy.ashx" />
     <Content Include="font\Open 24 Display St.woff" />
     <Content Include="font\alarm clock.woff" />
+    <Content Include="font\digital-7 %28mono%29.woff" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
