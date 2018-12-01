@@ -1100,10 +1100,10 @@ function createGaugeTile(domid,type) {
             if (domid == 1) {
                 $(".xixi2").html("<img src='image/index_chezaiship.png'><label>车载视频</label>")
             }
-            if (domid == 2) {
+            if (domid == 3) {
                 $(".xixi3").html("<img src='image/index_chezaiship.png'><label>车载视频</label>")
             }
-            if (domid == 3) {
+            if (domid == 2) {
                 $(".xixi4").html("<img src='image/index_chezaiship.png'><label>车载视频</label>")
             }
             break;
@@ -1114,10 +1114,10 @@ function createGaugeTile(domid,type) {
             if (domid == 1) {
                 $(".xixi2").html("<img src='image/index_duijiangji.png'><label>对讲机</label>")
             }
-            if (domid == 2) {
+            if (domid == 3) {
                 $(".xixi3").html("<img src='image/index_duijiangji.png'><label>对讲机</label>")
             }
-            if (domid == 3) {
+            if (domid == 2) {
                 $(".xixi4").html("<img src='image/index_duijiangji.png'><label>对讲机</label>")
             }
             break;
@@ -1128,10 +1128,10 @@ function createGaugeTile(domid,type) {
             if (domid == 1) {
                 $(".xixi2").html("<img src='image/index_lanjieyi.png'><label>拦截仪</label>")
             }
-            if (domid == 2) {
+            if (domid == 3) {
                 $(".xixi3").html("<img src='image/index_lanjieyi.png'><label>拦截仪</label>")
             }
-            if (domid == 3) {
+            if (domid == 2) {
                 $(".xixi4").html("<img src='image/index_lanjieyi.png'><label>拦截仪</label>")
             }
             break;
@@ -1142,10 +1142,10 @@ function createGaugeTile(domid,type) {
             if (domid == 1) {
                 $(".xixi2").html("<img src='image/index_jingwutong.png'><label>警务通</label>")
             }
-            if (domid == 2) {
+            if (domid == 3) {
                 $(".xixi3").html("<img src='image/index_jingwutong.png'><label>警务通</label>")
             }
-            if (domid == 3) {
+            if (domid == 2) {
                 $(".xixi4").html("<img src='image/index_jingwutong.png'><label>警务通</label>")
             }
             break;
@@ -1156,25 +1156,25 @@ function createGaugeTile(domid,type) {
             if (domid == 1) {
                 $(".xixi2").html("<img src='image/index_zhifajiluyi.png'><label>执法记录仪</label>")
             }
-            if (domid == 2) {
+            if (domid == 3) {
                 $(".xixi3").html("<img src='image/index_zhifajiluyi.png'><label>执法记录仪</label>")
             }
-            if (domid == 3) {
+            if (domid == 2) {
                 $(".xixi4").html("<img src='image/index_zhifajiluyi.png'><label>执法记录仪</label>")
             }
             break;
         case "6":
             if (domid == 0) {
-                $(".xixi1").html("<img src='image/index_jingwutong.png'><label>辅警通</label>")
+                $(".xixi1").html("<img src='image/index_fujingtong.png' style='width: 30px;'><label>辅警通</label>")
             }
             if (domid == 1) {
-                $(".xixi2").html("<img src='image/index_jingwutong.png'><label>辅警通</label>")
-            }
-            if (domid == 2) {
-                $(".xixi3").html("<img src='image/index_jingwutong.png'><label>辅警通</label>")
+                $(".xixi2").html("<img src='image/index_fujingtong.png' style='width: 30px;'><label>辅警通</label>")
             }
             if (domid == 3) {
-                $(".xixi4").html("<img src='image/index_jingwutong.png'><label>辅警通</label>")
+                $(".xixi3").html("<img src='image/index_fujingtong.png' style='width: 30px;'><label>辅警通</label>")
+            }
+            if (domid == 2) {
+                $(".xixi4").html("<img src='image/index_fujingtong.png' style='width: 30px;'><label>辅警通</label>")
             }
             break;
     }
@@ -1198,7 +1198,7 @@ function createGauge(data,rebuildchar) {
         arrayval = indexconfigdata[i].val.split(",");
         numchart = 0;
         createGaugeTile(i, indexconfigdata[i].DevType);
-          
+        if (!todayvalue) return;//没有数据
         switch (indexconfigdata[i].DevType) {
                 case "1":
                 case "2":
@@ -1308,7 +1308,16 @@ function createGauge(data,rebuildchar) {
                         numchart += 1;
                     }
                     break;
-                case "5":
+            case "5":
+                    if (arrayval[1] == "10") {
+                        value = dataValue(parseFloat(yesdayvalue.在线数), parseFloat(todayvalue.在线数))
+                        myGaugeChart("今日在线量", value, i, numchart, rebuildchar);
+                        numchart += 1;
+                    }
+                    if (arrayval[1] == "11") {
+                        myRealtimeChart("今日在线量", parseFloat(todayvalue.在线数), i, numchart, rebuildchar)
+                        numchart += 1;
+                    }
                     if (arrayval[2] == "10") {
                         value = dataValue(parseFloat(yesdayvalue.设备数量), parseFloat(todayvalue.设备数量));
                         myGaugeChart("设备配发数", value, i, numchart, rebuildchar);
