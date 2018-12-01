@@ -8,6 +8,8 @@ var historydata;
 var Totalinter;//一分钟重新加载全局设备情况
 var Gaugeinter;//2分钟加载仪表盘
 var carouselEntity;//轮播单位
+var color = ['#4c8afa', '#f2ab22', '#43db89', '#38e8e8', '#a24cfa', '#fa4cae', '#59bfa1', '#d7ce56', '#b45538', '#c48b6c', '#c56377', '#86c36a'];
+
 setInterval(function () {
     var date = new Date();
     var year = date.getFullYear();
@@ -88,7 +90,6 @@ function createdata(data) {
     var ddata = new Array();
     var ddatacolumn = new Array();
     var totalvalue = 0;
-    var color = ['#4c8afa', '#f2ab22', '#43db89', '#38e8e8', '#a24cfa', '#fa4cae', '#59bfa1', '#d7ce56', '#b45538', '#c48b6c', '#c56377', '#86c36a'];
     var colorcount = 0;
     //createTextLabel(data, color);
     for (var i1 = 0; i1 < charttype.length; i1++) {
@@ -267,10 +268,34 @@ function createcolum(index, type, data, color, fontweight) {
             type: type,
             innerSize: '80%',
             name: '配发数',
-            data: data
+            data: data,
+            borderRadius: 5
         }]
-    });
+    },
+     function (chart) {
+         SetEveryOnePointColor(chart);
+    }
+    );
 }
+
+
+function SetEveryOnePointColor(chart) {
+    //获得第一个序列的所有数据点
+    var pointsList = chart.series[0].points;
+    //遍历设置每一个数据点颜色
+    for (var i = 0; i < pointsList.length; i++) {
+        chart.series[0].points[i].update({
+            color: {
+                linearGradient: { x1: 0, y1: 1, x2: 0, y2: 0 }, //横向渐变效果 如果将x2和y2值交换将会变成纵向渐变效果
+                stops: [
+                            [0, Highcharts.Color(color[i]).setOpacity(1).get('rgba')],
+                            [1, 'rgb(255, 255, 255)']
+                ]
+            }
+        });
+    }
+}
+
 function createChart(index, type, data, color, totalvalue, fontweight) {
     var id = (index == "chart" || index == "column") ? index : $(".rlchars:eq(" + index + ") div:eq(0)").attr('id');
     var chart = Highcharts.chart(id, {
@@ -1016,6 +1041,24 @@ function loadTotalDevices() {
                 }
 
             })
+            switch (data.title) {
+                case "331000000000":
+                    $(".textxinxi1 label:eq(0)").text("全市");
+                    $(".textxinxi2 label:eq(0)").text("支队");
+                    break;
+                case "331001000000":
+                case "331002000000":
+                case "331003000000":
+                case "331004000000":
+                    $(".textxinxi1 label:eq(0)").text("支队");
+                    $(".textxinxi2 label:eq(0)").text("大队");
+                    break;
+                default:
+                    $(".textxinxi1 label:eq(0)").text("大队");
+                    $(".textxinxi2 label:eq(0)").text("中队");
+                    break;
+
+            }
 
 
 
@@ -1412,7 +1455,7 @@ function loadAlarmUser() {
             $(".entitylist ul").empty();
             for (var i = 0; i < data.data.length; i++) {
                 alarmindex = data.data[i]["ID"];
-                $(".entitylist ul ").append('<li class="news-item"><i class="fa fa-circle"></i> ' + data.data[i]["XM"] + '(' + data.data[i]["DevId"] + ')已经' + datecompare(data.data[i]["QQSJ"]) + '天未登录</li>')
+                $(".entitylist ul ").append('<li class="news-item"><i class="fa fa-exclamation-circle"></i> ' + data.data[i]["XM"] + '(' + data.data[i]["DevId"] + ')已经' + datecompare(data.data[i]["QQSJ"]) + '天未登录</li>')
             }
            
         },

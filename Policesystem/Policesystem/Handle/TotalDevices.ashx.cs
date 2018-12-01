@@ -77,7 +77,7 @@ namespace Policesystem.Handle
 
            
 
-            context.Response.Write(JSON.DatatableToDatatableJS(dt, ""));
+            context.Response.Write(JSON.DatatableToDatatableJS(dt, BMDM));
         }
 
         public bool IsReusable

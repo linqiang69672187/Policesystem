@@ -35,7 +35,7 @@ namespace Policesystem.Handle
 
 
         Request:
-            sqltext.Append("select * from IndexConfigs where ID=4");
+            sqltext.Append("select * from IndexConfigs where ID=5");
             DataTable dt = SQLHelper.ExecuteRead(CommandType.Text, sqltext.ToString(), "DB");
             context.Response.Write(JSON.DatatableToJson(dt, ""));
 
@@ -58,7 +58,7 @@ namespace Policesystem.Handle
 
         update: ;
             string val = context.Request.Form["val"];
-            sqltext.Append("if exists (select * from IndexConfigs where id=4) begin update IndexConfigs set val='"+val+"' where id=4 end else begin insert into IndexConfigs (val,id) values ('"+val+"',4) end");
+            sqltext.Append("if exists (select * from IndexConfigs where id=5) begin update IndexConfigs set val='"+val+"' where id=5 end else begin insert into IndexConfigs (val,id) values ('"+val+"',5) end");
 
             SQLHelper.ExecuteNonQuery(CommandType.Text, sqltext.ToString());
 

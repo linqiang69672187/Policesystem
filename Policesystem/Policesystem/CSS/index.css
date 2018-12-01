@@ -1103,3 +1103,6 @@ padding:2px 5px 0 0;
 .highcharts-yaxis-grid path:last-child{
     display:none;
 }
+.fa-exclamation-circle{
+    color:#FF0000;
+}
