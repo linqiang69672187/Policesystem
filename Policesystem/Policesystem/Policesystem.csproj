@@ -176,8 +176,6 @@
     <Content Include="Images\sort_both.png" />
     <Content Include="Images\sort_desc.png" />
     <Content Include="Images\sort_desc_disabled.png" />
-    <Content Include="Image\bannar-logo.png" />
-    <Content Include="Image\bannar-logo_L.png" />
     <Content Include="Image\bannar-time-bg.png" />
     <Content Include="Image\config_indexleft1.png" />
     <Content Include="Image\config_indexleft2.png" />
