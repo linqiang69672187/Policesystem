@@ -1219,7 +1219,7 @@ function createGauge(data,rebuildchar) {
                         numchart += 1;
                     }
                     if (arrayval[1] == "11") {
-                        myRealtimeChart("在线总时长", parseFloat(todayvalue.在线数), i, numchart, rebuildchar)
+                        myRealtimeChart("今日在线量", parseFloat(todayvalue.在线数), i, numchart, rebuildchar)
                         numchart += 1;
                     }
                     if (arrayval[2] == "10") {

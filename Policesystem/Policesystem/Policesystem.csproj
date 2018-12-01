@@ -380,6 +380,7 @@
     <Content Include="Handle\saveindexconfig.ashx" />
     <Content Include="Handle\templet\mingxi\1.xls" />
     <Content Include="Web.config" />
+    <Content Include="思路.txt" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="CSS\index.css" />
