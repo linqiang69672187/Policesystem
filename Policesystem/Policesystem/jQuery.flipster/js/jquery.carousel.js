@@ -301,45 +301,9 @@ function createChar() {
     });
 
 }
+var int = setInterval(createChar, 600000); //10分钟刷新
 $(function () {
-   
-    $.ajax({
-        type: "POST",
-        url: "../../Handle/loadfreshTime.ashx",
-        data: "",
-        dataType: "json",
-        success: function (data) {
-            var second;
-            for (var i = 0; i < data.data.length; i++) {
-                second = parseInt(data.data[i].DevType)*1000;
-                switch (data.data[i].val) {
-                    case "全局设备更新周期":
-                        window.parent.setInterloadTotalDevices(second);
-                        break;
-                    case "仪表盘信息栏更新周期":
-                        window.parent.setInterloadGaugeData(second);
-                        break;
-                    case "轮播及右侧图形数据更新周期":
-                        setInterval(createChar, second); //10分钟刷新
-
-                        break;
-                    case "轮播周期":
-                        setintervalofCarouse(second);
-                        break;
-
-                    default:
-                        break;
-                }
-            }
-            createChar();
-
-        },
-        error: function (msg) {
-            console.debug("错误:ajax");
-        }
-    });
-
-
+    createChar();
 });
 
 function crateItem() {
@@ -472,8 +436,4 @@ function crateItemRight() {
 
     });
 
-}
-
-function setintervalofCarouse(second) {
-    $('.caroursel').attr('data-setting', '{"width":2670,"height":620,"posterWidth":985,"posterHeight":620,"scale":0.8,"dealy":"' + second + '","algin":"middle"}');
 }
