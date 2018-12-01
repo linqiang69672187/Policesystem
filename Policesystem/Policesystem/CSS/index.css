@@ -631,7 +631,7 @@
         line-height:40px;
     }
    .count-title{
-       font-size:34px;
+       font-size:24px;
        font-family:'alarm clock' !important;
    }
     .qjxinxi li {
@@ -651,14 +651,13 @@
         margin-left: -20px !important;
     }
     .textxinxi1 label,.textxinxi2 label {
-        font-size:30px;
+        margin-left:15px;
     }
 
     .qjxinxi li label:nth-child(2) {
         position: absolute;
         margin-top: -12px;
         margin-left: 18px !important;
-        font-size: 30px !important;
     }
 
     .qjxinxi li label:nth-child(3) {
@@ -737,6 +736,8 @@
   
     .hbclasslabel{
        font-size: 12px;
+       display:block;
+       margin-top:-3px;
     }
     .col-md-4{
         padding-right: 0px !important;

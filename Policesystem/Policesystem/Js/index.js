@@ -689,14 +689,13 @@ function myRealtimeChart(label, value, index, chartnum, rebuildchar) {
 
 function myGaugeChart(label, value,index,chartnum,rebuildchar) {
     var chart
-    var oper = '环比增加' + value + '%<i class="fa fa-arrow-up" aria-hidden="true"></i><br/> <span style="hbclasslabel">● ' + label + ' ● </span>';
+    var oper = '环比增加' + value + '%<i class="fa fa-arrow-up" aria-hidden="true"></i><span class="hbclasslabel">● ' + label + ' ● </span>';
     var colorarray = ['#df3a20', '#df3a20', '#dccf1d', '#008000']
 
     if (value < 0) {
         value = Math.abs(value);
-        oper = '环比减少' + value + '%<i class="fa fa-arrow-down" aria-hidden="true"></i><br/> <span style="hbclasslabel">● ' + label + ' ● </span>';
+        oper = '环比减少' + value + '%<i class="fa fa-arrow-down" aria-hidden="true"></i><span class="hbclasslabel">● ' + label + ' ● </span>';
         colorarray = ['#df3a20', '#df3a20', '#dccf1d', '#FF0000']
-
     }
     var containerId;
     switch (index) {
