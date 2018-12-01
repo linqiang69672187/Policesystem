@@ -598,7 +598,16 @@
         line-height: 22px;
         margin-left: 20px;
     }
-
+   .qjxinxi i{
+       font-size:30px;
+       color:#116bf2;
+   }
+     .qjxinxi div:nth-child(2){
+         margin-top:-10px;
+     }
+       .qjxinxi div:nth-child(3){
+         margin-top:10px;
+     }
     .qjxinxi div:nth-child(2), .qjxinxi div:nth-child(3) {
         font-size: 24px !important;
         color: #fff !important;
@@ -631,14 +640,18 @@
     }
      .qjxinxi li:nth-child(1) {
         position: relative;
-        width:40px;
-        margin-right: 10px;
+        width:60px;
+        margin-right: 20px;
+        margin-top:0px;
     }
 
     .qjxinxi li i:nth-child(1) {
         position: absolute;
-        margin-top: 10px;
-        margin-left: -10px !important;
+        margin-top: 0px;
+        margin-left: -20px !important;
+    }
+    .textxinxi1 label,.textxinxi2 label {
+        font-size:30px;
     }
 
     .qjxinxi li label:nth-child(2) {
