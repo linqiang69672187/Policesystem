@@ -1298,6 +1298,14 @@ function createGauge(data,rebuildchar) {
     }
 }
 
+function setInterloadTotalDevices(interval) {
+    Totalinter = setInterval(loadTotalDevices, interval);//一分钟重新加载全局设备情况
+}
+
+function setInterloadGaugeData(interval) {
+    Gaugeinter = setInterval(loadGaugeData, interval);//2分钟加载仪表盘
+}
+
 function loadindexconfigdata() {
   
     $.ajax({
@@ -1309,8 +1317,6 @@ function loadindexconfigdata() {
             if (data.data.length == 4) {
                 indexconfigdata = data.data;
                // loadGaugeData();
-                 Totalinter = setInterval(loadTotalDevices, 10000);//一分钟重新加载全局设备情况
-                 Gaugeinter = setInterval(loadGaugeData, 1000);//2分钟加载仪表盘
             }
         },
         error: function (msg) {
