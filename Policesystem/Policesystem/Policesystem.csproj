@@ -133,6 +133,7 @@
     <Content Include="comjs\highcharts.js" />
     <Content Include="comjs\highmap.js" />
     <Content Include="comjs\highmaps.js" />
+    <Content Include="comjs\html5shiv.min.js" />
     <Content Include="comjs\ion.rangeSlider.js" />
     <Content Include="comjs\jquery-1.12.3.min - 复制.js" />
     <Content Include="comjs\jquery-1.12.3.min.js" />
@@ -485,6 +486,9 @@
     <Compile Include="Handle\Jqueryflipster.ashx.cs">
       <DependentUpon>Jqueryflipster.ashx</DependentUpon>
     </Compile>
+    <Compile Include="Handle\loadfreshTime.ashx.cs">
+      <DependentUpon>loadfreshTime.ashx</DependentUpon>
+    </Compile>
     <Compile Include="Handle\map.ashx.cs">
       <DependentUpon>map.ashx</DependentUpon>
     </Compile>
@@ -531,6 +535,7 @@
     <Content Include="font\Open 24 Display St.woff" />
     <Content Include="font\alarm clock.woff" />
     <Content Include="font\digital-7 %28mono%29.woff" />
+    <Content Include="Handle\loadfreshTime.ashx" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
