@@ -10,6 +10,7 @@ var Gaugeinter;//2分钟加载仪表盘
 var carouselEntity;//轮播单位
 var color = ['#4c8afa', '#f2ab22', '#43db89', '#38e8e8', '#a24cfa', '#fa4cae', '#59bfa1', '#d7ce56', '#b45538', '#c48b6c', '#c56377', '#86c36a'];
 
+Highcharts.setOptions({ global: { useUTC: false } });
 setInterval(function () {
     var date = new Date();
     var year = date.getFullYear();
@@ -67,6 +68,15 @@ switch (true) {
         columtitlefontSize = '18px';
         tickLength = 28;
         doublecount = 2;
+
+        realheight = 370;
+        realaxisLabelfontsize = '24px'
+        realxAxis = 25;
+        realtickLength = 10;
+        realtickPixelInterval = 150;
+        realtickPixelIntervalY = 100;
+        realtyAxisy = 10;
+        realsymbolWidth = 40;
         break;
     default:
         hchart = 110;
@@ -79,7 +89,17 @@ switch (true) {
         tickLength = 10;
         titlefontsize = '12px';
         columtitlefontSize = '8px';
+       
         doublecount = 1;
+
+        realheight = 130;
+        realaxisLabelfontsize = '12px';
+        realxAxis = 15;
+        realtickLength = 5;
+        realtickPixelInterval = 70;
+        realtickPixelIntervalY = 50;
+        realtyAxisy = 5;
+        realsymbolWidth = 20;
         break;
 
 }
@@ -244,8 +264,12 @@ function createcolum(index, type, data, color, fontweight) {
             }
         },
         tooltip: {
-            headerFormat: '<span style="font-size:11px">{series.name}</span><br>',
-            pointFormat: '<span style="color:{point.color}">{point.name}</span>: <b>{point.y:.2f}%</b> 使用率<br/>'
+            headerFormat: '<span >{series.name}</span><br>',
+            pointFormat: '<span style="color:{point.color}">{point.name}</span>: <b>{point.y:.2f}%</b> 使用率<br/>',
+            style: {
+                fontSize: realaxisLabelfontsize
+            }
+
         },
         legend: {
             enabled: false
@@ -549,14 +573,14 @@ function myRealtimeChart(label, value, index, chartnum, rebuildchar) {
             events: {},
             backgroundColor: 'rgba(0,0,0,0)',//设置背景透明
             marginRight: 0,
-            height: 130
+            height: realheight
         },
         legend: {
             title: {
 
                 style: {
                     "color": "#ffffff",
-                    "fontSize": "12px"
+                    "fontSize": realaxisLabelfontsize
                 }
             },
             floating:true,
@@ -564,13 +588,13 @@ function myRealtimeChart(label, value, index, chartnum, rebuildchar) {
             y: -15,
             x:10,
             verticalAlign: 'top',
-            itemStyle:{ "color": "#ffffff", "cursor": "pointer", "fontSize": "12px", "fontWeight": "normal" },
+            itemStyle: { "color": "#ffffff", "cursor": "pointer", "fontSize": realaxisLabelfontsize, "fontWeight": "normal" },
             lineHeight: 20,
             itemHoverStyle: {
                 color: '#fff'
             },
             squareSymbol: false,
-            symbolWidth: 20,
+            symbolWidth: realsymbolWidth,
             symbolRadius: 4
 
         },
@@ -580,17 +604,17 @@ function myRealtimeChart(label, value, index, chartnum, rebuildchar) {
         },
         xAxis: {
             type: 'datetime',
-    
+            tickPixelInterval: realtickPixelInterval,
             dateTimeLabelFormats: {
                 second: '%M:%S'
             },
-            tickLength: 5,
+            tickLength: realtickLength,
             labels: {
                 style: {
                     "color": "#ffffff",
-                    "fontSize": "11px"
+                    "fontSize": realaxisLabelfontsize
                 },
-                y: 15
+                y: realxAxis
 
             }
         },
@@ -604,15 +628,16 @@ function myRealtimeChart(label, value, index, chartnum, rebuildchar) {
             gridLineColor:'#ded44e',
             min: 0,
             gridLineDashStyle: 'ShortDot',
+            tickPixelInterval: realtickPixelIntervalY,
             max:maxvalue,
             labels: {
                 style: {
                     "color": "#ffffff",
-                     "fontSize": "11px"
+                    "fontSize": realaxisLabelfontsize
                 },
 
                 x: -5,
-                y: 5
+                y: realtyAxisy
    
 
             }
@@ -621,7 +646,10 @@ function myRealtimeChart(label, value, index, chartnum, rebuildchar) {
             formatter: function () {
                 return '<b>' + this.series.name + '</b><br/>' +
                     Highcharts.dateFormat('%Y-%m-%d %H:%M:%S', this.x) + '<br/>' + this.y;
-            }
+            },
+            style: {
+                fontSize: realaxisLabelfontsize
+			}
         },
         
         series: [{
@@ -812,6 +840,11 @@ function myGaugeChart(label, value,index,chartnum,rebuildchar) {
             margin: [0, 0, 0, 0],
             height: hchart
         },
+        tooltip: {
+            style: {
+                fontSize: realaxisLabelfontsize
+            }
+        },
         credits: {
             enabled: false
         },
@@ -885,7 +918,8 @@ function myGaugeChart(label, value,index,chartnum,rebuildchar) {
                 borderWidth:'0',
                 topWidth:'1'
             },
-            backgroundColor:null,
+            backgroundColor: null,
+
             dataLabels: {
                 formatter: function () {
                     var kmh = this.y
