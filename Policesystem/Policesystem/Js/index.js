@@ -1093,7 +1093,7 @@ function loadTotalDevices() {
                         to = data.data[index-1].value;
                         break;
                     case 7:
-                        to = formatSeconds(data.data[3].value2, 1);
+                        to = formatSeconds(data.data[4].value2, 1);
                         break;
                     default:
                         break;
