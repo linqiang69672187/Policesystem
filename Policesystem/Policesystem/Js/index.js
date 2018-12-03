@@ -77,6 +77,8 @@ switch (true) {
         realtickPixelIntervalY = 100;
         realtyAxisy = 10;
         realsymbolWidth = 40;
+        cloumntickPixelInterval = 100;
+        cloumnborderRadius = 40;
         break;
     default:
         hchart = 110;
@@ -100,6 +102,8 @@ switch (true) {
         realtickPixelIntervalY = 50;
         realtyAxisy = 5;
         realsymbolWidth = 20;
+        cloumntickPixelInterval = 30;
+        cloumnborderRadius = 10;
         break;
 
 }
@@ -163,7 +167,8 @@ function createdata(data) {
           createcolum(i1, "column", ddatacolumn, color);//创建柱图
             
     }
-    loadGaugeData();//加载仪表盘
+
+
 }
 
 function createTextLabel(data, colors) {
@@ -238,7 +243,6 @@ function createcolum(index, type, data, color, fontweight) {
         
         },
         yAxis: {
-            max:100,
             labels: {
                 style: {
                     color: '#fff',
@@ -252,7 +256,11 @@ function createcolum(index, type, data, color, fontweight) {
                     fontSize: (fontweight == 'L') ? doublecount*24+'px' : columtitlefontSize
                 }
             },
-            gridLineDashStyle: 'Dash', //Dash,Dot,Solid,默认Solid
+            gridLineWidth: 2,
+            gridLineColor: '#ded44e',
+            gridLineDashStyle: 'ShortDot',
+            gridZIndex: 4,
+            tickPixelInterval: (fontweight == 'L')?100:cloumntickPixelInterval,
         },
         
         title: {
@@ -293,7 +301,7 @@ function createcolum(index, type, data, color, fontweight) {
             innerSize: '80%',
             name: '配发数',
             data: data,
-            borderRadius: 5
+            borderRadius: (fontweight == 'L') ? 40 : cloumnborderRadius
         }]
     },
      function (chart) {
@@ -312,8 +320,10 @@ function SetEveryOnePointColor(chart) {
             color: {
                 linearGradient: { x1: 0, y1: 1, x2: 0, y2: 0 }, //横向渐变效果 如果将x2和y2值交换将会变成纵向渐变效果
                 stops: [
-                            [0, Highcharts.Color(color[i]).setOpacity(1).get('rgba')],
-                            [1, 'rgb(255, 255, 255)']
+                            [0, Highcharts.Color('#09c1ff').setOpacity(1).get('rgba')],
+                            [0.3, Highcharts.Color('#6961fd').setOpacity(1).get('rgba')],
+                            [0.5, Highcharts.Color('#bd17fd').setOpacity(1).get('rgba')],
+                            [1, '#bd17fd']
                 ]
             }
         });
@@ -517,11 +527,26 @@ function myRealtimeChart(label, value, index, chartnum, rebuildchar) {
 
   
 
-    if (chart&&!rebuildchar) {
+    if (chart) {
         var series = chart.series[0];
-    
-            var x = new Date().getTime();
-            series.addPoint([x, value]);
+        var time = (new Date()).getTime();
+        if (rebuildchar) {
+            var datascount = series.data.length;
+            for (i = 0; i < datascount; i += 1) {
+                series.removePoint(0);
+            }
+            for (i = -4; i <= 0; i += 1) {
+                x = time + i * 1000;
+                series.addPoint([x, value]);
+            }
+            series.update(true);
+        }
+        else
+        {
+            series.addPoint([time, value],true,true);
+        }
+
+
         return;
     }
 
@@ -626,7 +651,6 @@ function myRealtimeChart(label, value, index, chartnum, rebuildchar) {
             gridLineWidth: 1,
             tickPixelInterval: 30,
             gridLineColor:'#ded44e',
-            min: 0,
             gridLineDashStyle: 'ShortDot',
             tickPixelInterval: realtickPixelIntervalY,
             max:maxvalue,
@@ -665,7 +689,7 @@ function myRealtimeChart(label, value, index, chartnum, rebuildchar) {
                 var data = [],
                     time = (new Date()).getTime(),
                     i;
-                for (i = -1; i <= 0; i += 1) {
+                for (i = -4; i <= 0; i += 1) {
                     data.push({
                         x: time + i * 1000,
                         y: value
@@ -974,6 +998,12 @@ function myGaugeChart(label, value,index,chartnum,rebuildchar) {
 }
 
 function loadGaugeData() {
+    var entityBMDM;
+    $("#ifr").contents().find(".lbtitle").each(function () {
+        if ($(this).parent().parent().css("opacity") == 1) {
+            entityBMDM = $(this).attr("data-BMDM");
+        }
+    });
     var value = 0;
     var data1 = 0;
     var data2 = 0;
@@ -981,7 +1011,7 @@ function loadGaugeData() {
     $.ajax({
         type: "POST",
         url: "Handle/index.ashx",
-        data: { carouselEntity : $("#ifr").contents().find(".lbtitle:eq(1)").attr("data-BMDM")},
+        data: { carouselEntity: entityBMDM },
         dataType: "json",
         success: function (data) {
             createGauge(data,false);
@@ -1102,16 +1132,21 @@ function loadTotalDevices() {
     });
 }
 $(function () {
-    loadTotalDevices()//加载顶部全局设备数据
     loadindexconfigdata();//加载仪表盘数据
  //   loadHistoryData();
 });
 
 function changeCarouseEntity() {
+    var entityBMDM;
+    $("#ifr").contents().find(".lbtitle").each(function () {
+        if ($(this).parent().parent().css("opacity") == 1) {
+            entityBMDM = $(this).attr("data-BMDM");
+        }
+    });
     $.ajax({
         type: "POST",
         url: "Handle/index.ashx",
-        data: { carouselEntity: $("#ifr").contents().find(".lbtitle:eq(1)").attr("data-BMDM") },
+        data: { carouselEntity: entityBMDM },
         dataType: "json",
         success: function (data) {
             createGauge(data, true);
@@ -1333,10 +1368,12 @@ function createGauge(data,rebuildchar) {
 
 function setInterloadTotalDevices(interval) {
     Totalinter = setInterval(loadTotalDevices, interval);//一分钟重新加载全局设备情况
+    loadTotalDevices();
 }
 
 function setInterloadGaugeData(interval) {
     Gaugeinter = setInterval(loadGaugeData, interval);//2分钟加载仪表盘
+    loadGaugeData();
 }
 
 function loadindexconfigdata() {

@@ -119,7 +119,6 @@ var currentIndex = 0;
                     $(this).css("zIndex", zIndexArr[i]);
                 });
             }
-            window.parent.changeCarouseEntity();
         },
         setFirstPosition: function () {
             this.caroursel.css({ "width": this.setting.width, "height": this.setting.height });
@@ -288,7 +287,7 @@ function createChar() {
                 $(".divcontentlf:eq(" + i + ") div:eq(7)").text(formatSeconds(sumisused / total, 2) + "%");
                 $(".divcontentlf:eq(" + i + ") div:eq(11)").text(sumonline);
             };
-            currentIndex = 3;
+            currentIndex = 2;
             var senddata = [].concat(data);
             senddata.shift();
             window.parent.createdata(senddata);
@@ -407,6 +406,7 @@ function crateItem() {
     //    $(".lbtitle:eq(" + i + ")").html("<i class='fa fa-minus  fa-rotate-90'></i>" + data[i + currentIndex]["Name"]);
     //}
 
+    setTimeout(function () { window.parent.changeCarouseEntity() }, 500);
 
 
 }
@@ -471,6 +471,7 @@ function crateItemRight() {
         }
 
     });
+    setTimeout(function () { window.parent.changeCarouseEntity() }, 500);
 
 }
 
