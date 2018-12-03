@@ -322,7 +322,7 @@ function SetEveryOnePointColor(chart) {
                 stops: [
                             [0, Highcharts.Color('#09c1ff').setOpacity(1).get('rgba')],
                             [0.3, Highcharts.Color('#6961fd').setOpacity(1).get('rgba')],
-                            [0.5, Highcharts.Color('#bd17fd').setOpacity(1).get('rgba')],
+                            [0.5, Highcharts.Color('#6961fd').setOpacity(1).get('rgba')],
                             [1, '#bd17fd']
                 ]
             }
@@ -742,12 +742,12 @@ function myRealtimeChart(label, value, index, chartnum, rebuildchar) {
 function myGaugeChart(label, value,index,chartnum,rebuildchar) {
     var chart
     var oper = '环比增加' + value + '%<i class="fa fa-arrow-up" aria-hidden="true"></i><span class="hbclasslabel">● ' + label + ' ● </span>';
-    var colorarray = ['#df3a20', '#df3a20', '#dccf1d', '#008000']
+    var colorarray = ['#df3a20', '#dccf1d', '#1cd618', '#63869e']
 
     if (value < 0) {
         value = Math.abs(value);
         oper = '环比减少' + value + '%<i class="fa fa-arrow-down" aria-hidden="true"></i><span class="hbclasslabel">● ' + label + ' ● </span>';
-        colorarray = ['#df3a20', '#df3a20', '#dccf1d', '#FF0000']
+        colorarray = ['#df3a20', '#dccf1d', '#1cd618', '#63869e']
     }
     var containerId;
     switch (index) {
@@ -908,18 +908,18 @@ function myGaugeChart(label, value,index,chartnum,rebuildchar) {
             },
             plotBands: [{
                 from: 0,
-                to: 30,
+                to: 60,
                 innerRadius: '100%',
                 outerRadius: '80%',
                 color: colorarray[0] // 1
             }, {
-                from: 30,
-                to: 60,
+                from: 60,
+                to: 80,
                 innerRadius: '100%',
                 outerRadius: '80%',
                 color: colorarray[1] // 2
             }, {
-                from: 60,
+                from: 80,
                 to: 100,
                 innerRadius: '100%',
                 outerRadius: '80%',
@@ -1438,7 +1438,7 @@ $(function () {
                 alarmdays = data.data[i]["val"];
             }
             loadAlarmUser();
-            setInterval(loadAlarmUser, 10000);
+            setInterval(loadAlarmUser, 60000);
 
         },
         error: function (msg) {
@@ -1459,7 +1459,7 @@ function loadAlarmUser() {
             $(".entitylist ul").empty();
             for (var i = 0; i < data.data.length; i++) {
                 alarmindex = data.data[i]["ID"];
-                $(".entitylist ul ").append('<li class="news-item"><i class="fa fa-exclamation-circle"></i> ' + data.data[i]["XM"] + '(' + data.data[i]["DevId"] + ')已经' + datecompare(data.data[i]["QQSJ"]) + '天未登录</li>')
+                $(".entitylist ul ").append('<li class="news-item"><i class="fa fa-exclamation-circle"></i> ' + data.data[i]["BMMC"] + data.data[i]["XM"]  + '已经' + datecompare(data.data[i]["QQSJ"]) + '天未登录</li>')
             }
            
         },
