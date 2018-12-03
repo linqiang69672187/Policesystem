@@ -116,39 +116,40 @@ function createdata(data) {
     var totalvalue = 0;
     var colorcount = 0;
     //createTextLabel(data, color);
-    for (var i1 = 0; i1 < charttype.length; i1++) {
+    $(".listtitle").each(function (i1, element) {
         totalvalue = 0;
         ddata = [];
         ddatacolumn = [];
         colorcount = 0;
-        var lab = $.trim(charttype[i1]);
-        $(".listtitle:eq(" + i1 + ")").text(lab);
-        switch (lab) {
-            case "对讲机":
-                $(".imglable:eq(" + i1 + ")").attr('src', 'Image/index_duijiangji.png');
-                break;
-            case "执法记录仪":
-                $(".imglable:eq(" + i1 + ")").attr('src', 'Image/index_zhifajiluyi.png');
-                break;
-            case "警务通":
-                $(".imglable:eq(" + i1 + ")").attr('src', 'Image/index_jingwutong.png');
-                break;
-            case "辅警通":
-                $(".imglable:eq(" + i1 + ")").attr('src', 'Image/index_fujingtong.png');
-                $(".imglable:eq(" + i1 + ")").width(30);
-                break;
-            case "车载视频":
-                $(".imglable:eq(" + i1 + ")").attr('src', 'Image/index_chezaiship.png');
-                break;
-            case "拦截仪":
-                $(".imglable:eq(" + i1 + ")").attr('src', 'Image/index_lanjieyi.png');
-                break;
-            default:
-                break;
-        }
+        //var lab = $.trim(charttype[i1]);
+        //$(".listtitle:eq(" + i1 + ")").text(lab);
+        //switch (lab) {
+        //    case "对讲机":
+        //        $(".imglable:eq(" + i1 + ")").attr('src', 'Image/index_duijiangji.png');
+        //        break;
+        //    case "执法记录仪":
+        //        $(".imglable:eq(" + i1 + ")").attr('src', 'Image/index_zhifajiluyi.png');
+        //        break;
+        //    case "警务通":
+        //        $(".imglable:eq(" + i1 + ")").attr('src', 'Image/index_jingwutong.png');
+        //        break;
+        //    case "辅警通":
+        //        $(".imglable:eq(" + i1 + ")").attr('src', 'Image/index_fujingtong.png');
+        //        $(".imglable:eq(" + i1 + ")").width(30);
+        //        break;
+        //    case "车载视频":
+        //        $(".imglable:eq(" + i1 + ")").attr('src', 'Image/index_chezaiship.png');
+        //        break;
+        //    case "拦截仪":
+        //        $(".imglable:eq(" + i1 + ")").attr('src', 'Image/index_lanjieyi.png');
+        //        break;
+        //    default:
+        //        break;
+        //}
+
         for (var i = 0; i < data.length; i++) {
             for (var i2 = 0; i2 < data[i]["data"].length; i2++) {
-                if (data[i]["data"][i2]["TypeName"] == $.trim(charttype[i1])) {
+                if (data[i]["data"][i2]["TypeName"] == $(this).text()) {
                     var obj1 = JSON.parse('{"name":"' + data[i]["Name"] + '","y":' + data[i]["data"][i2]["count"] + '}');
                     totalvalue += parseInt(data[i]["data"][i2]["count"]);
                     ddata.push(obj1);
@@ -161,12 +162,12 @@ function createdata(data) {
             }
 
         }
-     
 
-          createChart(i1, "pie", ddata, color, totalvalue);//创建饼图
-          createcolum(i1, "column", ddatacolumn, color);//创建柱图
-            
-    }
+
+        createChart(i1, "pie", ddata, color, totalvalue);//创建饼图
+        createcolum(i1, "column", ddatacolumn, color);//创建柱图
+
+    });
 
 
 }

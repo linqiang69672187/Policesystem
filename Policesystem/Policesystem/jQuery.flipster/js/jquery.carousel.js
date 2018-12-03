@@ -3,6 +3,7 @@
  */
 var tabledata;
 var currentIndex = 0;
+var firstload = true;
 ; (function ($) {
     var Caroursel = function (caroursel) {
         var self = this;
@@ -34,16 +35,18 @@ var currentIndex = 0;
         this.rotateFlag = true;
         this.prevBtn.off("click").on("click", function () {
             if (self.rotateFlag) {
-                crateItem();
                 self.rotateFlag = false;
-                self.rotateAnimate("left")
+                self.rotateAnimate("left");
+                crateItem();
+
             }
         });
         this.nextBtn.off("click").on("click", function () {
             if (self.rotateFlag) {
-                crateItemRight();
                 self.rotateFlag = false;
-                self.rotateAnimate("right")
+                self.rotateAnimate("right");
+                crateItemRight();
+
             }
         });
         if (this.setting.isAutoplay) {
@@ -234,11 +237,9 @@ function createChar() {
         data: "",
         dataType: "json",
         success: function (data) {
-            Caroursel.init($('.caroursel'));
             tabledata = data;
             var n = 0;
             var sumonline, sumisused, total, img;
-            $("ul.poster-list").empty();
             for (var i = 0; i < data.length && i < 3; i++) {
 
                 switch (i) {
@@ -252,7 +253,6 @@ function createChar() {
                         n = 1;
                         break;
                 }
-                $("ul.poster-list").append('<li class="poster-item"><div><div class="lbtitle"></div><div class="divcontent"><div class="divcontentlf"><div><div><i class="fa fa-windows" aria-hidden="true"></i></div><div>总设备数</div><div>87</div></div><div><div><i class="fa fa-pie-chart"></i></div><div>设备使用率</div><div>50%</div></div><div><div><i class="fa fa-heartbeat"></i></div><div>在线数</div><div>50%</div></div></div><div class="divcontentrt"><ul></ul></div></div></div></li>');
                 sumonline = 0; sumisused = 0; total = 0;
                 $(".lbtitle:eq(" + i + ")").html("<i class='fa fa-minus  fa-rotate-90 " + data[n]["Name"] + "'></i>" + data[n]["Name"]);
                 $(".lbtitle:eq(" + i + ")").attr("data-BMDM", data[n]["BMDM"])
@@ -292,7 +292,16 @@ function createChar() {
             senddata.shift();
             window.parent.createdata(senddata);
             window.parent.chartdata = senddata;
-            Caroursel.init($('.caroursel'));
+            if (firstload) {
+              
+                Caroursel.init($('.caroursel'));
+                firstload = false;
+            }
+            else
+            {
+               
+
+            }
         },
         error: function (msg) {
             console.debug("错误:ajax");
