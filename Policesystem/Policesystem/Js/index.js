@@ -528,30 +528,7 @@ function myRealtimeChart(label, value, index, chartnum, rebuildchar) {
 
   
 
-    if (chart) {
-        var series = chart.series[0];
-        var time = (new Date()).getTime();
-        if (rebuildchar) {
-            var datascount = series.data.length;
-            for (i = 0; i < datascount; i += 1) {
-                series.removePoint(0);
-            }
-            for (i = -4; i <= 0; i += 1) {
-                x = time + i * 1000;
-                series.addPoint([x, value]);
-            }
-            chart.yAxis[0].update({
-               min:value
-            },true);
-        }
-        else
-        {
-            series.addPoint([time, value],true,true);
-        }
-
-
-        return;
-    }
+   
 
     var areacolor;
     switch (label) {
@@ -593,6 +570,31 @@ function myRealtimeChart(label, value, index, chartnum, rebuildchar) {
             break;
     }
 
+    if (chart) {
+        var series = chart.series[0];
+        var time = (new Date()).getTime();
+        if (rebuildchar) {
+            var datascount = series.data.length;
+            for (i = 0; i < datascount; i += 1) {
+                series.removePoint(0);
+            }
+            for (i = -4; i <= 0; i += 1) {
+                x = time + i * 1000;
+                series.addPoint([x, value]);
+            }
+            chart.yAxis[0].update({
+                min: value,
+                max: maxvalue
+
+            }, true);
+        }
+        else {
+            series.addPoint([time, value], true, true);
+        }
+
+
+        return;
+    }
 
     var chart = Highcharts.chart(containerId, {
         chart: {
@@ -656,7 +658,8 @@ function myRealtimeChart(label, value, index, chartnum, rebuildchar) {
             gridLineColor:'#ded44e',
             gridLineDashStyle: 'ShortDot',
             tickPixelInterval: realtickPixelIntervalY,
-            max:maxvalue,
+            max: maxvalue,
+            min:value,
             labels: {
                 style: {
                     "color": "#ffffff",

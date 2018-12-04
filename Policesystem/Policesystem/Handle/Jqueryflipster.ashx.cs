@@ -28,7 +28,7 @@ namespace Policesystem.Handle
 
             HttpCookie cookies = HttpContext.Current.Request.Cookies["cookieName"];
 
-            DataTable allentitys = SQLHelper.ExecuteRead(CommandType.Text, "SELECT BMDM,BMMC,SJBM,sort FROM [dbo].[Entity]", "1");
+            DataTable allentitys = SQLHelper.ExecuteRead(CommandType.Text, "SELECT BMDM,BMMC,SJBM,(CASE WHEN sort IS NULL THEN -1 ELSE sort END) AS sort FROM [dbo].[Entity]", "1");
 
             List<entityStruct> rows;
 
@@ -49,29 +49,55 @@ namespace Policesystem.Handle
                                 SJBM = p.Field<string>("SJBM"),
                                 BMMC = p.Field<string>("BMMC")
                             }).ToList<entityStruct>();
-                    sbSQL = "SELECT BMMC,BMDM from [Entity] where  BMDM ='331000000000' OR ([SJBM] = '331000000000' and BMMC like '台州市交通警察支队直属%')  order by Sort desc"; //目前只需要查询四个大队
+                   // sbSQL = "SELECT BMMC,BMDM from [Entity] where  BMDM ='331000000000' OR ([SJBM] = '331000000000' and BMMC like '台州市交通警察支队直属%')  order by Sort desc"; //目前只需要查询四个大队
                     break;
                 case "331001000000":
                 case "331002000000":
                 case "331003000000":
                 case "331004000000":
-                    sbSQL = " SELECT BMMC,BMDM from [Entity] where BMDM = '"+BMDM+ "' or [SJBM]='"+BMDM+"'  order BY CASE WHEN Sort IS NULL THEN 1 ELSE Sort END desc";
+                    rows = (from p in allentitys.AsEnumerable()
+                            where (p.Field<string>("SJBM") == "+BMDM+") || (p.Field<string>("BMDM") == "+BMDM+")
+                            orderby p.Field<int>("sort") descending
+                            select new entityStruct
+                            {
+                                BMDM = p.Field<string>("BMDM"),
+                                SJBM = p.Field<string>("SJBM"),
+                                BMMC = p.Field<string>("BMMC")
+                            }).ToList<entityStruct>();
+                  //  sbSQL = " SELECT BMMC,BMDM from [Entity] where BMDM = '"+BMDM+ "' or [SJBM]='"+BMDM+"'  order BY CASE WHEN Sort IS NULL THEN 1 ELSE Sort END desc";
                     break;
                 default:
-                    sbSQL = "SELECT BMMC,BMDM from [Entity] where [BMDM] = '"+BMDM+"' "; //目前只需要查询四个大队
+                    rows = (from p in allentitys.AsEnumerable()
+                            where  (p.Field<string>("BMDM") == "+BMDM+")
+                            orderby p.Field<int>("sort") descending
+                            select new entityStruct
+                            {
+                                BMDM = p.Field<string>("BMDM"),
+                                SJBM = p.Field<string>("SJBM"),
+                                BMMC = p.Field<string>("BMMC")
+                            }).ToList<entityStruct>();
+                   // sbSQL = "SELECT BMMC,BMDM from [Entity] where [BMDM] = '"+BMDM+"' "; //目前只需要查询四个大队
                     break;
             }
-            DataTable dtfrist = SQLHelper.ExecuteRead(CommandType.Text, sbSQL, "1");
+
             DataTable configs = SQLHelper.ExecuteRead(CommandType.Text, "SELECT val FROM [dbo].[IndexConfigs] where id =7", "1");
 
-
+            int i1 = 0;
+            List<string> strList = new List<string>();
 
 
             json.Append("[");
-            for (int i1 = 0; i1 < dtfrist.Rows.Count; i1++)
+            foreach (entityStruct item in rows)
             {
-                dwmc =(dtfrist.Rows[i1]["BMDM"].ToString()== "331000000000")?"交警支队": dtfrist.Rows[i1]["BMMC"].ToString().Substring(11);
-          
+                dwmc =(item.BMDM== "331000000000")?"交警支队": item.BMMC.Substring(11);
+                var entityids = GetSonID(item.BMDM,allentitys);
+
+                strList.Add(item.BMDM);
+                foreach (entityStruct itemx in entityids)
+                 {
+                    strList.Add(itemx.BMDM);
+                  }
+
                 if (i1 > 0)
                 {
                     json.Append(',');
@@ -82,17 +108,20 @@ namespace Policesystem.Handle
                 json.Append('"');
                 json.Append(",\"BMDM\":");
                 json.Append('"');
-                json.Append(dtfrist.Rows[i1]["BMDM"].ToString());
+                json.Append(item.BMDM.ToString());
                 json.Append('"');
                 json.Append(",\"squee\":");
                 json.Append('"');
                 json.Append(configs.Rows[0]["val"].ToString());
                 json.Append('"');
                 json.Append(',');
-                sqltext.Append("WITH childtable(BMMC,BMDM,SJBM) as (SELECT BMMC,BMDM,SJBM FROM [Entity] WHERE SJBM= '"+ dtfrist.Rows[i1]["BMDM"].ToString() + "' UNION ALL SELECT A.BMMC,A.BMDM,A.SJBM FROM [Entity] A,childtable b where a.SJBM = b.BMDM ) SELECT count(a.id) count, c.TypeName, sum((CASE WHEN([OnlineTime] +[HandleCnt]) > 0 THEN 1 ELSE 0 END)) Isused,sum([IsOnline]) online from Device a  LEFT JOIN Gps B ON a.DevId = B.PDAID  LEFT JOIN DeviceType C ON a.DevType = c.ID  where BMDM in (SELECT BMDM from childtable UNION all SELECT '" + dtfrist.Rows[i1]["BMDM"].ToString() + "') GROUP By c.TypeName ");
-                DataTable dt = SQLHelper.ExecuteRead(CommandType.Text, sqltext.ToString(), "DB");
-                sqltext.Clear();
-                json.Append(JSON.DatatableToJS(dt, "").ToString());
+                //sqltext.Append("WITH childtable(BMMC,BMDM,SJBM) as (SELECT BMMC,BMDM,SJBM FROM [Entity] WHERE SJBM= '"+ dtfrist.Rows[i1]["BMDM"].ToString() + "' UNION ALL SELECT A.BMMC,A.BMDM,A.SJBM FROM [Entity] A,childtable b where a.SJBM = b.BMDM ) SELECT count(a.id) count, c.TypeName, sum((CASE WHEN([OnlineTime] +[HandleCnt]) > 0 THEN 1 ELSE 0 END)) Isused,sum([IsOnline]) online from Device a  LEFT JOIN Gps B ON a.DevId = B.PDAID  LEFT JOIN DeviceType C ON a.DevType = c.ID  where BMDM in (SELECT BMDM from childtable UNION all SELECT '" + dtfrist.Rows[i1]["BMDM"].ToString() + "') GROUP By c.TypeName ");
+                //DataTable dt = SQLHelper.ExecuteRead(CommandType.Text, sqltext.ToString(), "DB");
+               // sqltext.Clear();
+               // json.Append(JSON.DatatableToJS(dt, "").ToString());
+
+                i1 += 1;
+                strList.Clear();
             }
             json.Append("]");
             context.Response.Write(json.ToString());
