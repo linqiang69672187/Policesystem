@@ -27,7 +27,12 @@ namespace Policesystem.Handle
             //HttpContext.Current.Response.Cookies.Add(cookie);
 
             HttpCookie cookies = HttpContext.Current.Request.Cookies["cookieName"];
-            string BMDM = "331000000000";
+
+            DataTable allentitys = SQLHelper.ExecuteRead(CommandType.Text, "SELECT BMDM,BMMC,SJBM FROM [dbo].[Entity]", "1");
+
+            List<entityStruct> rows;
+
+            string BMDM = "331001000000";
             if (cookies != null)
             {
                 BMDM = cookies["BMDM"];
@@ -35,25 +40,37 @@ namespace Policesystem.Handle
             switch (BMDM)
             {
                 case "331000000000":
+                    rows = (from p in allentitys.AsEnumerable()
+                            where (p.Field<string>("SJBM")== "331000000000") ||(p.Field<string>("BMDM")== "331000000000" && p.Field<string>("BMMC").StartsWith("台州市交通警察支队直属") )
+                            orderby p.Field<int>("sort") descending
+                            select new entityStruct
+                            {
+                                BMDM = p.Field<string>("BMDM"),
+                                SJBM = p.Field<string>("SJBM"),
+                                BMMC = p.Field<string>("BMMC")
+                            }).ToList<entityStruct>();
                     sbSQL = "SELECT BMMC,BMDM from [Entity] where  BMDM ='331000000000' OR ([SJBM] = '331000000000' and BMMC like '台州市交通警察支队直属%')  order by Sort desc"; //目前只需要查询四个大队
                     break;
                 case "331001000000":
                 case "331002000000":
                 case "331003000000":
                 case "331004000000":
-                    sbSQL = "WITH childtable(BMMC,BMDM,SJBM) as (SELECT BMMC,BMDM,SJBM FROM [Entity] WHERE SJBM ='" + BMDM + "' OR BMDM ='" + BMDM + "' UNION ALL SELECT A.BMMC,A.BMDM,A.SJBM FROM [Entity] A,childtable b where a.SJBM = b.BMDM ) SELECT BMMC,BMDM from [Entity] where BMDM in (SELECT BMDM FROM childtable) order BY CASE WHEN Sort IS NULL THEN 1 ELSE Sort END desc";
+                    sbSQL = " SELECT BMMC,BMDM from [Entity] where BMDM = '"+BMDM+ "' or [SJBM]='"+BMDM+"'  order BY CASE WHEN Sort IS NULL THEN 1 ELSE Sort END desc";
                     break;
                 default:
                     sbSQL = "SELECT BMMC,BMDM from [Entity] where [BMDM] = '"+BMDM+"' "; //目前只需要查询四个大队
                     break;
             }
-
             DataTable dtfrist = SQLHelper.ExecuteRead(CommandType.Text, sbSQL, "1");
             DataTable configs = SQLHelper.ExecuteRead(CommandType.Text, "SELECT val FROM [dbo].[IndexConfigs] where id =7", "1");
+
+
+
+
             json.Append("[");
             for (int i1 = 0; i1 < dtfrist.Rows.Count; i1++)
             {
-                dwmc =(dtfrist.Rows[i1]["BMDM"].ToString()== "331000000000")?"交警总队": dtfrist.Rows[i1]["BMMC"].ToString().Substring(11);
+                dwmc =(dtfrist.Rows[i1]["BMDM"].ToString()== "331000000000")?"交警支队": dtfrist.Rows[i1]["BMMC"].ToString().Substring(11);
           
                 if (i1 > 0)
                 {
@@ -80,6 +97,34 @@ namespace Policesystem.Handle
             json.Append("]");
             context.Response.Write(json.ToString());
         }
+
+        public class entityStruct
+        {
+            public string BMDM;
+            public string SJBM;
+            public string BMMC;
+        }
+        public IEnumerable<entityStruct> GetSonID(string p_id,DataTable allEntitys)
+        {
+            try
+            {
+                var query = (from p in allEntitys.AsEnumerable()
+                             where (p.Field<string>("SJBM") == p_id)
+                             select new entityStruct
+                             {
+                                 BMDM = p.Field<string>("BMDM"),
+                                 SJBM = p.Field<string>("SJBM"),
+                                 BMMC = p.Field<string>("BMMC")
+                             }).ToList<entityStruct>();
+                return query.ToList().Concat(query.ToList().SelectMany(t => GetSonID(t.BMDM,allEntitys)));
+            }
+            catch (Exception e)
+            {
+                return null;
+            }
+
+        }
+
 
         public bool IsReusable
         {
