@@ -1,8 +1,10 @@
 ﻿using DbComponent;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Web;
 
@@ -29,9 +31,10 @@ namespace Policesystem.Handle
             HttpCookie cookies = HttpContext.Current.Request.Cookies["cookieName"];
 
             DataTable allentitys = SQLHelper.ExecuteRead(CommandType.Text, "SELECT BMDM,BMMC,SJBM,(CASE WHEN sort IS NULL THEN -1 ELSE sort END) AS sort FROM [dbo].[Entity]", "1");
+            DataTable dt = SQLHelper.ExecuteRead(CommandType.Text, "SELECT count(a.id) count,BMDM, c.TypeName, sum((CASE WHEN([OnlineTime] +[HandleCnt]) > 0 THEN 1 ELSE 0 END)) Isused,sum((CASE WHEN [IsOnline] is null  THEN 0 ELSE [IsOnline] END)) online from Device a  LEFT JOIN Gps B ON a.DevId = B.PDAID  LEFT JOIN DeviceType C ON a.DevType = c.ID  GROUP By c.TypeName,BMDM", "1");
 
             List<entityStruct> rows;
-
+            List<gps> rowsx;
             string BMDM = "331000000000";
             if (cookies != null)
             {
@@ -41,7 +44,7 @@ namespace Policesystem.Handle
             {
                 case "331000000000":
                     rows = (from p in allentitys.AsEnumerable()
-                            where (p.Field<string>("SJBM")== "331000000000") ||(p.Field<string>("BMDM")== "331000000000" && p.Field<string>("BMMC").StartsWith("台州市交通警察支队直属") )
+                            where (p.Field<string>("SJBM")== "331000000000" && p.Field<string>("BMMC").StartsWith("台州市交通警察支队直属")) ||(p.Field<string>("BMDM")== "331000000000"  )
                             orderby p.Field<int>("sort") descending
                             select new entityStruct
                             {
@@ -117,9 +120,20 @@ namespace Policesystem.Handle
                 json.Append(',');
                 //sqltext.Append("WITH childtable(BMMC,BMDM,SJBM) as (SELECT BMMC,BMDM,SJBM FROM [Entity] WHERE SJBM= '"+ dtfrist.Rows[i1]["BMDM"].ToString() + "' UNION ALL SELECT A.BMMC,A.BMDM,A.SJBM FROM [Entity] A,childtable b where a.SJBM = b.BMDM ) SELECT count(a.id) count, c.TypeName, sum((CASE WHEN([OnlineTime] +[HandleCnt]) > 0 THEN 1 ELSE 0 END)) Isused,sum([IsOnline]) online from Device a  LEFT JOIN Gps B ON a.DevId = B.PDAID  LEFT JOIN DeviceType C ON a.DevType = c.ID  where BMDM in (SELECT BMDM from childtable UNION all SELECT '" + dtfrist.Rows[i1]["BMDM"].ToString() + "') GROUP By c.TypeName ");
                 //DataTable dt = SQLHelper.ExecuteRead(CommandType.Text, sqltext.ToString(), "DB");
-               // sqltext.Clear();
-               // json.Append(JSON.DatatableToJS(dt, "").ToString());
-
+                // sqltext.Clear();
+                // json.Append(JSON.DatatableToJS(dt, "").ToString());
+                rowsx = (from p in dt.AsEnumerable()
+                         where strList.ToArray().Contains(p.Field<string>("BMDM"))
+                         group p by new { t1 = p.Field<string>("TypeName") } into g
+                         select new gps
+                         {
+                             TypeName=g.Key.t1,
+                             count = g.Sum(p => (p.Field<Int32>("count"))),
+                             Isused = g.Sum(p => (p.Field<Int32>("Isused"))),
+                             online = g.Sum(p => (p.Field<Int32>("online")))
+                         }).ToList<gps>();
+                DataTable dtx = ToDataTable(rowsx);
+                json.Append(JSON.DatatableToJS(dtx, "").ToString());
                 i1 += 1;
                 strList.Clear();
             }
@@ -132,6 +146,14 @@ namespace Policesystem.Handle
             public string BMDM;
             public string SJBM;
             public string BMMC;
+        }
+
+        public class gps
+        {
+            public Int32 count;
+            public string TypeName;
+            public Int32 Isused;
+            public Int32 online;
         }
         public IEnumerable<entityStruct> GetSonID(string p_id,DataTable allEntitys)
         {
@@ -152,6 +174,34 @@ namespace Policesystem.Handle
                 return null;
             }
 
+        }
+
+        /// <summary>    
+        /// 将集合类转换成DataTable    
+        /// </summary>    
+        /// <param name="list">集合</param>    
+        /// <returns></returns>    
+        public static DataTable ToDataTable( List<gps> items)
+        {
+            DataTable dataTable = new DataTable();
+
+            dataTable.Columns.Add("count");
+            dataTable.Columns.Add("TypeName");
+            dataTable.Columns.Add("Isused");
+            dataTable.Columns.Add("online");
+
+
+            foreach (gps obj in items)
+            {
+                DataRow dr = dataTable.NewRow();
+                dr["count"] = obj.count;
+                dr["TypeName"] = obj.TypeName;
+                dr["Isused"] = obj.Isused;
+                dr["online"] = obj.online;
+                dataTable.Rows.Add(dr);
+            }
+
+            return dataTable;
         }
 
 
