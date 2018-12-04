@@ -540,7 +540,9 @@ function myRealtimeChart(label, value, index, chartnum, rebuildchar) {
                 x = time + i * 1000;
                 series.addPoint([x, value]);
             }
-            series.update(true);
+            chart.yAxis[0].update({
+               min:value
+            },true);
         }
         else
         {

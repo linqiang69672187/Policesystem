@@ -28,11 +28,11 @@ namespace Policesystem.Handle
 
             HttpCookie cookies = HttpContext.Current.Request.Cookies["cookieName"];
 
-            DataTable allentitys = SQLHelper.ExecuteRead(CommandType.Text, "SELECT BMDM,BMMC,SJBM FROM [dbo].[Entity]", "1");
+            DataTable allentitys = SQLHelper.ExecuteRead(CommandType.Text, "SELECT BMDM,BMMC,SJBM,sort FROM [dbo].[Entity]", "1");
 
             List<entityStruct> rows;
 
-            string BMDM = "331001000000";
+            string BMDM = "331000000000";
             if (cookies != null)
             {
                 BMDM = cookies["BMDM"];
