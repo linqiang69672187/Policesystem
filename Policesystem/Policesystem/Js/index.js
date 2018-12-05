@@ -7,8 +7,11 @@ var alarmdays = 30;
 var historydata;
 var Totalinter;//一分钟重新加载全局设备情况
 var Gaugeinter;//2分钟加载仪表盘
+var loadHistoryData;//历史折线图
 var carouselEntity;//轮播单位
 var color = ['#4c8afa', '#f2ab22', '#43db89', '#38e8e8', '#a24cfa', '#fa4cae', '#59bfa1', '#d7ce56', '#b45538', '#c48b6c', '#c56377', '#86c36a'];
+var historydetype;
+var historycurrentTime;
 
 Highcharts.setOptions({ global: { useUTC: false } });
 setInterval(function () {
@@ -433,7 +436,7 @@ function createChart(index, type, data, color, totalvalue, fontweight) {
 
 
 
-function myRealtimeChart(label, value, index, chartnum, rebuildchar) {
+function myRealtimeChart(label, value, index, chartnum, rebuildchar,histroydata) {
 
     var chart;
     var containerId;
@@ -695,6 +698,9 @@ function myRealtimeChart(label, value, index, chartnum, rebuildchar) {
             },
             data: (function () {
                 // 生成随机值
+                if (histroydata) {
+                    return historydata;
+                }
                 var data = [],
                     time = (new Date()).getTime(),
                     i;
@@ -1035,15 +1041,21 @@ function loadGaugeData() {
 }
 
 
-function loadHistoryData() {
+function loadHistory() {
+    var myDate = new Date();
+    if (historycurrentTime == myDate.getHours()) {
+        return;  //已经加载过了，直接退出
+    }
 
+    historycurrentTime = myDate.getHours();
     $.ajax({
         type: "POST",
         url: "Handle/index_24histroy.ashx",
-        data: "",
+        data: { historydetype: historydetype },
         dataType: "json",
         success: function (data) {
             historydata = data;
+            loadGaugeData();
         },
         error: function (msg) {
             console.debug("错误:ajax");
@@ -1268,7 +1280,14 @@ function createGauge(data,rebuildchar) {
     var arrayval;
     var data1=0;
     var data2=0;
-    var value=0
+    var value = 0
+    var entityBMDM;
+    $("#ifr").contents().find(".lbtitle").each(function () {
+        if ($(this).parent().parent().css("opacity") == 1) {
+            entityBMDM = $(this).attr("data-BMDM");
+        }
+    });
+
     for (var i = 0; i < indexconfigdata.length; i++) {
         todayvalue = data.data[2 * parseInt(indexconfigdata[i].DevType) - 1];
         yesdayvalue = data.data[2 * parseInt(indexconfigdata[i].DevType) - 2];
@@ -1363,6 +1382,12 @@ function createGauge(data,rebuildchar) {
                     myRealtimeChart("规范上传率", parseFloat(todayvalue.规范上传率), i, numchart, rebuildchar);
                     numchart += 1;
                     break;
+                case "02":
+                    var temphistorydata = selHistoryData(arrayval[i1], indexconfigdata[i].DevType, entityBMDM)
+                    myRealtimeChart("在线总时长", parseFloat(todayvalue.在线总时长), i, numchart, rebuildchar, temphistorydata);
+                    numchart += 1;
+                    break;
+
                 default:
                     break;
             }
@@ -1375,6 +1400,30 @@ function createGauge(data,rebuildchar) {
     }
 }
 
+
+function selHistoryData(index, type, entityBMDM) {
+    
+    var data = [];
+    var val;
+    
+   
+    for (var i = 0; i < historydata.data.length; i++) {
+        if (historydata.data[i]["BMDM"] == entityBMDM && historydata.data[i]["DevType"] == type) {
+            switch (index) {
+                case "02":
+                    val = historydata.data[i]["OnlineTime"]
+                    break;
+                default:
+                    break;
+            }
+            data.push({ x: historydata.data[i]["Time"],y:val})
+        }
+
+    }
+
+    return data;
+}
+
 function setInterloadTotalDevices(interval) {
     Totalinter = setInterval(loadTotalDevices, interval);//一分钟重新加载全局设备情况
     loadTotalDevices();
@@ -1382,7 +1431,9 @@ function setInterloadTotalDevices(interval) {
 
 function setInterloadGaugeData(interval) {
     Gaugeinter = setInterval(loadGaugeData, interval);//2分钟加载仪表盘
-    loadGaugeData();
+    loadHistoryData = setInterval(loadHistory, interval);//2分钟加载仪表盘
+   
+    
 }
 
 function loadindexconfigdata() {
@@ -1395,7 +1446,14 @@ function loadindexconfigdata() {
         success: function (data) {
             if (data.data.length == 4) {
                 indexconfigdata = data.data;
-               // loadGaugeData();
+                // loadGaugeData();
+                var tempconfig="";
+                for (var i = 0; i < indexconfigdata.length; i++) {
+                    tempconfig += (i == 0) ? indexconfigdata[i]["DevType"] : "," + indexconfigdata[i]["DevType"];
+                }
+                historydetype = tempconfig;
+                loadHistory();
+
             }
         },
         error: function (msg) {

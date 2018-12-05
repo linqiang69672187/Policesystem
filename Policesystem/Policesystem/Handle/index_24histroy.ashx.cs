@@ -18,6 +18,8 @@ namespace Policesystem.Handle
         public void ProcessRequest(HttpContext context)
         {
             context.Response.ContentType = "text/plain";
+
+            string historydetype = context.Request.Form["historydetype"];
             DataTable histroyreal = null;  //24小时数据表
             DataTable dtEntitys = null;   //递归单位表
 
@@ -30,21 +32,19 @@ namespace Policesystem.Handle
             switch (BMDM)
             {
                 case "331000000000":
-                    dtEntitys = SQLHelper.ExecuteRead(CommandType.Text, "SELECT BMDM,SJBM from [Entity] where SJBM ='" + BMDM + "'", "11");
-                    histroyreal = SQLHelper.ExecuteRead(CommandType.Text, "SELECT BMDM,[Time],DevType,count(ID) sl,SUM(OnlineTime) OnlineTime,SUM(HandleCnt) HandleCnt,SUM(CXCNT) CXCNT,SUM(FileSize) FileSize,SUM(SCL) SCL,SUM(GFSCL) GFSCL FROM [dbo].[StatsInfo_RealTime] WHERE BMDM <> ''  GROUP BY BMDM,[Time],DevType ORDER BY BMDM,[DevType],[TIME]", "histroyreal");
+                    dtEntitys = SQLHelper.ExecuteRead(CommandType.Text, "SELECT BMDM,SJBM from [Entity] where SJBM ='" + BMDM + "' ", "11");
                     break;
                 case "331001000000":
                 case "331002000000":
                 case "331003000000":
                 case "331004000000":
                     dtEntitys = SQLHelper.ExecuteRead(CommandType.Text, "SELECT BMDM,SJBM from [Entity] where SJBM ='" + BMDM + "'", "11");
-                    histroyreal = SQLHelper.ExecuteRead(CommandType.Text, "SELECT BMDM,[Time],DevType,count(ID) sl,SUM(OnlineTime) OnlineTime,SUM(HandleCnt) HandleCnt,SUM(CXCNT) CXCNT,SUM(FileSize) FileSize,SUM(SCL) SCL,SUM(GFSCL) GFSCL FROM [dbo].[StatsInfo_RealTime] WHERE BMDM <> ''  GROUP BY BMDM,[Time],DevType ORDER BY BMDM,[DevType],[TIME]", "histroyreal");
                     break;
                 default:
                     dtEntitys = SQLHelper.ExecuteRead(CommandType.Text, "SELECT BMDM,SJBM from [Entity] where BMDM ='" + BMDM + "'", "11");
-                    histroyreal = SQLHelper.ExecuteRead(CommandType.Text, "SELECT BMDM,[Time],DevType,count(ID) sl,SUM(OnlineTime) OnlineTime,SUM(HandleCnt) HandleCnt,SUM(CXCNT) CXCNT,SUM(FileSize) FileSize,SUM(SCL) SCL,SUM(GFSCL) GFSCL FROM [dbo].[StatsInfo_RealTime] WHERE BMDM <> ''  GROUP BY BMDM,[Time],DevType ORDER BY BMDM,[DevType],[TIME]", "histroyreal");
                     break;
             }
+            histroyreal = SQLHelper.ExecuteRead(CommandType.Text, "SELECT BMDM,[Time], CONVERT(nvarchar(20),DevType) as DevType,count(ID) sl,SUM((CASE WHEN [OnlineTime] is null  THEN 0 ELSE [OnlineTime] END)) OnlineTime,sum((CASE WHEN [HandleCnt] is null  THEN 0 ELSE [HandleCnt] END)) HandleCnt,SUM((CASE WHEN [CXCNT] is null  THEN 0 ELSE [CXCNT] END)) CXCNT,SUM((CASE WHEN [FileSize] is null  THEN 0 ELSE [FileSize] END)) FileSize,SUM((CASE WHEN [SCL] is null  THEN 0 ELSE [SCL] END)) SCL,SUM((CASE WHEN [GFSCL] is null  THEN 0 ELSE [GFSCL] END)) GFSCL FROM [dbo].[StatsInfo_RealTime] st  WHERE BMDM <> '' and  DevType in ("+historydetype+")  GROUP BY BMDM,[Time],DevType ORDER BY BMDM,[DevType],[TIME]", "histroyreal");
 
             allEntitys = SQLHelper.ExecuteRead(CommandType.Text, "SELECT BMDM,SJBM from [Entity] ", "11");
 
@@ -71,27 +71,43 @@ namespace Policesystem.Handle
                 {
                     strList.Add(item.BMDM);
                 }
-      
-               var  rows = from p in histroyreal.AsEnumerable()
-                       where strList.ToArray().Contains(p.Field<string>("BMDM"))
-                       select p;
 
-                foreach (var item in rows)
+                List<gps> rows = (from p in histroyreal.AsEnumerable()
+                                  where strList.ToArray().Contains(p.Field<string>("BMDM"))
+                                  group p by new { t1 = p.Field<string>("DevType"), t2 = p.Field<DateTime>("Time") } into g
+                                  select new gps
+                                  {
+                                      BMDM = dtEntitys.Rows[i1]["BMDM"].ToString(),
+                                      Time = g.Key.t2,
+                                      DevType = g.Key.t1,
+                                      HandleCnt = g.Sum(p => p.Field<Int64>("HandleCnt")),
+                                      CXCNT = g.Sum(p => p.Field<Int64>("CXCNT")),
+                                      FileSize = g.Sum(p => p.Field<Int64>("FileSize")),
+                                      SCL = g.Sum(p => p.Field<double>("SCL")),
+                                      GFSCL = g.Sum(p => p.Field<double>("GFSCL")),
+                                      sl = g.Sum(p => p.Field<Int32>("sl")),
+                                      OnlineTime = g.Sum(p => p.Field<Int64>("OnlineTime"))
+                                          }).ToList<gps>();
+
+                foreach (gps item in rows)
                 {
                     DataRow dr = dtreturns.NewRow();
 
-                    dr["BMDM"] = dtEntitys.Rows[i1]["BMDM"].ToString();
-                    dr["Time"] = item["Time"].ToString();
-                    dr["DevType"] = item["DevType"].ToString();
-                    dr["HandleCnt"] = item["HandleCnt"].ToString();
-                    dr["CXCNT"] = item["CXCNT"].ToString();
-                    dr["FileSize"] = item["FileSize"].ToString();
-                    dr["SCL"] = item["SCL"].ToString();
-                    dr["GFSCL"] = item["GFSCL"].ToString();
-                    dr["sl"] = item["sl"].ToString();
-                    dr["OnlineTime"] = item["OnlineTime"].ToString();
+                    dr["BMDM"] = item.BMDM;
+                    dr["Time"] = item.Time;
+                    dr["DevType"] = item.DevType;
+                    dr["HandleCnt"] = item.HandleCnt;
+                    dr["CXCNT"] = item.CXCNT;
+                    dr["FileSize"] = item.FileSize;
+                    dr["SCL"] = item.SCL;
+                    dr["GFSCL"] = item.GFSCL;
+                    dr["sl"] = item.sl;
+                    dr["OnlineTime"] = item.OnlineTime;
                     dtreturns.Rows.Add(dr);
                 }
+
+
+
 
             }
 
@@ -100,7 +116,7 @@ namespace Policesystem.Handle
                    into s
                            select new
                            {
-                               BMDM = "total",
+                               BMDM = BMDM,
                                Time = s.Key.Time,
                                DevType = s.Key.DevType,
                                HandleCnt = s.Sum(p => {
@@ -207,6 +223,21 @@ namespace Policesystem.Handle
             {
                 return null;
             }
+
+        }
+
+        public class gps
+        {
+            public string BMDM;
+            public DateTime Time;
+            public string DevType;
+            public Int64 HandleCnt;
+            public Int64 CXCNT;
+            public Int64 FileSize;
+            public double SCL;
+            public double GFSCL;
+            public Int32 sl;
+            public Int64 OnlineTime;
 
         }
 
