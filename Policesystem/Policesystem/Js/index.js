@@ -436,10 +436,11 @@ function createChart(index, type, data, color, totalvalue, fontweight) {
 
 
 
-function myRealtimeChart(label, value, index, chartnum, rebuildchar,histroydata) {
+function myRealtimeChart(label, value, index, chartnum, rebuildchar,histroytempdata) {
 
     var chart;
     var containerId;
+    var minvalue = value;
     switch (index) {
         case 0:
             if (chartnum > 1) return;
@@ -540,7 +541,7 @@ function myRealtimeChart(label, value, index, chartnum, rebuildchar,histroydata)
     switch (label) {
         case "在线总时长":
             areacolor = '#5d3b9d';
-            maxvalue = value*1.5;
+            maxvalue = value * 1.5;
             break;
         case "设备配发数":
             areacolor = '#3d4a82';
@@ -575,6 +576,14 @@ function myRealtimeChart(label, value, index, chartnum, rebuildchar,histroydata)
             maxvalue = 1;
             break;
     }
+   
+    if (histroytempdata) {
+        maxvalue = histroytempdata[histroytempdata.length - 1]["y"]*1.1;
+        minvalue = histroytempdata[0]["y"];
+    }
+    if (chart && histroytempdata && !rebuildchar) {
+        return;
+    }
 
     if (chart) {
         var series = chart.series[0];
@@ -584,9 +593,16 @@ function myRealtimeChart(label, value, index, chartnum, rebuildchar,histroydata)
             for (i = 0; i < datascount; i += 1) {
                 series.removePoint(0);
             }
-            for (i = -4; i <= 0; i += 1) {
-                x = time + i * 1000;
-                series.addPoint([x, value]);
+            if (histroytempdata) {
+                for (i = 0; i < histroytempdata.length; i += 1) {
+                    series.addPoint([histroytempdata[i].x, histroytempdata[i].y]);
+                }
+            }
+            else{
+                for (i = -20; i <= 0; i += 1) {
+                    x = time + i * 1000;
+                    series.addPoint([x, value]);
+                }
             }
             chart.yAxis[0].update({
                 min: value,
@@ -595,7 +611,8 @@ function myRealtimeChart(label, value, index, chartnum, rebuildchar,histroydata)
             }, true);
         }
         else {
-            series.addPoint([time, value], true, true);
+            
+                series.addPoint([time, value], true, true);
         }
 
 
@@ -664,8 +681,8 @@ function myRealtimeChart(label, value, index, chartnum, rebuildchar,histroydata)
             gridLineColor:'#ded44e',
             gridLineDashStyle: 'ShortDot',
             tickPixelInterval: realtickPixelIntervalY,
-            max: maxvalue,
-            min:value,
+            max:maxvalue,
+            min:minvalue,
             labels: {
                 style: {
                     "color": "#ffffff",
@@ -698,13 +715,13 @@ function myRealtimeChart(label, value, index, chartnum, rebuildchar,histroydata)
             },
             data: (function () {
                 // 生成随机值
-                if (histroydata) {
-                    return historydata;
+                if (histroytempdata) {
+                    return histroytempdata;
                 }
                 var data = [],
                     time = (new Date()).getTime(),
                     i;
-                for (i = -4; i <= 0; i += 1) {
+                for (i = -20; i <= 0; i += 1) {
                     data.push({
                         x: time + i * 1000,
                         y: value
@@ -1411,12 +1428,12 @@ function selHistoryData(index, type, entityBMDM) {
         if (historydata.data[i]["BMDM"] == entityBMDM && historydata.data[i]["DevType"] == type) {
             switch (index) {
                 case "02":
-                    val = historydata.data[i]["OnlineTime"]
+                    val = parseInt(historydata.data[i]["OnlineTime"]);
                     break;
                 default:
                     break;
             }
-            data.push({ x: historydata.data[i]["Time"],y:val})
+            data.push({ x: (new Date(historydata.data[i]["Time"])).getTime(), y: val })
         }
 
     }
