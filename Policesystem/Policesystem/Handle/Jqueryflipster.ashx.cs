@@ -31,8 +31,7 @@ namespace Policesystem.Handle
             HttpCookie cookies = HttpContext.Current.Request.Cookies["cookieName"];
 
             DataTable allentitys = SQLHelper.ExecuteRead(CommandType.Text, "SELECT BMDM,BMMC,SJBM,(CASE WHEN sort IS NULL THEN -1 ELSE sort END) AS sort FROM [dbo].[Entity]", "1");
-            DataTable dt = SQLHelper.ExecuteRead(CommandType.Text, "SELECT count(a.id) count,BMDM, c.TypeName, sum((CASE WHEN([OnlineTime] +[HandleCnt]) > 0 THEN 1 ELSE 0 END)) Isused,sum((CASE WHEN [IsOnline] is null  THEN 0 ELSE [IsOnline] END)) online from Device a  LEFT JOIN Gps B ON a.DevId = B.PDAID  LEFT JOIN DeviceType C ON a.DevType = c.ID  GROUP By c.TypeName,BMDM", "1");
-
+            DataTable dt;
             List<entityStruct> rows;
             List<gps> rowsx;
             string BMDM = "331000000000";
@@ -52,7 +51,9 @@ namespace Policesystem.Handle
                                 SJBM = p.Field<string>("SJBM"),
                                 BMMC = p.Field<string>("BMMC")
                             }).ToList<entityStruct>();
-                   // sbSQL = "SELECT BMMC,BMDM from [Entity] where  BMDM ='331000000000' OR ([SJBM] = '331000000000' and BMMC like '台州市交通警察支队直属%')  order by Sort desc"; //目前只需要查询四个大队
+                    // sbSQL = "SELECT BMMC,BMDM from [Entity] where  BMDM ='331000000000' OR ([SJBM] = '331000000000' and BMMC like '台州市交通警察支队直属%')  order by Sort desc"; //目前只需要查询四个大队
+                     dt = SQLHelper.ExecuteRead(CommandType.Text, "WITH childtable(BMMC,BMDM,SJBM) as (SELECT BMMC,BMDM,SJBM FROM [Entity] WHERE SJBM in ('331001000000','331002000000','331003000000','331004000000') OR BMDM  in ('331001000000','331002000000','331003000000','331004000000') UNION ALL SELECT A.BMMC,A.BMDM,A.SJBM FROM [Entity] A,childtable b where a.SJBM = b.BMDM )  SELECT count(a.id) count,BMDM, c.TypeName, sum((CASE WHEN([OnlineTime] +[HandleCnt]) > 0 THEN 1 ELSE 0 END)) Isused,sum((CASE WHEN [IsOnline] is null  THEN 0 ELSE [IsOnline] END)) online from Device a  LEFT JOIN Gps B ON a.DevId = B.PDAID  LEFT JOIN DeviceType C ON a.DevType = c.ID where BMDM in (SELECT BMDM FROM childtable)  GROUP By c.TypeName,BMDM", "1");
+
                     break;
                 case "331001000000":
                 case "331002000000":
@@ -67,7 +68,9 @@ namespace Policesystem.Handle
                                 SJBM = p.Field<string>("SJBM"),
                                 BMMC = p.Field<string>("BMMC")
                             }).ToList<entityStruct>();
-                  //  sbSQL = " SELECT BMMC,BMDM from [Entity] where BMDM = '"+BMDM+ "' or [SJBM]='"+BMDM+"'  order BY CASE WHEN Sort IS NULL THEN 1 ELSE Sort END desc";
+                    //  sbSQL = " SELECT BMMC,BMDM from [Entity] where BMDM = '"+BMDM+ "' or [SJBM]='"+BMDM+"'  order BY CASE WHEN Sort IS NULL THEN 1 ELSE Sort END desc";
+                    dt = SQLHelper.ExecuteRead(CommandType.Text, "WITH childtable(BMMC,BMDM,SJBM) as (SELECT BMMC,BMDM,SJBM FROM [Entity] WHERE SJBM ='"+BMDM+"' OR BMDM ='"+BMDM+"' UNION ALL SELECT A.BMMC,A.BMDM,A.SJBM FROM [Entity] A,childtable b where a.SJBM = b.BMDM )  SELECT count(a.id) count,BMDM, c.TypeName, sum((CASE WHEN([OnlineTime] +[HandleCnt]) > 0 THEN 1 ELSE 0 END)) Isused,sum((CASE WHEN [IsOnline] is null  THEN 0 ELSE [IsOnline] END)) online from Device a  LEFT JOIN Gps B ON a.DevId = B.PDAID  LEFT JOIN DeviceType C ON a.DevType = c.ID where BMDM in (SELECT BMDM FROM childtable)  GROUP By c.TypeName,BMDM", "1");
+
                     break;
                 default:
                     rows = (from p in allentitys.AsEnumerable()
@@ -79,7 +82,9 @@ namespace Policesystem.Handle
                                 SJBM = p.Field<string>("SJBM"),
                                 BMMC = p.Field<string>("BMMC")
                             }).ToList<entityStruct>();
-                   // sbSQL = "SELECT BMMC,BMDM from [Entity] where [BMDM] = '"+BMDM+"' "; //目前只需要查询四个大队
+                    // sbSQL = "SELECT BMMC,BMDM from [Entity] where [BMDM] = '"+BMDM+"' "; //目前只需要查询四个大队
+                    dt = SQLHelper.ExecuteRead(CommandType.Text, "WITH childtable(BMMC,BMDM,SJBM) as (SELECT BMMC,BMDM,SJBM FROM [Entity] WHERE SJBM ='" + BMDM + "' OR BMDM ='" + BMDM + "' UNION ALL SELECT A.BMMC,A.BMDM,A.SJBM FROM [Entity] A,childtable b where a.SJBM = b.BMDM )  SELECT count(a.id) count,BMDM, c.TypeName, sum((CASE WHEN([OnlineTime] +[HandleCnt]) > 0 THEN 1 ELSE 0 END)) Isused,sum((CASE WHEN [IsOnline] is null  THEN 0 ELSE [IsOnline] END)) online from Device a  LEFT JOIN Gps B ON a.DevId = B.PDAID  LEFT JOIN DeviceType C ON a.DevType = c.ID where BMDM in (SELECT BMDM FROM childtable)  GROUP By c.TypeName,BMDM", "1");
+
                     break;
             }
 
@@ -93,13 +98,14 @@ namespace Policesystem.Handle
             foreach (entityStruct item in rows)
             {
                 dwmc =(item.BMDM== "331000000000")?"交警支队": item.BMMC.Substring(11);
-                var entityids = GetSonID(item.BMDM,allentitys);
-
-                strList.Add(item.BMDM);
-                foreach (entityStruct itemx in entityids)
-                 {
-                    strList.Add(itemx.BMDM);
-                  }
+           
+                    var entityids = GetSonID(item.BMDM, allentitys);
+                    strList.Add(item.BMDM);
+                    foreach (entityStruct itemx in entityids)
+                    {
+                        strList.Add(itemx.BMDM);
+                    }
+               
 
                 if (i1 > 0)
                 {
@@ -157,9 +163,20 @@ namespace Policesystem.Handle
         }
         public IEnumerable<entityStruct> GetSonID(string p_id,DataTable allEntitys)
         {
+            List<entityStruct> query;
             try
-            {
-                var query = (from p in allEntitys.AsEnumerable()
+            {    if (p_id == "331000000000") {
+                    query = (from p in allEntitys.AsEnumerable()
+                             where (p.Field<string>("SJBM") == "331000000000" && p.Field<string>("BMMC").StartsWith("台州市交通警察支队直属"))
+                             select new entityStruct
+                             {
+                                 BMDM = p.Field<string>("BMDM"),
+                                 SJBM = p.Field<string>("SJBM"),
+                                 BMMC = p.Field<string>("BMMC")
+                             }).ToList<entityStruct>();
+                }
+                else { 
+                 query = (from p in allEntitys.AsEnumerable()
                              where (p.Field<string>("SJBM") == p_id)
                              select new entityStruct
                              {
@@ -167,6 +184,7 @@ namespace Policesystem.Handle
                                  SJBM = p.Field<string>("SJBM"),
                                  BMMC = p.Field<string>("BMMC")
                              }).ToList<entityStruct>();
+                }
                 return query.ToList().Concat(query.ToList().SelectMany(t => GetSonID(t.BMDM,allEntitys)));
             }
             catch (Exception e)

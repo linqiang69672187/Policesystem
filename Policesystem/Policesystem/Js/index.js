@@ -78,7 +78,8 @@ switch (true) {
         realtyAxisy = 10;
         realsymbolWidth = 40;
         cloumntickPixelInterval = 100;
-        cloumnborderRadius = 40;
+        cloumnborderRadius = 15;
+        columnpointWidth = 30;
         break;
     default:
         hchart = 110;
@@ -103,7 +104,8 @@ switch (true) {
         realtyAxisy = 5;
         realsymbolWidth = 20;
         cloumntickPixelInterval = 30;
-        cloumnborderRadius = 10;
+        cloumnborderRadius = 5;
+        columnpointWidth = 10;
         break;
 
 }
@@ -287,6 +289,7 @@ function createcolum(index, type, data, color, fontweight) {
         plotOptions: {
                 series: {
                     borderWidth: 0,
+                    pointWidth: (fontweight == 'L') ? 30 : columnpointWidth,
                     dataLabels: {
                         enabled: true,
                         format: '{point.y:.1f}%',
@@ -302,7 +305,7 @@ function createcolum(index, type, data, color, fontweight) {
             innerSize: '80%',
             name: '配发数',
             data: data,
-            borderRadius: (fontweight == 'L') ? 40 : cloumnborderRadius
+            borderRadius: (fontweight == 'L') ? 15 : cloumnborderRadius
         }]
     },
      function (chart) {

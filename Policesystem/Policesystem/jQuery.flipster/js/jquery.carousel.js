@@ -257,6 +257,7 @@ function createChar() {
                     sumonline = 0; sumisused = 0; total = 0;
                     $(".lbtitle:eq(" + i + ")").html("<i class='fa fa-minus  fa-rotate-90 " + data[n]["Name"] + "'></i>" + data[n]["Name"]);
                     $(".lbtitle:eq(" + i + ")").attr("data-BMDM", data[n]["BMDM"])
+                    $(".divcontentrt:eq(" + i + ") ul").empty();
                     for (var i1 = 0; i1 < data[n]["data"].length; i1++) {
                         total += parseInt(data[n]["data"][i1]["count"]);
                         if (data[n]["data"][i1]["online"] != "") { sumonline += parseInt(data[n]["data"][i1]["online"]) };//在线终端总数
@@ -309,7 +310,7 @@ function createChar() {
                         }
                         sumonline = 0; sumisused = 0; total = 0;
                         if ($(this).attr("data-BMDM") == data[n]["BMDM"]) {
-
+                            $(".divcontentrt:eq(" + index + ") ul").empty();
                             for (var i1 = 0; i1 < data[n]["data"].length; i1++) {
                                 total += parseInt(data[n]["data"][i1]["count"]);
                                 if (data[n]["data"][i1]["online"] != "") { sumonline += parseInt(data[n]["data"][i1]["online"]) };//在线终端总数
