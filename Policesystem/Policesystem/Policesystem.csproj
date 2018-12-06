@@ -474,6 +474,9 @@
     <Compile Include="Handle\indexconfig.ashx.cs">
       <DependentUpon>indexconfig.ashx</DependentUpon>
     </Compile>
+    <Compile Include="Handle\indexRealtime.ashx.cs">
+      <DependentUpon>indexRealtime.ashx</DependentUpon>
+    </Compile>
     <Compile Include="Handle\index_24histroy.ashx.cs">
       <DependentUpon>index_24histroy.ashx</DependentUpon>
     </Compile>
@@ -533,6 +536,7 @@
     <Content Include="font\alarm clock.woff" />
     <Content Include="font\digital-7 %28mono%29.woff" />
     <Content Include="Handle\loadfreshTime.ashx" />
+    <Content Include="Handle\indexRealtime.ashx" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

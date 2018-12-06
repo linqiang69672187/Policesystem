@@ -1058,14 +1058,25 @@ function loadGaugeData() {
         data: { carouselEntity: entityBMDM },
         dataType: "json",
         success: function (data) {
-            createGauge(data,false);
+            createGauge(data,false,1);
         },
         error: function (msg) {
             console.debug("错误:ajax");
         }
     });
 
-
+    $.ajax({
+        type: "POST",
+        url: "Handle/indexRealtime.ashx",
+        data: { carouselEntity: entityBMDM },
+        dataType: "json",
+        success: function (data) {
+            createGauge(data, false,2);
+        },
+        error: function (msg) {
+            console.debug("错误:ajax");
+        }
+    });
 
 }
 
@@ -1303,7 +1314,7 @@ function dataValue(data1,data2) {
     return value;
 }
 
-function createGauge(data,rebuildchar) {
+function createGauge(data,rebuildchar,type) {
     var todayvalue, yesdayvalue;
     var numchart = 0;
     var arrayval;
@@ -1342,9 +1353,10 @@ function createGauge(data,rebuildchar) {
                     numchart += 1;
                     break;
                 case "30":
-                    data1 = parseFloat(yesdayvalue.在线数) / parseFloat(yesdayvalue.设备数量);
-                    data2 = parseFloat(todayvalue.在线数) / parseFloat(todayvalue.设备数量);
+                    data1 = formatFloat(parseFloat(yesdayvalue.在线数) / parseFloat(yesdayvalue.设备数量),2);
+                    data2 = formatFloat(parseFloat(todayvalue.在线数) / parseFloat(todayvalue.设备数量),2);
                     value = dataValue(data1, data2)
+                    value = formatFloat(value, 2)
                     myGaugeChart("设备使用率", value, i, numchart, rebuildchar, data2);
                     numchart += 1;
                     break;
@@ -1370,7 +1382,9 @@ function createGauge(data,rebuildchar) {
                     break;
                 case "80":
                     value = dataValue(parseFloat(yesdayvalue.规范上传率), parseFloat(todayvalue.规范上传率));
-                    myGaugeChart("规范上传率", value, i, numchart, rebuildchar, parseFloat(todayvalue.规范上传率));
+                    value = formatFloat(value, 2)
+                    myGaugeChart("规范上传率", value, i, numchart, rebuildchar, formatFloat(parseFloat(todayvalue.规范上传率),2));
+
                     numchart += 1;
                     break;
                 case "01":
@@ -1618,7 +1632,7 @@ function loadAlarmUser() {
             $(".entitylist ul").empty();
             for (var i = 0; i < data.data.length; i++) {
                 alarmindex = data.data[i]["ID"];
-                $(".entitylist ul ").append('<li class="news-item"><i class="fa fa-exclamation-circle"></i> ' + data.data[i]["BMMC"] + data.data[i]["XM"] + '的' + data.data[i]["TypeName"] + '已经' + datecompare(data.data[i]["QQSJ"]) + '天未登录</li>')
+                $(".entitylist ul ").append('<li class="news-item"><i class="fa fa-exclamation-circle"></i> ' + data.data[i]["BMMC"] + data.data[i]["XM"] + '的' + data.data[i]["TypeName"] + '已经' + datecompare(data.data[i]["QQSJ"]) + '天未使用</li>')
             }
            
         },
