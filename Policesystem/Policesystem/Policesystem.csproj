@@ -229,7 +229,6 @@
     <Content Include="img\deviceClick_bg.png" />
     <Content Include="img\devicepic\1\car\1.png" />
     <Content Include="img\devicepic\1\car\2.png" />
-    <Content Include="img\devicepic\1\car\3.png" />
     <Content Include="img\devicepic\1\moto\1.png" />
     <Content Include="img\devicepic\1\moto\2.png" />
     <Content Include="img\devicepic\1\moto\3.png" />
@@ -237,7 +236,6 @@
     <Content Include="img\devicepic\2\2.png" />
     <Content Include="img\devicepic\4\1.png" />
     <Content Include="img\devicepic\4\2.png" />
-    <Content Include="img\devicepic\4\3.png" />
     <Content Include="img\gjclose.png" />
     <Content Include="img\interceptor.png" />
     <Content Include="img\jingjingju.png" />

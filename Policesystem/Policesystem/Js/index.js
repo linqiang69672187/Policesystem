@@ -578,8 +578,10 @@ function myRealtimeChart(label, value, index, chartnum, rebuildchar,histroytempd
     }
    
     if (histroytempdata) {
-        maxvalue = histroytempdata[histroytempdata.length - 1]["y"]*1.1;
-        minvalue = histroytempdata[0]["y"];
+        try {
+            maxvalue = histroytempdata[histroytempdata.length - 1]["y"] * 1.1;
+            minvalue = histroytempdata[0]["y"];
+        } catch (e) { }
     }
     if (chart && histroytempdata && !rebuildchar) {
         return;
@@ -667,7 +669,8 @@ function myRealtimeChart(label, value, index, chartnum, rebuildchar,histroytempd
                     "color": "#ffffff",
                     "fontSize": realaxisLabelfontsize
                 },
-                y: realxAxis
+                y: realxAxis,
+                format: (histroytempdata) ? '{value:%k点}' : '{value:%M:%S}'
 
             }
         },
@@ -771,14 +774,14 @@ function myRealtimeChart(label, value, index, chartnum, rebuildchar,histroytempd
 
 }
 
-function myGaugeChart(label, value,index,chartnum,rebuildchar) {
+function myGaugeChart(label, hbvalue, index, chartnum, rebuildchar, value) {
     var chart
-    var oper = '环比增加' + value + '%<i class="fa fa-arrow-up" aria-hidden="true"></i><span class="hbclasslabel">● ' + label + ' ● </span>';
+    var oper = '环比增加' + hbvalue + '%<i class="fa fa-arrow-up" aria-hidden="true"></i><span class="hbclasslabel">● ' + label + ' ● </span>';
     var colorarray = ['#df3a20', '#dccf1d', '#1cd618', '#63869e']
 
-    if (value < 0) {
+    if (hbvalue < 0) {
         value = Math.abs(value);
-        oper = '环比减少' + value + '%<i class="fa fa-arrow-down" aria-hidden="true"></i><span class="hbclasslabel">● ' + label + ' ● </span>';
+        oper = '环比减少' + hbvalue + '%<i class="fa fa-arrow-down" aria-hidden="true"></i><span class="hbclasslabel">● ' + label + ' ● </span>';
         colorarray = ['#df3a20', '#dccf1d', '#1cd618', '#63869e']
     }
     var containerId;
@@ -879,6 +882,11 @@ function myGaugeChart(label, value,index,chartnum,rebuildchar) {
         chart.update({
             title: {
                 text: oper
+            },
+            yAxis: {
+                title: {
+                    text: value+"%"
+                }
             }
         })
         point.update(value);
@@ -936,7 +944,11 @@ function myGaugeChart(label, value,index,chartnum,rebuildchar) {
                 style: { color: '#fff', fontSize: titlefontsize }
             },
             title: {
-                text: ''
+                text: value+"%",
+                y: 40,
+                style: {
+                    fontSize: titlefontsize
+                }
             },
             plotBands: [{
                 from: 0,
@@ -1316,49 +1328,49 @@ function createGauge(data,rebuildchar) {
             switch (arrayval[i1]) {
                 case "00":
                     value = dataValue(parseFloat(yesdayvalue.在线总时长), parseFloat(todayvalue.在线总时长))
-                    myGaugeChart("在线总时长", value, i, numchart, rebuildchar);
+                    myGaugeChart("在线总时长", value, i, numchart, rebuildchar, parseFloat(todayvalue.在线总时长));
                     numchart += 1;
                     break;
                 case "10":
                     value = dataValue(parseFloat(yesdayvalue.在线数), parseFloat(todayvalue.在线数))
-                    myGaugeChart("今日在线量", value, i, numchart, rebuildchar);
+                    myGaugeChart("今日在线量", value, i, numchart, rebuildchar, parseFloat(todayvalue.在线数));
                     numchart += 1;
                     break;
                 case "20":
                     value = dataValue(parseFloat(yesdayvalue.设备数量), parseFloat(todayvalue.设备数量))
-                    myGaugeChart("设备配发数", value, i, numchart, rebuildchar);
+                    myGaugeChart("设备配发数", value, i, numchart, rebuildchar, parseFloat(todayvalue.设备数量));
                     numchart += 1;
                     break;
                 case "30":
                     data1 = parseFloat(yesdayvalue.在线数) / parseFloat(yesdayvalue.设备数量);
                     data2 = parseFloat(todayvalue.在线数) / parseFloat(todayvalue.设备数量);
                     value = dataValue(data1, data2)
-                    myGaugeChart("设备使用率", value, i, numchart, rebuildchar);
+                    myGaugeChart("设备使用率", value, i, numchart, rebuildchar, data2);
                     numchart += 1;
                     break;
                 case "40":
                     value = dataValue(parseFloat(yesdayvalue.处理量), parseFloat(todayvalue.处理量))
-                    myGaugeChart("处理量", value, i, numchart, rebuildchar);
+                    myGaugeChart("处理量", value, i, numchart, rebuildchar, parseFloat(todayvalue.处理量));
                     numchart += 1;
                     break;
                 case "50":
                     value = dataValue(parseFloat(yesdayvalue.查询量), parseFloat(todayvalue.查询量));
-                    myGaugeChart("查询量", value, i, numchart, rebuildchar);
+                    myGaugeChart("查询量", value, i, numchart, rebuildchar, parseFloat(todayvalue.查询量));
                     numchart += 1;
                     break;
                 case "60":
                     value = dataValue(parseFloat(yesdayvalue.在线总时长), parseFloat(todayvalue.在线总时长));
-                    myGaugeChart("视频长度", value, i, numchart, rebuildchar);
+                    myGaugeChart("视频长度", value, i, numchart, rebuildchar, parseFloat(todayvalue.在线总时长));
                     numchart += 1;
                     break;
                 case "70":
                     value = dataValue(parseFloat(yesdayvalue.在线总时长), parseFloat(todayvalue.在线总时长));
-                    myGaugeChart("视频长度", value, i, numchart, rebuildchar);
+                    myGaugeChart("视频长度", value, i, numchart, rebuildchar, parseFloat(todayvalue.在线总时长));
                     numchart += 1;
                     break;
                 case "80":
                     value = dataValue(parseFloat(yesdayvalue.规范上传率), parseFloat(todayvalue.规范上传率));
-                    myGaugeChart("规范上传率", value, i, numchart, rebuildchar);
+                    myGaugeChart("规范上传率", value, i, numchart, rebuildchar, parseFloat(todayvalue.规范上传率));
                     numchart += 1;
                     break;
                 case "01":
@@ -1404,7 +1416,47 @@ function createGauge(data,rebuildchar) {
                     myRealtimeChart("在线总时长", parseFloat(todayvalue.在线总时长), i, numchart, rebuildchar, temphistorydata);
                     numchart += 1;
                     break;
-
+                case "12":
+                    var temphistorydata = selHistoryData(arrayval[i1], indexconfigdata[i].DevType, entityBMDM)
+                    myRealtimeChart("今日在线量", parseFloat(todayvalue.在线数), i, numchart, rebuildchar, temphistorydata);
+                    numchart += 1;
+                case "22":
+                    var temphistorydata = selHistoryData(arrayval[i1], indexconfigdata[i].DevType, entityBMDM)
+                    myRealtimeChart("设备配发数", parseFloat(todayvalue.设备数量), i, numchart, rebuildchar, temphistorydata);
+                    numchart += 1;
+                    break;
+                case "32":
+                    var temphistorydata = selHistoryData(arrayval[i1], indexconfigdata[i].DevType, entityBMDM)
+                    value = parseFloat(todayvalue.在线数) / parseFloat(todayvalue.设备数量);
+                    value = formatFloat(value, 2)
+                    myRealtimeChart("设备使用率", value, i, numchart, rebuildchar, temphistorydata);
+                    numchart += 1;
+                    break;
+                case "42":
+                    var temphistorydata = selHistoryData(arrayval[i1], indexconfigdata[i].DevType, entityBMDM)
+                    myRealtimeChart("处理量", parseFloat(todayvalue.处理量), i, numchart, rebuildchar, temphistorydata);
+                    numchart += 1;
+                    break;
+                case "52":
+                    var temphistorydata = selHistoryData(arrayval[i1], indexconfigdata[i].DevType, entityBMDM)
+                    myRealtimeChart("查询量", parseFloat(todayvalue.查询量), i, numchart, rebuildchar, temphistorydata);
+                    numchart += 1;
+                    break;
+                case "62":
+                    var temphistorydata = selHistoryData(arrayval[i1], indexconfigdata[i].DevType, entityBMDM)
+                    myRealtimeChart("视频长度", parseFloat(todayvalue.在线总时长), i, numchart, rebuildchar, temphistorydata);
+                    numchart += 1;
+                    break;
+                case "72":
+                    var temphistorydata = selHistoryData(arrayval[i1], indexconfigdata[i].DevType, entityBMDM)
+                    myRealtimeChart("视频文件大小", parseFloat(todayvalue.文件大小), i, numchart, rebuildchar, temphistorydata);
+                    numchart += 1;
+                    break;
+                case "82":
+                    var temphistorydata = selHistoryData(arrayval[i1], indexconfigdata[i].DevType, entityBMDM)
+                    myRealtimeChart("规范上传率", parseFloat(todayvalue.规范上传率), i, numchart, rebuildchar);
+                    numchart += 1;
+                    break;
                 default:
                     break;
             }
@@ -1419,7 +1471,6 @@ function createGauge(data,rebuildchar) {
 
 
 function selHistoryData(index, type, entityBMDM) {
-    
     var data = [];
     var val;
     
@@ -1429,6 +1480,30 @@ function selHistoryData(index, type, entityBMDM) {
             switch (index) {
                 case "02":
                     val = parseInt(historydata.data[i]["OnlineTime"]);
+                    break;
+                case "12":
+                    val = parseInt(historydata.data[i]["onlinecount"]);
+                    break;
+                case "22":
+                    val = parseInt(historydata.data[i]["sl"]);
+                    break;
+                case "32":
+                    val = formatFloat(parseFloat(historydata.data[i]["onlinecount"]) * 100 / parseFloat(historydata.data[i]["sl"]), 2);
+                    break;
+                case "42":
+                    val = parseInt(historydata.data[i]["HandleCnt"]);;
+                    break;
+                case "52":
+                    val = parseInt(historydata.data[i]["CXCNT"]);;
+                    break;
+                case "62":
+                    val = parseInt(historydata.data[i]["OnlineTime"]);;
+                    break;
+                case "72":
+                    val = parseInt(historydata.data[i]["FileSize"]);;
+                    break;
+                case "82":
+                    val = parseInt(historydata.data[i]["FileSize"]);;
                     break;
                 default:
                     break;
@@ -1543,7 +1618,7 @@ function loadAlarmUser() {
             $(".entitylist ul").empty();
             for (var i = 0; i < data.data.length; i++) {
                 alarmindex = data.data[i]["ID"];
-                $(".entitylist ul ").append('<li class="news-item"><i class="fa fa-exclamation-circle"></i> ' + data.data[i]["BMMC"] + data.data[i]["XM"]  + '已经' + datecompare(data.data[i]["QQSJ"]) + '天未登录</li>')
+                $(".entitylist ul ").append('<li class="news-item"><i class="fa fa-exclamation-circle"></i> ' + data.data[i]["BMMC"] + data.data[i]["XM"] + '的' + data.data[i]["TypeName"] + '已经' + datecompare(data.data[i]["QQSJ"]) + '天未登录</li>')
             }
            
         },

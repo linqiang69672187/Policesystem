@@ -43,7 +43,8 @@ namespace Policesystem.Handle
             {
                 case "331000000000":
                     rows = (from p in allentitys.AsEnumerable()
-                            where (p.Field<string>("SJBM")== "331000000000" && p.Field<string>("BMMC").StartsWith("台州市交通警察支队直属")) ||(p.Field<string>("BMDM")== "331000000000"  )
+                            where (p.Field<string>("SJBM") == "331000000000" && p.Field<string>("BMMC").StartsWith("台州市交通警察支队直属")) || (p.Field<string>("BMDM") == "331000000000")
+                            //where (p.Field<string>("SJBM")== "331000000000") ||(p.Field<string>("BMDM")== "331000000000"  )
                             orderby p.Field<int>("sort") descending
                             select new entityStruct
                             {
@@ -52,7 +53,7 @@ namespace Policesystem.Handle
                                 BMMC = p.Field<string>("BMMC")
                             }).ToList<entityStruct>();
                     // sbSQL = "SELECT BMMC,BMDM from [Entity] where  BMDM ='331000000000' OR ([SJBM] = '331000000000' and BMMC like '台州市交通警察支队直属%')  order by Sort desc"; //目前只需要查询四个大队
-                     dt = SQLHelper.ExecuteRead(CommandType.Text, "WITH childtable(BMMC,BMDM,SJBM) as (SELECT BMMC,BMDM,SJBM FROM [Entity] WHERE SJBM in ('331001000000','331002000000','331003000000','331004000000') OR BMDM  in ('331001000000','331002000000','331003000000','331004000000') UNION ALL SELECT A.BMMC,A.BMDM,A.SJBM FROM [Entity] A,childtable b where a.SJBM = b.BMDM )  SELECT count(a.id) count,BMDM, c.TypeName, sum((CASE WHEN([OnlineTime] +[HandleCnt]) > 0 THEN 1 ELSE 0 END)) Isused,sum((CASE WHEN [IsOnline] is null  THEN 0 ELSE [IsOnline] END)) online from Device a  LEFT JOIN Gps B ON a.DevId = B.PDAID  LEFT JOIN DeviceType C ON a.DevType = c.ID where BMDM in (SELECT BMDM FROM childtable)  GROUP By c.TypeName,BMDM", "1");
+                     dt = SQLHelper.ExecuteRead(CommandType.Text, "WITH childtable(BMMC,BMDM,SJBM) as (SELECT BMMC,BMDM,SJBM FROM [Entity] WHERE SJBM = '331000000000' UNION ALL SELECT A.BMMC,A.BMDM,A.SJBM FROM [Entity] A,childtable b where a.SJBM = b.BMDM )  SELECT count(a.id) count,BMDM, c.TypeName, sum((CASE WHEN([OnlineTime] +[HandleCnt]) > 0 THEN 1 ELSE 0 END)) Isused,sum((CASE WHEN [IsOnline] is null  THEN 0 ELSE [IsOnline] END)) online from Device a  LEFT JOIN Gps B ON a.DevId = B.PDAID  LEFT JOIN DeviceType C ON a.DevType = c.ID where BMDM in (SELECT BMDM FROM childtable)  GROUP By c.TypeName,BMDM", "1");
 
                     break;
                 case "331001000000":
@@ -97,8 +98,20 @@ namespace Policesystem.Handle
             json.Append("[");
             foreach (entityStruct item in rows)
             {
-                dwmc =(item.BMDM== "331000000000")?"交警支队": item.BMMC.Substring(11);
-           
+                //dwmc =(item.BMDM== "331000000000")?"交警支队": item.BMMC.Substring(11);
+                switch (item.BMDM)
+                {
+                    case "331000000000":
+                        dwmc = "交警支队";
+                        break;
+                    case "33100000000x":
+                        dwmc = item.BMMC;
+                        break;
+                    default:
+                        dwmc= item.BMMC.Substring(11);
+                        break;
+                }
+
                     var entityids = GetSonID(item.BMDM, allentitys);
                     strList.Add(item.BMDM);
                     foreach (entityStruct itemx in entityids)
