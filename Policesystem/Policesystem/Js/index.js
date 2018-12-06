@@ -658,14 +658,16 @@ function myRealtimeChart(label, value, index, chartnum, rebuildchar,histroytempd
         xAxis: {
             type: 'datetime',
             tickPixelInterval: realtickPixelInterval,
+            dateTimeLabelFormats: {
+                second: '%M:%S'
+            },
             tickLength: realtickLength,
             labels: {
                 style: {
                     "color": "#ffffff",
                     "fontSize": realaxisLabelfontsize
                 },
-                y: realxAxis,
-                format: (histroytempdata)?'{value:%k点}':'{value:%M:%S}'
+                y: realxAxis
 
             }
         },
