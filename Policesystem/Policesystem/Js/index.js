@@ -591,30 +591,51 @@ function myRealtimeChart(label, value, index, chartnum, rebuildchar,histroytempd
         var series = chart.series[0];
         var time = (new Date()).getTime();
         if (rebuildchar) {
-            var datascount = series.data.length;
-            for (i = 0; i < datascount; i += 1) {
-                series.removePoint(0);
-            }
+            series.remove();
+           // var datascount = series.data.length;
+         //   for (i = 0; i < datascount; i += 1) {
+          //      series.removePoint(0,false,false);
+            //  }
+            var data = [];
             if (histroytempdata) {
                 for (i = 0; i < histroytempdata.length; i += 1) {
-                    series.addPoint([histroytempdata[i].x, histroytempdata[i].y]);
+                    data.push({
+                        x: histroytempdata[i].x,
+                        y: histroytempdata[i].y
+                    });
                 }
             }
-            else{
-                for (i = -20; i <= 0; i += 1) {
-                    x = time + i * 1000;
-                    series.addPoint([x, value]);
+            else {
+               time = (new Date()).getTime(),
+                    i;
+                for (i = -1; i <= 0; i += 1) {
+                    data.push({
+                        x: time + i * 1000,
+                        y: value
+                    });
                 }
             }
+                chart.addSeries({
+                    name:label,
+                    // lineColor: areacolor,
+                    color: areacolor,
+                    fillOpacity: 0.8,
+                    marker: {
+                        enabled:false
+                    },
+                    data: data
+                });
+            
+          
             chart.yAxis[0].update({
-                min: value,
+                min: minvalue,
                 max: maxvalue
 
             }, true);
         }
         else {
             
-                series.addPoint([time, value], true, true);
+                series.addPoint([time, value]);
         }
 
 
@@ -724,7 +745,7 @@ function myRealtimeChart(label, value, index, chartnum, rebuildchar,histroytempd
                 var data = [],
                     time = (new Date()).getTime(),
                     i;
-                for (i = -20; i <= 0; i += 1) {
+                for (i = -1; i <= 0; i += 1) {
                     data.push({
                         x: time + i * 1000,
                         y: value
@@ -735,6 +756,7 @@ function myRealtimeChart(label, value, index, chartnum, rebuildchar,histroytempd
         }]
     });
 
+    
 
     switch (containerId) {
         case "zf_gfscl":
@@ -771,6 +793,10 @@ function myRealtimeChart(label, value, index, chartnum, rebuildchar,histroytempd
             break;
 
     }
+
+}
+
+function realtimeSeries() {
 
 }
 
@@ -1064,7 +1090,7 @@ function loadGaugeData() {
             console.debug("错误:ajax");
         }
     });
-
+    return;
     $.ajax({
         type: "POST",
         url: "Handle/indexRealtime.ashx",
@@ -1314,7 +1340,8 @@ function dataValue(data1,data2) {
     return value;
 }
 
-function createGauge(data,rebuildchar,type) {
+function createGauge(data, rebuildchar, type) {
+  
     var todayvalue, yesdayvalue;
     var numchart = 0;
     var arrayval;
@@ -1487,8 +1514,6 @@ function createGauge(data,rebuildchar,type) {
 function selHistoryData(index, type, entityBMDM) {
     var data = [];
     var val;
-    
-   
     for (var i = 0; i < historydata.data.length; i++) {
         if (historydata.data[i]["BMDM"] == entityBMDM && historydata.data[i]["DevType"] == type) {
             switch (index) {
@@ -1552,7 +1577,6 @@ function loadindexconfigdata() {
         success: function (data) {
             if (data.data.length == 4) {
                 indexconfigdata = data.data;
-                // loadGaugeData();
                 var tempconfig="";
                 for (var i = 0; i < indexconfigdata.length; i++) {
                     tempconfig += (i == 0) ? indexconfigdata[i]["DevType"] : "," + indexconfigdata[i]["DevType"];
