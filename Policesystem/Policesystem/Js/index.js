@@ -1077,7 +1077,7 @@ function loadGaugeData() {
     $.ajax({
         type: "POST",
         url: "Handle/index.ashx",
-        data: { carouselEntity: entityBMDM },
+        data: { carouselEntity: entityBMDM, historydetype: historydetype },
         dataType: "json",
         success: function (data) {
             createGauge(data,false,1);
@@ -1342,8 +1342,8 @@ function createGauge(data, rebuildchar, type) {
 
     for (var i = 0; i < indexconfigdata.length; i++) {
         var values = taday_yestodayvalue(data.data, indexconfigdata[i].DevType);
-        todayvalue = data.data[2 * parseInt(indexconfigdata[i].DevType) - 1];
-        yesdayvalue = data.data[2 * parseInt(indexconfigdata[i].DevType) - 2];
+        todayvalue = values[0];
+        yesdayvalue = values[1];
         arrayval = indexconfigdata[i].val.split(",");
         numchart = 0;
         createGaugeTile(i, indexconfigdata[i].DevType);

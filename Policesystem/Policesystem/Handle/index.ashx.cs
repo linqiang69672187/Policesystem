@@ -30,6 +30,10 @@ namespace Policesystem.Handle
             string historydetype = context.Request.Form["historydetype"];
             // HttpCookie cookies = HttpContext.Current.historydetype.Cookies["cookieName"];
             // and[Time] >= GETDATE() - 2
+            if(historydetype==null) {
+                historydetype = "1,2,3,4,5,6";
+              };
+
             string BMDM = "331000000000";
             if (carouselEntity != null)
             {
