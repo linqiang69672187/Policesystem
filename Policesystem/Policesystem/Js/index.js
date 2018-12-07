@@ -606,8 +606,6 @@ function myRealtimeChart(label, value, index, chartnum, rebuildchar,histroytempd
                 }
             }
             else {
-               time = (new Date()).getTime(),
-                    i;
                 for (i = -1; i <= 0; i += 1) {
                     data.push({
                         x: time + i * 1000,
