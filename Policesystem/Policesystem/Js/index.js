@@ -1063,6 +1063,7 @@ function myGaugeChart(label, hbvalue, index, chartnum, rebuildchar, value) {
 }
 
 function loadGaugeData() {
+    if (!indexconfigdata) return;
     var entityBMDM;
     $("#ifr").contents().find(".lbtitle").each(function () {
         if ($(this).parent().parent().css("opacity") == 1) {
@@ -1085,24 +1086,12 @@ function loadGaugeData() {
             console.debug("错误:ajax");
         }
     });
-    return;
-    $.ajax({
-        type: "POST",
-        url: "Handle/indexRealtime.ashx",
-        data: { carouselEntity: entityBMDM },
-        dataType: "json",
-        success: function (data) {
-            createGauge(data, false,2);
-        },
-        error: function (msg) {
-            console.debug("错误:ajax");
-        }
-    });
 
 }
 
 
 function loadHistory() {
+    if (!indexconfigdata) return;
     var myDate = new Date();
     if (historycurrentTime == myDate.getHours()) {
         return;  //已经加载过了，直接退出
@@ -1228,7 +1217,7 @@ function changeCarouseEntity() {
     $.ajax({
         type: "POST",
         url: "Handle/index.ashx",
-        data: { carouselEntity: entityBMDM },
+        data: { carouselEntity: entityBMDM,historydetype: historydetype },
         dataType: "json",
         success: function (data) {
             createGauge(data, true);
@@ -1352,6 +1341,7 @@ function createGauge(data, rebuildchar, type) {
     });
 
     for (var i = 0; i < indexconfigdata.length; i++) {
+        var values = taday_yestodayvalue(data.data, indexconfigdata[i].DevType);
         todayvalue = data.data[2 * parseInt(indexconfigdata[i].DevType) - 1];
         yesdayvalue = data.data[2 * parseInt(indexconfigdata[i].DevType) - 2];
         arrayval = indexconfigdata[i].val.split(",");
@@ -1504,6 +1494,19 @@ function createGauge(data, rebuildchar, type) {
     
 
     }
+}
+
+function taday_yestodayvalue(data, type) {
+    var returnvalue = [];
+    for (var i = 0; i < data.length; i++) {
+        if (data[i].DevType == type) {
+            returnvalue.push(data[i]);
+            returnvalue.push(data[i + 1]);
+            return returnvalue;
+        }
+
+    }
+
 }
 
 
