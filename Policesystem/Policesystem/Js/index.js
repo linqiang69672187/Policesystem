@@ -1063,7 +1063,7 @@ function myGaugeChart(label, hbvalue, index, chartnum, rebuildchar, value) {
 }
 
 function loadGaugeData() {
-    if (!indexconfigdata) return;
+    if (!historydetype) return;
     var entityBMDM;
     $("#ifr").contents().find(".lbtitle").each(function () {
         if ($(this).parent().parent().css("opacity") == 1) {
@@ -1091,7 +1091,7 @@ function loadGaugeData() {
 
 
 function loadHistory() {
-    if (!indexconfigdata) return;
+    if (!historydetype) return;
     var myDate = new Date();
     if (historycurrentTime == myDate.getHours()) {
         return;  //已经加载过了，直接退出
