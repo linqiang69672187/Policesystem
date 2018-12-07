@@ -591,10 +591,10 @@ function myRealtimeChart(label, value, index, chartnum, rebuildchar,histroytempd
         var series = chart.series[0];
         var time = (new Date()).getTime();
         if (rebuildchar) {
-            series.remove();
+            series.remove();//修改为删除数据线条列
            // var datascount = series.data.length;
          //   for (i = 0; i < datascount; i += 1) {
-          //      series.removePoint(0,false,false);
+          //      series.removePoint(0,false,false); 移除方法有性能问题
             //  }
             var data = [];
             if (histroytempdata) {
@@ -634,11 +634,8 @@ function myRealtimeChart(label, value, index, chartnum, rebuildchar,histroytempd
             }, true);
         }
         else {
-            
                 series.addPoint([time, value]);
         }
-
-
         return;
     }
 
@@ -1348,6 +1345,7 @@ function createGauge(data, rebuildchar, type) {
     var data1=0;
     var data2=0;
     var value = 0
+    var sendval = 0;
     var entityBMDM;
     $("#ifr").contents().find(".lbtitle").each(function () {
         if ($(this).parent().parent().css("opacity") == 1) {
@@ -1410,7 +1408,7 @@ function createGauge(data, rebuildchar, type) {
                 case "80":
                     value = dataValue(parseFloat(yesdayvalue.规范上传率), parseFloat(todayvalue.规范上传率));
                     value = formatFloat(value, 2)
-                    myGaugeChart("规范上传率", value, i, numchart, rebuildchar, formatFloat(parseFloat(todayvalue.规范上传率),2));
+                    myGaugeChart("规范上传率", value, i, numchart, rebuildchar, formatFloat(parseFloat(todayvalue.规范上传率 / todayvalue.设备数量), 2));
 
                     numchart += 1;
                     break;
@@ -1449,7 +1447,7 @@ function createGauge(data, rebuildchar, type) {
                     numchart += 1;
                     break;
                 case "81":
-                    myRealtimeChart("规范上传率", parseFloat(todayvalue.规范上传率), i, numchart, rebuildchar);
+                    myRealtimeChart("规范上传率", parseFloat(todayvalue.规范上传率 / todayvalue.设备数量), i, numchart, rebuildchar);
                     numchart += 1;
                     break;
                 case "02":
@@ -1495,7 +1493,7 @@ function createGauge(data, rebuildchar, type) {
                     break;
                 case "82":
                     var temphistorydata = selHistoryData(arrayval[i1], indexconfigdata[i].DevType, entityBMDM)
-                    myRealtimeChart("规范上传率", parseFloat(todayvalue.规范上传率), i, numchart, rebuildchar);
+                    myRealtimeChart("规范上传率", parseFloat(todayvalue.规范上传率 / todayvalue.设备数量), i, numchart, rebuildchar);
                     numchart += 1;
                     break;
                 default:

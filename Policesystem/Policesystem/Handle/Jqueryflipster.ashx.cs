@@ -61,7 +61,7 @@ namespace Policesystem.Handle
                 case "331003000000":
                 case "331004000000":
                     rows = (from p in allentitys.AsEnumerable()
-                            where (p.Field<string>("SJBM") == "+BMDM+") || (p.Field<string>("BMDM") == "+BMDM+")
+                            where (p.Field<string>("SJBM") ==BMDM) || (p.Field<string>("BMDM") == BMDM)
                             orderby p.Field<int>("sort") descending
                             select new entityStruct
                             {
@@ -75,7 +75,7 @@ namespace Policesystem.Handle
                     break;
                 default:
                     rows = (from p in allentitys.AsEnumerable()
-                            where  (p.Field<string>("BMDM") == "+BMDM+")
+                            where  (p.Field<string>("BMDM") == BMDM)
                             orderby p.Field<int>("sort") descending
                             select new entityStruct
                             {
