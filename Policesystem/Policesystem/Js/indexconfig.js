@@ -9,10 +9,11 @@ $.ajax({
     dataType: "json",
     success: function (data) {
   
-        if (data.data.length == 3) {
+        if (data.data.length == 4) {
             $("#cloum2select").val(data.data[0].DevType);
             $("#cloum3select").val(data.data[1].DevType);
-            $("#cloum5select").val(data.data[2].DevType);
+            $("#cloum4select").val(data.data[2].DevType);
+            $("#cloum5select").val(data.data[3].DevType);
 
             switchDevtype(data.data[0].DevType, $("#cloum2select"));
             switchDevtype(data.data[1].DevType, $("#cloum3select"));

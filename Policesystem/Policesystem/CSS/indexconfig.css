@@ -125,8 +125,10 @@ ul li{
     display:none;
 }
 li div{
-    width:50%;
     display:inline-block;
+    height:30px;
+    line-height:30px;
+    vertical-align:middle;
 }
 .fa-toggle-off,.fa-toggle-on{
     cursor:pointer;
@@ -195,4 +197,15 @@ li div{
     height:138px;
     width:100%;
     background-position:center;
-} 
+}
+.device_vale_type,.char_type{
+    display:inline-block;
+}
+.cloum3 li div:nth-child(2){
+    margin-left:70px;
+}
+.cloum3 ul li:nth-child(1){
+height:30px;
+line-height:30px;
+vertical-align:middle;
+}
