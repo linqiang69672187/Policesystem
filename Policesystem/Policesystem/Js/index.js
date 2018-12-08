@@ -441,6 +441,7 @@ function myRealtimeChart(label, value, index, chartnum, rebuildchar,histroytempd
     var chart;
     var containerId;
     var minvalue = value;
+    var titlevalue = '<span  class="realup">' + value+'</span>';
     switch (index) {
         case 0:
             if (chartnum > 1) return;
@@ -584,12 +585,27 @@ function myRealtimeChart(label, value, index, chartnum, rebuildchar,histroytempd
         } catch (e) { }
     }
     if (chart && histroytempdata && !rebuildchar) {
+        if (parseInt(chart.title.textStr) > value) {
+            titlevalue = '<span  class="realdown">' + value + '<i class="fa fa-arrow-down" aria-hidden="true"></i>' + '</span>';
+        }
+        else {
+            titlevalue = '<span class="realup">' + value + '<i class="fa fa-arrow-up" aria-hidden="true"></i>' + '</span>';
+        }
+        chart.title.update({ text: titlevalue });
         return;
     }
 
     if (chart) {
         var series = chart.series[0];
         var time = (new Date()).getTime();
+        if (parseInt(chart.title.textStr)>value)
+        {
+            titlevalue ='<span  class="realdown">'+ value + '<i class="fa fa-arrow-down" aria-hidden="true"></i>'+'</span>';
+        }
+        else
+        {
+            titlevalue = '<span class="realup">' + value + '<i class="fa fa-arrow-up" aria-hidden="true"></i>' + '</span>';
+        }
         if (rebuildchar) {
             series.remove();//修改为删除数据线条列
            // var datascount = series.data.length;
@@ -632,7 +648,8 @@ function myRealtimeChart(label, value, index, chartnum, rebuildchar,histroytempd
             }, true);
         }
         else {
-                series.addPoint([time, value]);
+            series.addPoint([time, value]);
+            chart.title.update({ text: titlevalue });
         }
         return;
     }
@@ -669,11 +686,23 @@ function myRealtimeChart(label, value, index, chartnum, rebuildchar,histroytempd
             symbolRadius: 4
 
         },
-        title:null,
+        title: {
+            useHTML: true,
+            text: titlevalue,
+            floating: true,
+            align: 'center',
+            x: 15,
+            y: 30,
+            verticalAlign: 'top',
+
+        },
         credits: {
             enabled: false
         },
         xAxis: {
+            title: {
+                text: null
+            },
             type: 'datetime',
             tickPixelInterval: realtickPixelInterval,
             dateTimeLabelFormats: {
@@ -791,9 +820,7 @@ function myRealtimeChart(label, value, index, chartnum, rebuildchar,histroytempd
 
 }
 
-function realtimeSeries() {
 
-}
 
 function myGaugeChart(label, hbvalue, index, chartnum, rebuildchar, value) {
     var chart

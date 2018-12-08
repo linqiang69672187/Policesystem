@@ -1027,6 +1027,14 @@
     list-style:none;
     margin-left:-40px;
 }
+.realdown{
+    font-size:14px;
+    color:#dc624d;
+}
+.realup{
+   font-size:14px;
+   color:#55d28e;
+}
 
   
 }
