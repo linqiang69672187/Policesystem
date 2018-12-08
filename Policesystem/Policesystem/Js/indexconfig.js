@@ -10,6 +10,7 @@ $.ajax({
     success: function (data) {
   
         if (data.data.length == 4) {
+            return;
             $("#cloum2select").val(data.data[0].DevType);
             $("#cloum3select").val(data.data[1].DevType);
             $("#cloum4select").val(data.data[2].DevType);
@@ -34,45 +35,59 @@ function switchDevtype(typeid,$ele) {
         case "1":
         case "2":
         case "3":
-            $($ele).parent().parent().find('li').each(function (index, ele) {
-                switch (index) {
-                    case 0:
-                    case 1:
-                        $(this).removeClass("none");
-                        break;
-                    default:
-                        $(this).addClass("none");
-                        break;
-                }
+            $($ele).parent().parent().find('.device_vale_type').each(function (index, ele) {
+                $(this).children().each(function (i,e) {
+                    switch (i,e) {
+                        case 0:
+                        case 1:
+                            $(this).removeClass("none");
+                            break;
+                        default:
+                            $(this).addClass("none");
+                            break;
+                    }
+
+                })
+                
             });
             break;
         case "4":
         case "6":
-            $($ele).parent().parent().find('li').each(function (index, ele) {
-                switch (index) {
-                    case 0:
-                    case 1:
-                    case 2:
-                        $(this).removeClass("none");
-                        break;
-                    default:
-                        $(this).addClass("none");
-                        break;
-                }
+            $($ele).parent().parent().find('.device_vale_type').each(function (index, ele) {
+                $(this).children().each(function (i,e) {
+                    switch (i) {
+                        case 0:
+                        case 1:
+                        case 2:
+                            $(this).removeClass("none");
+                            break;
+                        default:
+                            $(this).addClass("none");
+                            break;
+                    }
+                });
+               
             });
             break;
         case "5":
-            $($ele).parent().parent().find('li').each(function (index, ele) {
-                switch (index) {
-                    case 1:
-                    case 3:
-                    case 4:
-                        $(this).removeClass("none");
-                        break;
-                    default:
-                        $(this).addClass("none");
-                        break;
-                }
+            $($ele).parent().parent().find('.device_vale_type').each(function (index, ele) {
+                $(this).children().each(function (i, e) {
+                    switch (i) {
+                        case 1:
+                        case 2:
+                        case 3:
+                        case 4:
+                        case 6:
+                        case 7:
+                        case 8:
+                            $(this).removeClass("none");
+                            break;
+                        default:
+                            $(this).addClass("none");
+                            break;
+                    }
+                });
+               
             });
             break;
 

@@ -111,8 +111,9 @@ select {
     margin-left:10px;
 }
 li select {
+    margin-right: 10px;
     width: 75px;
-
+    margin-left: 5px;
 }
 select option {
     background-color: #071237;
