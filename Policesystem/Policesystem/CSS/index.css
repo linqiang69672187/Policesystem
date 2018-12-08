@@ -608,6 +608,14 @@
     .xzlb{
         margin-top:50px !important;
     }
+    .realdown{
+    font-size:24px;
+    color:#dc624d;
+}
+.realup{
+   font-size:24px;
+   color:#55d28e;
+}
 
 }
 @media screen and (max-width: 2000px) {
