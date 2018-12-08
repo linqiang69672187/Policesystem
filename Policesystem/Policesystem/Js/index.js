@@ -1342,12 +1342,12 @@ function createGauge(data, rebuildchar, type) {
 
     for (var i = 0; i < indexconfigdata.length&& i < 4; i++) {
         var values = taday_yestodayvalue(data.data, indexconfigdata[i].DevType);
-        todayvalue =(!values)?0:values[1];
-        yesdayvalue =(!values)?0:values[0];
+        todayvalue =(!values)?null:values[1];
+        yesdayvalue =(!values)?null:values[0];
         arrayval = indexconfigdata[i].val.split(",");
         numchart = 0;
         createGaugeTile(i, indexconfigdata[i].DevType);
-        if (!todayvalue) return;//没有数据
+        if (!todayvalue) continue;//没有数据
         for (var i1 = 0; i1 < arrayval.length; i1++) {
             switch (arrayval[i1]) {
                 case "00":
