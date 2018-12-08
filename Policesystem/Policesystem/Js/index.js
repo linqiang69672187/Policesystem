@@ -1340,10 +1340,10 @@ function createGauge(data, rebuildchar, type) {
         }
     });
 
-    for (var i = 0; i < indexconfigdata.length; i++) {
+    for (var i = 0; i < indexconfigdata.length&& i < 4; i++) {
         var values = taday_yestodayvalue(data.data, indexconfigdata[i].DevType);
-        todayvalue = values[0];
-        yesdayvalue = values[1];
+        todayvalue =(!values)?0:values[1];
+        yesdayvalue =(!values)?0:values[0];
         arrayval = indexconfigdata[i].val.split(",");
         numchart = 0;
         createGaugeTile(i, indexconfigdata[i].DevType);
@@ -1574,10 +1574,10 @@ function loadindexconfigdata() {
         data: "",
         dataType: "json",
         success: function (data) {
-            if (data.data.length == 4) {
+            if (data.data.length == 5) {
                 indexconfigdata = data.data;
                 var tempconfig="";
-                for (var i = 0; i < indexconfigdata.length; i++) {
+                for (var i = 0; i < indexconfigdata.length&&i<4; i++) {
                     tempconfig += (i == 0) ? indexconfigdata[i]["DevType"] : "," + indexconfigdata[i]["DevType"];
                 }
                 historydetype = tempconfig;

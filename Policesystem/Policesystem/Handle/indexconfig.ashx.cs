@@ -18,7 +18,7 @@ namespace Policesystem.Handle
         {
             context.Response.ContentType = "text/plain";
             StringBuilder sqltext = new StringBuilder();
-            sqltext.Append("SELECT * FROM [IndexConfigs] where id < 5");
+            sqltext.Append("SELECT * FROM [IndexConfigs] where id in (1,2,3,4,7)");
             DataTable dt = SQLHelper.ExecuteRead(CommandType.Text, sqltext.ToString(), "DB");
             context.Response.Write(JSON.DatatableToDatatableJS(dt, "table"));
         }

@@ -26,6 +26,9 @@ namespace Policesystem.Handle
             string val2 = context.Request.Form["val2"];
             string Row3 = context.Request.Form["Row3"];
             string val3 = context.Request.Form["val3"];
+            string Row4 = context.Request.Form["Row4"];
+            string val4 = context.Request.Form["val4"];
+            string val5 = context.Request.Form["val5"];
 
             SqlParameter[] sp = new SqlParameter[3];
             sp[0] = new SqlParameter("@id", 1);
@@ -45,6 +48,18 @@ namespace Policesystem.Handle
             sp2[2] = new SqlParameter("@val", val3);
             SQLHelper.ExecuteNonQuery(CommandType.Text, "update IndexConfigs set DevType=@DevType,val=@val where id = @id", sp2);
 
+            SqlParameter[] sp4 = new SqlParameter[3];
+            sp4[0] = new SqlParameter("@id", 4);
+            sp4[1] = new SqlParameter("@DevType", Row4);
+            sp4[2] = new SqlParameter("@val", val4);
+            SQLHelper.ExecuteNonQuery(CommandType.Text, "update IndexConfigs set DevType=@DevType,val=@val where id = @id", sp4);
+
+            SqlParameter[] sp5 = new SqlParameter[2];
+            sp5[0] = new SqlParameter("@id", 7);
+            sp5[1] = new SqlParameter("@val", val5);
+            SQLHelper.ExecuteNonQuery(CommandType.Text, "update IndexConfigs set val=@val where id = @id", sp5);
+
+
             try
             {
                 string strHostName = Dns.GetHostName(); //得到本机的主机名 
@@ -58,7 +73,7 @@ namespace Policesystem.Handle
                     JYBH = cookies["JYBH"];
                 }
 
-                string bz = "ID:1," + val1 + "ID:2" + val2 + "ID:3" + val3;
+                string bz = "ID:1," + val1 + "ID:2" + val2 + "ID:3" + val3 + "ID:4" + val4;
 
                 SqlParameter[] sp3 = new SqlParameter[7];
                 sp3[0] = new SqlParameter("@JYBH", JYBH);
