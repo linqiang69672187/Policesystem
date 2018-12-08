@@ -40,6 +40,8 @@ function switchDevtype(typeid,$ele) {
                     switch (i,e) {
                         case 0:
                         case 1:
+                        case 2:
+                        case 3:
                             $(this).removeClass("none");
                             break;
                         default:
@@ -59,6 +61,9 @@ function switchDevtype(typeid,$ele) {
                         case 0:
                         case 1:
                         case 2:
+                        case 3:
+                        case 4:
+                        case 5:
                             $(this).removeClass("none");
                             break;
                         default:
@@ -72,11 +77,11 @@ function switchDevtype(typeid,$ele) {
         case "5":
             $($ele).parent().parent().find('.device_vale_type').each(function (index, ele) {
                 $(this).children().each(function (i, e) {
+                   
                     switch (i) {
                         case 1:
                         case 2:
                         case 3:
-                        case 4:
                         case 6:
                         case 7:
                         case 8:
