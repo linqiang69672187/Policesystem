@@ -197,7 +197,6 @@ function clearintet() {
 
 function setTogglecloumnVal(val) {
     var arr = val.split(",");
-
     $(".rightbox select").each(function (i, ele) {
         if (arr[i] != "0") {
             $(".rightbox i:eq(" + i + ")").removeClass("fa-toggle-off").addClass("fa-toggle-on");

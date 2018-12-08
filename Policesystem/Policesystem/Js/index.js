@@ -1621,10 +1621,7 @@ $(function () {
         showItems: 5,
         pause: 5000
     });
-    $('.devicelist').vTicker({
-            showItems: 4,
-            pause: 10000
-        });
+  
     $.ajax({
         type: "POST",
         url: "Handle/getAlarmdays.ashx",
@@ -1676,20 +1673,32 @@ function datecompare(start) {
 
 function createcloumdiv(data) {
     var arr = data["val"].split(",");
-    var index = 0;
-    var classname="";
-    for (var i = 0; i < arr.length; i++) {
-        if (arr != "0") {
-            if (index % 2 == 0) {
+    var arrn = 0;
+    var classname = "";
+    $(".devicelist .row2n,.devicelist .row1n").each(function (index, ele) {
+        if (arr[index] != "0") {
+            if (arrn % 2 == 0) {
                 classname = "row2n";
             }
-            else
-            {
+            else {
                 classname = "row1n";
             }
-            $(".devicelist ul").append('<li><div class="'+classname+'"><div><img class="imglable" src="" /><label class="listtitle">'+arr[i]+'</label><img src="Image/index_bz.png" /></div><div class="rlchars"><ul><li>配发数量</li><li><div id="jwtchart"></div></li><li>设备使用率</li><li><div id="jwtcolumn"></div></li></ul></div><div></div></div></li>')
-            index += 1;
+       
+            $(this).removeClass("row2n").removeClass("row1n").addClass(classname);
+            $(this).find(".listtitle").text(arr[index]);
+            arrn += 1;
         }
+        else {
+            $(this).parent().remove();
+        }
+
+    })
+  
+    if (arrn>4) { //后台配置超过4种类型，开始移动
+          $('.devicelist').vTicker({
+        showItems: 4,
+        pause: 10000
+    });
     }
 }
 
