@@ -1580,6 +1580,7 @@ function loadindexconfigdata() {
                 for (var i = 0; i < indexconfigdata.length&&i<4; i++) {
                     tempconfig += (i == 0) ? indexconfigdata[i]["DevType"] : "," + indexconfigdata[i]["DevType"];
                 }
+                createcloumdiv(indexconfigdata[4]);
                 historydetype = tempconfig;
                 loadHistory();
 
@@ -1672,6 +1673,25 @@ function datecompare(start) {
     time = end - start;
     return Math.floor(time / 86400000) + 1;
 };
+
+function createcloumdiv(data) {
+    var arr = data["val"].split(",");
+    var index = 0;
+    var classname="";
+    for (var i = 0; i < arr.length; i++) {
+        if (arr != "0") {
+            if (index % 2 == 0) {
+                classname = "row2n";
+            }
+            else
+            {
+                classname = "row1n";
+            }
+            $(".devicelist ul").append('<li><div class="'+classname+'"><div><img class="imglable" src="" /><label class="listtitle">'+arr[i]+'</label><img src="Image/index_bz.png" /></div><div class="rlchars"><ul><li>配发数量</li><li><div id="jwtchart"></div></li><li>设备使用率</li><li><div id="jwtcolumn"></div></li></ul></div><div></div></div></li>')
+            index += 1;
+        }
+    }
+}
 
 
 
