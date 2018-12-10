@@ -437,7 +437,7 @@ function createChart(index, type, data, color, totalvalue, fontweight) {
 
 
 function myRealtimeChart(label, value, index, chartnum, rebuildchar,histroytempdata) {
-
+    if (isNaN(value)) { return;}
     var chart;
     var containerId;
     var minvalue = value;

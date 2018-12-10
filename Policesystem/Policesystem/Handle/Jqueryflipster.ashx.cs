@@ -99,13 +99,18 @@ namespace Policesystem.Handle
             foreach (entityStruct item in rows)
             {
                 //dwmc =(item.BMDM== "331000000000")?"交警支队": item.BMMC.Substring(11);
-                switch (item.BMDM)
+                switch (item.BMMC.Length)
                 {
-                    case "331000000000":
+                    case 9:
                         dwmc = "交警支队";
                         break;
-                    case "33100000000x":
+                    case 1:
                         dwmc = item.BMMC;
+                        break;
+                    case 10:
+                    case 11:
+                    case 12:
+                        dwmc = item.BMMC.Substring(7);
                         break;
                     default:
                         dwmc= item.BMMC.Substring(11);

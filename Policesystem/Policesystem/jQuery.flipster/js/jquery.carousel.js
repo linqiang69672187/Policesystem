@@ -241,6 +241,15 @@ function createChar() {
             var n = 0;
             var sumonline, sumisused, total, img;
             if (firstload) {
+                if (data.length == 1) {
+                    setintervalofCarouse(500000000);
+                }
+                else {
+                    $(".none").each(function (index, el) {
+                        $(this).removeClass("none");
+                    });
+
+                }
                 for (var i = 0; i < data.length && i < 3; i++) {
 
                     switch (i) {
@@ -289,6 +298,7 @@ function createChar() {
                     $(".divcontentlf:eq(" + i + ") div:eq(7)").text(formatSeconds(sumisused / total, 2) + "%");
                     $(".divcontentlf:eq(" + i + ") div:eq(11)").text(sumonline);
                 };
+              
                 currentIndex = 2;
                 Caroursel.init($('.caroursel'));
                 firstload = false;
