@@ -118,6 +118,7 @@
     <Content Include="build\src\ol3-layerswitcher.css" />
     <Content Include="build\src\ol3-layerswitcher.js" />
     <Content Include="comjs\Addcomjs.js" />
+    <Content Include="comjs\animateToPrice.js" />
     <Content Include="comjs\apiv2.0.my.js" />
     <Content Include="comjs\bootstrap-datetimepicker.js" />
     <Content Include="comjs\bootstrap.min.js" />
