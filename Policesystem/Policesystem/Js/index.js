@@ -71,6 +71,7 @@ switch (true) {
         columtitlefontSize = '18px';
         tickLength = 28;
         doublecount = 2;
+        gugaYaxisy = 145;
 
         realheight = 370;
         realaxisLabelfontsize = '24px'
@@ -95,7 +96,7 @@ switch (true) {
         tickLength = 10;
         titlefontsize = '12px';
         columtitlefontSize = '8px';
-       
+        gugaYaxisy = 45;
         doublecount = 1;
 
         realheight = 130;
@@ -993,7 +994,7 @@ function myGaugeChart(label, hbvalue, index, chartnum, rebuildchar, value) {
             },
             title: {
                 text: value+"%",
-                y: 40,
+                y: gugaYaxisy,
                 style: {
                     fontSize: titlefontsize
                 }
