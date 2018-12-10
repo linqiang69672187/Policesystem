@@ -115,6 +115,9 @@ li select {
     width: 75px;
     margin-left: 5px;
 }
+li select:nth-child(1) {
+    width: 85px;
+}
 select option {
     background-color: #071237;
 }
