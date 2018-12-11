@@ -27,7 +27,7 @@ namespace Policesystem.Handle
           
 
             HttpCookie cookies = HttpContext.Current.Request.Cookies["cookieName"];
-            string BMDM = "331000000000";
+            string BMDM = "331001000000";
           
             DataTable dt;
             if (cookies != null)
@@ -47,7 +47,7 @@ namespace Policesystem.Handle
                 case "331004000000":
                 case "33100000000x":
 
-                    sqltext.Append(" WITH childtable(BMMC,BMDM,SJBM) as (SELECT BMMC,BMDM,SJBM FROM [Entity] WHERE SJBM ='331000000000' OR BMDM ='331000000000' UNION ALL SELECT A.BMMC,A.BMDM,A.SJBM FROM [Entity] A,childtable b where a.SJBM = b.BMDM ) SELECT count(ID) as value,0 as value2 FROM [Device] where BMDM in (SELECT BMDM FROM childtable) union all SELECT  sum(HandleCnt) as value,SUM([OnlineTime]) as value2  FROM StatsInfo_Yestorday_Today where Time > GETDATE()-1 and BMDM in (SELECT BMDM FROM childtable) union all SELECT  count(id) as value1,0 as value2 FROM [Gps] where IsOnline=1 and PDAID in (SELECT [DevId] FROM [Device] where BMDM in (SELECT BMDM FROM childtable))");
+                    sqltext.Append(" WITH childtable(BMMC,BMDM,SJBM) as (SELECT BMMC,BMDM,SJBM FROM [Entity] WHERE SJBM in ('331001000000','331002000000','331003000000','331004000000','33100000000x') OR BMDM in ('331001000000','331002000000','331003000000','331004000000','33100000000x') UNION ALL SELECT A.BMMC,A.BMDM,A.SJBM FROM [Entity] A,childtable b where a.SJBM = b.BMDM ) SELECT count(ID) as value,0 as value2 FROM [Device] where BMDM in (SELECT BMDM FROM childtable) union all SELECT  sum(HandleCnt) as value,SUM([OnlineTime]) as value2  FROM StatsInfo_Yestorday_Today where Time > GETDATE()-1 and BMDM in (SELECT BMDM FROM childtable) union all SELECT  count(id) as value1,0 as value2 FROM [Gps] where IsOnline=1 and PDAID in (SELECT [DevId] FROM [Device] where BMDM in (SELECT BMDM FROM childtable))");
                      dt = SQLHelper.ExecuteRead(CommandType.Text, sqltext.ToString(), "DB"); ;
                     sqltext.Clear();
 
