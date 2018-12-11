@@ -523,13 +523,13 @@
     }
 
     #jwt_jrzx, #jwt_cxl, #jwt_rjcf{
-        margin-top: -40px;
+        margin-top: -60px;
         display: inline-table;
         width: 515px;
  
     }
        #jwt_jrcl, #jwt_pjcf {
-        margin-top: -40px;
+        margin-top: -60px;
         display: inline-block;
         width: 50%;
     }
