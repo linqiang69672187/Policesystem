@@ -80,7 +80,7 @@ switch (true) {
         realtickPixelInterval = 150;
         realtickPixelIntervalY = 100;
         realtyAxisy = 10;
-        realtitleyxisy = 60;
+        realtitleyxisy = 50;
         realsymbolWidth = 40;
         cloumntickPixelInterval = 100;
         cloumnborderRadius = 15;
