@@ -1475,6 +1475,7 @@ function createGauge(data, rebuildchar, type) {
                     var temphistorydata = selHistoryData(arrayval[i1], indexconfigdata[i].DevType, entityBMDM)
                     myRealtimeChart("今日在线量", parseFloat(todayvalue.在线数), i, numchart, rebuildchar, temphistorydata);
                     numchart += 1;
+                    break;
                 case "22":
                     var temphistorydata = selHistoryData(arrayval[i1], indexconfigdata[i].DevType, entityBMDM)
                     myRealtimeChart("设备配发数", parseFloat(todayvalue.设备数量), i, numchart, rebuildchar, temphistorydata);
@@ -1509,7 +1510,7 @@ function createGauge(data, rebuildchar, type) {
                     break;
                 case "82":
                     var temphistorydata = selHistoryData(arrayval[i1], indexconfigdata[i].DevType, entityBMDM)
-                    myRealtimeChart("规范上传率", parseFloat(todayvalue.规范上传率 / todayvalue.设备数量), i, numchart, rebuildchar);
+                    myRealtimeChart("规范上传率", formatFloat(parseFloat(todayvalue.规范上传率 / todayvalue.设备数量),2), i, numchart, rebuildchar, temphistorydata);
                     numchart += 1;
                     break;
                 default:
@@ -1554,7 +1555,7 @@ function selHistoryData(index, type, entityBMDM) {
                     val = parseInt(historydata.data[i]["sl"]);
                     break;
                 case "32":
-                    val = formatFloat(parseFloat(historydata.data[i]["onlinecount"]) * 100 / parseFloat(historydata.data[i]["sl"]), 2);
+                    val = formatFloat(parseFloat(historydata.data[i]["onlinecount"])  / parseFloat(historydata.data[i]["sl"]), 2);
                     break;
                 case "42":
                     val = parseInt(historydata.data[i]["HandleCnt"]);;
@@ -1569,7 +1570,7 @@ function selHistoryData(index, type, entityBMDM) {
                     val = parseInt(historydata.data[i]["FileSize"]);;
                     break;
                 case "82":
-                    val = parseInt(historydata.data[i]["FileSize"]);;
+                    val = formatFloat(parseFloat(historydata.data[i]["GFSCL"])  / parseFloat(historydata.data[i]["sl"]), 2);
                     break;
                 default:
                     break;
