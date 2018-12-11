@@ -49,7 +49,7 @@ setInterval(function () {
     $(".timebanner label").text(year + "-" + month + "-" + day + " " + hour + ":" + min + ":" + sencond);
 }, 50);
 
-$("#header").load('top.html', function () {
+$("#header").load('top.aspx', function () {
     $("#header ul li:eq(0)").addClass("active");
 });
 function Appendzero(obj) {
@@ -1394,8 +1394,8 @@ function createGauge(data, rebuildchar, type) {
                     numchart += 1;
                     break;
                 case "30":
-                    data1 = formatFloat(parseFloat(yesdayvalue.在线数) / parseFloat(yesdayvalue.设备数量),2);
-                    data2 = formatFloat(parseFloat(todayvalue.在线数) / parseFloat(todayvalue.设备数量),2);
+                    data1 = formatFloat(parseFloat(yesdayvalue.在线数) * 100 / parseFloat(yesdayvalue.设备数量), 2);
+                    data2 = formatFloat(parseFloat(todayvalue.在线数) * 100 / parseFloat(todayvalue.设备数量),2);
                     value = dataValue(data1, data2)
                     value = formatFloat(value, 2)
                     myGaugeChart("设备使用率", value, i, numchart, rebuildchar, data2);
@@ -1424,7 +1424,7 @@ function createGauge(data, rebuildchar, type) {
                 case "80":
                     value = dataValue(parseFloat(yesdayvalue.规范上传率), parseFloat(todayvalue.规范上传率));
                     value = formatFloat(value, 2)
-                    myGaugeChart("规范上传率", value, i, numchart, rebuildchar, formatFloat(parseFloat(todayvalue.规范上传率 / todayvalue.设备数量), 2));
+                    myGaugeChart("规范上传率", value, i, numchart, rebuildchar, formatFloat(parseFloat(todayvalue.规范上传率*100 / todayvalue.设备数量), 2));
 
                     numchart += 1;
                     break;
