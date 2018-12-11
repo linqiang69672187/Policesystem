@@ -49,7 +49,7 @@ setInterval(function () {
     $(".timebanner label").text(year + "-" + month + "-" + day + " " + hour + ":" + min + ":" + sencond);
 }, 50);
 
-$("#header").load('top.aspx', function () {
+$("#header").load('top.html', function () {
     $("#header ul li:eq(0)").addClass("active");
 });
 function Appendzero(obj) {
@@ -437,7 +437,7 @@ function createChart(index, type, data, color, totalvalue, fontweight) {
 
 
 
-function myRealtimeChart(label, value, index, chartnum, rebuildchar,histroytempdata) {
+function myRealtimeChart(label, value, index, chartnum, rebuildchar, histroytempdata) {
     if (isNaN(value)) { return;}
     var chart;
     var containerId;
@@ -1091,7 +1091,7 @@ function myGaugeChart(label, hbvalue, index, chartnum, rebuildchar, value) {
 }
 
 function loadGaugeData() {
-    if (!historydetype) return;
+    if (!historydetype || !historydata) return;
     var entityBMDM;
     $("#ifr").contents().find(".lbtitle").each(function () {
         if ($(this).parent().parent().css("opacity") == 1) {
