@@ -80,6 +80,7 @@ switch (true) {
         realtickPixelInterval = 150;
         realtickPixelIntervalY = 100;
         realtyAxisy = 10;
+        realtitleyxisy = 60;
         realsymbolWidth = 40;
         cloumntickPixelInterval = 100;
         cloumnborderRadius = 15;
@@ -106,10 +107,12 @@ switch (true) {
         realtickPixelInterval = 70;
         realtickPixelIntervalY = 50;
         realtyAxisy = 5;
+        realtitleyxisy = 30;
         realsymbolWidth = 20;
         cloumntickPixelInterval = 30;
         cloumnborderRadius = 5;
         columnpointWidth = 10;
+
         break;
 
 }
@@ -693,7 +696,7 @@ function myRealtimeChart(label, value, index, chartnum, rebuildchar, histroytemp
             floating: true,
             align: 'center',
             x: 15,
-            y: 30,
+            y: realtitleyxisy,
             verticalAlign: 'top',
 
         },
