@@ -722,8 +722,9 @@ function myRealtimeChart(label, value, index, chartnum, rebuildchar, histroytemp
                 if (!histroytempdata) return;
                 var positions = [],
 					tick = Math.floor(this.dataMin),
-					increment = Math.ceil((this.dataMax - this.dataMin) / 2);
-                for (tick; tick - increment <= this.dataMax; tick += increment) {
+                    maxpoint = this.dataMax - 60 * 60 * 1000;
+                increment = Math.ceil((maxpoint - this.dataMin) / 2);
+					for (tick; tick - increment <= maxpoint; tick += increment) {
                     positions.push(tick);
                 }
                 return positions;
