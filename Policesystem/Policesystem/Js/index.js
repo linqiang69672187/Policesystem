@@ -49,7 +49,7 @@ setInterval(function () {
     $(".timebanner label").text(year + "-" + month + "-" + day + " " + hour + ":" + min + ":" + sencond);
 }, 50);
 
-$("#header").load('top.html', function () {
+$("#header").load('top.aspx', function () {
     $("#header ul li:eq(0)").addClass("active");
 });
 function Appendzero(obj) {
@@ -619,12 +619,17 @@ function myRealtimeChart(label, value, index, chartnum, rebuildchar, histroytemp
             //  }
             var data = [];
             if (histroytempdata) {
-                for (i = 0; i < histroytempdata.length; i += 1) {
+                var len = histroytempdata.length
+                for (i = 0; i < len; i += 1) {
                     data.push({
                         x: histroytempdata[i].x,
                         y: histroytempdata[i].y
                     });
                 }
+                data.push({
+                    x: new Date(histroytempdata[len - 1].x).getTime() + 1 * 60 * 60 * 1000,
+                    y: null
+                });
             }
             else {
                 for (i = -1; i <= 0; i += 1) {
@@ -768,11 +773,23 @@ function myRealtimeChart(label, value, index, chartnum, rebuildchar, histroytemp
             },
             data: (function () {
                 // 生成随机值
+                var data = [];
                 if (histroytempdata) {
-                    return histroytempdata;
+                    var len = histroytempdata.length
+                    for (i = 0; i < len; i += 1) {
+                        data.push({
+                            x: histroytempdata[i].x,
+                            y: histroytempdata[i].y
+                        });
+                    }
+                    data.push({
+                        x: new Date(histroytempdata[len - 1].x).getTime() + 1 * 60 * 60 * 1000,
+                        y: null
+                    });
+                    return data;
                 }
-                var data = [],
-                    time = (new Date()).getTime(),
+              
+                   var time = (new Date()).getTime(),
                     i;
                 for (i = -1; i <= 0; i += 1) {
                     data.push({
