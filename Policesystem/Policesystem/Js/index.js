@@ -718,6 +718,16 @@ function myRealtimeChart(label, value, index, chartnum, rebuildchar, histroytemp
             dateTimeLabelFormats: {
                 second: '%M:%S'
             },
+            tickPositioner: function () {
+                if (!histroytempdata) return;
+                var positions = [],
+					tick = Math.floor(this.dataMin),
+					increment = Math.ceil((this.dataMax - this.dataMin) / 2);
+                for (tick; tick - increment <= this.dataMax; tick += increment) {
+                    positions.push(tick);
+                }
+                return positions;
+            },
             tickLength: realtickLength,
             labels: {
                 style: {
