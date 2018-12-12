@@ -72,6 +72,7 @@ switch (true) {
         tickLength = 28;
         doublecount = 2;
         gugaYaxisy = 145;
+        guguachartop = '-20px';
 
         realheight = 370;
         realaxisLabelfontsize = '24px'
@@ -99,7 +100,7 @@ switch (true) {
         columtitlefontSize = '8px';
         gugaYaxisy = 45;
         doublecount = 1;
-
+        guguachartop = '40px';
         realheight = 130;
         realaxisLabelfontsize = '12px';
         realxAxis = 15;
@@ -954,7 +955,10 @@ function myGaugeChart(label, hbvalue, index, chartnum, rebuildchar, value) {
             backgroundColor: 'rgba(0,0,0,0)',//设置背景透明
             plotShadow: false,
             margin: [0, 0, 0, 0],
-            height: hchart
+            height: hchart,
+            style: {
+                top:guguachartop
+           }
         },
         tooltip: {
             style: {
