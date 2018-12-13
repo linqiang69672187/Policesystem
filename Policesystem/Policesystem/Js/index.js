@@ -49,7 +49,7 @@ setInterval(function () {
     $(".timebanner label").text(year + "-" + month + "-" + day + " " + hour + ":" + min + ":" + sencond);
 }, 50);
 
-$("#header").load('top.aspx', function () {
+$("#header").load('top.html', function () {
     $("#header ul li:eq(0)").addClass("active");
 });
 function Appendzero(obj) {

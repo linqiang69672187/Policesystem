@@ -203,7 +203,7 @@ namespace Policesystem.Handle
                 
                     strList.Add(dtEntity.Rows[i1]["ID"].ToString());
                 
-                    if (!(ssdd != "all" && sszd == "all"))
+                    if (!(ssdd != "all" && sszd == "all")|| !(dtEntity.Rows[i1]["ParentID"].ToString()== "331000000000"))
                     {
                         foreach (entityStruct item in entityids)
                         {
