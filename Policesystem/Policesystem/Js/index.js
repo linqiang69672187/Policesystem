@@ -49,7 +49,7 @@ setInterval(function () {
     $(".timebanner label").text(year + "-" + month + "-" + day + " " + hour + ":" + min + ":" + sencond);
 }, 50);
 
-$("#header").load('top.html', function () {
+$("#header").load('top.aspx', function () {
     $("#header ul li:eq(0)").addClass("active");
 });
 function Appendzero(obj) {
@@ -72,7 +72,7 @@ switch (true) {
         tickLength = 28;
         doublecount = 2;
         gugaYaxisy = 145;
-        guguachartop = '-20px';
+        guguachartop = '0px';
 
         realheight = 370;
         realaxisLabelfontsize = '24px'
