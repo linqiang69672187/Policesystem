@@ -72,7 +72,7 @@ switch (true) {
         tickLength = 28;
         doublecount = 2;
         gugaYaxisy = 145;
-        guguachartop = '0px';
+        guguachartop = '40px';
 
         realheight = 370;
         realaxisLabelfontsize = '24px'
